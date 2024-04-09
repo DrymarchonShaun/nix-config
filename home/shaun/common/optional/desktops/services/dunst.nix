@@ -13,8 +13,8 @@
     #    waylandDisplay = ""; # set the service's WAYLAND_DISPLAY environment variable
     #    configFile = "";
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
     settings = {

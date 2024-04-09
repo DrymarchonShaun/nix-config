@@ -17,14 +17,11 @@
     ./hardware-configuration.nix
 
     #################### Host-specific Optional Configs ####################
-    ../common/optional/yubikey
-    ../common/optional/services/clamav.nix # depends on optional/msmtp.nix
-    ../common/optional/msmtp.nix # required for emailing clamav alerts
     ../common/optional/services/openssh.nix
 
     # Desktop
-    ../common/optional/services/greetd.nix # display manager
     ../common/optional/hyprland.nix # window manager
+    ../common/optional/pipewire.nix # audio
 
     #################### Users to Create ####################
     ../common/users/shaun
@@ -71,5 +68,5 @@
   programs.nix-ld.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }
