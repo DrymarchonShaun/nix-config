@@ -4,12 +4,12 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      family = "FiraCode Nerd Font";
-      package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
+      family = "Roboto Mono";
+      package = pkgs.roboto-mono;
     };
     regular = {
-      family = "Fira Sans";
-      package = pkgs.fira;
+      family = "Roboto";
+      package = pkgs.roboto;
     };
   };
 }

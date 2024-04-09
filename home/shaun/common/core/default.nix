@@ -22,15 +22,14 @@
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   home = {
-    username = lib.mkDefault "ta";
+    username = lib.mkDefault "shaun";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "23.05";
+    stateVersion = lib.mkDefault "23.11";
     sessionPath = [
       "$HOME/.local/bin"
-      "$HOME/scripts/talon_scripts"
     ];
     sessionVariables = {
-      FLAKE = "$HOME/src/nix-config";
+      FLAKE = "$HOME/.src/nix-config";
       SHELL = "zsh";
       TERM = "kitty";
       TERMINAL = "kitty";
