@@ -3,7 +3,9 @@
   fonts.fontconfig.enable = true;
   home.packages = [
     pkgs.noto-fonts
-    pkgs.nerdfonts # loads the complete collection. look into overide for FiraMono or potentially mononoki
+    pkgs.roboto
+    pkgs.roboto-mono
+    (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     pkgs.meslo-lgs-nf
   ];
 

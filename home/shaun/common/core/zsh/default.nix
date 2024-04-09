@@ -95,12 +95,12 @@
       doc = "cd $HOME/documents";
       scripts = "cd $HOME/scripts";
       ts = "cd $HOME/.talon/user/fidget";
-      src = "cd $HOME/src";
-      edu = "cd $HOME/src/edu";
-      dfs = "cd $HOME/src/dotfiles";
-      dfsw = "cd $HOME/src/dotfiles.wiki";
-      nfs = "cd $HOME/src/nix-config";
-      uc = "cd $HOME/src/unmovedcentre";
+      src = "cd $HOME/.src";
+      edu = "cd $HOME/.src/edu";
+      dfs = "cd $HOME/.src/dotfiles";
+      dfsw = "cd $HOME/.src/dotfiles.wiki";
+      nfs = "cd $HOME/.src/nix-config";
+      uc = "cd $HOME/.src/unmovedcentre";
       l = "eza -lah";
       la = "eza -lah";
       ll = "eza -lh";
@@ -118,10 +118,8 @@
       ns = "nix-shell";
 
       #-----------Remotes----------------
-      cakes = "ssh -l freshcakes freshcakes.memeoid.cx";
-      gooey = "ssh -l pi 10.13.37.69";
-      gusto = "ssh -l ta 10.13.37.5";
-      grief = "ssh -l ta 10.13.37.7";
+      corais = "ssh -l shaun 10.0.0.2";
+      natrix = "ssh -l ta 10.0.0.4";
 
       #-------------Git Goodness-------------
       # just reference `$ alias` and use the defautls, they're good.
