@@ -34,6 +34,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # vscode extensions/themes
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    catppuccin-vsc.url = "github:catppuccin/vscode";
+
+
+
     # Windows management
     # for now trying to avoid this one because I want stability for my wm
     # this is the hyprland development flake package / unstable
