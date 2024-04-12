@@ -1,8 +1,7 @@
 { inputs, pkgs, ... }: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    ./lsp.nix
   ];
-
   programs.nixvim = {
     enable = true;
     enableMan = true; # install man pages for nixvim options
@@ -11,14 +10,15 @@
 
     # TODO: nixvim: gruvbox-material
     colorschemes = {
-      gruvbox = {
+      catppuccin = {
         enable = true;
-        contrastDark = "medium";
-        # transparentBg = "true";
+        flavour = "macchiato";
+        transparentBackground = true;
       };
     };
+    colorscheme = "catppuccin";
 
-    options = {
+    opts = {
       # # Lua reference:
       # vim.o behaves like :set
       # vim.go behaves like :setglobal
@@ -47,7 +47,7 @@
       linebreak = true; # Wrap lines at convenient points
 
       # ========= Font =========
-      guifont = "NotoSansMono:h9"; # fontname:fontsize
+      guifont = "RobotoMono:h9"; # fontname:fontsize
 
       # ========= Cursor =========
       guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,n-v-i:blinkon0";
@@ -110,113 +110,56 @@
     # Greeter
     plugins.alpha = {
       enable = true;
-      iconsEnabled = true; # installs nvim-web-devicons.
-      layout = [
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "text";
-          val = [
-            "                 ______"
-            "                /     /\\"
-            "               /     /##\\"
-            "              /     /####\\"
-            "             /     /######\\"
-            "            /     /########\\"
-            "           /     /##########\\"
-            "          /     /#####/\\#####\\"
-            "         /     /#####/++\\#####\\"
-            "        /     /#####/++++\\#####\\"
-            "       /     /#####/\\+++++\\#####\\"
-            "      /     /#####/  \\+++++\\#####\\"
-            "     /     /#####/    \\+++++\\#####\\"
-            "    /     /#####/      \\+++++\\#####\\"
-            "   /     /#####/        \\+++++\\#####\\"
-            "  /     /#####/__________\\+++++\\#####\\"
-            " /                        \\+++++\\#####\\"
-            "/__________________________\\+++++\\####/"
-            "\\+++++++++++++++++++++++++++++++++\\##/"
-            " \\+++++++++++++++++++++++++++++++++\\/"
-            "  ``````````````````````````````````"
-            ""
-          ];
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          type = "group";
-          val = [
-            {
-              command = "<CMD>ene <CR>";
-              desc = "  New file";
-              shortcut = "<Leader>cn";
-            }
-            {
-              command = ":qa<CR>";
-              desc = "  Quit Neovim";
-              shortcut = ":q";
-            }
-          ];
-        }
-        {
-          type = "padding";
-          val = 2;
-        }
-        {
-          opts = {
-            hl = "Keyword";
-            position = "center";
-          };
-          type = "text";
-          val = "The way out is through.";
-        }
-      ];
+      theme = "dashboard";
     };
     # TODO: nixvim switch to lightline and lightline-bufferline
-    plugins.airline = {
+    # plugins.airline = {
+    #   enable = true;
+    #   powerline = true;
+    #   extensions = {
+    #     # TODO: nixvim: Figure out tabline extension stuff in nixvim
+    #     # TODO: nixvim: Possibly use bufferline or lightline-bufferline instead
+    #     # """" Tabline settings
+    #     #
+    #     # " show buffer numbers in the tab line for easier deleting
+    #     # " use :echo airline#extensions#tabline#get() to see what is actually set
+    #     # let g:airline#extensions#tabline#show_tab_nr = 1
+    #     # let g:airline#extensions#tabline#tabs_label = 't'
+    #     # let g:airline#extensions#tabline#buffers_label = 'b'
+    #     # let g:airline#extensions#tabline#buffer_nr_show = 1
+    #     #
+    #     # " Disable showing buffer numbers for splits when using tabs. This gets quite
+    #     # " annoying if there's quite a few splits open.
+    #     # let g:airline#extensions#tabline#show_splits = 0
+    #     #
+    #     # " Title adjustments
+    #     # "airline_symbols Show tab numbers in the tab title
+    #     # let g:airline#extensions#tabline#tab_nr_type = 1
+    #     #
+    #     # " https://github.com/vim-airline/vim-airline/issues/476
+    #     #
+    #     # " show the buffer index
+    #     # "let g:airline#extensions#tabline#buffer_idx_mode = 1
+    #     # "
+    #     # " https://github.com/vim-airline/vim-airline/wiki/Configuration-Examples-and-Snippets#a-different-example-add-the-window-number-in-front-of-the-mode
+    #     # function! WindowNumber(...)
+    #     #     let builder = a:1
+    #     #     let context = a:2
+    #     #     call builder.add_section('airline_b', '%{tabpagewinnr(tabpagenr())}')
+    #     #     return 0
+    #     # endfunction
+    #   };
+    # };
+
+    plugins.lightline = {
       enable = true;
-      powerline = true;
-      extensions = {
-        # TODO: nixvim: Figure out tabline extension stuff in nixvim
-        # TODO: nixvim: Possibly use bufferline or lightline-bufferline instead
-        # """" Tabline settings
-        #
-        # " show buffer numbers in the tab line for easier deleting
-        # " use :echo airline#extensions#tabline#get() to see what is actually set
-        # let g:airline#extensions#tabline#show_tab_nr = 1
-        # let g:airline#extensions#tabline#tabs_label = 't'
-        # let g:airline#extensions#tabline#buffers_label = 'b'
-        # let g:airline#extensions#tabline#buffer_nr_show = 1
-        #
-        # " Disable showing buffer numbers for splits when using tabs. This gets quite
-        # " annoying if there's quite a few splits open.
-        # let g:airline#extensions#tabline#show_splits = 0
-        #
-        # " Title adjustments
-        # "airline_symbols Show tab numbers in the tab title
-        # let g:airline#extensions#tabline#tab_nr_type = 1
-        #
-        # " https://github.com/vim-airline/vim-airline/issues/476
-        #
-        # " show the buffer index
-        # "let g:airline#extensions#tabline#buffer_idx_mode = 1
-        # "
-        # " https://github.com/vim-airline/vim-airline/wiki/Configuration-Examples-and-Snippets#a-different-example-add-the-window-number-in-front-of-the-mode
-        # function! WindowNumber(...)
-        #     let builder = a:1
-        #     let context = a:2
-        #     call builder.add_section('airline_b', '%{tabpagewinnr(tabpagenr())}')
-        #     return 0
-        # endfunction
-      };
     };
+    plugins.bufferline = {
+      enable = true;
+    };
+
     plugins.fidget = {
       enable = true;
-      text.spinner = "triangle";
     };
 
     # ========= Undo history ========
@@ -286,6 +229,8 @@
     #    "!" Insert and command-line mode
     #    "l" Insert, command-line and lang-arg mode
     #    "c" Command-line mode
+    plugins.which-key.enable = true;
+
     keymaps = [
       # TODO: nixvim: Test sudo save
       # {
@@ -294,6 +239,20 @@
       #   key = "w!!";
       #   action = "<cmd>w !sudo tee > /dev/null %<CR>";
       # }
+      {
+        mode = [ "" "i" ];
+        key = "<c-s>";
+        action = "<cmd>w<CR>";
+        options = { noremap = true; };
+
+      }
+      {
+        mode = [ "" "i" ];
+        key = "<c-q>";
+        action = "<cmd>q!<CR>";
+        options = { noremap = true; };
+
+      }
       {
         # edit vimrc
         mode = [ "" ];
