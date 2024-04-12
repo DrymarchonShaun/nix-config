@@ -14,6 +14,13 @@
         enable = true;
         flavour = "macchiato";
         transparentBackground = true;
+        integrations = {
+          alpha = true;
+          noice = true;
+          which_key = true;
+          neotree = true;
+          treesitter = true;
+        };
       };
     };
     colorscheme = "catppuccin";
@@ -31,7 +38,7 @@
       hidden = true; # Makes vim act like all other editors, buffers can exist in the background without being in a window. http://items.sjbach.com/319/configuring-vim-right
       number = true; # show line numbers
       relativenumber = true; # show relative linenumbers
-      laststatus = 0; # Display status line always
+      laststatus = 2; # laststatus of 2 is required for lightline
       history = 1000; # Store lots of :cmdline history
       showcmd = true; # Show incomplete cmds down the bottom
       showmode = true; # Show current mode down the bottom
@@ -112,44 +119,6 @@
       enable = true;
       theme = "dashboard";
     };
-    # TODO: nixvim switch to lightline and lightline-bufferline
-    # plugins.airline = {
-    #   enable = true;
-    #   powerline = true;
-    #   extensions = {
-    #     # TODO: nixvim: Figure out tabline extension stuff in nixvim
-    #     # TODO: nixvim: Possibly use bufferline or lightline-bufferline instead
-    #     # """" Tabline settings
-    #     #
-    #     # " show buffer numbers in the tab line for easier deleting
-    #     # " use :echo airline#extensions#tabline#get() to see what is actually set
-    #     # let g:airline#extensions#tabline#show_tab_nr = 1
-    #     # let g:airline#extensions#tabline#tabs_label = 't'
-    #     # let g:airline#extensions#tabline#buffers_label = 'b'
-    #     # let g:airline#extensions#tabline#buffer_nr_show = 1
-    #     #
-    #     # " Disable showing buffer numbers for splits when using tabs. This gets quite
-    #     # " annoying if there's quite a few splits open.
-    #     # let g:airline#extensions#tabline#show_splits = 0
-    #     #
-    #     # " Title adjustments
-    #     # "airline_symbols Show tab numbers in the tab title
-    #     # let g:airline#extensions#tabline#tab_nr_type = 1
-    #     #
-    #     # " https://github.com/vim-airline/vim-airline/issues/476
-    #     #
-    #     # " show the buffer index
-    #     # "let g:airline#extensions#tabline#buffer_idx_mode = 1
-    #     # "
-    #     # " https://github.com/vim-airline/vim-airline/wiki/Configuration-Examples-and-Snippets#a-different-example-add-the-window-number-in-front-of-the-mode
-    #     # function! WindowNumber(...)
-    #     #     let builder = a:1
-    #     #     let context = a:2
-    #     #     call builder.add_section('airline_b', '%{tabpagewinnr(tabpagenr())}')
-    #     #     return 0
-    #     # endfunction
-    #   };
-    # };
 
     plugins.lightline = {
       enable = true;
@@ -158,7 +127,11 @@
       enable = true;
     };
 
-    plugins.fidget = {
+    plugins.noice = {
+      enable = true;
+    };
+
+    plugins.treesitter = {
       enable = true;
     };
 
@@ -179,7 +152,7 @@
     # ========= File Nav ===========
     # TODO: nixvim set this one up
     # plugins.harpoon = {};
-
+    plugins.neo-tree.enable = true;
     #
     # ========== Dev Tools =========
     #
@@ -189,13 +162,6 @@
     # Load Plugins that aren't provided as modules by nixvim
     extraPlugins = builtins.attrValues {
       inherit (pkgs.vimPlugins)
-        # linting and fixing (config in extraConfigVim)
-        # https://github.com/dense-analysis/ale
-        # TODO: nixvim: revamp setup to lua
-        # there is also a lightline-ale  plugin/extension for lightline when you get around to it
-        # by default ALE completion is disabled. need to determine if it's worth enabling and ditching youcompleteme ... it likely is for simplicity!
-        ale
-
         vim-illuminate# Highlight similar words as are under the cursor
         vim-numbertoggle# Use relative number on focused buffer only
         range-highlight-nvim# Highlight range as specified in commandline e.g. :10,15
@@ -254,27 +220,42 @@
 
       }
       {
-        # edit vimrc
-        mode = [ "" ];
-        key = "<Leader>ve";
-        action = "<cmd>e ~/.config/.vimrc<CR>";
+        mode = [ "" "i" ];
+        key = "<c-/>";
+        action = "<cmd>Telescope live_grep<CR>";
         options = { noremap = true; };
       }
       {
-        # reload vimrc
-        mode = [ "n" ];
-        key = "<Leader>vr";
-        action = "<cmd>so $MYVIMRC<CR>";
+        mode = [ "" "i" ];
+        key = "<c-z>";
+        action = "<cmd>undo<CR>";
         options = { noremap = true; };
       }
       {
-        # clear search highlighting
-        mode = [ "n" ];
-        key = "<space><space>";
-        action = "<cmd>nohlsearch<CR>";
+        mode = [ "" "i" ];
+        key = "<c-u>";
+        action = "<cmd>undo<CR>";
         options = { noremap = true; };
       }
 
+      {
+        mode = [ "" "i" ];
+        key = "<c-s-z>";
+        action = "<cmd>redo<CR>";
+        options = { noremap = true; };
+      }
+      {
+        mode = [ "" "i" ];
+        key = "<c-r>";
+        action = "<cmd>redo<CR>";
+        options = { noremap = true; };
+      }
+      {
+        mode = [ "" "i" ];
+        key = "<c-y>";
+        action = "<cmd>redo<CR>";
+        options = { noremap = true; };
+      }
       # ======== Movement ========
       {
         # move down through wrapped lines
@@ -412,42 +393,6 @@
 
       let g:vimwiki_list = [wiki_0, wiki_1]
       " let g:vimwiki_list = [wiki_0, wiki_1, wiki_2]
-
-      " ================ Ale ========================
-      " linter and fixer packages have to be installed via AUR or pamac
-      let g:ale_linters = {
-                  \ 'c': ['clang-tidy'],
-                  \ 'python': ['flake8'],
-                  \ 'vim': ['vint'],
-                  \ 'markdown': ['markdownlint'],
-      \ }
-
-      let g:ale_fixers = {
-            \ 'c': ['clang-format'],
-            \ 'javascript': ['prettier', 'eslint'],
-            \ 'json': ['fixjson', 'prettier'],
-            \ 'python': ['black', 'isort'],
-            \ }
-
-      " Set global fixers for all file types except Markdown
-      " Why? because double spaces at the end of a line in markdown indicate a
-      " linebreak without creating a new paragraph
-      function! SetGlobalFixers()
-        let g:ale_fixers['*'] = ['trim_whitespace', 'remove_trailing_lines']
-      endfunction
-
-      augroup GlobalFixers
-        autocmd!
-        autocmd VimEnter * call SetGlobalFixers()
-      augroup END
-
-      " Set buffer-local fixers for Markdown files
-      augroup MarkdownFixers
-        autocmd!
-        autocmd FileType markdown let b:ale_fixers = ['prettier']
-      augroup END
-
-      let g:ale_fix_on_save = 1
     '';
 
     # extraConfigLua = ''
@@ -460,18 +405,3 @@
     # '';
   };
 }
-
-# # Syntax support
-# vim-polyglot # a collection of language packs for vim
-#
-# # The following are commented out because they are already included in vim-polyglot
-# # but in case poly-glot fails I want to be able to quickly enable what I need.
-# haskell-vim
-# plantuml-syntax
-# pgsql-vim
-# python-syntax
-# rust-vim
-# vim-markdown
-# vim-nix
-# vim-terraform
-# vim-toml
