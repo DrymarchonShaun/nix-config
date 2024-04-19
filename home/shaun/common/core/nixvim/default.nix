@@ -26,7 +26,7 @@
     };
     colorscheme = "catppuccin";
 
-    opts = {
+    options = {
       # # Lua reference:
       # vim.o behaves like :set
       # vim.go behaves like :setglobal
