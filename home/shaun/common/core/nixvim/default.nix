@@ -1,5 +1,6 @@
 { inputs, pkgs, ... }: {
   imports = [
+    inputs.nixvim.homeManagerModules.nixvim
     ./lsp.nix
   ];
   programs.nixvim = {
@@ -25,7 +26,7 @@
     };
     colorscheme = "catppuccin";
 
-    opts = {
+    options = {
       # # Lua reference:
       # vim.o behaves like :set
       # vim.go behaves like :setglobal
@@ -102,6 +103,11 @@
       # ================ Movement ========================
       backspace = "indent,eol,start"; # allow backspace in insert mode
     };
+    #
+    # =============== Auto Commands
+    #
+
+    autoCmd = import ./autocmd.nix;
 
     #
     # ========= UI Plugins =========
@@ -135,6 +141,9 @@
       enable = true;
     };
 
+    # autopairs
+    plugins.nvim-autopairs.enable = true;
+
     # ========= Undo history ========
     # TODO: nixvim: set up    alos, map to <leader>u
     # plugins.undotree = {};
@@ -147,6 +156,7 @@
       # https://github.com/nvim-telescope/telescope.nvim
       enable = true;
       extensions.fzy-native.enable = true;
+      extensions.file-browser.enable = true;
     };
 
     # ========= File Nav ===========
@@ -156,7 +166,7 @@
     #
     # ========== Dev Tools =========
     #
-    plugins.fugitive.enable = true; # vim-fugitive
+    # plugins.fugitive.enable = true; # vim-fugitive
     # plugins.surround.enable = true; # vim-surround
 
     # Load Plugins that aren't provided as modules by nixvim
@@ -166,8 +176,8 @@
         vim-numbertoggle# Use relative number on focused buffer only
         range-highlight-nvim# Highlight range as specified in commandline e.g. :10,15
         vimade# Dim unfocused buffers
-        vim-twiggy# Fugitive plugin to add branch control
-        vimwiki# Vim Wiki
+        # vim-twiggy# Fugitive plugin to add branch control
+        # vimwiki# Vim Wiki
         YouCompleteMe# Code completion engine
 
         # TODO: nixvim: make sure this is working and not conflicting with YCM
@@ -178,7 +188,8 @@
     };
 
     # ========= Mapleader =========
-    globals.mapleader = ";";
+    globals.mapleader = " ";
+    globals.maplocalleader = "\\";
 
     #
     # ========= Key binds =========
@@ -195,172 +206,100 @@
     #    "!" Insert and command-line mode
     #    "l" Insert, command-line and lang-arg mode
     #    "c" Command-line mode
-    plugins.which-key.enable = true;
+    plugins.which-key = {
+      enable = true;
+    };
 
-    keymaps = [
-      # TODO: nixvim: Test sudo save
-      # {
-      #   # sudo save
-      #   mode= ["c"];
-      #   key = "w!!";
-      #   action = "<cmd>w !sudo tee > /dev/null %<CR>";
-      # }
-      {
-        mode = [ "" "i" ];
-        key = "<c-s>";
-        action = "<cmd>w<CR>";
-        options = { noremap = true; };
+    keymaps =
+      # ========= Movement ==========
+      (import ./keymaps/movement.nix) ++
+      # ========= Plugins =========
+      (import ./keymaps/plugins.nix) ++
+      [
+        # TODO: nixvim: Test sudo save
+        # {
+        #   # sudo save
+        #   mode= ["c"];
+        #   key = "w!!";
+        #   action = "<cmd>w !sudo tee > /dev/null %<CR>";
+        # }
+        # save file
+        {
+          mode = [ "i" "x" "n" "s" ];
+          key = "<C-s>";
+          action = "<cmd>w<cr><esc>";
+          options = { desc = "Save File"; };
+        }
+        # File Explorer
+        {
+          mode = [ "" ];
+          key = "<Leader>e";
+          action = "<cmd>Neotree toggle<cr>";
+          options = { desc = "File Explorer"; };
+        }
 
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-q>";
-        action = "<cmd>q!<CR>";
-        options = { noremap = true; };
+        #keywordprg
+        {
+          mode = [ "n" ];
+          key = "<leader>K";
+          action = "<cmd>norm! K<cr>";
+          options = { desc = "Keywordprg"; };
+        }
 
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-/>";
-        action = "<cmd>Telescope live_grep<CR>";
-        options = { noremap = true; };
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-z>";
-        action = "<cmd>undo<CR>";
-        options = { noremap = true; };
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-u>";
-        action = "<cmd>undo<CR>";
-        options = { noremap = true; };
-      }
+        # better indenting
+        # TODO: is this even doing anything?
+        # { mode = [ "v" ]; key = "<"; action = "<gv"; }
+        # { mode = [ "v" ]; key = ">"; action = ">gv"; }
 
-      {
-        mode = [ "" "i" ];
-        key = "<c-s-z>";
-        action = "<cmd>redo<CR>";
-        options = { noremap = true; };
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-r>";
-        action = "<cmd>redo<CR>";
-        options = { noremap = true; };
-      }
-      {
-        mode = [ "" "i" ];
-        key = "<c-y>";
-        action = "<cmd>redo<CR>";
-        options = { noremap = true; };
-      }
-      # ======== Movement ========
-      {
-        # move down through wrapped lines
-        mode = [ "n" ];
-        key = "j";
-        action = "gj";
-        options = { noremap = true; };
-      }
-      {
-        # move up through wrapped lines
-        mode = [ "n" ];
-        key = "k";
-        action = "gk";
-        options = { noremap = true; };
-      }
-      {
-        # rebind 1/2 page down
-        mode = [ "n" ];
-        key = "<C-j>";
-        action = "<C-d>";
-        options = { noremap = true; };
-      }
-      {
-        # rebind 1/2 page up
-        mode = [ "n" ];
-        key = "<C-k>";
-        action = "<C-u>";
-        options = { noremap = true; };
-      }
-      {
-        # move to beginning/end of line
-        mode = [ "n" ];
-        key = "E";
-        action = "$";
-        options = { noremap = true; };
-      }
-      # {
-      #   # disable default move to beginning/end of line
-      #   mode = ["n"];
-      #   key = "$";
-      #   action = "<nop>";
-      # }
+        # new file
+        {
+          mode = [ "n" ];
+          key = "<leader>fn";
+          action = "<cmd>enew<cr>";
+          options = { desc = "New File"; };
+        }
 
-      # =========== Fugitive Plugin =========
-      {
-        # quick git status
-        mode = [ "n" ];
-        key = "<Leader>gs";
-        action = "<cmd>G<CR>";
-        options = { noremap = true; };
-      }
-      {
-        # quick merge command: take from right page (tab 3) upstream
-        mode = [ "n" ];
-        key = "<Leader>gj";
-        action = "<cmd>diffget //3<CR>";
-        options = { noremap = true; };
-      }
-      {
-        # quick merge command: take from left page (tab 2) head
-        mode = [ "n" ];
-        key = "<Leader>gf";
-        action = "<cmd>diffget //2<CR>";
-        options = { noremap = true; };
-      }
+        # quit
+        {
+          mode = [ "n" ];
+          key = "<leader>qq";
+          action = "<cmd>qa<CR>";
+          options = { noremap = true; };
 
-      # ========== Telescope Plugin =========
-      {
-        # find files
-        mode = [ "n" ];
-        key = "<Leader>ff";
-        action = "<cmd>Telescope find_files<CR>";
-        options = { noremap = true; };
-      }
-      {
-        # live grep
-        mode = [ "n" ];
-        key = "<Leader>fg";
-        action = "<cmd>Telescope live_grep<CR>";
-        options = { noremap = true; };
-      }
-      {
-        # buffers
-        mode = [ "n" ];
-        key = "<Leader>fb";
-        action = "<cmd>Telescope buffers<CR>";
-        options = { noremap = true; };
-      }
-      {
-        # help tags
-        mode = [ "n" ];
-        key = "<Leader>fh";
-        action = "<cmd>Telescope help_tags<CR>";
-        options = { noremap = true; };
-      }
+        }
 
-      # ========= Twiggy =============
-      {
-        # toggle display twiggy
-        mode = [ "n" ];
-        key = "<Leader>tw";
-        action = ":Twiggy<CR>";
-        options = { noremap = true; };
-      }
-    ];
+        # unmapping binds
+        #        {
+        #          mode = [ "" "i" ];
+        #          key = "<c-z>";
+        #          action = "";
+        #          options = { noremap = true; };
+        #        }
+        {
+          mode = [ "" "i" ];
+          key = "<c-u>";
+          action = "";
+          options = { noremap = true; };
+        }
+        {
+          mode = [ "" "i" ];
+          key = "<c-s-z>";
+          action = "";
+          options = { noremap = true; };
+        }
+        {
+          mode = [ "" "i" ];
+          key = "<c-r>";
+          action = "";
+          options = { noremap = true; };
+        }
+        {
+          mode = [ "" "i" ];
+          key = "<c-y>";
+          action = "";
+          options = { noremap = true; };
+        }
+      ];
     extraConfigVim = ''
       " ================ Persistent Undo ==================
       " Keep undo history across sessions, by storing in file.
@@ -369,39 +308,37 @@
           silent !mkdir ~/.vim/backups > /dev/null 2>&1
           set undodir=~/.vim/backups
           set undofile
-      endif
-
-      " ================ Vim Wiki config =================
-      " See :h vimwiki_list for info on registering wiki paths
-      let wiki_0 = {}
-      let wiki_0.path = '~/dotfiles.wiki/'
-      let wiki_0.index = 'home'
-      let wiki_0.syntax = 'markdown'
-      let wiki_0.ext = '.md'
-
-      " fill spaces in page names with _ in pathing
-      let wiki_0.links_space_char = '_'
-
-      " TODO: nixvim: CONFIRM THESE PATHS FOR NIXOS
-      let wiki_1 = {}
-      let wiki_1.path = '~/doc/foundry/thefoundry.wiki/'
-      let wiki_1.index = 'home'
-      let wiki_1.syntax = 'markdown'
-      let wiki_1.ext = '.md'
-      " fill spaces in page names with _ in pathing
-      let wiki_1.links_space_char = '_'
-
-      let g:vimwiki_list = [wiki_0, wiki_1]
-      " let g:vimwiki_list = [wiki_0, wiki_1, wiki_2]
+      endif  
     '';
 
-    # extraConfigLua = ''
-    # -- ========= Colorscheme Overrides ==========
-    # -- Override cursor color and blink for nav and visual mode
-    # vim.cmd("highlight Cursor guifg=black guibg=orange");
-    #
-    # -- Override cursor color for insert mode
-    # vim.cmd("highlight iCursor guifg=black guibg=orange");
-    # '';
+    extraConfigLua = ''
+      do
+          local which_key = require("which-key")
+          
+          which_key.register({
+            b = { 
+              name = "+buffer", },
+            c = { 
+              name = "+code", },
+            f = { 
+              name = "+file/find", },
+            g = { 
+              name = "+git",
+              h = { 
+                name = "+hunks", },
+              },
+            q = { 
+              name = "+quit", },
+            s = { 
+              name = "+search", },
+            u = { 
+              name = "+ui", },
+            w = { 
+              name = "+windows", },
+            x = { 
+              name = "+diagnostics/quickfix", },
+          }, { mode = "n", prefix = "<leader>", silent = true, noremap = true })
+      end
+    '';
   };
 }
