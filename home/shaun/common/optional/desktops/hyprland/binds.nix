@@ -68,15 +68,15 @@
       in
       [
         #################### Program Launch ####################
-        "SHIFTALT,Return,exec,kitty"
+        "SUPER,Return,exec,foot"
 
         #################### Basic Bindings ####################
-        "SHIFTALT,q,killactive"
+        "SUPER,q,killactive"
         "SUPERSHIFT,e,exit"
 
         "SUPER,s,togglesplit"
-        "SUPER,f,fullscreen,1"
-        "SUPERSHIFT,f,fullscreen,0"
+        "ALT,Return,fullscreen,1"
+        "SHIFTALT,Return,fullscreen,0"
         "SUPERSHIFT,space,togglefloating"
 
         "SUPER,minus,splitratio,-0.25"

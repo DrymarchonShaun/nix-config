@@ -8,15 +8,16 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    # systemd = {
-    #   enable = true;
-    #   # TODO: experiment with whether this is required.
-    #   # Same as default, but stop the graphical session too
-    #   extraCommands = lib.mkBefore [
-    #     "systemctl --user stop graphical-session.target"
-    #     "systemctl --user start hyprland-session.target"
-    #   ];
-    # };
+    systemd = {
+      enable = true;
+      # TODO: experiment with whether this is required.
+      # Same as default, but stop the graphical session too
+      variables = [ "--all" ];
+      extraCommands = lib.mkBefore [
+        "systemctl --user stop graphical-session.target"
+        "systemctl --user start hyprland-session.target"
+      ];
+    };
 
     # plugins = [];
 
