@@ -18,6 +18,7 @@
 
     #################### Host-specific Optional Configs ####################
     ../common/optional/services/openssh.nix
+    ../common/optional/unbound.nix
 
     # Desktop
     ../common/optional/hyprland.nix # window manager
