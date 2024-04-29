@@ -1,4 +1,4 @@
-{ dotfiles, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 {
   programs.nixvim.plugins = {
     nix.enable = true;
@@ -7,7 +7,7 @@
       servers = {
         nil_ls = {
           enable = true;
-          package = dotfiles.inputs.nil.packages.${pkgs.system}.default;
+          package = inputs.nil.packages.${pkgs.system}.default;
           extraOptions = {
             nix = {
               maxMemoryMB = 0;
@@ -21,15 +21,15 @@
         };
       };
     };
-      none-ls = {
-        enable = true;
-       enableLspFormat = true;
-       sources = {
-          code_actions.statix.enable = true;
-          diagnostics.statix.enable = true;
-          formatting.nixpkgs_fmt.enable = true;
-        };
+    none-ls = {
+      enable = true;
+      enableLspFormat = true;
+      sources = {
+        code_actions.statix.enable = true;
+        diagnostics.statix.enable = true;
+        formatting.nixpkgs_fmt.enable = true;
       };
+    };
     lsp-format.enable = true;
   };
 }
