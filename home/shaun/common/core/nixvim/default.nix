@@ -123,7 +123,7 @@
     # Greeter
     plugins.alpha = {
       enable = true;
-      theme = "dashboard";
+      #theme = "dashboard";
     };
 
     plugins.lightline = {
@@ -156,7 +156,7 @@
       # https://github.com/nvim-telescope/telescope.nvim
       enable = true;
       extensions.fzy-native.enable = true;
-      extensions.file-browser.enable = true;
+      # extensions.file-browser.enable = true;
     };
 
     # ========= File Nav ===========
