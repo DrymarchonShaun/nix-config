@@ -1,9 +1,23 @@
-{ lib, config, ... }: {
+{ lib, pkgs, config, ... }:
+{
   wayland.windowManager.hyprland.settings = {
     bindm = [
       "SUPER,mouse:272,movewindow"
       "SUPER,mouse:273,resizewindow"
     ];
+
+
+    binde =
+      let
+        pamixer = "${pkgs.pamixer}/bin/pamixer";
+        brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+      in
+      [
+        ",XF86AudioLowerVolume,exec,${pamixer} -d 5"
+        ",XF86AudioRaiseVolume,exec,${pamixer} -i 5"
+        ",XF86MonBrightnessDown,exec,${brightnessctl} -q set 5%-"
+        ",XF86MonBrightnessUp,exec,${brightnessctl} -q set +5%"
+      ];
 
     bind =
       let
@@ -43,6 +57,7 @@
           j = down;
         };
 
+
         #swaylock = "${config.programs.swaylock.package}/bin/swaylock";
         #playerctl = "${config.services.playerctld.package}/bin/playerctl";
         #playerctld = "${config.services.playerctld.package}/bin/playerctld";
@@ -53,23 +68,26 @@
         #}}/bin/pass-wofi";
 
         #grimblast = "${pkgs.inputs.hyprwm-contrib.grimblast}/bin/grimblast";
-        #pactl = "${pkgs.pulseaudio}/bin/pactl";
+        pactl = "${pkgs.pulseaudio}/bin/pactl";
         #tly = "${pkgs.tly}/bin/tly";
         #gtk-play = "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play";
         #notify-send = "${pkgs.libnotify}/bin/notify-send";
 
-        #gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
-        #xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
-        #defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
+        gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
+        xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
+        defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
 
-        #terminal = config.home.sessionVariables.TERM;
-        #browser = defaultApp "x-scheme-handler/https";
-        #editor = defaultApp "text/plain";
+        terminal = config.home.sessionVariables.TERM;
+        browser = defaultApp "x-scheme-handler/https";
+        editor = defaultApp "text/plain";
+        file-manager = defaultApp "inode/directory";
       in
       [
         #################### Program Launch ####################
-        "SUPER,Return,exec,foot"
-
+        "SUPER,Return,exec,${terminal}"
+        "SUPER,b,exec,${browser}"
+        "SUPER,e,exec,${editor}"
+        "SUPER,f,exec,${file-manager}"
         #################### Basic Bindings ####################
         "SUPER,q,killactive"
         "SUPERSHIFT,e,exit"
@@ -92,6 +110,9 @@
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
+        # Function Keys
+        ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
+
       ] ++
       # Change workspace
       (map
