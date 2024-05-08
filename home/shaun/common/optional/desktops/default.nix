@@ -7,6 +7,9 @@
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
     ./waybar.nix # infobar
+    ./swayidle.nix
+    ./swaylock.nix
+    ./rofi.nix
     #./rofi-wayland.nix #app launcher
     #./swww.nix #wallpaper daemon
 
