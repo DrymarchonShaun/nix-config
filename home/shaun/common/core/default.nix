@@ -31,8 +31,8 @@
     sessionVariables = {
       FLAKE = "$HOME/.src/nix-config";
       SHELL = "zsh";
-      TERM = "kitty";
-      TERMINAL = "kitty";
+      TERM = "foot";
+      TERMINAL = "foot";
       EDITOR = "nvim";
       MANPAGER = "batman"; # see ./cli/bat.nix
     };
