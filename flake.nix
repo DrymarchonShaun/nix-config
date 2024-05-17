@@ -168,6 +168,17 @@
       # Building configurations available through `just rebuild` or `nixos-rebuild --flake .#hostname`
 
       nixosConfigurations = {
+        # System76 Darter Pro
+        natrix = lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = specialArgs;
+            }
+            ./hosts/natrix
+          ];
+        };
         # Qemu VM dev lab
         grief = lib.nixosSystem {
           inherit specialArgs;
