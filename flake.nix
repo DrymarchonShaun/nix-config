@@ -34,6 +34,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
     # Nix Language Server
     nil = {
       url = "github:oxalica/nil";
