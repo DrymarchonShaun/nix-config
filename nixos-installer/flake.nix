@@ -53,21 +53,21 @@
       guppy = newConfig "guppy" "/dev/vda" false "0";
       gusto = newConfig "gusto" "/dev/sda" true "8";
 
-      # Custom ISO
-      #
-      # `just iso` - from nix-config directory to generate the iso standalone
-      # 'just iso-install <drive>` - from nix-config directory to generate and copy directly to USB drive
-      # `nix build ./nixos-installer#nixosConfigurations.iso.config.system.build.isoImage` - from nix-config directory to generate the iso manually
-      #
-      # Generated images will be output to the ~/nix-config/results directory unless drive is specified
-      iso = nixpkgs.lib.nixosSystem {
-        specialArgs = minimalSpecialArgs;
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-          ./iso
-        ];
+        # Custom ISO
+        #
+        # `just iso` - from nix-config directory to generate the iso standalone
+        # 'just iso-install <drive>` - from nix-config directory to generate and copy directly to USB drive
+        # `nix build ./nixos-installer#nixosConfigurations.iso.config.system.build.isoImage` - from nix-config directory to generate the iso manually
+        #
+        # Generated images will be output to the ~/nix-config/results directory unless drive is specified
+        iso = nixpkgs.lib.nixosSystem {
+          specialArgs = minimalSpecialArgs;
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+            ./iso
+          ];
+        };
       };
     };
-  };
 }
