@@ -1,10 +1,10 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, configVars, ... }:
 {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = "DrymarchonShaun";
-    userEmail = "";
+    userName = configVars.handle;
+    userEmail = configVars.userEmail;
     aliases = { };
     extraConfig = {
       init.defaultBranch = "main";
