@@ -6,7 +6,7 @@
   handle = "DrymarchonShaun";
   userEmail = inputs.nix-secrets.user-email;
   #gitEmail = "";
-  workEmail = inputs.nix-secrets.work-email;
+  schoolEmail = inputs.nix-secrets.school-email;
   networking = import ./networking.nix { inherit lib; };
   persistFolder = "/persist";
   isMinimal = false; # Used to indicate nixos-installer build
