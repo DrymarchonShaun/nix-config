@@ -261,6 +261,24 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1714363258,
+        "narHash": "sha256-cV2WzkwvtMvpGT9BzytqMGhTCkYDixinqRCkckXyaIQ=",
+        "ref": "main",
+        "rev": "0a4c83fe7116332c604b304af6033ad376f3a3e2",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -475,8 +493,8 @@
         "disko": "disko",
         "hardware": "hardware",
         "home-manager": "home-manager",
-        "mysecrets": "mysecrets",
         "nil": "nil",
+        "nix-secrets": "nix-secrets",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
