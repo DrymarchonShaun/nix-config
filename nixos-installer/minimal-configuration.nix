@@ -51,8 +51,8 @@
   };
 
   nix.settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      warn-dirty = false;
+    experimental-features = [ "nix-command" "flakes" ];
+    warn-dirty = false;
   };
   system.stateVersion = "23.11";
 }

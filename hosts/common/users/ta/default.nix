@@ -18,13 +18,13 @@ let
     };
 in
 {
-  config = lib.recursiveUpdate fullUserConfig 
+  config = lib.recursiveUpdate fullUserConfig
     #this is the second argument to recursiveUpdate
     {
-    users.mutableUsers = false; # Only allow declarative credentials; Required for sops
-    users.users.${configVars.username} = {
-      isNormalUser = true;
-      password = "nixos"; # Overridden if sops is working
+      users.mutableUsers = false; # Only allow declarative credentials; Required for sops
+      users.users.${configVars.username} = {
+        isNormalUser = true;
+        password = "nixos"; # Overridden if sops is working
 
         extraGroups = [
           "wheel"
