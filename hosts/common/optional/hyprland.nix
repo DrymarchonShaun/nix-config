@@ -6,7 +6,7 @@
     portalPackage = pkgs.xdg-desktop-portal-hyprland; # default
   };
 
-  logind = {
+  services.logind = {
     powerKey = "ignore";
     lidSwitchDocked = "suspend";
     extraConfig = ''

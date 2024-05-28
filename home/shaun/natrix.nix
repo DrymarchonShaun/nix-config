@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, config, outputs, ... }:
+{ lib, configVars, ... }:
 {
   imports = [
     #################### Required Configs ####################
@@ -23,4 +23,12 @@
     common/optional/desktops
 
   ];
+
+  home = {
+    username = configVars.username;
+    homeDirectory = "/home/${configVars.username}";
+  };
+  # Disable impermanence
+  #home.persistence = lib.mkForce { };
+
 }

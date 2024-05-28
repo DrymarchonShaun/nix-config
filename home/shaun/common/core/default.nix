@@ -9,7 +9,7 @@
     ./direnv.nix # shell environment manager. Hooks inot shell direnv to look for .envrc before prompts
     ./fonts.nix # core fonts
     ./git.nix # personal git config
-    ./kitty.nix # terminal
+    ./foot.nix # terminal
     ./nixvim # vim goodness
     ./screen.nix # hopefully rarely needed but good to have if so
     ./ssh.nix # personal ssh configs
