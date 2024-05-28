@@ -63,28 +63,28 @@
 
     # Private secrets repo.  See ./docs/secretsmgmt.md
     # Authenticate via ssh and use shallow clone
-    mysecrets = {
+    nix-secrets = {
       url = "git+ssh://git@github.com/DrymarchonShaun/nix-secrets?ref=main&shallow=1";
       flake = false;
     };
   };
 
   outputs = { self, disko, nixpkgs, home-manager, ... } @ inputs:
-  let
-    inherit (self) outputs;
-    forAllSystems = nixpkgs.lib.genAttrs [
-      "x86_64-linux"
-      #"aarch64-darwin"
-    ];
-    inherit (nixpkgs) lib;
-    configVars = import ./vars { inherit inputs lib; };
-    configLib = import ./lib { inherit lib; };
-    specialArgs = { inherit inputs outputs configVars configLib nixpkgs; };
-  in
-  {
-    # Custom modules to enable special functionality for nixos or home-manager oriented configs.
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
+    let
+      inherit (self) outputs;
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        #"aarch64-darwin"
+      ];
+      inherit (nixpkgs) lib;
+      configVars = import ./vars { inherit inputs lib; };
+      configLib = import ./lib { inherit lib; };
+      specialArgs = { inherit inputs outputs configVars configLib nixpkgs; };
+    in
+    {
+      # Custom modules to enable special functionality for nixos or home-manager oriented configs.
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
 
       # Custom modifications/overrides to upstream packages.
       overlays = import ./overlays { inherit inputs outputs; };
