@@ -20,20 +20,8 @@ in
     validateSopsFiles = false;
 
     secrets = {
-      "ssh_keys/maya" = {
-        path = "${homeDirectory}/.ssh/id_maya";
-      };
-      "ssh_keys/mara" = {
-        path = "${homeDirectory}/.ssh/id_mara";
-      };
-      "ssh_keys/manu" = {
-        path = "${homeDirectory}/.ssh/id_manu";
-      };
-      "ssh_keys/mila" = {
-        path = "${homeDirectory}/.ssh/id_mila";
-      };
-      "ssh_keys/meek" = {
-        path = "${homeDirectory}/.ssh/id_meek";
+      "ssh_keys/mimir" = {
+        path = "${homeDirectory}/.ssh/id_mimir";
       };
     };
   };
