@@ -35,4 +35,13 @@
       '';
     };
   };
+  home = {
+    pointerCursor = {
+      name = "Catppuccin-Macchiato-Blue-Cursors";
+      package = pkgs.catppuccin-cursors.macchiatoBlue;
+      size = 18;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+  };
 }

@@ -11,3 +11,11 @@
 #### Sway ?????
 
 nvim space/<leader>???
+
+
+- polkit
+- avahi
+- bluetooth
+- dconf
+- gvfs
+- gpg-agent?
