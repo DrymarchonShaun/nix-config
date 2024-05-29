@@ -12,6 +12,7 @@ rec {
   zsh-term-title = pkgs.callPackage ./zsh-term-title { };
   fae-linux = pkgs.callPackage ./fae-linux { };
   rofi-randr = pkgs.callPackage ./rofi-randr { };
+  swaync-catppuccin = pkgs.callPackage ./swaync-catppuccin { };
   syncthing-resolve-conflicts = pkgs.callPackage ./syncthing-resolve-conflicts { };
   wallpapers = pkgs.callPackage ./wallpapers { };
 }
