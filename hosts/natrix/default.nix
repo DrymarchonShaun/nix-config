@@ -19,6 +19,7 @@
     #################### Host-specific Optional Configs ####################
     ../common/optional/services/openssh.nix
     ../common/optional/services/geoclue.nix
+    ../common/optional/services/gvfs.nix
     ../common/optional/unbound.nix
 
     # Desktop
@@ -60,6 +61,20 @@
       timeout = 3;
     };
   };
+
+  fileSystems."/run/media/shaun/storage" = {
+    device = "/dev/mapper/luksmnt";
+    options = [ "nofail" "noatime" ];
+  };
+
+  environment.etc = {
+    crypttab = {
+      text = ''
+        luksmnt /dev/disk/by-partlabel/storage /etc/.cryptkey luks,nofail
+      '';
+    };
+  };
+
 
   # VirtualBox settings for Hyprland to display correctly
   # environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
