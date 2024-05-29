@@ -6,7 +6,9 @@
 
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
+    ./services/wl-paste.nix # Clipboard functionality
     ./waybar.nix # infobar
+    ./monitors.nix
     ./swayidle.nix
     ./swaylock.nix
     ./rofi.nix

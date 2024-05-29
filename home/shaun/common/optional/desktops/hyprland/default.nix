@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, config, lib, ... }: {
   imports = [
     # custom key binds
     ./binds.nix
@@ -18,10 +18,36 @@
         "systemctl --user start hyprland-session.target"
       ];
     };
-
+    extraConfig = ''
+        device:elan0412:00-04f3:3240-touchpad {
+        accel_profile=adaptive
+      }
+    '';
     # plugins = [];
 
     settings = {
+      # See https://wiki.hyprland.org/Configuring/Monitors/
+
+      monitor = map
+        (m:
+          let
+            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+            position = "${toString m.x}x${toString m.y}";
+          in
+          "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
+        )
+        config.monitors;
+
+      workspace = [
+        "1,monitor:eDP-1,default=true"
+        "2,monitor:eDP-1"
+        "3,monitor:eDP-1"
+        "4,monitor:eDP-1"
+        "5,monitor:HDMI-A-1,default=true"
+        "5,monitor:DP-1,default=true"
+      ];
+
+
       env = [
         "NIXOS_OZONE_WL, 1" # for ozone-based and electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND, 1" # for firefox to run on wayland
@@ -33,17 +59,20 @@
       ];
 
       general = {
-        gaps_in = 8;
-        gaps_out = 5;
-        border_size = 3;
-        cursor_inactive_timeout = 4;
+        gaps_in = 5;
+        gaps_out = 20;
+        border_size = 2;
+        # cursor_inactive_timeout = 4;
       };
 
       input = {
         kb_layout = "us";
-        mouse = {
-          acceleration = 1.0;
-          naturalScroll = true;
+        follow_mouse = true;
+        accel_profile = "flat";
+        sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+        touchpad = {
+          disable_while_typing = true;
+          natural_scroll = true;
         };
       };
 
@@ -51,7 +80,7 @@
         active_opacity = 0.94;
         inactive_opacity = 0.75;
         fullscreen_opacity = 1.0;
-        # rounding = 7;
+        rounding = 3;
         blur = {
           enabled = true;
           size = 5;
@@ -59,7 +88,7 @@
           new_optimizations = true;
           ignore_opacity = true;
         };
-        drop_shadow = false;
+        drop_shadow = true;
         shadow_range = 12;
         shadow_offset = "3 3";
         "col.shadow" = "0x44000000";
@@ -68,8 +97,6 @@
 
     };
 
-    # load at the end of the hyperland set
-    # extraConfig = ''    '';
   };
 
   # # TODO: move below into individual .nix files with their own configs
