@@ -6,10 +6,8 @@ let
 
   # these are values we don't want to set if the environment is minimal. E.g. ISO or nixos-installer
   # isMinimal is true in the nixos-installer/flake.nix
-  fullUserConfig = lib.optionalAttrs (!(lib.hasAttr "isMinimal" configVars))
+  fullUserConfig = lib.optionalAttrs (!configVars.isMinimal)
     {
-      users.mutableUsers = false; # Required for password to be set via sops during system activation!
-      #users.users.${configVars.username}.hashedPasswordFile = config.sops.secrets."${configVars.username}/password".path;
       users.users.${configVars.username} = {
         hashedPasswordFile = sopsHashedPasswordFile;
         packages = [ pkgs.home-manager ];
@@ -20,12 +18,10 @@ let
     };
 in
 {
-  # isMinimal is set /nixos-installer/flake.nix) and for
-  # iso where we want to limit the depth of user configuration
-  # FIXME  this should just pass an isIso style thing that we can check instead
   config = lib.recursiveUpdate fullUserConfig
     #this is the second argument to recursiveUpdate
     {
+      users.mutableUsers = false; # Only allow declarative credentials; Required for sops
       users.users.${configVars.username} = {
         isNormalUser = true;
         password = "nixos"; # Overridden if sops is working
