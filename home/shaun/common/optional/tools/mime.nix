@@ -7,7 +7,7 @@
       "application/mxf" = [ "vlc.desktop" ];
       "application/octet-stream" = [ "code.desktop" ];
       "application/ogg" = [ "vlc.desktop" ];
-      "application/pdf" = [ "firefox.desktop" ];
+      "application/pdf" = [ "brave-browser.desktop" ];
       "application/ram" = [ "vlc.desktop" ];
       "application/sdp" = [ "vlc.desktop" ];
       "application/vnd.adobe.flash.movie" = [ "vlc.desktop" ];
@@ -32,9 +32,9 @@
       "application/x-quicktime-media-link" = [ "vlc.desktop" ];
       "application/x-shorten" = [ "vlc.desktop" ];
       "application/x-sony-bbeb" = [ "calibre-gui.desktop" ];
-      "application/x-xpinstall" = [ "firefox.desktop" ];
+      "application/x-xpinstall" = [ "brave-browser.desktop" ];
       "application/x-zerosize" = [ "code.desktop" ];
-      "application/xhtml+xml" = [ "firefox.desktop" ];
+      "application/xhtml+xml" = [ "brave-browser.desktop" ];
       "application/xml" = [ "code.desktop" ];
       "application/xspf+xml" = [ "vlc.desktop" ];
       "application/zip" = [ "org.gnome.FileRoller.desktop" ];
@@ -79,7 +79,7 @@
       "image/wmf" = [ "org.inkscape.Inkscape.desktop" ];
       "image/x-eps" = [ "org.inkscape.Inkscape.desktop" ];
       "inode/directory" = [ "nemo.desktop" ];
-      "text/html" = [ "firefox.desktop" ];
+      "text/html" = [ "brave-browser.desktop" ];
       "text/plain" = [ "code.desktop" ];
       "text/x-google-video-pointer" = [ "vlc.desktop" ];
       "text/x-log" = [ "code.desktop" ];
@@ -109,8 +109,8 @@
       "x-content/video-svcd" = [ "vlc.desktop" ];
       "x-content/video-vcd" = [ "vlc.desktop" ];
       "x-scheme-handler/calibre" = [ "calibre-gui.desktop" ];
-      "x-scheme-handler/http" = [ "firefox.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "brave-browser.desktop" ];
+      "x-scheme-handler/https" = [ "brave-browser.desktop" ];
       "x-scheme-handler/icy" = [ "vlc.desktop" ];
       "x-scheme-handler/icyx" = [ "vlc.desktop" ];
       "x-scheme-handler/mms" = [ "vlc.desktop" ];

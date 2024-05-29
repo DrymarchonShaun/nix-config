@@ -12,6 +12,7 @@
     ./swayidle.nix
     ./swaylock.nix
     ./rofi.nix
+    ./tray.nix
     #./rofi-wayland.nix #app launcher
     #./swww.nix #wallpaper daemon
 
