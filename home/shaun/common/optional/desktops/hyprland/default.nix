@@ -95,8 +95,29 @@
         "col.shadow_inactive" = "0x66000000";
       };
 
-    };
+      animations = {
+        enabled = true;
+        bezier = [
+          "easein,0.11, 0, 0.5, 0"
+          "easeinback,0.36, 0, 0.66, -0.56"
+          "easeout,0.5, 1, 0.89, 1"
+          "easeoutback,0.34, 1.56, 0.64, 1"
+        ];
 
+        animation = [
+          "border,1,3,easeout"
+          "fadeDim,1,3,easeout"
+          "fadeIn,1,3,easeout"
+          "fadeOut,1,3,easein"
+          "fadeShadow,1,3,easeout"
+          "fadeSwitch,1,3,easeout"
+          "windowsIn,1,3,easeoutback,slide"
+          "windowsMove,1,3,easeoutback"
+          "windowsOut,1,3,easeinback,slide"
+          "workspaces,1,2,easeoutback,slide"
+        ];
+      };
+    };
   };
 
   # # TODO: move below into individual .nix files with their own configs

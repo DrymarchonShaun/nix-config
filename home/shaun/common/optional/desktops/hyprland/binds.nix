@@ -81,6 +81,7 @@
         browser = defaultApp "x-scheme-handler/https";
         editor = defaultApp "text/plain";
         file-manager = defaultApp "inode/directory";
+        launcher = "${config.programs.rofi.package}/bin/rofi";
       in
       [
         #################### Program Launch ####################
@@ -88,6 +89,9 @@
         "SUPER,b,exec,${browser}"
         "SUPER,e,exec,${editor}"
         "SUPER,f,exec,${file-manager}"
+        "SUPER,D,exec,${launcher} -modi \"run,drun\" -show drun"
+        "SUPER,P,exec,${launcher} -modi \"display:${pkgs.rofi-randr}/bin/rofi-randr\" -show display"
+
         #################### Basic Bindings ####################
         "SUPER,q,killactive"
         "SUPERSHIFT,e,exit"

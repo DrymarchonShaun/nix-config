@@ -11,7 +11,7 @@ buildNpmPackage {
     owner = "catppuccin";
     repo = "swaync";
     rev = "main";
-    hash = "sha256-kwK03esY/4L8DVkuFyw8vRjg2SsKCQ3xh7md+l0rPCc=";
+    hash = "sha256-+bw1n8O9YlXc4ulXk8lRvcZ/SLrBTwVPRwOsANlJWGE=";
   };
 
   npmDepsHash = "sha256-BWKyHf6ocZXMCUV15Au2In5ozsofIs3rrWhqWvJESKQ=";

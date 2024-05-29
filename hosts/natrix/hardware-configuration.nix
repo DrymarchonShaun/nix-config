@@ -9,6 +9,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelParams = [ "acpi_backlight=native" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

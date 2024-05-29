@@ -31,15 +31,21 @@ in
     # Fix LPE vulnerability with sudo use SSH_AUTH_SOCK: https://github.com/NixOS/nixpkgs/issues/31611
     authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
   };
+
+  programs.gnupg.agent = {
+    enable = lib.mkDefault true;
+    enableSSHSupport = lib.mkDefault true;
+  };
+
   # yubikey login / sudo
   # this potentially causes a security issue that we mitigated above
   security.pam = {
     enableSSHAgentAuth = true;
     #FIXME the above is deprecated in 24.05 but we will wait until release
     #sshAgentAuth.enable = true;
-    services = {
-      sudo.u2fAuth = true;
-    };
+    #services = {
+    #  sudo.u2fAuth = true;
+    #};
   };
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
