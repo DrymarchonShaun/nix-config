@@ -21,7 +21,7 @@
 
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
-  services.ssh-agent.enable = true;
+  # services.ssh-agent.enable = true;
 
   home = {
     username = lib.mkDefault "shaun";
