@@ -264,10 +264,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1714363258,
-        "narHash": "sha256-cV2WzkwvtMvpGT9BzytqMGhTCkYDixinqRCkckXyaIQ=",
+        "lastModified": 1716941580,
+        "narHash": "sha256-kNKi0St6+nrm9XFYZFiwKGmKMN0zXGuCJ1ebBuwE5vo=",
         "ref": "main",
-        "rev": "0a4c83fe7116332c604b304af6033ad376f3a3e2",
+        "rev": "289c21d8cfa102f4abe5249d1d64b015e09989d5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
@@ -397,11 +397,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1716292277,
-        "narHash": "sha256-248jDA6qGlyKvNWf8ar44xQRNxc/FmEibBTfoYeTH5Y=",
+        "lastModified": 1716925652,
+        "narHash": "sha256-Yr7h0CvhVjbaWXTGpxUqudarwmVXCuHXaSLekIwBeFU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8fcbc5106945623794244cae1b4add3e3469a0db",
+        "rev": "83f832443c258d751d22f16b0346e593fa1121d5",
         "type": "github"
       },
       "original": {

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   programs.rofi = {
     enable = true;
@@ -21,7 +21,7 @@
     };
     theme =
       let
-        inherit (lib.formats.rasi) mkLiteral;
+        inherit (config.lib.formats.rasi) mkLiteral;
       in
       {
         "*" = {

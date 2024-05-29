@@ -4,7 +4,6 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     userName = configVars.handle;
-    userEmail = configVars.userEmail;
     aliases = { };
     extraConfig = {
       init.defaultBranch = "main";
