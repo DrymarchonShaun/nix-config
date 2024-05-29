@@ -5,7 +5,7 @@
     ./hyprland
 
     ########## Utilities ##########
-    ./services/dunst.nix # Notification daemon
+    ./services/swaync.nix # Notification daemon
     ./services/wl-paste.nix # Clipboard functionality
     ./waybar.nix # infobar
     ./monitors.nix
