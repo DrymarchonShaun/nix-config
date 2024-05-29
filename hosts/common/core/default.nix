@@ -11,6 +11,8 @@
     ++ (builtins.attrValues outputs.nixosModules);
 
   services.yubikey-agent.enable = true;
+  security.pam.services.swaylock = { };
+
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=120 # only ask for password every 2h
