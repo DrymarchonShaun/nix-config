@@ -48,11 +48,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716983378,
-        "narHash": "sha256-nfbgkhyXdClO6/Cog7GK+r8kd4gmbg2vWA5gSkYnhG4=",
+        "lastModified": 1717032306,
+        "narHash": "sha256-s3Sis+M1qTSVIehHrEKBzHBpqprIFJli5V6WojkJnYE=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "5f7bdc72053380270f2a88690a14292c63cd5643",
+        "rev": "8ea5bcccc03111bdedaeaae9380dfab61e9deb33",
         "type": "github"
       },
       "original": {
@@ -223,24 +223,6 @@
         "type": "github"
       }
     },
-    "mysecrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1717032460,
-        "narHash": "sha256-t8Pwan0IBtHmwpJVghHdLlTd/blxwtQx0zW6/ansOHs=",
-        "ref": "main",
-        "rev": "121cab20cd81f9624b01317fc985d176f8308f7e",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
-      }
-    },
     "nil": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -264,10 +246,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1717030471,
-        "narHash": "sha256-6o713bvnzA+Mrw2ABy8ZPVNUhtL+D8A33aVuHA07LEk=",
+        "lastModified": 1717047941,
+        "narHash": "sha256-1pvp+cUh1m5quHVDihN8VfUA/bR8CZu+briMawTZ1Ng=",
         "ref": "main",
-        "rev": "6dbf7b6238da31dda17295f94cf6f621dafdabf2",
+        "rev": "f32f57d320d8a1c5e60e20a1a2ba9a099124eab3",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
@@ -286,11 +268,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1716946043,
-        "narHash": "sha256-JesSXNUtBPxH6SjJgPDkYHTLsV+/mezE05rPyplbiAI=",
+        "lastModified": 1717032429,
+        "narHash": "sha256-1+87CE8xOUsJChiq9aNQqWPKoWMuyurW+aXrGbMWH7I=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "35bae3cfd65aeb35b3866ecac6e70a60c8a9e8fd",
+        "rev": "0309d806a5431a46fb7fd81e20d7133ac8b1de55",
         "type": "github"
       },
       "original": {
