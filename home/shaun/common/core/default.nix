@@ -32,7 +32,7 @@
     ];
     sessionVariables = {
       FLAKE = "$HOME/.src/nix-config";
-      SHELL = "zsh";
+      SHELL = "${pkgs.zsh}/bin/zsh";
       TERM = "foot";
       TERMINAL = "foot";
       EDITOR = "nvim";
