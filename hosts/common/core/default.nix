@@ -3,7 +3,7 @@
     ++ [ inputs.home-manager.nixosModules.home-manager ]
     ++ (builtins.attrValues outputs.nixosModules);
 
-  # services.yubikey-agent.enable = true;
+  #services.yubikey-agent.enable = true;
   security.pam.services.swaylock = { };
 
 
