@@ -58,7 +58,7 @@
             setopt auto_list # automatically list choices on ambiguous completion
             setopt auto_menu # automatically use menu completion
             zstyle ':completion:*' menu select # select completions with arrow keys
-            zstyle ':completion:*' group-name "" # group results by category
+            #zstyle ':completion:*' group-name "" # group results by category
             zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 
       #      bindkey '^I' forward-word         # tab
@@ -75,10 +75,10 @@
         "git"
         "sudo" # press Esc twice to get the previous command prefixed with sudo https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
       ];
-      extraConfig = ''
-        # Display red dots whilst waiting for completion.
-        COMPLETION_WAITING_DOTS="true"
-      '';
+      # extraConfig = ''
+      #   # Display red dots whilst waiting for completion.
+      #   COMPLETION_WAITING_DOTS="true"
+      # '';
     };
 
     shellAliases = {
@@ -119,7 +119,7 @@
 
       #-----------Remotes----------------
       corais = "ssh -l shaun 10.0.0.2";
-      natrix = "ssh -l ta 10.0.0.4";
+      natrix = "ssh -l shaun 10.0.0.4";
 
       #-------------Git Goodness-------------
       # just reference `$ alias` and use the defautls, they're good.
