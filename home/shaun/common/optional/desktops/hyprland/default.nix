@@ -47,6 +47,10 @@
         "5,monitor:DP-1,default=true"
       ];
 
+      exec-once = [
+        "${pkgs.hyprpaper}/bin/hyprpaper"
+      ];
+
 
       env = [
         "NIXOS_OZONE_WL, 1" # for ozone-based and electron apps to run on wayland
