@@ -4,7 +4,7 @@
     enable = true;
     tray = {
       enable = true;
-      command = "syncthingtray --wait";
+      command = "${pkgs.syncthingtray}/bin/syncthingtray --wait";
       package = pkgs.syncthingtray;
     };
   };
