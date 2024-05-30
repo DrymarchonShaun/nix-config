@@ -1,5 +1,10 @@
 { outputs, lib, ... }:
 {
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+  };
+
   programs.ssh = {
     enable = true;
 
