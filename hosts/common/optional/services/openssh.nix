@@ -32,11 +32,6 @@ in
     authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
   };
 
-  programs.gnupg.agent = {
-    enable = lib.mkDefault true;
-    enableSSHSupport = lib.mkDefault true;
-  };
-
   # yubikey login / sudo
   # this potentially causes a security issue that we mitigated above
   # security.pam = {
