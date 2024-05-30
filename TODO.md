@@ -19,3 +19,5 @@ nvim space/<leader>???
 - dconf
 - gvfs
 - gpg-agent?
+- hyprlock?
+- waybar
