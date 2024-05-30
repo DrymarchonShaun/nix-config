@@ -3,6 +3,7 @@
     # Packages with custom configs go here
 
     ./hyprland
+    ./hyprpaper.nix
 
     ########## Utilities ##########
     ./services/swaync.nix # Notification daemon

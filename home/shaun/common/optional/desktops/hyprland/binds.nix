@@ -58,7 +58,7 @@
         };
 
 
-        #swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+        swaylock = "${config.programs.swaylock.package}/bin/swaylock";
         #playerctl = "${config.services.playerctld.package}/bin/playerctl";
         #playerctld = "${config.services.playerctld.package}/bin/playerctld";
         #makoctl = "${config.services.mako.package}/bin/makoctl";
@@ -114,6 +114,8 @@
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
+        "SUPER,l,exec,${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png"
+
         # Function Keys
         ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
 
