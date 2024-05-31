@@ -46,6 +46,8 @@
       url = "github:oxalica/nil";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     # vscode extensions/themes
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     catppuccin-vsc.url = "github:catppuccin/vscode";

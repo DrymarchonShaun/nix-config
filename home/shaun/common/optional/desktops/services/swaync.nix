@@ -104,9 +104,9 @@
       '';
       target = "/.config/swaync/config.json";
     };
-    "style" = {
-      source = "${pkgs.swaync-catppuccin}/macchiato.css";
-      target = "/.config/swaync/style.css";
-    };
+    #"style" = {
+    #  source = "${pkgs.swaync-catppuccin}/macchiato.css";
+    #  target = "/.config/swaync/style.css";
+    #};
   };
 }

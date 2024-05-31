@@ -2,6 +2,9 @@
 {
   imports = [
 
+    # Theme
+    inputs.catppuccin.homeManagerModules.catppuccin
+
     # Packages with custom configs go here
 
     ./bash.nix # backup shell
@@ -22,6 +25,12 @@
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   # services.ssh-agent.enable = true;
+
+  catppuccin = {
+    enable = true;
+    accent = "blue";
+    flavor = "macchiato";
+  };
 
   home = {
     username = lib.mkDefault "shaun";
