@@ -22,6 +22,7 @@
     ../common/optional/services/gvfs.nix
     ../common/optional/services/bluetooth.nix
     ../common/optional/unbound.nix
+    ../common/optional/openbooks.nix
 
     # Desktop
     ../common/optional/hyprland.nix # window manager
@@ -67,6 +68,9 @@
     device = "/dev/mapper/luksmnt";
     options = [ "nofail" "noatime" ];
   };
+
+
+  # environment.systemPackages = [ pkgs.libsForQt5.qtstyleplugin-kvantum pkgs.qt6Packages.qtstyleplugin-kvantum ];
 
   environment.etc = {
     crypttab = {
