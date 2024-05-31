@@ -123,31 +123,31 @@
       # Change workspace
       (map
         (n:
-          "ALT,${n},workspace,name:${n}"
+          "SUPER,${n},workspace,name:${n}"
         )
         workspaces) ++
       # Move window to workspace
       (map
         (n:
-          "SHIFTALT,${n},movetoworkspacesilent,name:${n}"
+          "SHIFTSUPER,${n},movetoworkspacesilent,name:${n}"
         )
         workspaces) ++
       # Move focus
       (lib.mapAttrsToList
         (key: direction:
-          "ALT,${key},movefocus,${direction}"
+          "SUPER,${key},movefocus,${direction}"
         )
         directions) ++
       # Swap windows
       (lib.mapAttrsToList
         (key: direction:
-          "SUPERSHIFT,${key},swapwindow,${direction}"
+          "ALTSHIFT,${key},swapwindow,${direction}"
         )
         directions) ++
       # Move windows
       (lib.mapAttrsToList
         (key: direction:
-          "SHIFTALT,${key},movewindoworgroup,${direction}"
+          "SHIFTSUPER,${key},movewindoworgroup,${direction}"
         )
         directions) ++
       # Move monitor focus
