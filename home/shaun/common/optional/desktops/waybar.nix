@@ -3,6 +3,7 @@
   # Let it try to start a few more times
   systemd.user.services.waybar = {
     Unit.StartLimitBurst = 30;
+    Service.RestartSec = 5;
   };
   programs.waybar = {
     enable = true;
@@ -11,13 +12,12 @@
     systemd.target = "graphical-session.target";
     settings = {
       mainBar = {
-        layer = "top";
+        layer = "bottom";
         margin = "20 20 0 20";
         modules-left = [
           "hyprland/workspaces"
         ];
         modules-center = [
-          "mpd"
           "clock"
           "custom/notification"
         ];
@@ -38,31 +38,6 @@
           persistent_workspaces = {
             "*" = 4;
           };
-        };
-        mpd = {
-          format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon} {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})";
-          format-disconnected = "Disconnected";
-          format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped";
-          interval = 10;
-          consume-icons = {
-            on = "󰆐 ";
-          };
-          random-icons = {
-            off = "  ";
-            on = "󰒟 ";
-          };
-          repeat-icons = {
-            on = "󰕇 ";
-          };
-          single-icons = {
-            on = "󰕇1 ";
-          };
-          state-icons = {
-            paused = "󰏤 ";
-            playing = "󰐊 ";
-          };
-          tooltip-format = "MPD (connected)";
-          tooltip-format-disconnected = "MPD (disconnected)";
         };
         "custom/notification" = {
           tooltip = false;
@@ -294,14 +269,6 @@
 
       #clock {
         padding-left: 5px;
-        padding-right: 4px;
-        transition: none;
-        color: @text;
-        background: @surface0;
-      }
-
-      #mpd {
-        padding-left: 6px;
         padding-right: 4px;
         border-radius: 10px 0px 0px 10px;
         transition: none;

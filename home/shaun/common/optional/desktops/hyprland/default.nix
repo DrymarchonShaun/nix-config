@@ -12,11 +12,11 @@
       enable = true;
       # TODO: experiment with whether this is required.
       # Same as default, but stop the graphical session too
-      variables = [ "--all" ];
       extraCommands = lib.mkBefore [
         "systemctl --user stop graphical-session.target"
         "systemctl --user start hyprland-session.target"
       ];
+      variables = [ "--all" ];
     };
     extraConfig = ''
         device:elan0412:00-04f3:3240-touchpad {
@@ -49,6 +49,8 @@
 
       exec-once = [
         "${pkgs.hyprpaper}/bin/hyprpaper"
+        #"${pkgs.waybar}/bin/waybar"
+        "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"
       ];
 
 
@@ -59,6 +61,7 @@
         "XDG_SESSION_TYPE,wayland"
         "WLR_NO_HARDWARE_CURSORS,1"
         "WLR_RENDERER_ALLOW_SOFTWARE,1"
+        "XCURSOR_SIZE,24"
         # "QT_QPA_PLATFORM,wayland"
       ];
 
@@ -67,6 +70,11 @@
         gaps_out = 20;
         border_size = 2;
         # cursor_inactive_timeout = 4;
+      };
+
+      misc = {
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = true;
       };
 
       input = {
@@ -80,9 +88,37 @@
         };
       };
 
+      windowrule = [
+        # Dialogs
+        "float, title:^(Open File)(.*)$"
+        "float, title:^(Select a File)(.*)$"
+        "float, title:^(Choose wallpaper)(.*)$"
+        "float, title:^(Open Folder)(.*)$"
+        "float, title:^(Save As)(.*)$"
+        "float, title:^(Library)(.*)$"
+        "float, title:^(Accounts)(.*)$"
+      ];
+
+      windowrulev2 = [
+        # Steam
+        "center, title:(Steam), class:(), floating:1"
+        "float, title:(Steam Settings), class:(steam)"
+        "float, title:(Friends List), class:(steam)"
+
+        # Polkit
+        #"dimaround, class:(polkit-gnome-authentication-agent-1)"
+        "center,    class:(polkit-gnome-authentication-agent-1)"
+        "float,     class:(polkit-gnome-authentication-agent-1)"
+        "pin,       class:(polkit-gnome-authentication-agent-1)"
+
+        # Disable borders on floating windows
+        "noborder, floating:1"
+
+        # Inhibit idle whenever an application is fullscreened
+        "idleinhibit always, fullscreen:1"
+      ];
+
       decoration = {
-        active_opacity = 0.94;
-        inactive_opacity = 0.75;
         fullscreen_opacity = 1.0;
         rounding = 3;
         blur = {
@@ -93,10 +129,7 @@
           ignore_opacity = true;
         };
         drop_shadow = true;
-        shadow_range = 12;
-        shadow_offset = "3 3";
-        "col.shadow" = "0x44000000";
-        "col.shadow_inactive" = "0x66000000";
+        shadow_range = 4;
       };
 
       animations = {
