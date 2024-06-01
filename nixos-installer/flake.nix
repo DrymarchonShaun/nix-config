@@ -50,6 +50,7 @@
         guppy = newConfig "guppy" "/dev/vda" false "0";
         gusto = newConfig "gusto" "/dev/sda" true "8";
         natrix = newConfig "natrix" "/dev/nvme0n1" false "0";
+        corais = newConfig "corais" "/dev/nvme0n1" false "0";
 
         # Custom ISO
         #
