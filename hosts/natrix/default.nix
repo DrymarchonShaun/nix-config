@@ -5,7 +5,7 @@
 #
 ###############################################################
 
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, configLib, ... }: {
   imports = [
     #################### Every Host Needs This ####################
     ./hardware-configuration.nix
@@ -15,16 +15,16 @@
     inputs.hardware.nixosModules.common-gpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
 
- #################### Disk Layout ####################
-  #  inputs.disko.nixosModules.disko
-  #  (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
-  #  {
-  #    _module.args = {
-  #      disk = "/dev/nvme0n1";
-  #      swapSize = "16";
-  #      withSwap = false;
-  #    };
-  #  }
+    #################### Disk Layout ####################
+    #  inputs.disko.nixosModules.disko
+    #  (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
+    #  {
+    #    _module.args = {
+    #      disk = "/dev/nvme0n1";
+    #      swapSize = "16";
+    #      withSwap = false;
+    #    };
+    #  }
   ]
   ++ (map configLib.relativeToRoot [
     #################### Required Configs ####################

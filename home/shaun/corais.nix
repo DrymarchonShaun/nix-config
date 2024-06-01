@@ -22,6 +22,7 @@
     common/optional/tools/nemo.nix
 
     common/optional/desktops
+    common/optional/desktops/hyprland
 
   ];
 
@@ -45,6 +46,19 @@
       workspace = "F1";
     }
   ];
+
+  wayland.windowManager.hyprland.settings.workspace = [
+    "name:1,monitor:DP-1,default=true"
+    "name:2,monitor:DP-1"
+    "name:3,monitor:DP-1"
+    "name:4,monitor:DP-1"
+    "name:F1,monitor:DP-2,default=true"
+    "name:F2,monitor:DP-2"
+    "name:F3,monitor:DP-2"
+    "name:F4,monitor:DP-2"
+  ];
+
+
 
   home = {
     username = configVars.username;

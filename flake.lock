@@ -279,10 +279,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1717047941,
-        "narHash": "sha256-1pvp+cUh1m5quHVDihN8VfUA/bR8CZu+briMawTZ1Ng=",
+        "lastModified": 1717212823,
+        "narHash": "sha256-tER/jwthNEZ6qt/i61+VBrLcFHEcMfY5lK6hNBOEiRY=",
         "ref": "main",
-        "rev": "f32f57d320d8a1c5e60e20a1a2ba9a099124eab3",
+        "rev": "b1c31fb0735429a8071ca1c496ae28cb0367f149",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
