@@ -44,9 +44,10 @@
         (m:
           let
             resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-            position = "${toString m.x}x${toString m.y}";
+            position = "${toString (m.x / m.scale)}x${toString (m.y / m.scale)}";
+            scale = "${toString m.scale}";
           in
-          "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
+          "${m.name},${if m.enabled then "${resolution},${position},${scale}" else "disable"}"
         )
         config.monitors;
 
@@ -80,9 +81,14 @@
         key_press_enables_dpms = true;
       };
 
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
       input = {
         kb_layout = "us";
         follow_mouse = true;
+        mouse_refocus = false;
         accel_profile = "flat";
         sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
         touchpad = {

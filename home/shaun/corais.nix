@@ -33,6 +33,7 @@
       height = 1440;
       refreshRate = 165;
       noBar = false;
+      scale = 1.15;
       x = 0;
       workspace = "1";
       primary = true;
@@ -42,21 +43,28 @@
       width = 2560;
       height = 1440;
       refreshRate = 165;
+      scale = 1.15;
       x = 2560;
       workspace = "F1";
     }
   ];
 
-  wayland.windowManager.hyprland.settings.workspace = [
-    "name:1,monitor:DP-1,default=true"
-    "name:2,monitor:DP-1"
-    "name:3,monitor:DP-1"
-    "name:4,monitor:DP-1"
-    "name:F1,monitor:DP-2,default=true"
-    "name:F2,monitor:DP-2"
-    "name:F3,monitor:DP-2"
-    "name:F4,monitor:DP-2"
-  ];
+  wayland.windowManager.hyprland.config = {
+    extraSessionCommands = ''
+      "export GDK_DPI_SCALE=1.15"
+    '';
+
+    workspaceOutputAssign = [
+      { output = "DP-1"; workspace = "1"; }
+      { output = "DP-1"; workspace = "2"; }
+      { output = "DP-1"; workspace = "3"; }
+      { output = "DP-1"; workspace = "4"; }
+      { output = "DP-2"; workspace = "F1"; }
+      { output = "DP-2"; workspace = "F2"; }
+      { output = "DP-2"; workspace = "F3"; }
+      { output = "DP-2"; workspace = "F4"; }
+    ];
+  };
 
 
 
