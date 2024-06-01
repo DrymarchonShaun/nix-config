@@ -5,9 +5,9 @@
 #
 ###############################################################
 
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, configLib, ... }: {
   imports = [
-        #################### Every Host Needs This ####################
+    #################### Every Host Needs This ####################
     ./hardware-configuration.nix
 
     #################### Hardware Modules ####################
@@ -15,7 +15,7 @@
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
 
-        #################### Disk Layout ####################
+    #################### Disk Layout ####################
     inputs.disko.nixosModules.disko
     (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
     {
@@ -33,12 +33,13 @@
     "hosts/common/optional/services/openssh.nix"
     "hosts/common/optional/services/geoclue.nix"
     "hosts/common/optional/services/gvfs.nix"
-    "hosts/common/optional/services/bluetooth.nix"
+    #"hosts/common/optional/services/bluetooth.nix"
     "hosts/common/optional/unbound.nix"
     "hosts/common/optional/openbooks.nix"
 
     # Desktop
     "hosts/common/optional/hyprland.nix" # window manager
+    # "hosts/common/optional/plasma.nix" # desktop environment
     "hosts/common/optional/pipewire.nix" # audio
 
     #################### Users to Create ####################

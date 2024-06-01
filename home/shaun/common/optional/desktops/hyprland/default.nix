@@ -2,6 +2,18 @@
   imports = [
     # custom key binds
     ./binds.nix
+    ../hyprpaper.nix
+
+    ########## Utilities ##########
+    ../services/swaync.nix # Notification daemon
+    ../services/wl-paste.nix # Clipboard functionality
+    ../waybar.nix # infobar
+    ../monitors.nix
+    ../swayidle.nix
+    ../swaylock.nix
+    ../rofi.nix
+    ../tray.nix
+
   ];
 
   # NOTE: xdg portal package is currently set in /hosts/common/optional/hyprland.nix
@@ -37,15 +49,6 @@
           "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
         )
         config.monitors;
-
-      workspace = [
-        "1,monitor:eDP-1,default=true"
-        "2,monitor:eDP-1"
-        "3,monitor:eDP-1"
-        "4,monitor:eDP-1"
-        "5,monitor:HDMI-A-1,default=true"
-        "5,monitor:DP-1,default=true"
-      ];
 
       exec-once = [
         "${pkgs.hyprpaper}/bin/hyprpaper"
