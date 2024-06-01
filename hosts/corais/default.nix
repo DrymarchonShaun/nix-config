@@ -52,7 +52,7 @@
   # services.pam.services.greetd.enableGnomeKeyring = true;
 
   networking = {
-    hostName = "natrix";
+    hostName = "corais";
     networkmanager.enable = true;
     enableIPv6 = false;
   };
@@ -62,14 +62,6 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       timeout = 3;
-    };
-  };
-
-  environment.etc = {
-    crypttab = {
-      text = ''
-        luksmnt /dev/disk/by-partlabel/storage /etc/.cryptkey luks,nofail
-      '';
     };
   };
 
