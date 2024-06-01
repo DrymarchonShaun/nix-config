@@ -31,6 +31,7 @@
       width = 1920;
       height = 1080;
       noBar = false;
+      scale = 1;
       x = 0;
       workspace = "1";
       primary = true;
@@ -40,18 +41,19 @@
       width = 1920;
       height = 1080;
       refreshRate = 60;
+      scale = 1;
       x = 1920;
       workspace = "5";
     }
   ];
 
   wayland.windowManager.hyprland.settings.workspace = [
-    "1,monitor:eDP-1,default=true"
-    "2,monitor:eDP-1"
-    "3,monitor:eDP-1"
-    "4,monitor:eDP-1"
-    "5,monitor:HDMI-A-1,default=true"
-    "5,monitor:DP-1,default=true"
+    "name:1,monitor:eDP-1,default=true"
+    "name:2,monitor:eDP-1"
+    "name:3,monitor:eDP-1"
+    "name:4,monitor:eDP-1"
+    "name:5,monitor:HDMI-A-1,default=true"
+    "name:5,monitor:DP-1,default=true"
   ];
 
   home = {
