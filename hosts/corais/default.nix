@@ -7,24 +7,23 @@
 
 { inputs, pkgs, ... }: {
   imports = [
-    #################### Every Host Needs This ####################
+        #################### Every Host Needs This ####################
     ./hardware-configuration.nix
 
     #################### Hardware Modules ####################
-    inputs.hardware.nixosModules.common-cpu-intel
-    inputs.hardware.nixosModules.common-gpu-intel
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
 
- #################### Disk Layout ####################
-  #  inputs.disko.nixosModules.disko
-  #  (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
-  #  {
-  #    _module.args = {
-  #      disk = "/dev/nvme0n1";
-  #      swapSize = "16";
-  #      withSwap = false;
-  #    };
-  #  }
+        #################### Disk Layout ####################
+    inputs.disko.nixosModules.disko
+    (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
+    {
+      _module.args = {
+        disk = "/dev/nvme0n1";
+        withSwap = false;
+      };
+    }
   ]
   ++ (map configLib.relativeToRoot [
     #################### Required Configs ####################
@@ -47,18 +46,6 @@
 
   ]);
 
-  hardware = {
-    system76.enableAll = true;
-    # system76.power-daemon.enable = lib.mkForce false;
-  };
-
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="leds", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="leds", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
-  '';
-
 
   services.gnome.gnome-keyring.enable = true;
   # TODO enable and move to greetd area? may need authentication dir or something?
@@ -77,14 +64,6 @@
       timeout = 3;
     };
   };
-
-  fileSystems."/run/media/shaun/storage" = {
-    device = "/dev/mapper/luksmnt";
-    options = [ "nofail" "noatime" ];
-  };
-
-
-  # environment.systemPackages = [ pkgs.libsForQt5.qtstyleplugin-kvantum pkgs.qt6Packages.qtstyleplugin-kvantum ];
 
   environment.etc = {
     crypttab = {
