@@ -12,7 +12,7 @@
       font = "Roboto";
       font-size = 45;
       ignore-empty-password = true;
-      image = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png";
+      image = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png";
       indicator = true;
       indicator-caps-lock = true;
       indicator-radius = 170;
