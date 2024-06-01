@@ -114,7 +114,7 @@
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
-        "SUPER,l,exec,${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png"
+        "SUPER,l,exec,${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png"
 
         # Function Keys
         ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
