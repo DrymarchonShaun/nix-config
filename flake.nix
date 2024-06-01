@@ -181,6 +181,17 @@
             ./hosts/natrix
           ];
         };
+        # Desktop
+        corais = lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = specialArgs;
+            }
+            ./hosts/corais
+          ];
+        };
         # Qemu VM dev lab
         grief = lib.nixosSystem {
           inherit specialArgs;
