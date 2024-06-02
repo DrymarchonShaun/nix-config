@@ -22,7 +22,7 @@
     common/optional/tools/nemo.nix
 
     common/optional/desktops
-    common/optional/desktops/hyprland
+    common/optional/desktops/sway
 
   ];
 
@@ -49,7 +49,7 @@
     }
   ];
 
-  wayland.windowManager.hyprland.config = {
+  wayland.windowManager.sway.config = {
     extraSessionCommands = ''
       "export GDK_DPI_SCALE=1.15"
     '';

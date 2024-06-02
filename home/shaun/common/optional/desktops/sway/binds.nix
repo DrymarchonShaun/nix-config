@@ -1,6 +1,46 @@
 { lib, pkgs, config, ... }:
 let
+  workspaces = [
+    "0"
+    "1"
+    "2"
+    "3"
+    "4"
+    "5"
+    "6"
+    "7"
+    "8"
+    "9"
+    "F1"
+    "F2"
+    "F3"
+    "F4"
+    "F5"
+    "F6"
+    "F7"
+    "F8"
+    "F9"
+    "F10"
+    "F11"
+    "F12"
+  ];
+  # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
+  directions = rec {
+    left = "left";
+    right = "right";
+    up = "up";
+    down = "down";
+    h = left;
+    l = right;
+    k = up;
+    j = down;
+  };
+
+
+
   modifier = config.wayland.windowManager.sway.config.modifier;
+
+
   pamixer = "${pkgs.pamixer}/bin/pamixer";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
@@ -51,6 +91,48 @@ in
       "Alt+Print" = "exec ${grimshot} --notify  copy output";
       "Ctrl+Print" = "exec ${grimshot} --notify  copy area";
 
-    };
+    }
+    # Change workspace 
+    // builtins.listToAttrs (builtins.map
+      (n: {
+        name = "${modifier}+${n}";
+        value = "workspace ${n}";
+      })
+      workspaces)
+    # Move window to workspace
+    // builtins.listToAttrs (builtins.map
+      (n: {
+        name = "${modifier}+shift+${n}";
+        value = " move container to workspace ${n}";
+      })
+      workspaces)
+    # Move focus
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (key: direction: {
+        name = "${modifier}+${key}";
+        value = "focus ${direction}";
+      })
+      directions)
+    # move window / group
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (key: direction: {
+        name = "alt+shift+${key}";
+        value = "move ${direction}";
+      })
+      directions)
+    # Move monitor focus 
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (key: direction: {
+        name = "${modifier}+alt+${key}";
+        value = "focus output ${direction}";
+      })
+      directions)
+    # Move workspace to other monitor 
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (key: direction: {
+        name = "${modifier}+alt+shift+${key}";
+        value = "move workspace output ${direction}";
+      })
+      directions);
   };
 }
