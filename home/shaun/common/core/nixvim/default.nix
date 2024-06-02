@@ -123,7 +123,7 @@
     # Greeter
     plugins.alpha = {
       enable = true;
-      #theme = "dashboard";
+      theme = "dashboard";
     };
 
     plugins.lightline = {
