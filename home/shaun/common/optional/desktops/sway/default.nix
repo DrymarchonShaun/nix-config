@@ -40,11 +40,11 @@
       enable = true;
       # TODO: experiment with whether this is required.
       # Same as default, but stop the graphical session too
-      #extraCommands = lib.mkBefore [
-      #  "systemctl --user stop graphical-session.target"
-      #  "systemctl --user start sway-session.target"
-      #];
-      #variables = [ "--all" ];
+      extraCommands = lib.mkBefore [
+        "systemctl --user stop graphical-session.target"
+        "systemctl --user start sway-session.target"
+      ];
+      variables = [ "--all" ];
     };
 
     extraSessionCommands = [
