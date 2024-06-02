@@ -30,6 +30,7 @@ in
           "wheel"
         ] ++ ifTheyExist [
           "audio"
+          "disk"
           "input"
           "video"
           "docker"
