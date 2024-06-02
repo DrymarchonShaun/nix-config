@@ -50,9 +50,9 @@
   ];
 
   wayland.windowManager.sway = {
-    # extraSessionCommands = config.wayland.windowManager.sway.extraSessionCommands ++ ''
-    #   "export GDK_DPI_SCALE=1.15"
-    # '';
+    extraSessionCommands = [
+      "export GDK_DPI_SCALE=1.15"
+    ];
     config = {
       workspaceOutputAssign = [
         { output = "DP-1"; workspace = "1"; }
@@ -66,8 +66,16 @@
       ];
     };
   };
-
-
+  programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
+    "1" = [ "DP-1" ];
+    "2" = [ "DP-1" ];
+    "3" = [ "DP-1" ];
+    "4" = [ "DP-1" ];
+    "F1" = [ "DP-2" ];
+    "F2" = [ "DP-2" ];
+    "F3" = [ "DP-2" ];
+    "F4" = [ "DP-2" ];
+  };
 
   home = {
     username = configVars.username;
