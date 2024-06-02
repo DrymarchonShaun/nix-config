@@ -15,4 +15,5 @@ rec {
   swaync-catppuccin = pkgs.callPackage ./swaync-catppuccin { };
   syncthing-resolve-conflicts = pkgs.callPackage ./syncthing-resolve-conflicts { };
   wallpapers = pkgs.callPackage ./wallpapers { };
+  import-gsettings = pkgs.callPackage ./import-gsettings.nix { };
 }
