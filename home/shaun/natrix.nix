@@ -22,6 +22,7 @@
     common/optional/tools/nemo.nix
 
     common/optional/desktops
+    common/optional/desktops/sway
 
   ];
 
@@ -47,14 +48,28 @@
     }
   ];
 
-  wayland.windowManager.hyprland.settings.workspace = [
-    "name:1,monitor:eDP-1,default=true"
-    "name:2,monitor:eDP-1"
-    "name:3,monitor:eDP-1"
-    "name:4,monitor:eDP-1"
-    "name:5,monitor:HDMI-A-1,default=true"
-    "name:5,monitor:DP-1,default=true"
-  ];
+  wayland.windowManager.sway = {
+    # extraSessionCommands = [
+    #   "export GDK_DPI_SCALE=1.15"
+    # ];
+    config = {
+      workspaceOutputAssign = [
+        { output = "eDP-1"; workspace = "1"; }
+        { output = "eDP-1"; workspace = "2"; }
+        { output = "eDP-1"; workspace = "3"; }
+        { output = "HMDI-A-1"; workspace = "5"; }
+        { output = "DP-1"; workspace = "5"; }
+      ];
+    };
+  };
+  programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
+    "1" = [ "eDP-1" ];
+    "2" = [ "eDP-1" ];
+    "3" = [ "eDP-1" ];
+    "4" = [ "eDP-1" ];
+    "5" = [ "DP-1" "HDMI-A-1" ];
+
+  };
 
   home = {
     username = configVars.username;
