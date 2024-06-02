@@ -33,7 +33,7 @@
       height = 1440;
       refreshRate = 165;
       noBar = false;
-      scale = 1.15;
+      scale = 1.2;
       x = 0;
       workspace = "1";
       primary = true;
@@ -43,7 +43,7 @@
       width = 2560;
       height = 1440;
       refreshRate = 165;
-      scale = 1.15;
+      scale = 1.2;
       x = 2560;
       workspace = "F1";
     }
