@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  home.packages = [ pkgs.steam ];
+  # home.packages = [ pkgs.steam ];
 }
