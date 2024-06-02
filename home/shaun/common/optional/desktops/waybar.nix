@@ -35,7 +35,6 @@
         ];
         "sway/workspaces" = {
           format = "{name}";
-          sort = "name";
         };
         "custom/notification" = {
           tooltip = false;
