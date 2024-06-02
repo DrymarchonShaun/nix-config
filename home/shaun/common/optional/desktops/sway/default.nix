@@ -31,9 +31,16 @@
     };
 
     config = {
+      # Modifier (super key)
       modifier = "Mod4";
-      terminal = "foot";
+      # Default movement keys (arrow keys, TKL keyboard)
+      left = "Left";
+      down = "Down";
+      up = "Up";
+      right = "Right";
 
+      # No sway bar
+      bars = [ ];
 
       output = import ./monitors.nix
         {
@@ -45,12 +52,9 @@
         };
       };
 
-
-
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
       ];
-
 
       extraSessionCommands = [
         "export NIXOS_OZONE_W=1" # for ozone-based and electron apps to run on wayland

@@ -38,7 +38,8 @@
     "hosts/common/optional/openbooks.nix"
 
     # Desktop
-    "hosts/common/optional/hyprland.nix" # window manager
+    # "hosts/common/optional/hyprland.nix" # window manager
+    "hosts/common/optional/sway.nix" # window manager
     # "hosts/common/optional/plasma.nix" # desktop environment
     "hosts/common/optional/pipewire.nix" # audio
 
