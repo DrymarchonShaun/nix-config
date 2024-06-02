@@ -1,4 +1,4 @@
-{ lib, configVars, ... }:
+{ lib, configVars, config, ... }:
 {
   imports = [
     #################### Required Configs ####################
@@ -49,21 +49,22 @@
     }
   ];
 
-  wayland.windowManager.sway.config = {
-    extraSessionCommands = ''
-      "export GDK_DPI_SCALE=1.15"
-    '';
-
-    workspaceOutputAssign = [
-      { output = "DP-1"; workspace = "1"; }
-      { output = "DP-1"; workspace = "2"; }
-      { output = "DP-1"; workspace = "3"; }
-      { output = "DP-1"; workspace = "4"; }
-      { output = "DP-2"; workspace = "F1"; }
-      { output = "DP-2"; workspace = "F2"; }
-      { output = "DP-2"; workspace = "F3"; }
-      { output = "DP-2"; workspace = "F4"; }
-    ];
+  wayland.windowManager.sway = {
+    # extraSessionCommands = config.wayland.windowManager.sway.extraSessionCommands ++ ''
+    #   "export GDK_DPI_SCALE=1.15"
+    # '';
+    config = {
+      workspaceOutputAssign = [
+        { output = "DP-1"; workspace = "1"; }
+        { output = "DP-1"; workspace = "2"; }
+        { output = "DP-1"; workspace = "3"; }
+        { output = "DP-1"; workspace = "4"; }
+        { output = "DP-2"; workspace = "F1"; }
+        { output = "DP-2"; workspace = "F2"; }
+        { output = "DP-2"; workspace = "F3"; }
+        { output = "DP-2"; workspace = "F4"; }
+      ];
+    };
   };
 
 
