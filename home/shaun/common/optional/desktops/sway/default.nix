@@ -30,14 +30,20 @@
       variables = [ "--all" ];
     };
 
+    extraSessionCommands = ''
+      export NIXOS_OZONE_WL=1 # for ozone-based and electron apps to run on wayland
+      export MOZ_ENABLE_WAYLAND=1 # for firefox to run on wayland
+      export MOZ_WEBRENDER=1 # for firefox to run on wayland
+      export XDG_SESSION_TYPE=wayland
+      export WLR_NO_HARDWARE_CURSORS=1
+      export WLR_RENDERER_ALLOW_SOFTWARE=1
+      export XCURSOR_SIZE=24
+      # QT_QPA_PLATFORM,wayland
+    '';
+
     config = {
       # Modifier (super key)
       modifier = "Mod4";
-      # Default movement keys (arrow keys, TKL keyboard)
-      left = "Left";
-      down = "Down";
-      up = "Up";
-      right = "Right";
 
       # No sway bar
       bars = [ ];
@@ -54,17 +60,6 @@
 
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
-      ];
-
-      extraSessionCommands = [
-        "export NIXOS_OZONE_W=1" # for ozone-based and electron apps to run on wayland
-        "export MOZ_ENABLE_WAYLAND=1" # for firefox to run on wayland
-        "export MOZ_WEBRENDER=1" # for firefox to run on wayland
-        "export XDG_SESSION_TYPE=wayland"
-        "export WLR_NO_HARDWARE_CURSORS=1"
-        "export WLR_RENDERER_ALLOW_SOFTWARE=1"
-        "export XCURSOR_SIZE=24"
-        # "QT_QPA_PLATFORM,wayland"
       ];
 
       gaps.inner = 5;
@@ -93,7 +88,7 @@
 
       window = {
         commands = [
-          { command = "inhibit_idle fullscreen"; }
+          { command = "inhibit_idle fullscreen"; criteria = { class = "^.*"; }; }
         ];
       };
 
