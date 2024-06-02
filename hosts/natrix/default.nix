@@ -12,7 +12,7 @@
 
     #################### Hardware Modules ####################
     inputs.hardware.nixosModules.common-cpu-intel
-    inputs.hardware.nixosModules.common-gpu-intel
+    #inputs.hardware.nixosModules.common-gpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
 
     #################### Disk Layout ####################
@@ -39,9 +39,10 @@
     "hosts/common/optional/openbooks.nix"
 
     # Desktop
-    "hosts/common/optional/hyprland.nix" # window manager
+    # "hosts/common/optional/hyprland.nix" # window manager
+    "hosts/common/optional/sway.nix" # window manager
     "hosts/common/optional/pipewire.nix" # audio
-
+    "hosts/common/optional/steam.nix"
     #################### Users to Create ####################
     "hosts/common/users/shaun"
 
