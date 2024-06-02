@@ -19,27 +19,28 @@
 
   wayland.windowManager.sway = {
     enable = true;
+    package = pkgs.swayfx;
     systemd = {
       enable = true;
       # TODO: experiment with whether this is required.
       # Same as default, but stop the graphical session too
-      extraCommands = lib.mkBefore [
-        "systemctl --user stop graphical-session.target"
-        "systemctl --user start sway-session.target"
-      ];
-      variables = [ "--all" ];
+      #extraCommands = lib.mkBefore [
+      #  "systemctl --user stop graphical-session.target"
+      #  "systemctl --user start sway-session.target"
+      #];
+      #variables = [ "--all" ];
     };
 
-    extraSessionCommands = ''
-      export NIXOS_OZONE_WL=1 # for ozone-based and electron apps to run on wayland
-      export MOZ_ENABLE_WAYLAND=1 # for firefox to run on wayland
-      export MOZ_WEBRENDER=1 # for firefox to run on wayland
-      export XDG_SESSION_TYPE=wayland
-      export WLR_NO_HARDWARE_CURSORS=1
-      export WLR_RENDERER_ALLOW_SOFTWARE=1
-      export XCURSOR_SIZE=24
+    extraSessionCommands = [
+      "export NIXOS_OZONE_WL=1" # for ozone-based and electron apps to run on wayland
+      "export MOZ_ENABLE_WAYLAND=1" # for firefox to run on wayland
+      "export MOZ_WEBRENDER=1" # for firefox to run on wayland
+      "export XDG_SESSION_TYPE=wayland"
+      "export WLR_NO_HARDWARE_CURSORS=1"
+      "export WLR_RENDERER_ALLOW_SOFTWARE=1"
+      "export XCURSOR_SIZE=24"
       # QT_QPA_PLATFORM,wayland
-    '';
+    ];
 
     config = {
       # Modifier (super key)
@@ -60,6 +61,8 @@
 
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
+        { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
+        { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
       ];
 
       gaps.inner = 5;
@@ -87,6 +90,7 @@
       };
 
       window = {
+        titlebar = false;
         commands = [
           { command = "inhibit_idle fullscreen"; criteria = { class = "^.*"; }; }
         ];
@@ -121,11 +125,49 @@
       # Inhibit idle whenever an application is fullscreened
       #  "idleinhibit always, fullscreen:1"
       #];
+
+      colors = {
+        focused = {
+          background = "$base";
+          text = "$text";
+          border = "$blue";
+          indicator = "$sapphire";
+          childBorder = "$blue";
+        };
+        focusedInactive = {
+          background = "$base";
+          text = "$text";
+          border = "$surface2";
+          indicator = "$overlay1";
+          childBorder = "$surface2";
+        };
+        unfocused = {
+          background = "$base";
+          text = "$text";
+          border = "$surface1";
+          indicator = "$overlay0";
+          childBorder = "$surface1";
+
+        };
+        urgent = {
+          background = "$base";
+          text = "$red";
+          border = "$red";
+          indicator = "$red";
+          childBorder = "$red";
+
+        };
+      };
+
       fonts = {
         names = [ "Roboto" ];
         style = "Regular";
       };
     };
+    extraConfig = ''
+      blur enable
+      corner_radius 7
+    '';
   };
 
   # # TODO: move below into individual .nix files with their own configs

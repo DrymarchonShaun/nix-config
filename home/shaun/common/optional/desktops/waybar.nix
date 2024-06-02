@@ -10,12 +10,13 @@
     package = pkgs.waybar;
     systemd.enable = true;
     systemd.target = "graphical-session.target";
+    catppuccin.enable = true;
     settings = {
       mainBar = {
         layer = "bottom";
         margin = "20 20 0 20";
         modules-left = [
-          "hyprland/workspaces"
+          "sway/workspaces"
         ];
         modules-center = [
           "clock"
@@ -32,12 +33,9 @@
           "battery"
           "tray"
         ];
-        "hyprland/workspaces" = {
+        "sway/workspaces" = {
           format = "{name}";
-          sort = "number";
-          persistent_workspaces = {
-            "*" = 4;
-          };
+          sort = "name";
         };
         "custom/notification" = {
           tooltip = false;
@@ -156,37 +154,6 @@
       };
     };
     style = ''
-      @define-color base #24273a;
-      @define-color mantle #1e2030;
-      @define-color crust #181926;
-
-      @define-color text #cad3f5;
-      @define-color subtext0 #a5adcb;
-      @define-color subtext1 #b8c0e0;
-
-      @define-color surface0 #363a4f;
-      @define-color surface1 #494d64;
-      @define-color surface2 #5b6078;
-
-      @define-color overlay0 #6e738d;
-      @define-color overlay1 #8087a2;
-      @define-color overlay2 #939ab7;
-
-      @define-color blue #8aadf4;
-      @define-color lavender #b7bdf8;
-      @define-color sapphire #7dc4e4;
-      @define-color sky #91d7e3;
-      @define-color teal #8bd5ca;
-      @define-color green #a6da95;
-      @define-color yellow #eed49f;
-      @define-color peach #f5a97f;
-      @define-color maroon #ee99a0;
-      @define-color red #ed8796;
-      @define-color mauve #c6a0f6;
-      @define-color pink #f5bde6;
-      @define-color flamingo #f0c6c6;
-      @define-color rosewater #f4dbd6;
-
       * {
         border: none;
         border-radius: 0;
@@ -223,18 +190,19 @@
         padding-bottom: 6px;
       }
 
-      #workspaces button.empty {
-        /* background: @surface2; */
+      #workspaces button.persistent {
         color: @overlay1;
       }
 
       #workspaces button.visible {
-        /* background: @surface2; */
         color: @green;
       }
 
       #workspaces button.active {
-        /* background: @surface2; */
+        color: @text;
+      }
+      
+      #workspaces button.focused {
         color: @blue;
       }
 

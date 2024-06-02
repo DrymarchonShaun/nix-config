@@ -47,7 +47,7 @@
     "hosts/common/users/shaun"
 
   ]);
-
+  hardware.wooting.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
   # TODO enable and move to greetd area? may need authentication dir or something?
