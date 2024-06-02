@@ -62,7 +62,10 @@
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
         { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
+        { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
+        { command = "${pkgs.steam}/bin/steam"; }
+        { command = "${pkgs.discord}/bin/discord"; }
       ];
 
       gaps.inner = 5;

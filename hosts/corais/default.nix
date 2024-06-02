@@ -42,12 +42,13 @@
     "hosts/common/optional/sway.nix" # window manager
     # "hosts/common/optional/plasma.nix" # desktop environment
     "hosts/common/optional/pipewire.nix" # audio
+    "hosts/common/optional/steam.nix" # steam 
+    "hosts/common/optional/wooting.nix"
 
     #################### Users to Create ####################
     "hosts/common/users/shaun"
 
   ]);
-  hardware.wooting.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
   # TODO enable and move to greetd area? may need authentication dir or something?
