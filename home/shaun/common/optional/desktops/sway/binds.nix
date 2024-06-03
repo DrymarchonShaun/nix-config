@@ -1,29 +1,30 @@
 { lib, pkgs, config, ... }:
 let
-  workspaces = [
-    "0"
-    "1"
-    "2"
-    "3"
-    "4"
-    "5"
-    "6"
-    "7"
-    "8"
-    "9"
-    "F1"
-    "F2"
-    "F3"
-    "F4"
-    "F5"
-    "F6"
-    "F7"
-    "F8"
-    "F9"
-    "F10"
-    "F11"
-    "F12"
-  ];
+  workspaces = {
+    "1" = "1";
+    "2" = "2";
+    "3" = "3";
+    "4" = "4";
+    "5" = "5";
+    "6" = "6";
+    "7" = "7";
+    "8" = "8";
+    "9" = "9";
+    "10" = "0";
+    "11" = "F1";
+    "12" = "F2";
+    "13" = "F3";
+    "14" = "F4";
+    "15" = "F5";
+    "16" = "F6";
+    "17" = "F7";
+    "18" = "F8";
+    "19" = "F9";
+    "20" = "F10";
+    "21" = "F11";
+    "22" = "F12";
+  };
+
   # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
   directions = rec {
     left = "left";
@@ -93,17 +94,17 @@ in
 
     }
     # Change workspace 
-    // builtins.listToAttrs (builtins.map
-      (n: {
-        name = "${modifier}+${n}";
-        value = "workspace ${n}";
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (index: name: {
+        name = "${modifier}+${name}";
+        value = "workspace ${lib.strings.concatStrings [ index ":" name ]}";
       })
       workspaces)
     # Move window to workspace
-    // builtins.listToAttrs (builtins.map
-      (n: {
-        name = "${modifier}+shift+${n}";
-        value = " move container to workspace ${n}";
+    // builtins.listToAttrs (lib.mapAttrsToList
+      (index: name: {
+        name = "${modifier}+shift+${name}";
+        value = " move container to workspace ${lib.strings.concatStrings [ index ":" name ]}";
       })
       workspaces)
     # Move focus
@@ -116,7 +117,7 @@ in
     # move window / group
     // builtins.listToAttrs (lib.mapAttrsToList
       (key: direction: {
-        name = "alt+shift+${key}";
+        name = "${modifier}+shift+${key}";
         value = "move ${direction}";
       })
       directions)
