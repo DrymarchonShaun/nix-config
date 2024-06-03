@@ -35,7 +35,6 @@
       noBar = false;
       scale = 1.2;
       x = 0;
-      workspace = "1";
       primary = true;
     }
     {
@@ -45,7 +44,6 @@
       refreshRate = 165;
       scale = 1.2;
       x = 2560;
-      workspace = "F1";
     }
   ];
 
@@ -59,22 +57,22 @@
         { output = "DP-1"; workspace = "2"; }
         { output = "DP-1"; workspace = "3"; }
         { output = "DP-1"; workspace = "4"; }
-        { output = "DP-2"; workspace = "F1"; }
-        { output = "DP-2"; workspace = "F2"; }
-        { output = "DP-2"; workspace = "F3"; }
-        { output = "DP-2"; workspace = "F4"; }
+        { output = "DP-2"; workspace = "11:F1"; }
+        { output = "DP-2"; workspace = "12:F2"; }
+        { output = "DP-2"; workspace = "13:F3"; }
+        { output = "DP-2"; workspace = "14:F4"; }
       ];
     };
   };
   programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
-    "1" = [ "DP-1" ];
-    "2" = [ "DP-1" ];
-    "3" = [ "DP-1" ];
-    "4" = [ "DP-1" ];
-    "F1" = [ "DP-2" ];
-    "F2" = [ "DP-2" ];
-    "F3" = [ "DP-2" ];
-    "F4" = [ "DP-2" ];
+    "1:1" = [ "DP-1" ];
+    "2:2" = [ "DP-1" ];
+    "3:3" = [ "DP-1" ];
+    "4:4" = [ "DP-1" ];
+    "11:F1" = [ "DP-2" ];
+    "12:F2" = [ "DP-2" ];
+    "13:F3" = [ "DP-2" ];
+    "14:F4" = [ "DP-2" ];
   };
 
   home = {
