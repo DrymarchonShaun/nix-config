@@ -41,11 +41,23 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Virtual machine definition
+    NixVirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+
+
+
+
     # Nix Language Server
     nil = {
       url = "github:oxalica/nil";
     };
 
+
+    # Theme
     catppuccin.url = "github:catppuccin/nix";
 
     # vscode extensions/themes

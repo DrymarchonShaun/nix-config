@@ -33,6 +33,7 @@
     "hosts/common/optional/services/openssh.nix"
     "hosts/common/optional/services/geoclue.nix"
     "hosts/common/optional/services/gvfs.nix"
+    "hosts/common/optional/services/libvirtd.nix"
     #"hosts/common/optional/services/bluetooth.nix"
     "hosts/common/optional/unbound.nix"
     "hosts/common/optional/openbooks.nix"
