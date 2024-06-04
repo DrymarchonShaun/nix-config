@@ -60,6 +60,7 @@
       btop# resource monitor
       coreutils# basic gnu utils
       # curl
+      killall# better kill
       eza# ls replacement
       fd# tree style ls
       findutils# find

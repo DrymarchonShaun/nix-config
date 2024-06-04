@@ -13,4 +13,20 @@ let
 in
 {
   home.packages = [ (discord-wayland.override { withVencord = true; }) ];
+  systemd.user.services.discord = {
+    Unit = {
+      Description =
+        "Autostart Discord in Sway";
+      Requires = [ "tray.target" ];
+      After = [ "graphical-session-pre.target" "tray.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 15 && ${discord-wayland}/bin/discord\"";
+      KillMode = "mixed";
+    };
+
+    Install = { WantedBy = [ "graphical-session.target" ]; };
+  };
 }
