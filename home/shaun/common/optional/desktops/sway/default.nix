@@ -49,6 +49,8 @@
       # No sway bar
       bars = [ ];
 
+      defaultWorkspace = "workspace 1:1";
+
       output = import ./monitors.nix
         {
           inherit lib;
@@ -65,7 +67,7 @@
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
         { command = "${pkgs.steam}/bin/steam"; }
-        { command = "${pkgs.discord}/bin/discord"; }
+        #{ command = "${pkgs.discord}/bin/discord"; }
       ];
 
       gaps.inner = 5;
@@ -99,6 +101,15 @@
         ];
       };
 
+      assigns = {
+        "4:4" = [
+          { class = "steam"; }
+          { class = "heroic"; }
+        ];
+        "11:F1" = [
+          { title = ".*Discord"; }
+        ];
+      };
       #windowrule = [
       # Dialogs
       #  "float, title:^(Open File)(.*)$"
