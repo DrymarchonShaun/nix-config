@@ -3,6 +3,7 @@
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
+    package = pkgs.unstable.libvirt;
     extraConfig = ''
       user="${configVars.username}"
     '';
@@ -13,7 +14,9 @@
     onShutdown = "shutdown";
 
     qemu = {
-      package = pkgs.qemu_kvm;
+      package = pkgs.unstable.qemu_kvm.override {
+        pipewireSupport = true;
+      };
       swtpm.enable = true;
       ovmf = {
         enable = true;
