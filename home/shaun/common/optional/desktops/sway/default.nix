@@ -49,7 +49,7 @@
       # No sway bar
       bars = [ ];
 
-      defaultWorkspace = "workspace 1:1";
+      # defaultWorkspace = "workspace number 1";
 
       output = import ./monitors.nix
         {
@@ -179,6 +179,7 @@
       };
     };
     extraConfig = ''
+      workspace number 1
       blur enable
       corner_radius 7
     '';
