@@ -123,6 +123,9 @@
 
       #-------------Git Goodness-------------
       # just reference `$ alias` and use the defautls, they're good.
+
+      #-----------Anti-Stupid-Shit----------------
+      clear = "echo \"use ctrl+l stupid\"";
     };
   };
 }

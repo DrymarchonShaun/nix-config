@@ -47,9 +47,11 @@
     }
   ];
 
+  home.sessionVariables = {
+    GDK_DPI_SCALE = 1.15;
+  };
   wayland.windowManager.sway = {
     extraSessionCommands = [
-      "export GDK_DPI_SCALE=1.15"
     ];
     config = {
       workspaceOutputAssign = [
