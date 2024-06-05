@@ -17,6 +17,22 @@
 
   # NOTE: xdg portal package is currently set in /hosts/common/optional/hyprland.nix
 
+  home.sessionVariables =
+    {
+      NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
+      MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
+      MOZ_WEBRENDER = "1"; # for firefox to run on wayland
+      XDG_SESSION_TYPE = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      WLR_RENDERER_ALLOW_SOFTWARE = "1";
+      XCURSOR_SIZE = "24";
+
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+
+      _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
+
+    };
+
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.swayfx;

@@ -14,7 +14,6 @@
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
-
     #################### Disk Layout ####################
     inputs.disko.nixosModules.disko
     (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
@@ -54,7 +53,7 @@
   services.gnome.gnome-keyring.enable = true;
   # TODO enable and move to greetd area? may need authentication dir or something?
   # services.pam.services.greetd.enableGnomeKeyring = true;
-
+  hardware.amdgpu.opencl = true;
   networking = {
     hostName = "corais";
     networkmanager.enable = true;
