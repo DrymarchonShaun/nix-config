@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  discord-wayland = pkgs.discord.overrideAttrs (
+  discord-wayland = pkgs.unstable.discord.overrideAttrs (
     old: {
       nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
       postFixup = (old.postFixup or "") + ''
@@ -13,8 +13,10 @@ let
 in
 {
   home.packages = [ (discord-wayland.override { withVencord = true; }) ];
+  # home.packages = [ discord-wayland ];
   systemd.user.services.discord = {
     Unit = {
+      StartLimitBurst = 30;
       Description =
         "Autostart Discord in Sway";
       Requires = [ "tray.target" ];
@@ -23,7 +25,8 @@ in
     };
 
     Service = {
-      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 15 && ${discord-wayland}/bin/discord\"";
+      RestartSec = 5;
+      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 5 && ${discord-wayland}/bin/discord\"";
       KillMode = "mixed";
     };
 
