@@ -1,9 +1,8 @@
 { config, configVars, pkgs, ... }: {
-
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    package = pkgs.unstable.libvirt;
+    package = pkgs.libvirt;
     extraConfig = ''
       user="${configVars.username}"
     '';
@@ -14,8 +13,11 @@
     onShutdown = "shutdown";
 
     qemu = {
-      package = pkgs.unstable.qemu_kvm.override {
+      package = pkgs.qemu_kvm.overrideAttrs {
         pipewireSupport = true;
+        patches = [
+          ./qemu-anti-detection.patch
+        ];
       };
       swtpm.enable = true;
       ovmf = {
@@ -24,6 +26,9 @@
           (pkgs.OVMFFull.override {
             secureBoot = true;
             tpmSupport = true;
+            edk2 = pkgs.edk2.overrideAttrs (attrs: {
+              patches = attrs.patches ++ [ ./edk2-to-am.patch ];
+            });
           }).fd
         ];
       };
@@ -36,6 +41,12 @@
     "disk"
   ];
   boot = {
+    kernelPatches = [
+      #  {
+      #    name = "rdtsc";
+      #    patch = ./rdtsc.patch;
+      #  }
+    ];
     initrd.kernelModules = [
       "vfio_pci"
       "vfio"
