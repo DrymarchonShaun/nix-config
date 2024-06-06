@@ -10,6 +10,19 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+    OVMFFull = prev.OVMFFull.override {
+      secureBoot = true;
+      tpmSupport = true;
+      edk2 = prev.edk2.overrideAttrs (attrs: {
+        patches = attrs.patches ++ [ ./patches/edk2-to-am.patch ];
+      });
+    };
+    qemu_kvm = prev.qemu_kvm.overrideAttrs {
+      pipewireSupport = true;
+      patches = [
+        ./qemu-anti-detection.patch
+      ];
+    };
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });

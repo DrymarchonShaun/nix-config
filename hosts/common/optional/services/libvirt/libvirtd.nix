@@ -1,4 +1,8 @@
-{ config, configVars, pkgs, ... }: {
+{ inputs, config, configVars, pkgs, ... }: {
+  import = [
+    inputs.NixVirt.nixosModules.default
+    ./windows.nix
+  ];
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
@@ -13,23 +17,12 @@
     onShutdown = "shutdown";
 
     qemu = {
-      package = pkgs.qemu_kvm.overrideAttrs {
-        pipewireSupport = true;
-        patches = [
-          ./qemu-anti-detection.patch
-        ];
-      };
+      package = pkgs.qemu_kvm;
       swtpm.enable = true;
       ovmf = {
         enable = true;
         packages = [
-          (pkgs.OVMFFull.override {
-            secureBoot = true;
-            tpmSupport = true;
-            edk2 = pkgs.edk2.overrideAttrs (attrs: {
-              patches = attrs.patches ++ [ ./edk2-to-am.patch ];
-            });
-          }).fd
+          pkgs.OVMFFull.fd
         ];
       };
     };
@@ -41,12 +34,6 @@
     "disk"
   ];
   boot = {
-    kernelPatches = [
-      #  {
-      #    name = "rdtsc";
-      #    patch = ./rdtsc.patch;
-      #  }
-    ];
     initrd.kernelModules = [
       "vfio_pci"
       "vfio"
