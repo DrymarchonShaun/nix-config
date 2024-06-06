@@ -46,18 +46,23 @@
       ];
       variables = [ "--all" ];
     };
+    # workaround for nix-community/home-manager#5379
+    checkConfig = false;
 
-    extraSessionCommands = [
-      "export NIXOS_OZONE_WL=1" # for ozone-based and electron apps to run on wayland
-      "export MOZ_ENABLE_WAYLAND=1" # for firefox to run on wayland
-      "export MOZ_WEBRENDER=1" # for firefox to run on wayland
-      "export XDG_SESSION_TYPE=wayland"
-      "export WLR_NO_HARDWARE_CURSORS=1"
-      "export WLR_RENDERER_ALLOW_SOFTWARE=1"
-      "export XCURSOR_SIZE=24"
+    extraSessionCommands = ''
+      # for ozone-based and electron apps to run on wayland
+      export NIXOS_OZONE_WL=1 
+
+      # for firefox to run on wayland
+      export MOZ_ENABLE_WAYLAND=1      
+      export MOZ_WEBRENDER=1
+
+      export XDG_SESSION_TYPE=wayland
+      export WLR_NO_HARDWARE_CURSORS=1
+      export WLR_RENDERER_ALLOW_SOFTWARE=1
+      export XCURSOR_SIZE=24
       # QT_QPA_PLATFORM,wayland
-    ];
-
+    '';
     config = {
       # Modifier (super key)
       modifier = "Mod4";
