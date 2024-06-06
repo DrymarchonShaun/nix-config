@@ -1,7 +1,8 @@
-{ outputs, lib, ... }:
+{ outputs, pkgs, lib, ... }:
 {
   services.gpg-agent = {
     enable = true;
+    pinentryPackage = pkgs.pinentry-all;
     enableSshSupport = true;
   };
 
