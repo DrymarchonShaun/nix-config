@@ -206,10 +206,9 @@
   {
     mode = [ "n" ];
     key = "<leader>be";
-    action = ''function()
+    action.__raw = ''function()
           require("neo-tree.command").execute({ source = "buffers", toggle = true })
           end'';
-    lua = true;
     options = { desc = "Buffer Explorer"; };
   }
 

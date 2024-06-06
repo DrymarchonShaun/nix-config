@@ -13,20 +13,22 @@
     colorschemes = {
       catppuccin = {
         enable = true;
-        flavour = "macchiato";
-        transparentBackground = true;
-        integrations = {
-          alpha = true;
-          noice = true;
-          which_key = true;
-          neotree = true;
-          treesitter = true;
+        settings = {
+          flavour = "macchiato";
+          transparent_background = true;
+          integrations = {
+            alpha = true;
+            noice = true;
+            which_key = true;
+            neotree = true;
+            treesitter = true;
+          };
         };
       };
     };
     colorscheme = "catppuccin";
 
-    options = {
+    opts = {
       # # Lua reference:
       # vim.o behaves like :set
       # vim.go behaves like :setglobal
@@ -44,7 +46,7 @@
       showcmd = true; # Show incomplete cmds down the bottom
       showmode = true; # Show current mode down the bottom
       autoread = true; # Reload files changed outside vim
-      lazyredraw = true; # Redraw only when needed
+      # lazyredraw = true; # Redraw only when needed
       showmatch = true; # highlight matching braces
       ruler = true; # show current line and column
       visualbell = true; # No sounds
