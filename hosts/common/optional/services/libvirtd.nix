@@ -40,7 +40,7 @@
       "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
-      "vfio_virqfd"
+      # "vfio_virqfd"
     ];
     kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     kernelParams = [ "amd_iommu=on" "amd_iommu=pt" "kvm.ignore_msrs=1" ];
