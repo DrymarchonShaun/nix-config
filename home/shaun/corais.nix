@@ -51,8 +51,6 @@
     GDK_DPI_SCALE = 1.15;
   };
   wayland.windowManager.sway = {
-    extraSessionCommands = [
-    ];
     config = {
       workspaceOutputAssign = [
         { output = "DP-1"; workspace = "1:1"; }
