@@ -5,7 +5,7 @@
     lsp = {
       enable = true;
       servers = {
-        nil_ls = {
+        nil-ls = {
           enable = true;
           package = inputs.nil.packages.${pkgs.system}.default;
           extraOptions = {
