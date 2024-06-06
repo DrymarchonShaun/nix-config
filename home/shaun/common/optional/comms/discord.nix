@@ -1,16 +1,6 @@
 { pkgs, ... }:
 let
-  discord-wayland = (pkgs.unstable.discord.overrideAttrs (
-    old: {
-      # nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
-      # postFixup = (old.postFixup or "") + ''
-      #   wrapProgram $out/bin/discord \
-      #     --add-flags "--enable-features=UseOzonePlatform" \
-      #     --add-flags "--ozone-platform=wayland"
-      # '';
-    }
-  )).override { withVencord = true; };
-
+  vencord = pkgs.discord.override { withVencord = true; };
   krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher"
     {
       libraries = with pkgs.python3Packages; [ capstone pyelftools ];
@@ -27,13 +17,32 @@ let
         rev = "main";
         sha256 = "sha256-lRkQ1VXOz13Edn53Gn1SwcqVjZkjwGCIIBvvENBLe7Y=";
       } + "/hm/discord/krisp-patcher.py"));
+
+  discord-patched-launch = pkgs.writeScriptBin "discord" ''
+    while true; do
+      if [ ! -f ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node ]; then
+        ${vencord}/bin/discord &
+        notify-send "Failed to Apply Patch - Relaunching Discord" "File /modules/discord_krisp/discord_krisp.node does not exist"
+        
+        # Wait for the file to appear
+        while [ ! -f ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node ]; do
+          sleep 1
+        done
+        
+        # Kill Discord process
+        killall .Discord-wrapped
+      else
+        ${krisp-patcher}/bin/krisp-patcher "$(realpath ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node)"
+        ${vencord}/bin/discord
+          break
+      fi
+    done
+  '';
 in
 {
   home.packages = [
-    discord-wayland
-    krisp-patcher
+    discord-patched-launch
   ];
-  # home.packages = [ discord-wayland ];
   systemd.user.services.discord = {
     Unit = {
       StartLimitBurst = 30;
@@ -47,7 +56,7 @@ in
     Service = {
       RestartSec = 5;
       Restart = "on-failure";
-      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 5 && ${discord-wayland}/bin/discord\"";
+      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 5 && ${discord-patched-launch}/bin/discord\"";
       KillMode = "mixed";
     };
 
