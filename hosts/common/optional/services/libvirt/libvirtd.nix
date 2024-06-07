@@ -1,9 +1,13 @@
 { inputs, config, configVars, pkgs, ... }: {
-  import = [
+  imports = [
     inputs.NixVirt.nixosModules.default
     ./windows.nix
+    ./networks.nix
   ];
   programs.virt-manager.enable = true;
+  virtualisation.libvirt = {
+    enable = true;
+  };
   virtualisation.libvirtd = {
     enable = true;
     package = pkgs.libvirt;

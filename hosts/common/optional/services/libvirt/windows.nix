@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {
-      definition = inputs.NixVirt.lib.domains.writeXML
+      definition = inputs.NixVirt.lib.domain.writeXML
         {
           "xmlns:qemu" = "http://libvirt.org/schemas/domain/qemu/1.0";
           type = "kvm";
@@ -41,7 +41,7 @@
           cpu = {
             mode = "host-passthrough";
             check = "none";
-            migratable = true;
+            migratable = false;
             cache = { mode = "passthrough"; };
             feature = [
               { policy = "require"; name = "hypervisor"; }
@@ -98,29 +98,29 @@
             apic = { };
             hyperv = {
               mode = "passthrough";
-              relaxed = { state = "on"; };
-              vapic = { state = "on"; };
-              spinlocks = { state = "on"; retries = 8191; };
-              vpindex = { state = "on"; };
-              synic = { state = "on"; };
+              relaxed = { state = true; };
+              vapic = { state = true; };
+              spinlocks = { state = true; retries = 8191; };
+              vpindex = { state = true; };
+              synic = { state = true; };
               stimer = {
-                state = "on";
-                direct = { state = "on"; };
+                state = true;
+                direct = { state = true; };
               };
-              reset = { state = "on"; };
-              vendor_id = { state = "on"; value = "OriginalAMD"; };
-              frequencies = { state = "on"; };
-              reenlightenment = { state = "off"; };
-              tlbflush = { state = "on"; };
-              ipi = { state = "on"; };
-              evmcs = { state = "off"; };
-              avic = { state = "on"; };
+              reset = { state = true; };
+              vendor_id = { state = true; value = "OriginalAMD"; };
+              frequencies = { state = true; };
+              reenlightenment = { state = false; };
+              tlbflush = { state = true; };
+              ipi = { state = true; };
+              evmcs = { state = false; };
+              avic = { state = true; };
             };
             kvm = {
-              hidden = { state = "on"; };
+              hidden = { state = true; };
             };
-            vmport = { state = "off"; };
-            smm = { state = "on"; };
+            vmport = { state = false; };
+            smm = { state = true; };
             ioapic = { driver = "kvm"; };
           };
 
@@ -128,12 +128,12 @@
             offset = "timezone";
             timezone = "America/Los_Angeles";
             timer = [
-              { name = "rtc"; present = "no"; tickpolicy = "catchup"; }
+              { name = "rtc"; present = false; tickpolicy = "catchup"; }
               { name = "pit"; tickpolicy = "discard"; }
-              { name = "hpet"; present = "no"; }
-              { name = "kvmclock"; present = "no"; }
-              { name = "hypervclock"; present = "yes"; }
-              { name = "tsc"; present = "yes"; mode = "native"; }
+              { name = "hpet"; present = false; }
+              { name = "kvmclock"; present = false; }
+              { name = "hypervclock"; present = true; }
+              { name = "tsc"; present = true; mode = "native"; }
             ];
           };
 
@@ -154,9 +154,9 @@
                 source = { dev = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S598NG0MA08105W"; };
                 target = { dev = "sdd"; bus = "sata"; };
                 serial = "S598NG0MA08105W";
-                boot = { order = "1"; };
+                boot = { order = 1; };
                 alias = { name = "ua-winboot"; };
-                address = { type = "drive"; controller = "0"; bus = "0"; target = "0"; unit = "3"; };
+                address = { type = "drive"; controller = 0; bus = 0; target = 0; unit = 3; };
               }
             ];
 
@@ -165,7 +165,7 @@
               mac = { address = "52:54:00:5c:78:25"; };
               source = { network = "default"; };
               model = { type = "e1000e"; };
-              address = { type = "pci"; domain = "0x0000"; bus = "0x05"; slot = "0x00"; function = "0x0"; };
+              address = { type = "pci"; domain = 0; bus = 5; slot = 0; function = 0; };
             };
 
             input = [
@@ -178,7 +178,7 @@
               }
               {
                 type = "evdev";
-                source = { dev = "/dev/input/by-id/usb-Wooting_WootingTwoHE_A02B2130W041H00501-if03-event-kbd"; grab = "all"; grabToggle = "ctrl-ctrl"; repeat = "on"; };
+                source = { dev = "/dev/input/by-id/usb-Wooting_WootingTwoHE_A02B2130W041H00501-if03-event-kbd"; grab = "all"; grabToggle = "ctrl-ctrl"; repeat = true; };
               }
               {
                 type = "mouse";
@@ -198,10 +198,10 @@
               audio = { id = 1; };
               address = {
                 type = "pci";
-                domain = "0x0000";
-                bus = "0x00";
-                slot = "0x1b";
-                function = "0x0";
+                domain = 0;
+                bus = 0;
+                slot = 27;
+                function = 0;
               };
             };
             audio = {
@@ -234,41 +234,41 @@
               target = { type = "serial"; port = 0; };
             };
 
-    # GPU passthrough
-    video = {
-      model = {
-        type = "none";
-      };
-    };
+            # GPU passthrough
+            video = {
+              model = {
+                type = "none";
+              };
+            };
 
             hostdev = [
               {
                 mode = "subsystem";
                 type = "pci";
-                managed = "yes";
-                source.address = { domain = "0x0000"; bus = "0x04"; slot = "0x00"; function = "0x0"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x06"; slot = "0x00"; function = "0x0"; };
+                managed = true;
+                source.address = { domain = 0; bus = 4; slot = 0; function = 0; };
+                address = { type = "pci"; domain = 0; bus = 6; slot = 0; function = 0; };
               }
               {
                 mode = "subsystem";
                 type = "pci";
-                managed = "yes";
-                source.address = { domain = "0x0000"; bus = "0x04"; slot = "0x00"; function = "0x1"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x07"; slot = "0x00"; function = "0x0"; };
+                managed = true;
+                source.address = { domain = 0; bus = 4; slot = 0; function = 1; };
+                address = { type = "pci"; domain = 0; bus = 7; slot = 0; function = 0; };
               }
               {
                 mode = "subsystem";
                 type = "pci";
-                managed = "yes";
-                source.address = { domain = "0x0000"; bus = "0x04"; slot = "0x00"; function = "0x2"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x08"; slot = "0x00"; function = "0x0"; };
+                managed = true;
+                source.address = { domain = 0; bus = 4; slot = 0; function = 2; };
+                address = { type = "pci"; domain = 0; bus = 8; slot = 0; function = 0; };
               }
               {
                 mode = "subsystem";
                 type = "pci";
-                managed = "yes";
-                source.address = { domain = "0x0000"; bus = "0x04"; slot = "0x00"; function = "0x3"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x09"; slot = "0x00"; function = "0x0"; };
+                managed = true;
+                source.address = { domain = 0; bus = 4; slot = 0; function = 3; };
+                address = { type = "pci"; domain = 0; bus = 9; slot = 0; function = 0; };
               }
             ];
 
@@ -282,130 +282,130 @@
                 type = "usb";
                 index = 0;
                 model = "qemu-xhci";
-                ports = "15";
-                address = { type = "pci"; domain = "0x0000"; bus = "0x02"; slot = "0x00"; function = "0x0"; };
+                ports = 15;
+                address = { type = "pci"; domain = 0; bus = 2; slot = 0; function = 0; };
               }
-              { type = "pci"; index = "0"; model = "pcie-root"; }
+              { type = "pci"; index = 0; model = "pcie-root"; }
               {
                 type = "pci";
                 index = 1;
                 model = "pcie-root-port";
-                target = { chassis = "1"; port = "0x10"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x0"; multifunction = "on"; };
+                target = { chassis = 1; port = 16; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 0; multifunction = true; };
               }
               {
                 type = "pci";
                 index = 2;
                 model = "pcie-root-port";
-                target = { chassis = "2"; port = "0x11"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x1"; };
+                target = { chassis = 2; port = 17; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 1; };
               }
               {
                 type = "pci";
                 index = 3;
                 model = "pcie-root-port";
-                target = { chassis = "3"; port = "0x12"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x2"; };
+                target = { chassis = 3; port = 18; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 2; };
               }
               {
                 type = "pci";
                 index = 4;
                 model = "pcie-root-port";
-                target = { chassis = "4"; port = "0x13"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x3"; };
+                target = { chassis = 4; port = 19; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 3; };
               }
               {
                 type = "pci";
                 index = 5;
                 model = "pcie-root-port";
-                target = { chassis = "5"; port = "0x14"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x4"; };
+                target = { chassis = 5; port = 20; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 4; };
               }
               {
                 type = "pci";
                 index = 6;
                 model = "pcie-root-port";
-                target = { chassis = "6"; port = "0x15"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x5"; };
+                target = { chassis = 6; port = 21; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 5; };
               }
               {
                 type = "pci";
                 index = 7;
                 model = "pcie-root-port";
-                target = { chassis = "7"; port = "0x16"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x6"; };
+                target = { chassis = 7; port = 22; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 6; };
               }
               {
                 type = "pci";
                 index = 8;
                 model = "pcie-root-port";
-                target = { chassis = "8"; port = "0x17"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x02"; function = "0x7"; };
+                target = { chassis = 8; port = 23; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 2; function = 7; };
               }
               {
                 type = "pci";
                 index = 9;
                 model = "pcie-root-port";
-                target = { chassis = "9"; port = "0x18"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x0"; multifunction = "on"; };
+                target = { chassis = 9; port = 24; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 0; multifunction = true; };
               }
               {
                 type = "pci";
                 index = 10;
                 model = "pcie-root-port";
-                target = { chassis = "10"; port = "0x19"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x1"; };
+                target = { chassis = 10; port = 25; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 1; };
               }
               {
                 type = "pci";
                 index = 11;
                 model = "pcie-root-port";
-                target = { chassis = "11"; port = "0x1a"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x2"; };
+                target = { chassis = 11; port = 26; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 2; };
               }
               {
                 type = "pci";
                 index = 12;
                 model = "pcie-root-port";
-                target = { chassis = "12"; port = "0x1b"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x3"; };
+                target = { chassis = 12; port = 27; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 3; };
               }
               {
                 type = "pci";
                 index = 13;
                 model = "pcie-root-port";
-                target = { chassis = "13"; port = "0x1c"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x4"; };
+                target = { chassis = 13; port = 28; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 4; };
               }
               {
                 type = "pci";
                 index = 14;
                 model = "pcie-root-port";
-                target = { chassis = "14"; port = "0x1d"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x5"; };
+                target = { chassis = 14; port = 29; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 5; };
               }
               {
                 type = "pci";
                 index = 15;
                 model = "pcie-root-port";
-                target = { chassis = "15"; port = "0x1e"; };
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x03"; function = "0x6"; };
+                target = { chassis = 15; port = 30; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 3; function = 6; };
               }
               {
                 type = "pci";
                 index = 16;
                 model = "pcie-to-pci-bridge";
-                address = { type = "pci"; domain = "0x0000"; bus = "0x01"; slot = "0x00"; function = "0x0"; };
+                address = { type = "pci"; domain = 0; bus = 1; slot = 0; function = 0; };
               }
               {
                 type = "sata";
                 index = 0;
-                address = { type = "pci"; domain = "0x0000"; bus = "0x00"; slot = "0x1f"; function = "0x2"; };
+                address = { type = "pci"; domain = 0; bus = 0; slot = 31; function = 2; };
               }
               {
                 type = "virtio-serial";
                 index = 0;
-                address = { type = "pci"; domain = "0x0000"; bus = "0x03"; slot = "0x00"; function = "0x0"; };
+                address = { type = "pci"; domain = 0; bus = 3; slot = 0; function = 0; };
               }
             ];
           };

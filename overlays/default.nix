@@ -21,7 +21,7 @@
     qemu_kvm = prev.qemu_kvm.overrideAttrs {
       pipewireSupport = true;
       patches = [
-        ./qemu-anti-detection.patch
+        ./patches/qemu-anti-detection.patch
       ];
     };
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
