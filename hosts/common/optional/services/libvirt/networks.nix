@@ -1,7 +1,7 @@
 { inputs, ... }: {
   virtualisation.libvirt.connections."qemu:///system".networks = [
     {
-      definition = inputs.NixVirt.lib.networks.writeXML {
+      definition = inputs.NixVirt.lib.network.writeXML {
         name = "default";
         uuid = "3c1c8fe2-4fe1-487c-bdce-f700f671850f";
         forward = {
