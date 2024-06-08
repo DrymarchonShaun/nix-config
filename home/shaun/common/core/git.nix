@@ -5,8 +5,7 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     userName = configVars.handle;
-    # Not best practice, but this is primarily being hidden from the open internet - for more information see https://github.com/ryantm/agenix?tab=readme-ov-file#builtinsreadfile-anti-pattern
-    userEmail = configLib.readFile config.sops.secrets."${configVars.username}/email".path;
+    userEmail = configVars.gitEmail;
     aliases = {
       stat = "status";
     };
