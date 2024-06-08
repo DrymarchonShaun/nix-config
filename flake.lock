@@ -368,10 +368,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1717641106,
-        "narHash": "sha256-IXf1ZZ2u0R1Pb3VUCIckC5dP5i2rreU2DfAZOP9OFT4=",
+        "lastModified": 1717814575,
+        "narHash": "sha256-MrYJXwBtyPBsV36N5xPt8FmA+lzA04CXANNUtdxmhhw=",
         "ref": "main",
-        "rev": "f7ae30ac1903d81406f108e0fe5ebb19a11cf861",
+        "rev": "19ffae0e833eee15559935980a5aa518578c6e9e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
@@ -390,11 +390,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1717723681,
-        "narHash": "sha256-LOZi9PMkeMVW/sVAwIxOUm+V4rrxA+8It5K0IxArj+Q=",
+        "lastModified": 1717809892,
+        "narHash": "sha256-vHipyuWYFCpCtkbl+1bm/e0Z8nwcqU18KOgQ3u6lZ5A=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "d75119cd9adcf49fad8880ddc67ad294f6688a2c",
+        "rev": "bd2330982dfc514b64d15332c572804ba341b8be",
         "type": "github"
       },
       "original": {
@@ -501,11 +501,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1717796960,
-        "narHash": "sha256-BKjQ9tQdsuoROrojHZb7KTAv95WprqCkNFvuzatfEo0=",
+        "lastModified": 1717810270,
+        "narHash": "sha256-LU48qxiLz/quCmh1vS1Cz24/BB9UWSQIijAubjUBMRo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8e0a5f16b7bf7f212be068dd302c49888c6ad68f",
+        "rev": "b2c2a47bcb17567c3b1be6f434e2f8eee7858d62",
         "type": "github"
       },
       "original": {
