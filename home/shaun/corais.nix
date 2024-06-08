@@ -5,7 +5,6 @@
     common/core #required
 
     #################### Host-specific Optional Configs ####################
-    common/optional/sops.nix
     common/optional/browsers/brave.nix
     common/optional/browsers/firefox.nix
     common/optional/comms/discord.nix
