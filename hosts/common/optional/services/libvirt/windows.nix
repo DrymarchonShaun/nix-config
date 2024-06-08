@@ -3,7 +3,6 @@
     {
       definition = inputs.NixVirt.lib.domain.writeXML
         {
-          "xmlns:qemu" = "http://libvirt.org/schemas/domain/qemu/1.0";
           type = "kvm";
 
           name = "win11";
@@ -85,10 +84,12 @@
             loader = {
               readonly = true;
               type = "pflash";
-              path = "${pkgs.OVMFFull.fd}/FV/OVMF_CODE.fd";
+              # path = "${pkgs.OVMFFull.fd}/FV/OVMF_CODE.fd";
+              path = "/run/libvirt/nix-ovmf/OVMF_CODE.fd";
             };
             nvram = {
-              template = "${pkgs.OVMFFull.fd}/FV/OVMF_VARS.fd";
+              # template = "${pkgs.OVMFFull.fd}/FV/OVMF_VARS.fd";
+              template = "/run/libvirt/nix-ovmf/OVMF_VARS.fd";
               path = "/var/lib/libvirt/qemu/nvram/win11_VARS.fd";
             };
             smbios.mode = "sysinfo";
