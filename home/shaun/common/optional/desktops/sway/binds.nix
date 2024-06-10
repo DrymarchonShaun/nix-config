@@ -74,7 +74,7 @@ in
       #################### Basic Bindings ####################
       "${modifier}+q" = "kill";
       "${modifier}+shift+e" = "exit";
-      "${modifier}+l" = "exec ${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png";
+      "${modifier}+ctrl+shift+l" = "exec ${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png";
       "alt+return" = "fullscreen";
 
       # Function Keys

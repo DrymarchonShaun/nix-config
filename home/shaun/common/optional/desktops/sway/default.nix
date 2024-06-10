@@ -33,6 +33,15 @@
 
     };
 
+  services.swayidle.timeouts = [
+    {
+      timeout = 600;
+      command = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms off'";
+      resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
+    }
+  ];
+
+
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.swayfx;
