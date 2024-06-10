@@ -51,19 +51,19 @@
     # ];
     config = {
       workspaceOutputAssign = [
-        { output = "eDP-1"; workspace = "1"; }
-        { output = "eDP-1"; workspace = "2"; }
-        { output = "eDP-1"; workspace = "3"; }
+        { output = "eDP-1"; workspace = "1:1"; }
+        { output = "eDP-1"; workspace = "2:2"; }
+        { output = "eDP-1"; workspace = "3:3"; }
         { output = "HMDI-A-1"; workspace = "11:F1"; }
         { output = "DP-1"; workspace = "11:F1"; }
       ];
     };
   };
   programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
-    "1" = [ "eDP-1" ];
-    "2" = [ "eDP-1" ];
-    "3" = [ "eDP-1" ];
-    "4" = [ "eDP-1" ];
+    "1:1" = [ "eDP-1" ];
+    "2:2" = [ "eDP-1" ];
+    "3:3" = [ "eDP-1" ];
+    "4:4" = [ "eDP-1" ];
     "11:F1" = [ "DP-1" "HDMI-A-1" ];
 
   };
