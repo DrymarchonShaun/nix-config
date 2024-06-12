@@ -13,6 +13,7 @@
     ../swaylock.nix
     ../rofi.nix
     ../tray.nix
+    ../wayland.nix # various wayland utilities
 
   ];
 
