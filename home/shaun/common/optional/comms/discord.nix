@@ -10,13 +10,10 @@ let
         "F405" # name may be undefined, or defined from star imports: module
       ];
     }
-    (builtins.readFile (pkgs.fetchFromGitHub
-      {
-        owner = "sersorrel";
-        repo = "sys";
-        rev = "main";
-        sha256 = "sha256-lRkQ1VXOz13Edn53Gn1SwcqVjZkjwGCIIBvvENBLe7Y=";
-      } + "/hm/discord/krisp-patcher.py"));
+    (builtins.readFile (builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/sersorrel/sys/main/hm/discord/krisp-patcher.py";
+      sha256 = "sha256-87VlZKw6QoXgQwEgxT3XeFY8gGoTDWIopGLOEdXkkjE=";
+    }));
 
   discord-patched-launch = pkgs.writeScriptBin "discord" ''
     while true; do
