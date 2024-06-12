@@ -12,6 +12,7 @@
     ../swaylock.nix
     ../rofi.nix
     ../tray.nix
+    ../wayland.nix # various wayland utilities
 
   ];
 
@@ -128,7 +129,12 @@
       window = {
         titlebar = false;
         commands = [
-          { command = "inhibit_idle fullscreen"; criteria = { class = "^.*"; }; }
+          { criteria = { class = "^.*"; }; command = "inhibit_idle fullscreen"; }
+
+          { criteria = { app_id = "nm-connection-editor"; }; command = "floating enable"; }
+          { criteria = { app_id = "pwvucontrol"; }; command = "floating enable"; }
+          { criteria = { app_id = "blueman-manager"; }; command = "floating enable"; }
+          { criteria = { title = "^Syncthing Tray( \(.*\))?$"; }; command = "floating enable, border none, resize set 550 400, move position 1350 0"; }
         ];
       };
 
