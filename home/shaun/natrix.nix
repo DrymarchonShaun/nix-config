@@ -66,8 +66,18 @@
     "3:3" = [ "eDP-1" ];
     "4:4" = [ "eDP-1" ];
     "11:F1" = [ "DP-1" "HDMI-A-1" ];
-
   };
+
+  programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon4/temp1_input";
+
+  programs.waybar.settings.mainBar."custom/fan" = {
+    format = "{}% 󰈐 ";
+    # exec = "${pkgs.fish}/bin/fish -c 'math -s0 (${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input)\" / 8800 * 100\"'";
+    exec = "${pkgs.bash}/bin/bash -c 'echo $((($(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input) * 100) / 8800))'";
+    interval = 1;
+    tooltip = false;
+  };
+
 
   home = {
     username = configVars.username;

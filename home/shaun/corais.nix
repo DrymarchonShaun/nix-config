@@ -75,6 +75,8 @@
     "14:F4" = [ "DP-2" ];
   };
 
+  programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon2/temp3_input";
+
   home = {
     username = configVars.username;
     homeDirectory = "/home/${configVars.username}";

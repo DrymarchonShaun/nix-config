@@ -99,7 +99,6 @@
           format-alt = "{used} GB 󰘚 ";
         };
         temperature = {
-          hwmon-path = "/sys/class/hwmon/hwmon4/temp1_input";
           critical-threshold = 80;
           format = "{temperatureC}°C {icon}";
           format-icons = [
@@ -109,13 +108,6 @@
           ];
           tooltip = false;
           interval = 1;
-        };
-        "custom/fan" = {
-          format = "{}% 󰈐 ";
-          # exec = "${pkgs.fish}/bin/fish -c 'math -s0 (${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input)\" / 8800 * 100\"'";
-          exec = "${pkgs.bash}/bin/bash -c 'echo $((($(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input) * 100) / 8800))'";
-          interval = 1;
-          tooltip = false;
         };
         backlight = {
           device = "intel_backlight";
@@ -235,7 +227,7 @@
       }
 
       #clock {
-        padding-left: 5px;
+        padding-left: 11px;
         padding-right: 4px;
         border-radius: 10px 0px 0px 10px;
         transition: none;
