@@ -98,7 +98,7 @@
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
         { command = "${pkgs.steam}/bin/steam"; }
-        { command = "${pkgs.steam}/bin/qpwgraph"; }
+        { command = "${pkgs.qpwgraph}/bin/qpwgraph"; }
         #{ command = "${pkgs.discord}/bin/discord"; }
       ];
 
@@ -134,7 +134,7 @@
           { criteria = { app_id = "nm-connection-editor"; }; command = "floating enable"; }
           { criteria = { app_id = "pwvucontrol"; }; command = "floating enable"; }
           { criteria = { app_id = "blueman-manager"; }; command = "floating enable"; }
-          { criteria = { title = "^Syncthing Tray( \(.*\))?$"; }; command = "floating enable, border none, resize set 550 400, move position 1350 0"; }
+          { criteria = { title = "^Syncthing Tray( \(.*\))?$"; }; command = "floating enable"; }
         ];
       };
 
