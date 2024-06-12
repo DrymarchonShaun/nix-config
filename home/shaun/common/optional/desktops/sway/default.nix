@@ -97,6 +97,7 @@
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
         { command = "${pkgs.steam}/bin/steam"; }
+        { command = "${pkgs.steam}/bin/qpwgraph"; }
         #{ command = "${pkgs.discord}/bin/discord"; }
       ];
 
