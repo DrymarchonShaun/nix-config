@@ -19,6 +19,7 @@
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
       pamixer# pulseaudio sound mixer
-      pavucontrol; # pulseaudio volume control
+      pwvucontrol# pipewire volume control
+      qpwgraph; #pipewire plugboard
   };
 }
