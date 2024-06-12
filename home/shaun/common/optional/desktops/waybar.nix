@@ -85,7 +85,7 @@
           ignored-sinks = [
             "Easy Effects Sink"
           ];
-          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         };
         cpu = {
           format = "{usage}% 󰍛 ";
