@@ -53,7 +53,8 @@ in
     Service = {
       RestartSec = 5;
       Restart = "on-failure";
-      ExecStart = "/bin/sh -c \"${pkgs.coreutils}/bin/sleep 5 && ${discord-patched-launch}/bin/discord\"";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+      ExecStart = "${discord-patched-launch}/bin/discord";
       KillMode = "mixed";
     };
 

@@ -22,8 +22,7 @@ clangStdenv.mkDerivation
     ];
 
     installPhase = ''
-      mkdir -p $out/bin/
-      cp -pr /build/source/out/bin/FAE_Linux $out/bin/FAE_Linux
+      install -Dm755 /build/source/out/bin/FAE_Linux $out/bin/FAE_Linux
     '';
 
     meta = {
