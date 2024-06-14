@@ -37,9 +37,7 @@ let
   '';
 in
 {
-  home.packages = [
-    discord-patched-launch
-  ];
+  home.packages = [ discord-patched-launch ];
   systemd.user.services.discord = {
     Unit = {
       StartLimitBurst = 30;

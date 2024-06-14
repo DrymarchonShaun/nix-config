@@ -10,17 +10,17 @@
     };
   };
   # config = configLib.mkDelayedUnit pkgs config.services.syncthing.tray.package "/bin/syncthingtry --wait";
-  #  systemd.user.services.syncthingtray = {
-  #    Unit = {
-  #      StartLimitBurst = 30;
-  #    };
-  #
-  #    Service = {
-  #      RestartSec = 5;
-  #      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
-  #      ExecStart = "${config.services.syncthing.tray.package}/bin/syncthingtray --wait";
-  #      Restart = "on-failure";
-  #      KillMode = "mixed";
-  #    };
-  #  };
+  systemd.user.services.syncthingtray = {
+    Unit = {
+      StartLimitBurst = 30;
+    };
+
+    Service = {
+      RestartSec = 5;
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+      ExecStart = "${config.services.syncthing.tray.package}/bin/syncthingtray --wait";
+      Restart = "on-failure";
+      KillMode = "mixed";
+    };
+  };
 }
