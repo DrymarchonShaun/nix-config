@@ -5,6 +5,9 @@
     # Theme
     inputs.catppuccin.homeManagerModules.catppuccin
 
+    # nix-index database
+    inputs.nix-index-database.hmModules.nix-index
+
     # Packages with custom configs go here
 
     ./bash.nix # backup shell
@@ -104,6 +107,7 @@
 
   programs = {
     home-manager.enable = true;
+    nix-index.enable = true;
   };
 
   # Nicely reload system units when changing configs
