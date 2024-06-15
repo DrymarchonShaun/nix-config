@@ -8,7 +8,6 @@
   discord-patched-launcher = pkgs.callPackage ./discord-patched-launcher.nix { };
   fae-linux = pkgs.callPackage ./fae-linux { };
   import-gsettings = pkgs.callPackage ./import-gsettings.nix { };
-  krisp-patcher = pkgs.callPackage ./krisp-patcher.nix { };
   rofi-randr = pkgs.callPackage ./rofi-randr { };
   swaync-catppuccin = pkgs.callPackage ./swaync-catppuccin { };
   syncthing-resolve-conflicts = pkgs.callPackage ./syncthing-resolve-conflicts { };
