@@ -64,6 +64,16 @@
       #      bindkey '^I' forward-word         # tab
       #      bindkey '^[[Z' backward-word      # shift+tab
       #      bindkey '^ ' autosuggest-accept   # ctrl+space
+       
+      #      nix shell alias
+
+              function ns() {
+                local args=()
+              for arg in "$@"; do
+                args+=("nixpkgs#$arg")
+              done
+              nix shell "''${args[@]}"
+              }
     '';
 
     oh-my-zsh = {
@@ -113,9 +123,9 @@
       vim = "nvim";
 
       #-----------Nix related----------------
-      ne = "nix-instantiate --eval";
-      nb = "nix-build";
-      ns = "nix-shell";
+      # ne = "nix-instantiate --eval";
+      # nb = "nix-build";
+      # ns = "";
 
       #-----------Remotes----------------
       corais = "ssh -l shaun 10.0.0.2";
