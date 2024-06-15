@@ -53,7 +53,9 @@
   services.gnome.gnome-keyring.enable = true;
   # TODO enable and move to greetd area? may need authentication dir or something?
   # services.pam.services.greetd.enableGnomeKeyring = true;
-  hardware.amdgpu.opencl = true;
+  hardware.amdgpu = {
+    opencl = true;
+  };
   networking = {
     hostName = "corais";
     networkmanager.enable = true;
