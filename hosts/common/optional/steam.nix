@@ -14,6 +14,7 @@
         stdenv.cc.cc.lib
         libkrb5
         keyutils
+        gamemode
       ];
     };
   };

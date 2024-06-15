@@ -35,6 +35,7 @@ in
           "video"
           "docker"
           "git"
+          "gamemode"
           "networkmanager"
         ];
 

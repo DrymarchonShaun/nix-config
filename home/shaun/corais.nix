@@ -33,7 +33,7 @@
       height = 1440;
       refreshRate = 165;
       noBar = false;
-      scale = 1.2;
+      scale = 1.0;
       x = 0;
       primary = true;
     }
@@ -42,7 +42,7 @@
       width = 2560;
       height = 1440;
       refreshRate = 165;
-      scale = 1.2;
+      scale = 1.0;
       x = 2560;
     }
   ];
