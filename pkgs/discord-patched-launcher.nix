@@ -6,7 +6,6 @@
 , discord
 , killall
 , makeDesktopItem
-, copyDesktopItems
 , writeShellApplication
 }:
 stdenv.mkDerivation
