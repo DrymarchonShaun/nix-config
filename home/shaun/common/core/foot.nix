@@ -3,8 +3,8 @@
     enable = true;
     settings = {
       main = {
-        font = "Roboto Mono:size=13";
-        dpi-aware = "no";
+        font = "Roboto Mono:size=12";
+        dpi-aware = "yes";
       };
 
       bell = {
