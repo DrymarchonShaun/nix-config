@@ -15,10 +15,16 @@
         libkrb5
         keyutils
         gamemode
+        gamemode.lib
+        gamescope
+        mangohud
       ];
     };
   };
-  programs.gamescope.enable = true;
+  programs.gamescope = {
+    enable = true;
+    package = pkgs.unstable.gamescope;
+  };
   programs.gamemode = {
     enable = true;
     settings = {

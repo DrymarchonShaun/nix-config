@@ -134,6 +134,7 @@
           { criteria = { app_id = "nm-connection-editor"; }; command = "floating enable"; }
           { criteria = { app_id = "pwvucontrol"; }; command = "floating enable"; }
           { criteria = { app_id = "blueman-manager"; }; command = "floating enable"; }
+          { criteria = { class = "steam"; title = "Friends List"; }; command = "floating enable"; }
           { criteria = { title = "^Syncthing Tray( \(.*\))?$"; }; command = "floating enable"; }
         ];
       };
@@ -147,6 +148,10 @@
           { title = ".*Discord"; }
         ];
       };
+
+
+
+
       #windowrule = [
       # Dialogs
       #  "float, title:^(Open File)(.*)$"
