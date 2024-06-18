@@ -14,6 +14,7 @@
     common/optional/games/heroic.nix
     common/optional/media/calibre.nix
     common/optional/tools/eye-of-gnome.nix
+    common/optional/games/mangohud.nix
     common/optional/tools/gimp.nix
     common/optional/tools/inkscape.nix
     common/optional/tools/libreoffice.nix
