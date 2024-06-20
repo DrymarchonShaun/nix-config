@@ -15,7 +15,11 @@ rec {
     let
       discord-patcher-launcher =
         let
+
+          # uncomment when vencord is broken
+          # vencord = discord;
           vencord = discord.override { withVencord = true; };
+
           krisp-patcher = writers.writePython3Bin "krisp-patcher"
             {
               libraries = with python3Packages; [ capstone pyelftools ];
