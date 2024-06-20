@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 {
-  home.packages = [ pkgs.discord-patched-launcher ];
+  home.packages = [ pkgs.vesktop ];
+  # home.packages = [ pkgs.discord-patched-launcher ];
   systemd.user.services.discord = {
     Unit = {
       StartLimitBurst = 30;
@@ -19,7 +20,9 @@
       ExecStart = lib.mkForce (pkgs.writeShellScript "discord-delayed" ''
         set -euo pipefail
         ${lib.getExe' pkgs.coreutils "sleep"} 3
-        exec ${lib.getExe' pkgs.discord-patched-launcher "discord" }
+        # exec ${lib.getExe' pkgs.discord-patched-launcher "discord" }
+        exec ${lib.getExe' pkgs.vesktop "vesktop" }
+
       '');
       KillMode = "mixed";
     };

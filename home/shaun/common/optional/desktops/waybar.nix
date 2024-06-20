@@ -149,7 +149,8 @@
         border: none;
         border-radius: 0;
         /* `otf-font-awesome` is required to be installed for icons */
-        font-family: Roboto Regular;
+        font-family: Roboto;
+        font-weight: normal;
         min-height: 22px;
         font-size: 16px;
         text-shadow: none;
@@ -172,8 +173,8 @@
 
 
       #workspaces button {
-        padding-left: 4px;
-        padding-right: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
         text-shadow: inherit;
         color: @text;
         background: transparent;
@@ -235,14 +236,14 @@
         background: @surface0;
       }
 
-        #custom-notification {
-          padding-left: 6px;
-          padding-right: 6px;
-          border-radius: 0px 10px 10px 0px;
-          transition: none;
-          color: @text;
-          background: @surface0;
-        }
+      #custom-notification {
+        padding-left: 6px;
+        padding-right: 4px;
+        border-radius: 0px 10px 10px 0px;
+        transition: none;
+        color: @text;
+        background: @surface0;
+      }
 
       #pulseaudio {
         padding-left: 11px;
