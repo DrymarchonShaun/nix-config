@@ -58,10 +58,10 @@ in
           tooltip = false;
           format = "{icon}";
           format-icons = {
-            notification = (iconOffset "1pt" "󱅫");
-            none = (iconOffset "1pt" "󰂚");
-            dnd-notification = (iconOffset "1pt" "󰂛");
-            dnd-none = (iconOffset "1pt" "󰂛");
+            notification = iconOffset "1pt" "󱅫";
+            none = iconOffset "1pt" "󰂚";
+            dnd-notification = iconOffset "1pt" "󰂛";
+            dnd-none = iconOffset "1pt" "󰂛";
           };
           return-type = "json";
           exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
@@ -108,8 +108,8 @@ in
           capslock = true;
           format = "<span text_transform=\"uppercase\">{name}</span>${smallSpace}{icon} ";
           format-icons = {
-            locked = (iconOffset "1pt" "󰔡");
-            unlocked = (iconOffset "1pt" "󰨙");
+            locked = iconOffset "1pt" "󰔡";
+            unlocked = iconOffset "1pt" "󰨙";
           };
         };
 
@@ -150,8 +150,8 @@ in
           reverse-scrolling = 1;
           format = "{volume:2}%${smallSpace}{icon}";
           format-muted = "{volume:2}%${smallSpace}${iconOffset "1pt" "󰝟"}";
-          format-source = (iconOffset "1pt" "󰍬");
-          format-source-muted = (iconOffset "1pt" "󰍭");
+          format-source = iconOffset "1pt" "󰍬";
+          format-source-muted = iconOffset "1pt" "󰍭";
           format-icons = {
             default = [
               (iconOffset "1pt" "󰕿")
