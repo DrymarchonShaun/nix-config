@@ -22,6 +22,7 @@
             which_key = true;
             neotree = true;
             treesitter = true;
+            treesitter_context = true;
           };
         };
       };
@@ -141,6 +142,14 @@
 
     plugins.treesitter = {
       enable = true;
+    };
+
+    plugins.treesitter-context = {
+      enable = true;
+      settings = {
+        mode = "cursor";
+        max_lines = 3;
+      };
     };
 
     # autopairs
