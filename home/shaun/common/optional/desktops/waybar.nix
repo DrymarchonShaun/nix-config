@@ -1,4 +1,10 @@
 { pkgs, lib, ... }:
+let
+  # use U+2004 between text and icons
+  smallSpace = ''<span font="Roboto"> </span>'';
+  # offset char by rise
+  iconOffset = rise: char: ''<span rise="${rise}">${char} </span>'';
+in
 {
   # Let it try to start a few more times
   systemd.user.services.waybar = {
@@ -14,7 +20,7 @@
     settings = {
       mainBar = {
         layer = "bottom";
-        margin = "20 20 0 20";
+        margin = "10 10 0 10";
         modules-left = [
           "sway/workspaces"
         ];
@@ -40,10 +46,10 @@
           tooltip = false;
           format = "{icon}";
           format-icons = {
-            notification = "󰂚<span foreground = 'red' > <sup></sup> </span> ";
-            none = "󰂚 ";
-            dnd-notification = "󰂛<span foreground='red'><sup></sup></span> ";
-            dnd-none = "󰂛 ";
+            notification = (iconOffset "1pt" "󱅫");
+            none = (iconOffset "1pt" "󰂚");
+            dnd-notification = (iconOffset "1pt" "󰂛");
+            dnd-none = (iconOffset "1pt" "󰂛");
           };
           return-type = "json";
           exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
@@ -54,7 +60,7 @@
         keyboard-state = {
           numlock = true;
           capslock = true;
-          format = "{name} {icon}";
+          format = "<span text_transform=\"uppercase\">{name}</span>${smallSpace}{icon} ";
           format-icons = {
             locked = "󰔡 ";
             unlocked = "󰨙 ";
@@ -62,24 +68,19 @@
         };
         clock = {
           interval = 1;
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          format = "{:%a, %d %b, %I:%M:%S %p}";
+          format = "<span text_transform=\"uppercase\">{:%a, %d %b, %I:%M:%S %p}</span>";
         };
         pulseaudio = {
           reverse-scrolling = 1;
-          format = "{volume}% {icon}";
-          format-bluetooth = "{volume}% {icon}  ";
-          format-bluetooth-muted = "{icon} 󰝟 ";
-          format-muted = "{volume}% 󰝟 ";
-          format-source = "󰍬 ";
-          format-source-muted = "󰍭 ";
+          format = "{volume}%${smallSpace}{icon}";
+          format-muted = "{volume}%${smallSpace}${iconOffset "1pt" "󰝟"}";
+          format-source = (iconOffset "1pt" "󰍬");
+          format-source-muted = (iconOffset "1pt" "󰍭");
           format-icons = {
-            headphone = "󰋋 ";
-            headset = "󰋎 ";
             default = [
-              "󰕿 "
-              "󰖀 "
-              "󰕾 "
+              (iconOffset "1pt" "󰕿")
+              (iconOffset "1pt" "󰖀")
+              (iconOffset "1pt" "󰕾")
             ];
           };
           ignored-sinks = [
@@ -88,32 +89,35 @@
           on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         };
         cpu = {
-          format = "{usage}% 󰍛 ";
-          format-alt = "{avg_frequency} GHz 󰍛 ";
+          format = "{usage}%${smallSpace}${iconOffset "1pt" "󰚗"}";
+          format-alt = "{avg_frequency}GHz${smallSpace}${iconOffset "1pt" "󰚗"}";
           tooltip = true;
           interval = 1;
         };
         memory = {
           interval = 30;
-          format = "{percentage}% 󰘚 ";
-          format-alt = "{used} GB 󰘚 ";
+          format = "{percentage}%${smallSpace}${iconOffset "1pt" "󰍛"}";
+          format-alt = "{used}GB${smallSpace}${iconOffset "1pt" "󰍛"}";
         };
         temperature = {
           critical-threshold = 80;
-          format = "{temperatureC}°C {icon}";
+          format = "{temperatureC}°C${smallSpace}{icon}";
           format-icons = [
-            "󱃃 "
-            "󰔏 "
-            "󱃂 "
+            (iconOffset "1pt" "󱃃")
+            (iconOffset "1pt" "󰔏")
+            (iconOffset "1pt" "󱃂")
+            (iconOffset "1pt" "󰸁")
           ];
           tooltip = false;
           interval = 1;
         };
         backlight = {
           device = "intel_backlight";
-          format = "{percent}% {icon}";
+          format = "{percent}%${smallSpace}{icon}";
           format-icons = [
-            "󰃞 "
+            (iconOffset "1pt" "󰃞")
+            (iconOffset "1pt" "󰃟")
+            (iconOffset "1pt" "󰃠")
           ];
         };
         battery = {
@@ -121,21 +125,21 @@
             warning = 30;
             critical = 15;
           };
-          format = "{capacity}% {icon}";
-          format-charging = "{capacity}% 󰂅 ";
-          format-plugged = "{capacity}% 󰚥 ";
-          format-alt = "{time} {icon}";
+          format = "{capacity}%${smallSpace}{icon}";
+          format-charging = "{capacity}%${smallSpace}${iconOffset "1pt" "󰂄"}";
+          format-plugged = "{capacity}%${smallSpace}${iconOffset "1pt" "󰚥"}";
+          format-alt = "{time}${smallSpace}{icon}";
           format-icons = [
-            "󰁺 "
-            "󰁻 "
-            "󰁼 "
-            "󰁽 "
-            "󰁾 "
-            "󰁿 "
-            "󰂀 "
-            "󰂁 "
-            "󰂂 "
-            "󰁹 "
+            (iconOffset "1pt" "󰁺")
+            (iconOffset "1pt" "󰁻")
+            (iconOffset "1pt" "󰁼")
+            (iconOffset "1pt" "󰁽")
+            (iconOffset "1pt" "󰁾")
+            (iconOffset "1pt" "󰁿")
+            (iconOffset "1pt" "󰂀")
+            (iconOffset "1pt" "󰂁")
+            (iconOffset "1pt" "󰂂")
+            (iconOffset "1pt" "󰁹")
           ];
         };
         tray = {
@@ -149,19 +153,25 @@
         border: none;
         border-radius: 0;
         /* `otf-font-awesome` is required to be installed for icons */
-        font-family: Roboto;
+        font-family: "Roboto Mono", "Symbols Nerd Font Mono";
         font-weight: normal;
         min-height: 22px;
-        font-size: 16px;
+        font-size: 17px;
         text-shadow: none;
+        padding-top: 2px;
+        padding-bottom: 2px;
       }
-
+    
       window#waybar {
         background: transparent;
       }
 
       window#waybar.hidden {
         opacity: 0.2;
+      }
+
+      #spaced {
+          letter-spacing: 0.25em;
       }
 
       #workspaces {
@@ -173,13 +183,11 @@
 
 
       #workspaces button {
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
         text-shadow: inherit;
         color: @text;
         background: transparent;
-        padding-top: 6px;
-        padding-bottom: 6px;
       }
 
       #workspaces button.persistent {
@@ -228,8 +236,8 @@
       }
 
       #clock {
-        padding-left: 11px;
-        padding-right: 4px;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
         border-radius: 10px 0px 0px 10px;
         transition: none;
         color: @text;
@@ -237,8 +245,8 @@
       }
 
       #custom-notification {
-        padding-left: 6px;
-        padding-right: 4px;
+        padding-left: 0.25em;
+        padding-right: 0.5em;
         border-radius: 0px 10px 10px 0px;
         transition: none;
         color: @text;
@@ -246,8 +254,8 @@
       }
 
       #pulseaudio {
-        padding-left: 11px;
-        padding-right: 0px;
+        padding-left: 0.5em;
+        padding-right: 0.2em;
         border-radius: 10px 0px 0px 10px;
         transition: none;
         color: @text;
@@ -255,16 +263,16 @@
       }
 
       #cpu {
-        padding-left: 3px;
-        padding-right: 0px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         color: @text;
         background: @surface0;
       }
 
       #temperature {
-        padding-left: 5px;
-        padding-right: 0px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         color: @text;
@@ -277,8 +285,8 @@
       }
 
       #memory {
-        padding-left: 3px;
-        padding-right: 2px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         color: @text;
@@ -286,8 +294,8 @@
       }
 
       #custom-fan {
-        padding-left: 3px;
-        padding-right: 2px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         color: @text;
@@ -295,8 +303,8 @@
       }
 
       #keyboard-state {
-        padding-left: 5px;
-        padding-right: 0px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         color: @text;
@@ -304,8 +312,8 @@
       }
 
       #backlight {
-        padding-left: 4px;
-        padding-right: 4px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         color: @text;
@@ -313,8 +321,8 @@
       }
 
       #battery {
-        padding-left: 4px;
-        padding-right: 2px;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
         border-radius: 0px;
         transition: none;
         background: @surface0;
@@ -337,8 +345,8 @@
       }
 
       #tray {
-        padding-left: 0px;
-        padding-right: 11px;
+        padding-left: 0.2em;
+        padding-right: 0.5em;
         border-radius: 0px 10px 10px 0px;
         transition: none;
         color: @text;
