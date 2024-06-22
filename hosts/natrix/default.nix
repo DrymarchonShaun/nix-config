@@ -5,14 +5,14 @@
 #
 ###############################################################
 
-{ inputs, pkgs, configLib, ... }: {
+{ inputs, lib, pkgs, configLib, ... }: {
   imports = [
     #################### Every Host Needs This ####################
     ./hardware-configuration.nix
 
     #################### Hardware Modules ####################
     inputs.hardware.nixosModules.common-cpu-intel
-    #inputs.hardware.nixosModules.common-gpu-intel
+    # inputs.hardware.nixosModules.common-gpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
 
     #################### Disk Layout ####################
