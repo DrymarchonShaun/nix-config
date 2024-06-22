@@ -37,4 +37,12 @@
       config.allowUnfree = true;
     };
   };
+  # When applied, the dev/master nixpkgs set (declared in the flake inputs) will
+  # be accessible through 'pkgs.dev'
+  dev-packages = final: _prev: {
+    dev = import inputs.nixpkgs-dev {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
 }

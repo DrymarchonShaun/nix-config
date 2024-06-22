@@ -4,7 +4,7 @@
 , coreutils
 , libnotify
 , discord
-, unstable
+, dev
 , killall
 , makeDesktopItem
 , writeShellApplication
@@ -19,7 +19,7 @@ rec {
 
           # uncomment when vencord is broken
           # vencord = discord;
-          vencord = discord.override { withVencord = true; vencord = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/9e7c922448c923a629f0aea4209aa2aa95bb0f50.tar.gz") { }).vencord; };
+          vencord = discord.override { withVencord = true; vencord = dev.vencord; };
 
           krisp-patcher = writers.writePython3Bin "krisp-patcher"
             {
