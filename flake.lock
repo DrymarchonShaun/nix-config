@@ -440,6 +440,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-dev": {
+      "locked": {
+        "lastModified": 1719077161,
+        "narHash": "sha256-LEkVVLbMZt3H/RYaTxA/h6O7PvXvaeMMeazK/V3lfBo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c2132a15f0e88ef6b0ab87ca6a15ee973975d189",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-ovmf": {
       "locked": {
         "lastModified": 1708984720,
@@ -522,11 +538,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1719065873,
-        "narHash": "sha256-95PKw/edeE1G0b+DKDNhlqcaIAgnoFCmCHu4QM74Gt0=",
+        "lastModified": 1719076561,
+        "narHash": "sha256-LZ8/N4N0v6R+CE51zkw6E/IChrTxvYH9OxUujPa3G2w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "930bb14650d7fb24198fa7ad45287eef7e87f42a",
+        "rev": "c3ff461dc958361e49535a92165ab81151690fbb",
         "type": "github"
       },
       "original": {
@@ -577,6 +593,7 @@
         "nix-secrets": "nix-secrets",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-dev": "nixpkgs-dev",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "sops-nix": "sops-nix"
