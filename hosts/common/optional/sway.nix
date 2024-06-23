@@ -12,4 +12,13 @@
     ];
   };
 
+  # less delay on failed login
+  security.pam.services.swaylock = {
+    nodelay = true;
+    failDelay = {
+      enable = true;
+      delay = 500000;
+    };
+  };
+
 }
