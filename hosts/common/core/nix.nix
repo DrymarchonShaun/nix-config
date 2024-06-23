@@ -1,6 +1,7 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, pkgs, lib, ... }:
 {
   nix = {
+    package = lib.mkDefault pkgs.nixVersions.latest;
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
@@ -12,7 +13,7 @@
     settings = {
       # See https://jackson.dev/post/nix-reasonable-defaults/
       connect-timeout = 5;
-      log-lines = 25;
+      log-lines = 50;
       min-free = 128000000; # 128MB
       max-free = 1000000000; # 1GB
 
@@ -21,13 +22,13 @@
 
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
+      flake-registry = ""; # Disable global flake registry
     };
 
     # Garbage Collection
     gc = {
       automatic = true;
-      options = "--delete-older-than 10d";
+      options = "--delete-older-than 3d";
     };
-
   };
 }
