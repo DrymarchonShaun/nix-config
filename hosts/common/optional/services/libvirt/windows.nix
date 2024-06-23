@@ -5,7 +5,7 @@
         {
           type = "kvm";
 
-          name = "win11";
+          name = "win11gpu";
           uuid = "78103f8f-6a97-437f-9b98-765e21656584";
           metadata = with inputs.NixVirt.lib.xml;
             [
