@@ -2,7 +2,6 @@
   imports = [
     # custom key binds
     ./binds.nix
-    ../hyprpaper.nix
 
     ########## Utilities ##########
     ../services/swaync.nix # Notification daemon
