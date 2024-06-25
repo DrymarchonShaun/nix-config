@@ -17,10 +17,10 @@ stdenv.mkDerivation {
   pname = "arma3-unix-launcher";
   version = "git";
   src = fetchFromGitHub {
-    owner = "muttleyxd";
+    owner = "DrymarchonShaun";
     repo = "arma3-unix-launcher";
-    rev = "master";
-    hash = "sha256-JD/CoCSAqbx77JUkRbRo/ipsWOmr/JFqrFS4SP1AEyw=";
+    rev = "rfdlc";
+    hash = "sha256-w47V8gVXIkapfEAhXFDQaKYHbx2wIk2uIh53OQUxmPU=";
   };
   nativeBuildInputs = [ wrapQtAppsHook cmake spdlog curlpp.src curl ];
 
