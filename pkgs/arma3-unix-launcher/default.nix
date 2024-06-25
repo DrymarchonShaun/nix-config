@@ -1,28 +1,28 @@
-{ clangStdenv
-, lib
-, curl
-, substituteAll
-, fetchFromGitHub
-, fetchurl
+{ stdenv
 , cmake
+, curl
 , curlpp
 , doctest
-, spdlog
+, fetchFromGitHub
+, fetchurl
 , fmt
-, trompeloeil
 , nlohmann_json
 , qt5
+, spdlog
+, substituteAll
+, trompeloeil
+, wrapQtAppsHook
 }:
-clangStdenv.mkDerivation {
+stdenv.mkDerivation {
   pname = "arma3-unix-launcher";
   version = "git";
   src = fetchFromGitHub {
     owner = "muttleyxd";
     repo = "arma3-unix-launcher";
-    rev = "commit-383";
-    hash = "sha256-1CXWwujLgNfofTmKkFqaCUGwQTE7QIfhulOwHfhsTy0=";
+    rev = "master";
+    hash = "sha256-JD/CoCSAqbx77JUkRbRo/ipsWOmr/JFqrFS4SP1AEyw=";
   };
-  nativeBuildInputs = [ cmake curl.dev ];
+  nativeBuildInputs = [ wrapQtAppsHook cmake spdlog curlpp.src curl ];
 
   buildInputs = [
     qt5.qtbase
@@ -40,25 +40,19 @@ clangStdenv.mkDerivation {
         rev = "45664c4";
         sha256 = "sha256-qLD9zD6hbItDn6ZHHWBXrAWhySvqcs40xA5+C/5Fkhw=";
       };
-      curlpp_src = curlpp.src.overrideAttrs { version = "master"; rev = "master"; };
-      doctest_src = doctest.src;
-      fmt_src = fmt.src.overrideAttrs { version = "8.1.1"; rev = "8.1.1"; };
-      nlohmann_json_src = nlohmann_json.overrideAttrs { dontBuild = true; version = "3.7.3"; };
+      curlpp_src = curlpp.src;
+      doctest_src = doctest;
+      fmt_src = fmt;
+      nlohmann_json_src = nlohmann_json;
       pugixml_src = fetchFromGitHub {
         owner = "muttleyxd";
         repo = "pugixml";
         rev = "simple-build-for-a3ul";
         sha256 = "sha256-FpREdz6DbhnLDGOuQY9rU17SSd6ngA4WfO0kGHqGJPM=";
       };
-      spdlog_src = spdlog.src.overrideAttrs { version = "v1.x"; rev = "v1.x"; };
+      spdlog_src = spdlog;
       steamworkssdk_src = fetchurl { url = "https://github.com/julianxhokaxhiu/SteamworksSDKCI/releases/download/1.53/SteamworksSDK-v1.53.0_x64.zip"; sha256 = "sha256-6PQGaPsaxBg/MHVWw2ynYW6LaNSrE9Rd9Q9ZLKFGPFA="; };
-      trompeloeil_src = trompeloeil.src.overrideAttrs { version = "64fd171"; rev = "64fd171"; };
+      trompeloeil_src = trompeloeil;
     })
   ];
-  dontWrapQtApps = true;
-  installPhase = ''
-    mkdir -p $out/{bin,share}
-    mv share $out/
-    install -Dm755 bin/$pname "$out/bin/$pname" 
-  '';
 }
