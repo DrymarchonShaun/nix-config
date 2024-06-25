@@ -6,7 +6,7 @@
 rec {
 
   #################### Packages with external source ####################
-  arma3-unix-launcher = pkgs.callPackage ./arma3-unix-launcher { };
+  arma3-unix-launcher = pkgs.libsForQt5.callPackage ./arma3-unix-launcher { };
   cd-gitroot = pkgs.callPackage ./cd-gitroot { };
   discord-patched-launcher = pkgs.callPackage ./discord-patched-launcher.nix { };
   fae-linux = pkgs.callPackage ./fae-linux { };
