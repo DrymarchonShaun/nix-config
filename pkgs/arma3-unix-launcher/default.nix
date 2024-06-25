@@ -1,42 +1,58 @@
-{ clangStdenv
-, lib
-, fetchFromGitHub
-, wrapQtAppsHook
-, git
+{ stdenv
 , cmake
-, pkg-config
+, curl
 , curlpp
-, spdlog
+, doctest
+, fetchFromGitHub
+, fetchurl
 , fmt
-, pugixml
 , nlohmann_json
-, qtbase
-, qtsvg
+, qt5
+, spdlog
+, substituteAll
+, trompeloeil
+, wrapQtAppsHook
 }:
-clangStdenv.mkDerivation {
+stdenv.mkDerivation {
   pname = "arma3-unix-launcher";
   version = "git";
   src = fetchFromGitHub {
     owner = "muttleyxd";
     repo = "arma3-unix-launcher";
-    rev = "commit-383";
-    hash = "sha256-1CXWwujLgNfofTmKkFqaCUGwQTE7QIfhulOwHfhsTy0=";
+    rev = "master";
+    hash = "sha256-JD/CoCSAqbx77JUkRbRo/ipsWOmr/JFqrFS4SP1AEyw=";
   };
-  nativeBuildInputs = [ wrapQtAppsHook cmake pkg-config ];
+  nativeBuildInputs = [ wrapQtAppsHook cmake spdlog curlpp.src curl ];
 
   buildInputs = [
-    curlpp
-    (spdlog.overrideAttrs { version = "1.11.0"; })
-    fmt
-    nlohmann_json
-    pugixml
-    qtbase
-    qtsvg
+    qt5.qtbase
+    qt5.qtsvg
   ];
 
-  installPhase = ''
-    mkdir -p $out/{bin,share}
-    mv share $out/
-    install -Dm755 bin/$pname "$out/bin/$pname" 
-  '';
+  cmakeFlags = [ "-Wno-dev" ];
+  patches = [
+    # prevent CMake from trying to get libraries on the Internet
+    (substituteAll {
+      src = ./dont_fetch_dependencies.patch;
+      argparse_src = fetchFromGitHub {
+        owner = "p-ranav";
+        repo = "argparse";
+        rev = "45664c4";
+        sha256 = "sha256-qLD9zD6hbItDn6ZHHWBXrAWhySvqcs40xA5+C/5Fkhw=";
+      };
+      curlpp_src = curlpp.src;
+      doctest_src = doctest;
+      fmt_src = fmt;
+      nlohmann_json_src = nlohmann_json;
+      pugixml_src = fetchFromGitHub {
+        owner = "muttleyxd";
+        repo = "pugixml";
+        rev = "simple-build-for-a3ul";
+        sha256 = "sha256-FpREdz6DbhnLDGOuQY9rU17SSd6ngA4WfO0kGHqGJPM=";
+      };
+      spdlog_src = spdlog;
+      steamworkssdk_src = fetchurl { url = "https://github.com/julianxhokaxhiu/SteamworksSDKCI/releases/download/1.53/SteamworksSDK-v1.53.0_x64.zip"; sha256 = "sha256-6PQGaPsaxBg/MHVWw2ynYW6LaNSrE9Rd9Q9ZLKFGPFA="; };
+      trompeloeil_src = trompeloeil;
+    })
+  ];
 }
