@@ -1,20 +1,8 @@
-{ pkgs, ... }:
-let
-  vscode-wayland = pkgs.vscode.overrideAttrs (
-    old: {
-      #   nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
-      #   postFixup = (old.postFixup or "") + ''
-      #     wrapProgram $out/bin/code \
-      #       --add-flags "--enable-features=UseOzonePlatform" \
-      #       --add-flags "--ozone-platform=wayland"
-      #   '';
-    }
-  );
-in
+{ inputs, pkgs, ... }:
 {
   programs.vscode = {
     enable = true;
-    package = vscode-wayland;
+    package = pkgs.vscode;
     extensions = with pkgs.vscode-marketplace; [
       # Nix
       mkhl.direnv
