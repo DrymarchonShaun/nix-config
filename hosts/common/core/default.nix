@@ -1,5 +1,12 @@
-{ inputs, outputs, configLib, ... }: {
-  imports = (configLib.scanPaths ./.)
+{
+  inputs,
+  outputs,
+  configLib,
+  ...
+}:
+{
+  imports =
+    (configLib.scanPaths ./.)
     ++ [ inputs.home-manager.nixosModules.home-manager ]
     ++ (builtins.attrValues outputs.nixosModules);
 
@@ -26,7 +33,9 @@
     # Defaults env_keep + =SSH_AUTH_SOCK
   '';
 
-  home-manager.extraSpecialArgs = { inherit inputs outputs; };
+  home-manager.extraSpecialArgs = {
+    inherit inputs outputs;
+  };
 
   nixpkgs = {
     # you can add global overlays here

@@ -1,8 +1,11 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  configVars,
+  ...
+}:
 let
-  #FIXME: switch this to 10022 at some point. leaving it as 22 for now becuase I don't have time
-  # to add all the required matchblock entries
-  sshPort = 22;
+  sshPort = configVars.networking.sshPort;
 
   # Sops needs access to the keys before the persist dirs are even mounted; so
   # just persisting the keys won't work, we must point at /persist
@@ -24,10 +27,12 @@ in
       GatewayPorts = "clientspecified";
     };
 
-    hostKeys = [{
-      path = "${lib.optionalString hasOptinPersistence "/persist"}/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
+    hostKeys = [
+      {
+        path = "${lib.optionalString hasOptinPersistence "/persist"}/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
     # Fix LPE vulnerability with sudo use SSH_AUTH_SOCK: https://github.com/NixOS/nixpkgs/issues/31611
     authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
   };

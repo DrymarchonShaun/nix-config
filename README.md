@@ -42,17 +42,17 @@ The way out, is through.
 
 ---
 
-Watch NixOS related videos on my (YouTube channel)[https://www.youtube.com/@Emergent_Mind].
+Watch NixOS related videos on my [YouTube channel](https://www.youtube.com/@Emergent_Mind).
 
 ## Feature Highlights
 
 - Flake-based multi-host, multi-user NixOS and Home-Manager configurations
   - Core configs for hosts and users
   - Modular, optional configs for user and host-specific needs
-- Secrets management via sops-nix and a private nix-secrets repo which is included as a flake input
-- Automated remote-bootstrapping of NixOS, nix-config, and nix-secrets
+- Secrets management via sops-nix and a _private_ nix-secrets repo which is included as a flake input
+- Automated remote-bootstrapping of NixOS, nix-config, and _private_ nix-secrets
 - Multiple YubiKey device handling and agent forwarding
-- Basic NixOs and Home-Manager build automation recipes
+- Basic NixOS and Home-Manager build automation recipes
 
 The roadmap of additional features is laid across functionally thematic stages that can be viewed, along with short term objectives, in the [Roadmap of TODOs](docs/TODO.md).
 
@@ -66,9 +66,11 @@ Completed features will be added here as each stage is complete.
 - Persistance
 - More disk space
 
+This is a personalized configuration that has several technical requirements to build successfully. This nix-config will serve you best as a reference, learning resource, and template for crafting your own configuration. I am continuing to provide resources throughout the repository and my website to help but you must also experiment and learn as you go to be successful to create a NixOS environment that will meet your needs.
+
 ## Structure Quick Reference
 
-For details about design concepts, constraints, and how structural elements interact, see the article and/or Youtube video [Anatomy of a NixOS Config](https://unmovedcentre.com/technology/2024/02/24/anatomy-of-a-nixos-config.html) available on my website.
+For details about design concepts, constraints, and how structural elements interact, see the article and/or Youtube video [Anatomy of a NixOS Config](https://unmovedcentre.com/posts/anatomy-of-a-nixos-config/) available on my website.
 
 For a large screenshot of the concept diagram, as well as previous iterations, see [Anatomy](docs/anatomy.md).
 
@@ -83,7 +85,7 @@ For a large screenshot of the concept diagram, as well as previous iterations, s
     - `disks` - Declarative disk partition and format specifications via disko.
     - `optional` - Optional configurations present across more than one host.
     - `users` - Host level user configurations present across at least one host.
-  - `genoa` - stage 3
+  - `genoa` - stage 5
   - `ghost` - stage 4
   - `grief` - Lab - Qemu VM
   - `gooey` - stage 5
@@ -110,6 +112,8 @@ For details on how this is accomplished, how to approach different scenarios, an
 
 ## Support
 
+Thank you to my generous supporters!
+
 If you find what I do helpful, please consider supporting my work on Ko-fi.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P6VO0HV)
@@ -120,10 +124,12 @@ I intentionally keep all of my content ad-free.
 
 - [Official Nix Documentation](https://nix.dev)
   - [Best practices](https://nix.dev/guides/best-practices)
-- [NixOS & Flakes Book](https://nixos-and-flakes.thiscute.world/) - Ryan Yin gets a second mention here. This book he's writing is fantastic.
+- [Noogle](https://noogle.dev/) - Nix API reference documentation.
+- [Official NixOS Wiki](https://wiki.nixos.org/)
+- [NixOS & Flakes Book](https://nixos-and-flakes.thiscute.world/) - an excellent introductory book by Ryan Yin
 - [Impermanence](https://github.com/nix-community/impermanence)
 - Yubikey
-  - <https://nixos.wiki/wiki/Yubikey>
+  - <https://wiki.nixos.org/wiki/Yubikey>
   - [DrDuh YubiKey-Guide](https://github.com/drduh/YubiKey-Guide)
 
 ## Acknowledgements

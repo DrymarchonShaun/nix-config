@@ -1,6 +1,9 @@
 # You can build these directly using 'nix build .#example'
 
-{ pkgs ? import <nixpkgs> { } }: rec {
+{
+  pkgs ? import <nixpkgs> { },
+}:
+rec {
 
   #################### Packages with external source ####################
   arma3-unix-launcher = pkgs.libsForQt5.callPackage ./arma3-unix-launcher { };
