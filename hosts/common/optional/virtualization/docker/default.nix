@@ -1,0 +1,4 @@
+{ ... }: {
+  virtualisation = {
+    podman.dockerCompat = true;
+  };
