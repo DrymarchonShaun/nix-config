@@ -24,7 +24,6 @@ in
     #font.name =  TODO see misterio https://github.com/Misterio77/nix-config/blob/f4368087b0fd0bf4a41bdbf8c0d7292309436bb0/home/misterio/features/desktop/common/gtk.nix   he has a custom config for managing fonts, colorsheme etc.
     catppuccin = {
       enable = false;
-      cursor.enable = true;
       icon.enable = true;
     };
     theme.name = "adw-gtk3-dark";
@@ -40,10 +39,10 @@ in
     #  };
     #};
 
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.catppuccin-papirus-folders.override { inherit (config.gtk.catppuccin.icon) accent flavor; };
-    };
+    # iconTheme = {
+    #   name = "Papirus-Dark";
+    #   package = pkgs.catppuccin-papirus-folders.override { inherit (config.gtk.catppuccin.icon) accent flavor; };
+    # };
 
     gtk3 = {
       extraCss = builtins.readFile "${gradienceBuild}/gtk-3.0/gtk.css";
@@ -58,13 +57,14 @@ in
       };
     };
   };
-  home = {
-    pointerCursor = {
-      name = "Catppuccin-Macchiato-Blue-Cursors";
-      package = pkgs.catppuccin-cursors.macchiatoBlue;
-      size = 18;
-      gtk.enable = true;
-      x11.enable = true;
-    };
-  };
+  catppuccin.pointerCursor.enable = true;
+  #home = {
+  #  pointerCursor = {
+  #    name = "Catppuccin-Macchiato-Blue-Cursors";
+  #    package = pkgs.catppuccin-cursors.macchiatoBlue;
+  #    size = 18;
+  #    gtk.enable = true;
+  #    x11.enable = true;
+  #  };
+  #};
 }
