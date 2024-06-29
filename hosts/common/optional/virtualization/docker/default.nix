@@ -1,4 +1,9 @@
 { ... }: {
   virtualisation = {
-    podman.dockerCompat = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      autoPrune.enable = true;
+    };
   };
+}

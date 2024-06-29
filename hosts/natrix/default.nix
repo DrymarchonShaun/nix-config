@@ -36,7 +36,12 @@
     "hosts/common/optional/services/gvfs.nix"
     "hosts/common/optional/services/bluetooth.nix"
     "hosts/common/optional/unbound.nix"
-    "hosts/common/optional/openbooks.nix"
+
+
+    # Docker Configs
+    "hosts/common/optional/virtualization/docker"
+    "hosts/common/optional/virtualization/docker/openbooks.nix"
+
 
     # Desktop
     # "hosts/common/optional/hyprland.nix" # window manager
