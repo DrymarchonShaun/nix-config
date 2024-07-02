@@ -11,7 +11,6 @@
     common/optional/dev/vscode.nix
     common/optional/games/heroic.nix
     common/optional/games/prismlauncher.nix
-    common/optional/games/steam.nix
     common/optional/media/calibre.nix
     common/optional/tools/eye-of-gnome.nix
     common/optional/tools/gimp.nix
