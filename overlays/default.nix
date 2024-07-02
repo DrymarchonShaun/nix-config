@@ -15,20 +15,22 @@
       secureBoot = true;
       tpmSupport = true;
       edk2 = prev.edk2.overrideAttrs (attrs: {
-        patches = attrs.patches ++ [ ./patches/edk2-to-am.patch ];
+        patches = (attrs.patches or [ ]) ++ [ ./patches/edk2-to-am.patch ];
       });
     };
     qemu_kvm = prev.qemu_kvm.overrideAttrs (attrs: {
       pipewireSupport = true;
-      patches = attrs.patches ++ [
+      patches = (attrs.patches or [ ]) ++ [
         ./patches/qemu-anti-detection.patch
       ];
     });
-    cinnamon.nemo-with-extensions = prev.cinnamon.nemo-with-extensions.overrideAttrs (attrs: {
-      patches = attrs.patches ++ [
-        # https://github.com/NixOS/nixpkgs/issues/212740
-        ./patches/nemo-no-widget-destroy.patch
-      ];
+    cinnamon = prev.cinnamon.overrideScope (cfinal: cprev: {
+      nemo = cprev.nemo.overrideAttrs (attrs: {
+        patches = (attrs.patches or [ ]) ++ [
+          # https://github.com/NixOS/nixpkgs/issues/212740
+          ./patches/nemo-no-widget-destroy.patch
+        ];
+      });
     });
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...

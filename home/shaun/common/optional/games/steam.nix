@@ -1,4 +1,3 @@
 { pkgs, ... }: {
-  # home.packages = [ pkgs.steam ];
-
+  home.packages = [ pkgs.arma3-unix-launcher ];
 }
