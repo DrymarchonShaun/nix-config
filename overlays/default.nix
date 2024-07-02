@@ -18,12 +18,18 @@
         patches = attrs.patches ++ [ ./patches/edk2-to-am.patch ];
       });
     };
-    qemu_kvm = prev.qemu_kvm.overrideAttrs {
+    qemu_kvm = prev.qemu_kvm.overrideAttrs (attrs: {
       pipewireSupport = true;
-      patches = [
+      patches = attrs.patches ++ [
         ./patches/qemu-anti-detection.patch
       ];
-    };
+    });
+    cinnamon.nemo-with-extensions = prev.cinnamon.nemo-with-extensions.overrideAttrs (attrs: {
+      patches = attrs.patches ++ [
+        # https://github.com/NixOS/nixpkgs/issues/212740
+        ./patches/nemo-no-widget-destroy.patch
+      ];
+    });
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
