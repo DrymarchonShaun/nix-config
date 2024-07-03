@@ -1,5 +1,6 @@
 { inputs, pkgs, ... }:
 {
+  home.packages = [ inputs.nil.packages.${pkgs.system}.nil ];
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
