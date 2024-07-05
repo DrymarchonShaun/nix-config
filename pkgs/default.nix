@@ -1,7 +1,7 @@
 # You can build these directly using 'nix build .#example'
 
-{
-  pkgs ? import <nixpkgs> { },
+{ pkgs ? import <nixpkgs> { }
+,
 }:
 rec {
 
@@ -17,4 +17,5 @@ rec {
   wallpapers = pkgs.callPackage ./wallpapers { };
   zhooks = pkgs.callPackage ./zhooks { };
   zsh-term-title = pkgs.callPackage ./zsh-term-title { };
+  gamma-launcher = pkgs.callPackage ./gamma-launcher { };
 }

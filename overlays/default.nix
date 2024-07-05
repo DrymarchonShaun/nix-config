@@ -20,24 +20,25 @@
     };
     qemu_kvm = prev.qemu_kvm.overrideAttrs (attrs: {
       pipewireSupport = true;
-      patches = (attrs.patches or [ ]) ++ [
-        ./patches/qemu-anti-detection.patch
-      ];
+      patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
     });
-    cinnamon = prev.cinnamon.overrideScope (cfinal: cprev: {
-      nemo = cprev.nemo.overrideAttrs (attrs: {
-        patches = (attrs.patches or [ ]) ++ [
-          # https://github.com/NixOS/nixpkgs/issues/212740
-          # ./patches/nemo-no-widget-destroy.patch
-          # Don't tie the interactive search box with the window's lifetime
-          # https://github.com/linuxmint/nemo/issues/3423
-          (prev.fetchpatch {
-            url = "https://github.com/linuxmint/nemo/commit/055b47af0e1a830e556989372f3689bbd36b639d.patch";
-            hash = "sha256-cMtBz1uLGCV4nnrBITzXAV/SffI0nNcEdeujrHxAzQc=";
-          })
-        ];
-      });
-    });
+    cinnamon = prev.cinnamon.overrideScope (
+      cfinal: cprev: {
+        nemo = cprev.nemo.overrideAttrs (attrs: {
+          patches = (attrs.patches or [ ]) ++ [
+            # https://github.com/NixOS/nixpkgs/issues/212740
+            # ./patches/nemo-no-widget-destroy.patch
+            # Don't tie the interactive search box with the window's lifetime
+            # https://github.com/linuxmint/nemo/issues/3423
+            (prev.fetchpatch {
+              url = "https://github.com/linuxmint/nemo/commit/055b47af0e1a830e556989372f3689bbd36b639d.patch";
+              hash = "sha256-cMtBz1uLGCV4nnrBITzXAV/SffI0nNcEdeujrHxAzQc=";
+            })
+          ];
+        });
+      }
+    );
+    p7zip = prev.p7zip.override { enableUnfree = true; };
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
