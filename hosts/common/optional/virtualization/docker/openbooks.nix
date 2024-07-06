@@ -6,7 +6,7 @@
     ports = [ "5228:80" ];
     cmd = [
       "--name"
-      "${builtins.substring 0 13 (builtins.hashString "sha256" (toString builtins.currentTime))}"
+      "Drymarchon"
       "--searchbot"
       "searchook"
       "--useragent"
