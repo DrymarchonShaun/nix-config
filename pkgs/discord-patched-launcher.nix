@@ -4,7 +4,7 @@
 , coreutils
 , libnotify
 , discord
-, dev
+, master
 , killall
 , makeDesktopItem
 , writeShellApplication
@@ -19,7 +19,7 @@ rec {
 
           # uncomment when vencord is broken
           # vencord = discord;
-          vencord = discord.override { withVencord = true; vencord = dev.vencord; };
+          vencord = discord.override { withVencord = true; vencord = master.vencord; };
 
           krisp-patcher = writers.writePython3Bin "krisp-patcher"
             {

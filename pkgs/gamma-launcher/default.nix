@@ -1,57 +1,32 @@
-{ stdenv
-, fetchurl
-, autoPatchelfHook
-, zlib
-,
-}:
-stdenv.mkDerivation rec {
-  pname = "gamma-launcher";
-  version = "v1.7";
+ { python3Packages
+ , dev
+ , fetchFromGitHub
+ }:
+  python3Packages.buildPythonApplication rec {
+     pname = "gamma-launcher";
+     version = "v1.7-unstable-2024-07-02";
+      # https://github.com/Mord3rca/gamma-launcher
+      # waiting for nixpkgs#324293 to be merged before making this less janky, using a local nixpkgs instance with the additions for now.
 
-  src = fetchurl {
-    url = "https://github.com/Mord3rca/${pname}/releases/download/${version}/gamma-launcher";
-    sha256 = "sha256-lWP9HxInkx78VTm5lZ+DMwrAlrLQYIUslrNcDSaKtpY=";
-    executable = true;
-  };
-
-  buildInputs = [
-    autoPatchelfHook
-    zlib
-  ];
-
-  dontUnpack = true;
-
-  installPhase = ''
-    install -Dm755 $src $out/bin/gamma-launcher
-  '';
-}
-
-# { python3Packages
-# , fetchFromGitHub
-# }:
-#  python3Packages.buildPythonApplication rec {
-#     pname = "gamma-launcher";
-#     version = "v1.7";
-# 
-#     src = fetchFromGitHub {
-#       repo = pname;
-#       owner = "Mord3rca";
-#       rev = version;
-#       hash = "sha256-WRuqmoR2LM8niuLzCTXSS6DEGANBje/yVuEKMLYcwDc=";
-#     };
-# 
-#   build-system = with python3Packages; [
-#     setuptools
-#   ];
-#   doCheck = false;
-#   dependencies = with python3Packages; [
-#     py7zr
-#     beautifulsoup4
-#     platformdirs
-#     rarfile
-#     requests
-#     tenacity
-#     tqdm
-#     python-magic
-#   ];
-# }
+     src = fetchFromGitHub {
+       repo = pname;
+       owner = "Mord3rca";
+       rev = "90d74777d849ef292bf6811374fdb4fa09361138";
+       hash = "sha256-Ye6VEtCt5Fe5gfo+8eSA+LHawQuWR1XbZt6wBFAC/3c=";
+     };
+ 
+   build-system = [
+     python3Packages.setuptools
+   ];
+   doCheck = false;
+   dependencies = [
+    dev.python3Packages.py7zr
+     python3Packages.beautifulsoup4
+     python3Packages.platformdirs
+     python3Packages.rarfile
+     python3Packages.requests
+     python3Packages.tenacity
+     python3Packages.tqdm
+     python3Packages.python-magic
+   ];
+ }

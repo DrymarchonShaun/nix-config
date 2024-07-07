@@ -13,16 +13,17 @@
 , substituteAll
 , trompeloeil
 , wrapQtAppsHook
+, buildDayZLauncher ? false
 ,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "arma3-unix-launcher";
-  version = "383-unstable-2024-04-18";
+  version = "383-unstable-2024-07-05";
   src = fetchFromGitHub {
     owner = "muttleyxd";
-    repo = pname;
-    rev = "793eb6da640334107c906b106a7f300f0dab47ba";
-    hash = "sha256-JD/CoCSAqbx77JUkRbRo/ipsWOmr/JFqrFS4SP1AEyw=";
+    repo = finalAttrs.pname;
+    rev = "f77f9e4c759b32718a589b282a4146fa0b930242";
+    hash = "sha256-0cU3pirDx+hwMqYBEvwlSpdAgJDhnC1m3+mgZ7YP49Y=";
   };
   nativeBuildInputs = [
     wrapQtAppsHook
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
     qt5.qtsvg
   ];
 
-  cmakeFlags = [ "-Wno-dev" ];
+  cmakeFlags = [ "-Wno-dev" ] ++ lib.optional buildDayZLauncher [ "-DBUILD_DAYZ_LAUNCHER=ON" ];
   patches = [
     # prevent CMake from trying to get libraries on the internet
     (substituteAll {
@@ -67,7 +68,7 @@ stdenv.mkDerivation rec {
     })
     # game won't launch with steam integration anyways, disable it
     ./disable_steam_integration.patch
-  ];
+  ] ++ lib.optional buildDayZLauncher [ ./fix_dayz_build.patch ];
 
   meta = {
     homepage = "https://github.com/muttleyxd/arma3-unix-launcher/";
@@ -82,4 +83,4 @@ stdenv.mkDerivation rec {
     mainProgram = "arma3-unix-launcher";
     platforms = with lib.platforms; linux ++ darwin;
   };
-}
+})

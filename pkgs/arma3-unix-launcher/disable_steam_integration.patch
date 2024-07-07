@@ -21,3 +21,5 @@ index d9223db..5773593 100644
 -    else
 -        steam_integration = std::make_unique<Steam::IntegrationStub>(DayZ::Definitions::app_id);
 +    steam_integration = std::make_unique<Steam::IntegrationStub>(DayZ::Definitions::app_id);
+ 
+

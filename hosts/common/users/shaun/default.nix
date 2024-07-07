@@ -31,6 +31,7 @@ in
         ] ++ ifTheyExist [
           "audio"
           "disk"
+          "storage"
           "input"
           "video"
           "docker"
