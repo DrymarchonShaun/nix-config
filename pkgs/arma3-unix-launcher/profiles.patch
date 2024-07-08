@@ -1,0 +1,92 @@
+diff --git a/src/arma3-unix-launcher/mainwindow.cpp b/src/arma3-unix-launcher/mainwindow.cpp
+index 58793df..b22dd85 100644
+--- a/src/arma3-unix-launcher/mainwindow.cpp
++++ b/src/arma3-unix-launcher/mainwindow.cpp
+@@ -198,2 +198,8 @@ try
+     }
++        if (parameters["profiles"].is_string())
++    {
++        std::string profiles_dir = parameters["profiles"];
++        if (StringUtils::trim(profiles_dir).empty())
++            throw std::invalid_argument("Parameters -> Profiles Directory cannot be empty");
++    }
+ 
+@@ -230,3 +236,9 @@ try
+         spdlog::trace("path: {}", mod.string());
+-    client->CreateArmaCfg(mods);
++    if (!parameters["profiles"].is_null()) {
++        std::string profiles = parameters["profiles"];
++        std::filesystem::path profiles_dir = profiles + "/Users/steamuser/Arma3.cfg";
++        client->CreateArmaCfg(mods, profiles_dir);
++    }
++    else
++        client->CreateArmaCfg(mods);
+     client->Start(manager.get_launch_parameters(), environment_variables, steam_integration->is_initialized(),
+@@ -486,2 +498,7 @@ void MainWindow::on_checkbox_parameter_file_stateChanged(int arg1)
+ 
++void MainWindow::on_checkbox_profiles_stateChanged(int arg1)
++{
++    ui->textbox_profiles->setEnabled(arg1 == Qt::CheckState::Checked);
++}
++
+ void MainWindow::on_checkbox_world_stateChanged(int arg1)
+diff --git a/src/arma3-unix-launcher/mainwindow.h b/src/arma3-unix-launcher/mainwindow.h
+index e6a92cf..288ea82 100644
+--- a/src/arma3-unix-launcher/mainwindow.h
++++ b/src/arma3-unix-launcher/mainwindow.h
+@@ -43,2 +43,3 @@ class MainWindow : public QMainWindow
+         void on_checkbox_parameter_file_stateChanged(int arg1);
++        void on_checkbox_profiles_stateChanged(int arg1);
+         void on_checkbox_world_stateChanged(int arg1);
+diff --git a/src/arma3-unix-launcher/mainwindow.ui b/src/arma3-unix-launcher/mainwindow.ui
+index abe5270..edd2ae6 100644
+--- a/src/arma3-unix-launcher/mainwindow.ui
++++ b/src/arma3-unix-launcher/mainwindow.ui
+@@ -450,2 +450,20 @@
+                 </item>
++                <item>
++                 <layout class="QHBoxLayout" name="layout_horizontal_parameters_advanced_profiles">
++                  <item>
++                   <widget class="QCheckBox" name="checkbox_profiles">
++                    <property name="text">
++                     <string>Profiles Directory</string>
++                    </property>
++                   </widget>
++                  </item>
++                  <item>
++                   <widget class="QLineEdit" name="textbox_profiles">
++                    <property name="enabled">
++                     <bool>false</bool>
++                    </property>
++                   </widget>
++                  </item>
++                 </layout>
++                </item>
+                 <item>
+diff --git a/src/arma3-unix-launcher/settings.cpp b/src/arma3-unix-launcher/settings.cpp
+index 23c33eb..28e0ffa 100644
+--- a/src/arma3-unix-launcher/settings.cpp
++++ b/src/arma3-unix-launcher/settings.cpp
+@@ -51,3 +51,4 @@ namespace
+                                                             "window": false,
+-                                                            "world": null
++                                                            "world": null,
++                                                            "profiles": null
+                                                         },
+@@ -107,2 +108,7 @@ std::string Settings::get_launch_parameters()
+             ret += fmt::format(" -{}", parameter.key());
++        else if ((parameter.key() == "profiles") && parameter.value().is_string())
++        {
++            std::string value = StringUtils::ToWindowsPath(parameter.value(), 'Z' );
++            ret += fmt::format(" -{}=\"{}\"", parameter.key(), value);
++        }
+         else if (parameter.value().type() == nlohmann::json::value_t::string)
+@@ -149,2 +155,3 @@ void Settings::load_settings_to_ui(Ui::MainWindow *ui)
+     read_setting("noLogs", ui->checkbox_no_logs);
++    read_setting("profiles", ui->checkbox_profiles, ui->textbox_profiles);
+     read_setting("world", ui->checkbox_world, ui->textbox_world);
+@@ -232,2 +239,3 @@ void Settings::save_settings_from_ui(Ui::MainWindow *ui)
+     write_setting("noLogs", ui->checkbox_no_logs);
++    write_setting("profiles", ui->checkbox_profiles, ui->textbox_profiles);
+     write_setting("world", ui->checkbox_world, ui->textbox_world);
+

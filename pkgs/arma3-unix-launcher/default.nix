@@ -18,12 +18,12 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "arma3-unix-launcher";
-  version = "383-unstable-2024-07-05";
+  version = "383-unstable-2024-07-07";
   src = fetchFromGitHub {
     owner = "muttleyxd";
     repo = finalAttrs.pname;
-    rev = "f77f9e4c759b32718a589b282a4146fa0b930242";
-    hash = "sha256-0cU3pirDx+hwMqYBEvwlSpdAgJDhnC1m3+mgZ7YP49Y=";
+    rev = "ceee0def11a329a5be7dbadb1abb3682a13b6ee1";
+    hash = "sha256-qSvPUZi9RnIYReg7LUkpEs0uYChu3zzHJd/tXQafhp0=";
   };
   nativeBuildInputs = [
     wrapQtAppsHook
@@ -68,7 +68,8 @@ stdenv.mkDerivation (finalAttrs: {
     })
     # game won't launch with steam integration anyways, disable it
     ./disable_steam_integration.patch
-  ] ++ lib.optional buildDayZLauncher [ ./fix_dayz_build.patch ];
+    ./profiles.patch
+  ];
 
   meta = {
     homepage = "https://github.com/muttleyxd/arma3-unix-launcher/";
@@ -77,7 +78,7 @@ stdenv.mkDerivation (finalAttrs: {
       # Launcher
       mit
       # Steamworks SDK
-      unfree
+      # unfree
     ];
     maintainers = with lib.maintainers; [ DrymarchonShaun ];
     mainProgram = "arma3-unix-launcher";
