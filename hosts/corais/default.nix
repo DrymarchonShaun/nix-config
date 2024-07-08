@@ -27,7 +27,7 @@
   ++ (map configLib.relativeToRoot [
     #################### Required Configs ####################
     "hosts/common/core"
-
+    "hosts/common/core/services/polkit.nix"
     #################### Host-specific Optional Configs ####################
     "hosts/common/optional/services/openssh.nix"
     "hosts/common/optional/services/geoclue.nix"
