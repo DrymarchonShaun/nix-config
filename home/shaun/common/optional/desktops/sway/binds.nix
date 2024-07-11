@@ -92,6 +92,9 @@ in
       "Alt+Print" = "exec ${grimshot} --notify  copy output";
       "Ctrl+Print" = "exec ${grimshot} --notify  copy area";
 
+      # Layouts
+      "${modifier}+s" = "layout stacking";
+      "${modifier}+t" = "layout tabbed";
     }
     # Change workspace 
     // builtins.listToAttrs (lib.mapAttrsToList
