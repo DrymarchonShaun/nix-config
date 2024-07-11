@@ -442,17 +442,18 @@
     },
     "nixpkgs-dev": {
       "locked": {
-        "lastModified": 1720302191,
-        "narHash": "sha256-MVJFZVw0uCSbbAWBcYIlzM/8Z9JXS5WBUYUDtYJjOJI=",
-        "ref": "refs/heads/release-24.05",
-        "rev": "18d4ef20e30514db099b51554ff8b0f01103d7fe",
-        "revCount": 632724,
-        "type": "git",
-        "url": "file:///home/shaun/.src/nixpkgs"
+        "lastModified": 1720680099,
+        "narHash": "sha256-B5t6mqJO9WrdAFz2+pb2XnclSHjEAgY5vwuJ6DHtT+E=",
+        "owner": "DrymarchonShaun",
+        "repo": "nixpkgs",
+        "rev": "a0a5ec54c811fefedb3a8596498690784c3ce4a1",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/shaun/.src/nixpkgs"
+        "owner": "DrymarchonShaun",
+        "ref": "dev",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-master": {

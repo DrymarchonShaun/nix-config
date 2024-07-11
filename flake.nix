@@ -7,7 +7,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
     nixpkgs-master.url = "github:NixOS/nixpkgs/master"; # also see 'master-packages' overlay at 'overlays/default.nix"
-    nixpkgs-dev.url = "git+file:///home/shaun/.src/nixpkgs"; # also see 'dev-packages' overlay at 'overlays/default.nix"
+    nixpkgs-dev.url = "github:DrymarchonShaun/nixpkgs/dev"; # also see 'dev-packages' overlay at 'overlays/default.nix"
 
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
