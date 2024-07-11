@@ -58,13 +58,9 @@ in
     };
   };
   catppuccin.pointerCursor.enable = true;
-  #home = {
-  #  pointerCursor = {
-  #    name = "Catppuccin-Macchiato-Blue-Cursors";
-  #    package = pkgs.catppuccin-cursors.macchiatoBlue;
-  #    size = 18;
-  #    gtk.enable = true;
-  #    x11.enable = true;
-  #  };
-  #};
+  home.pointerCursor = {
+    size = 28;
+    gtk.enable = true;
+    x11.enable = true;
+  };
 }

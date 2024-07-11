@@ -25,7 +25,6 @@
       XDG_SESSION_TYPE = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
       WLR_RENDERER_ALLOW_SOFTWARE = "1";
-      XCURSOR_SIZE = "24";
 
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
@@ -69,7 +68,6 @@
       export XDG_SESSION_TYPE=wayland
       export WLR_NO_HARDWARE_CURSORS=1
       export WLR_RENDERER_ALLOW_SOFTWARE=1
-      export XCURSOR_SIZE=24
       # QT_QPA_PLATFORM,wayland
     '';
     config = {
@@ -95,12 +93,12 @@
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
         { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-        { command = "${pkgs.import-gsettings}/bin/import-gsettings"; }
+        { command = "${pkgs.import-gsettings}/bin/import-gsettings"; always = true; }
         { command = "${pkgs.steam}/bin/steam"; }
       ];
 
       gaps.inner = 5;
-      gaps.outer = 20;
+      gaps.outer = 15;
       window.border = 2;
 
       input = {
