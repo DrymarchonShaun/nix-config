@@ -13,8 +13,12 @@ writeShellScriptBin "import-gsettings" ''
   icon_theme="$(grep 'gtk-icon-theme-name' "$config" | cut -d'=' -f2)"
   cursor_theme="$(grep 'gtk-cursor-theme-name' "$config" | cut -d'=' -f2)"
   font_name="$(grep 'gtk-font-name' "$config" | cut -d'=' -f2)"
+  prefer_dark="$(grep 'gtk-application-prefer-dark-theme' "$config" | cut -d'=' -f2)"
   ${glib}/bin/gsettings set "$gnome_schema" gtk-theme "$gtk_theme"
   ${glib}/bin/gsettings set "$gnome_schema" icon-theme "$icon_theme"
   ${glib}/bin/gsettings set "$gnome_schema" cursor-theme "$cursor_theme"
   ${glib}/bin/gsettings set "$gnome_schema" font-name "$font_name"
+  if [[ $prefer_dark == "1" || $prefer_dark == "true" ]]; then
+    ${glib}/bin/gsettings set "$gnome_schema" color-scheme prefer-dark
+  fi
 ''
