@@ -31,10 +31,12 @@
     "hosts/common/core"
 
     #################### Host-specific Optional Configs ####################
+    "hosts/common/optional/services/avahi.nix"
     "hosts/common/optional/services/openssh.nix"
     "hosts/common/optional/services/geoclue.nix"
     "hosts/common/optional/services/gvfs.nix"
     "hosts/common/optional/services/bluetooth.nix"
+    "hosts/common/optional/services/syncthing.nix"
     "hosts/common/optional/unbound.nix"
 
 
