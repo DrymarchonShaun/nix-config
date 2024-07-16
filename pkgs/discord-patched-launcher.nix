@@ -32,7 +32,7 @@ rec {
             }
             (builtins.readFile (builtins.fetchurl {
               url = "https://raw.githubusercontent.com/sersorrel/sys/main/hm/discord/krisp-patcher.py";
-              sha256 = "sha256-87VlZKw6QoXgQwEgxT3XeFY8gGoTDWIopGLOEdXkkjE=";
+              sha256 = "sha256:1d182pv51sqzp8qnc7cj8gpr29pjb3skvqb80p8lx5k06c7xg22w";
             }));
         in
         writeShellApplication {
