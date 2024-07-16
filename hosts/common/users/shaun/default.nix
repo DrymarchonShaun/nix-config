@@ -2,7 +2,7 @@
 let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   sopsHashedPasswordFile = lib.optionalString (lib.hasAttr "sops-nix" inputs) config.sops.secrets."${configVars.username}/password".path;
-  pubKeys = lib.filesystem.listFilesRecursive (./keys);
+  pubKeys = lib.filesystem.listFilesRecursive (./keys/ssh);
 
   # these are values we don't want to set if the environment is minimal. E.g. ISO or nixos-installer
   # isMinimal is true in the nixos-installer/flake.nix
@@ -60,6 +60,7 @@ in
       environment.systemPackages = [
         pkgs.just
         pkgs.rsync
+        pkgs.gnupg
       ];
     };
 }
