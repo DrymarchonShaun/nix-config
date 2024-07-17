@@ -20,10 +20,25 @@ in
     validateSopsFiles = false;
 
     secrets = {
+      "${configVars.username}/email" = { };
+
       "ssh_keys/mimir" = {
         path = "${homeDirectory}/.ssh/id_mimir";
       };
-      "${configVars.username}/email" = { };
+
+      "gpg_keys/odin/signing" = {
+        mode = "0400";
+        path = "%r/gpg-keys/odin/signing.asc";
+      };
+      "gpg_keys/odin/encrypting" = {
+        mode = "0400";
+        path = "%r/gpg-keys/odin/encrypting.asc";
+      };
+      "gpg_keys/odin/authenticating" = {
+        mode = "0400";
+        path = "%r/gpg-keys/odin/authenticating.asc";
+      };
+
     };
   };
 }
