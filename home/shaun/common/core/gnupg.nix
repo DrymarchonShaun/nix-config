@@ -1,10 +1,12 @@
 { pkgs, lib, configLib, configVars, ... }:
 let
   update-trust = pkgs.writeShellScript "update-trust" ''
+    echo "active user is $(${pkgs.coreutils}/bin/whoami)"
     echo "processing $1"
     KEYID="$(${pkgs.gnupg}/bin/gpg --no-tty --show-keys --keyid-format=long --with-colons "$1" | ${pkgs.gawk}/bin/awk -F ":" 'NR==2 { print $10 }')"
     echo "KEYID is $KEYID"
     echo -e "trust\n5\ny\n" | ${pkgs.gnupg}/bin/gpg -q --command-fd 0 --expert --edit-key "$KEYID"
+    ${pkgs.gnupg}/bin/gpg --list-keys
   '';
 in
 {
@@ -39,6 +41,6 @@ in
 
 
   home.activation.importGpgKeys = lib.mkForce (lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "linkGeneration" "onFilesChange" "setupLaunchAgents" "sops-nix" ] ''
-    run ${pkgs.findutils}/bin/find $XDG_RUNTIME_DIR/gpg-keys/ -name "*.asc" -exec ${pkgs.gnupg}/bin/gpg --import {} \; -exec ${pkgs.util-linux}/bin/script -c "${update-trust} {}" \;
+    run ${pkgs.findutils}/bin/find $XDG_RUNTIME_DIR/gpg-keys/ -name "*.asc" -exec ${pkgs.gnupg}/bin/gpg --import {} \; -exec ${pkgs.util-linux}/bin/script -q -O /dev/null -c "${update-trust} {}" \;
   '');
 }
