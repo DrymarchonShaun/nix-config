@@ -16,7 +16,7 @@
         keyutils
         gamemode
         gamemode.lib
-        gamescope
+        unstable.gamescope
         mangohud
       ];
     };
