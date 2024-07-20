@@ -94,7 +94,7 @@
         { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
         { command = "${pkgs.import-gsettings}/bin/import-gsettings"; always = true; }
-        { command = "${pkgs.steam}/bin/steam"; }
+        { command = "steam"; }
       ];
 
       gaps.inner = 5;
