@@ -12,21 +12,20 @@
 , spdlog
 , substituteAll
 , trompeloeil
-, wrapQtAppsHook
 , buildDayZLauncher ? false
 ,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "arma3-unix-launcher";
-  version = "383-unstable-2024-07-07";
+  version = "383-unstable-2024-07-11";
   src = fetchFromGitHub {
     owner = "muttleyxd";
-    repo = finalAttrs.pname;
-    rev = "ceee0def11a329a5be7dbadb1abb3682a13b6ee1";
-    hash = "sha256-qSvPUZi9RnIYReg7LUkpEs0uYChu3zzHJd/tXQafhp0=";
+    repo = "arma3-unix-launcher";
+    rev = "61865cd1c5d4bdb78c955bd84bdb2004a59821af";
+    hash = "sha256-QLQscay1z0NBj+pf/hUw7hV5c6xU5RPucsYO2iJtQtU=";
   };
   nativeBuildInputs = [
-    wrapQtAppsHook
+    qt5.wrapQtAppsHook
     cmake
     spdlog
     curlpp.src
@@ -38,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
     qt5.qtsvg
   ];
 
-  cmakeFlags = [ "-Wno-dev" ] ++ lib.optional buildDayZLauncher [ "-DBUILD_DAYZ_LAUNCHER=ON" ];
+  cmakeFlags = [ "-Wno-dev" ] ++ lib.optionals buildDayZLauncher [ "-DBUILD_DAYZ_LAUNCHER=ON" ];
   patches = [
     # prevent CMake from trying to get libraries on the internet
     (substituteAll {
@@ -68,7 +67,6 @@ stdenv.mkDerivation (finalAttrs: {
     })
     # game won't launch with steam integration anyways, disable it
     ./disable_steam_integration.patch
-    ./profiles.patch
   ];
 
   meta = {
@@ -78,7 +76,7 @@ stdenv.mkDerivation (finalAttrs: {
       # Launcher
       mit
       # Steamworks SDK
-      # unfree
+      unfree
     ];
     maintainers = with lib.maintainers; [ DrymarchonShaun ];
     mainProgram = "arma3-unix-launcher";
