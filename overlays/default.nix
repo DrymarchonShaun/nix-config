@@ -23,6 +23,9 @@
       patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
     });
     p7zip = prev.p7zip.override { enableUnfree = true; };
+    #sway-contrib.grimshot = prev.sway-contrib.grimshot.overrideAttrs (attrs: {
+    #  patches = (attrs.patches or [ ]) ++ [ ./patches/grimshot-application-name.patch ];
+    #});
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });

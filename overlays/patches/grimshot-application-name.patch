@@ -1,0 +1,54 @@
+diff --git a/grimshot b/grimshot
+index 87c7fc3..ad41e11 100755
+--- a/grimshot
++++ b/grimshot
+@@ -122,11 +122,15 @@ takeScreenshot() {
+   FILE=$1
+   GEOM=$2
+   OUTPUT=$3
++  APP_ID=$4
+   if [ -n "$OUTPUT" ]; then
+-    grim ${CURSOR:+-c} -o "$OUTPUT" "$FILE" || die "Unable to invoke grim"
++      FILE=$(sed "s/\.png/-$OUTPUT\.png/" <<< $FILE)
++      grim ${CURSOR:+-c} -o "$OUTPUT" "$FILE" || die "Unable to invoke grim"
+   elif [ -z "$GEOM" ]; then
++    FILE=$(sed "s/\.png/-$APP_ID\.png/" <<< $FILE)
+     grim ${CURSOR:+-c} "$FILE" || die "Unable to invoke grim"
+   else
++    FILE=$(sed "s/\.png/-$APP_ID\.png/" <<< $FILE)
+     grim ${CURSOR:+-c} -g "$GEOM" "$FILE" || die "Unable to invoke grim"
+   fi
+ }
+@@ -160,14 +164,30 @@ elif [ "$SUBJECT" = "output" ] ; then
+   OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused)' | jq -r '.name')
+   WHAT="$OUTPUT"
+ elif [ "$SUBJECT" = "window" ] ; then
+-  GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -r)
++  WINDOWS=$(swaymsg -t get_tree | jq -r '.. | select(.pid?and .visible?) |  { app_id: .app_id, rect: .rect? }') 
++  GEOM=$(echo $WINDOWS | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -r)
++  # find the matching app_id
++  APP_ID=$(echo $WINDOWS | jq -s -r \
++      --arg x $(echo $GEOM | cut -d, -f1) \
++      --arg y $(echo $GEOM | cut -d, -f2 | cut -d' ' -f1) \
++      --arg width $(echo $GEOM | cut -d' ' -f2 | cut -dx -f1) \
++      --arg height $(echo $GEOM | cut -d' ' -f2 | cut -dx -f2) \
++      '.[] | select(.rect.x == ($x|tonumber) and .rect.y == ($y|tonumber) and .rect.width == ($width|tonumber) and .rect.height == ($height|tonumber)) | .app_id')
+   # Check if user exited slurp without selecting the area
+   if [ -z "$GEOM" ]; then
+    exit 1
+   fi
+   WHAT="Window"
+ elif [ "$SUBJECT" = "anything" ] ; then
+-  GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -o)
++  WINDOWS=$(swaymsg -t get_tree | jq -r '.. | select(.pid?and .visible?) |  { app_id: .app_id, rect: .rect? }') 
++  GEOM=$(echo $WINDOWS | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -o)
++  # find the matching app_id
++  APP_ID=$(echo $WINDOWS | jq -s -r \
++      --arg x $(echo $GEOM | cut -d, -f1) \
++      --arg y $(echo $GEOM | cut -d, -f2 | cut -d' ' -f1) \
++      --arg width $(echo $GEOM | cut -d' ' -f2 | cut -dx -f1) \
++      --arg height $(echo $GEOM | cut -d' ' -f2 | cut -dx -f2) \
++      '.[] | select(.rect.x == ($x|tonumber) and .rect.y == ($y|tonumber) and .rect.width == ($width|tonumber) and .rect.height == ($height|tonumber)) | .app_id')
+   # Check if user exited slurp without selecting the area
+   if [ -z "$GEOM" ]; then
+     exit

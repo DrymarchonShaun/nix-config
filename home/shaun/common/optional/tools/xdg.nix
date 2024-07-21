@@ -1,7 +1,25 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   home.packages = [ pkgs.xdg-utils ]; # needed by multiple programs for xdg-open
   xdg = {
     enable = true;
+    configHome = "${config.home.homeDirectory}/.config";
+    dataHome = "${config.home.homeDirectory}/.local/share";
+    stateHome = "${config.home.homeDirectory}/.local/state";
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      extraConfig = {
+        "XDG_SCREENSHOTS_DIR" = "${config.xdg.userDirs.pictures}/Screenshots";
+      };
+      desktop = "${config.home.homeDirectory}/Desktop";
+      documents = "${config.home.homeDirectory}/Documents";
+      download = "${config.home.homeDirectory}/Downloads";
+      music = "${config.home.homeDirectory}/Music";
+      pictures = "${config.home.homeDirectory}/Pictures";
+      publicShare = null;
+      templates = null;
+      videos = "${config.home.homeDirectory}/Videos";
+    };
     mimeApps = {
       enable = true;
       defaultApplications = {
@@ -16,8 +34,8 @@
         "application/vnd.adobe.flash.movie" = [ "vlc.desktop" ];
         "application/vnd.amazon.mobi8-ebook" = [ "calibre-gui.desktop" ];
         "application/vnd.apple.mpegurl" = [ "vlc.desktop" ];
-        "application/vnd.comicbook-rar" = [ "calibre-gui.desktop" ];
         "application/vnd.comicbook+zip" = [ "calibre-gui.desktop" ];
+        "application/vnd.comicbook-rar" = [ "calibre-gui.desktop" ];
         "application/vnd.corel-draw" = [ "org.inkscape.Inkscape.desktop" ];
         "application/vnd.ms-asf" = [ "vlc.desktop" ];
         "application/vnd.ms-wpl" = [ "vlc.desktop" ];
@@ -41,10 +59,10 @@
         "application/xml" = [ "code.desktop" ];
         "application/xspf+xml" = [ "vlc.desktop" ];
         "application/zip" = [ "org.gnome.FileRoller.desktop" ];
+        "audio/AMR" = [ "vlc.desktop" ];
+        "audio/AMR-WB" = [ "vlc.desktop" ];
         "audio/aac" = [ "vlc.desktop" ];
         "audio/ac3" = [ "vlc.desktop" ];
-        "audio/AMR-WB" = [ "vlc.desktop" ];
-        "audio/AMR" = [ "vlc.desktop" ];
         "audio/basic" = [ "vlc.desktop" ];
         "audio/flac" = [ "vlc.desktop" ];
         "audio/midi" = [ "vlc.desktop" ];
@@ -80,6 +98,7 @@
         "image/svg+xml" = [ "org.inkscape.Inkscape.desktop" ];
         "image/vnd.rn-realpix" = [ "vlc.desktop" ];
         "image/wmf" = [ "org.inkscape.Inkscape.desktop" ];
+        "image/png" = [ "org.gnome.eog.desktop" ];
         "image/x-eps" = [ "org.inkscape.Inkscape.desktop" ];
         "inode/directory" = [ "nemo.desktop" ];
         "text/html" = [ "brave-browser.desktop" ];

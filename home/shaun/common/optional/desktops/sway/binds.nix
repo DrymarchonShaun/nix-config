@@ -88,9 +88,10 @@ in
       "XF86AudioPrev" = "exec ${playerctl} previous";
 
       # Screenshots
-      "Print" = "exec ${grimshot} --notify copy window";
-      "Alt+Print" = "exec ${grimshot} --notify  copy output";
-      "Ctrl+Print" = "exec ${grimshot} --notify  copy area";
+      "Alt+Print" = "exec ${grimshot} --notify savecopy output";
+      "Ctrl+Print" = "exec ${grimshot} --notify savecopy window";
+      "Ctrl+Shift+Print" = "exec ${grimshot} --notify  savecopy area";
+      "Print" = "exec ${grimshot} --notify  savecopy anything";
 
       # Layouts
       "${modifier}+s" = "layout stacking";
