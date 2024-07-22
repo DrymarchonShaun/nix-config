@@ -36,6 +36,8 @@
     "hosts/common/optional/services/bluetooth.nix"
     "hosts/common/optional/services/syncthing.nix"
     "hosts/common/optional/unbound.nix"
+    "hosts/common/optional/vlc.nix"
+
 
     # Docker Configs
     "hosts/common/optional/virtualization/docker"
@@ -46,7 +48,7 @@
     "hosts/common/optional/sway.nix" # window manager
     # "hosts/common/optional/plasma.nix" # desktop environment
     "hosts/common/optional/pipewire.nix" # audio
-    "hosts/common/optional/steam.nix" # steam 
+    "hosts/common/optional/steam.nix" # steam
     "hosts/common/optional/wooting.nix"
 
     #################### Users to Create ####################
