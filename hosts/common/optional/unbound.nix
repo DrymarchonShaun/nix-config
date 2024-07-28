@@ -13,11 +13,6 @@
         do-not-query-localhost = lib.mkDefault false;
       };
       forward-zone = lib.mkDefault [
-        # {
-        #  name = "***REMOVED***";
-        #  forward-addr = [ "10.1.1.240" ];
-        #  forward-first = true;
-        # }
         {
           name = ".";
           forward-tls-upstream = true;
