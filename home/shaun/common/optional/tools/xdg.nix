@@ -94,6 +94,7 @@
         "audio/x-wavpack" = [ "vlc.desktop" ];
         "audio/x-xm" = [ "vlc.desktop" ];
         "image/cgm" = [ "org.inkscape.Inkscape.desktop" ];
+        "image/jpeg" = [ "org.gnome.eog.desktop" ];
         "image/svg+xml-compressed" = [ "org.inkscape.Inkscape.desktop" ];
         "image/svg+xml" = [ "org.inkscape.Inkscape.desktop" ];
         "image/vnd.rn-realpix" = [ "vlc.desktop" ];
