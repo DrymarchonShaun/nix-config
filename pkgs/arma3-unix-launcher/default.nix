@@ -17,12 +17,12 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "arma3-unix-launcher";
-  version = "383-unstable-2024-07-11";
+  version = "413";
   src = fetchFromGitHub {
     owner = "muttleyxd";
     repo = "arma3-unix-launcher";
-    rev = "61865cd1c5d4bdb78c955bd84bdb2004a59821af";
-    hash = "sha256-QLQscay1z0NBj+pf/hUw7hV5c6xU5RPucsYO2iJtQtU=";
+    rev = "2ea62d961522f1542d4c8e669ef5fe856916f9ec";
+    hash = "sha256-uym93mYmVj9UxT8RbwdRUyIPrQX7nZTNWUUVjxCQmVU=";
   };
   nativeBuildInputs = [
     qt5.wrapQtAppsHook
