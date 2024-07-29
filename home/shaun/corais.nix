@@ -67,7 +67,7 @@
       ];
     };
   };
-  programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
+  programs.waybar.settings.mainBar."sway/workspaces"."persistent-workspaces" = {
     "1:1" = [ "DP-1" ];
     "2:2" = [ "DP-1" ];
     "3:3" = [ "DP-1" ];

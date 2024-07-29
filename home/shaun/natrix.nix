@@ -61,7 +61,7 @@
       ];
     };
   };
-  programs.waybar.settings.mainBar."sway/workspaces"."persistent_workspaces" = {
+  programs.waybar.settings.mainBar."sway/workspaces"."persistent-workspaces" = {
     "1:1" = [ "eDP-1" ];
     "2:2" = [ "eDP-1" ];
     "3:3" = [ "eDP-1" ];
