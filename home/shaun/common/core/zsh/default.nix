@@ -35,6 +35,10 @@
         name = "zhooks";
         src = "${pkgs.zhooks}/share/zsh/zhooks";
       }
+      {
+        name = "fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
     ];
 
     initExtraFirst = ''
