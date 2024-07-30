@@ -1,6 +1,6 @@
 { config, ... }: {
   home.sessionVariables = {
-    MANGOHUD_CONFIGFILE = config.xdg.configFile."MangoHud/MangoHud.conf".target;
+    MANGOHUD_CONFIGFILE = "${config.home.homeDirectory}/${config.xdg.configFile."MangoHud/MangoHud.conf".target}";
   };
   programs.mangohud = {
     enable = true;
@@ -14,7 +14,7 @@
       gpu_temp = true;
       mangoapp_steam = true;
       no_display = true;
-      output_folder = "/home/shaun";
+      output_folder = config.home.homeDirectory;
       ram = true;
       resolution = true;
       toggle_hud = "Super_R";
