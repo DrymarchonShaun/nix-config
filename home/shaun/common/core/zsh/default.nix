@@ -10,6 +10,7 @@
     autosuggestion.enable = true;
     history.size = 10000;
     history.share = true;
+    history.path = "$ZDOTDIR/zsh_history";
 
     plugins = [
       {
@@ -102,15 +103,8 @@
       man = "batman";
 
       #------------Navigation------------
-      doc = "cd $HOME/documents";
-      scripts = "cd $HOME/scripts";
-      ts = "cd $HOME/.talon/user/fidget";
       src = "cd $HOME/.src";
-      edu = "cd $HOME/.src/edu";
-      dfs = "cd $HOME/.src/dotfiles";
-      dfsw = "cd $HOME/.src/dotfiles.wiki";
       nfs = "cd $HOME/.src/nix-config";
-      uc = "cd $HOME/.src/unmovedcentre";
       l = "eza -lah";
       la = "eza -lah";
       ll = "eza -lh";
@@ -134,8 +128,6 @@
       #-------------Git Goodness-------------
       # just reference `$ alias` and use the defautls, they're good.
 
-      #-----------Anti-Stupid-Shit----------------
-      clear = "echo \"use ctrl+l stupid\"";
     };
   };
 }
