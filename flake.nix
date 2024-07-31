@@ -1,5 +1,5 @@
 {
-  description = "EmergentMind's Nix-Config";
+  description = "DrymarchonShaun's Nix-Config";
 
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
