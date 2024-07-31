@@ -5,7 +5,7 @@
 
     ########## Utilities ##########
     ../services/swaync.nix # Notification daemon
-    ../services/wl-paste.nix # Clipboard functionality
+    # ../services/wl-paste.nix # Clipboard functionality
     ../waybar.nix # infobar
     ../swayidle.nix
     ../swaylock.nix
@@ -17,29 +17,30 @@
 
   # NOTE: xdg portal package is currently set in /hosts/common/optional/hyprland.nix
 
-  home.sessionVariables =
-    {
-      NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
-      MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
-      MOZ_WEBRENDER = "1"; # for firefox to run on wayland
-      XDG_SESSION_TYPE = "wayland";
-      WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_RENDERER_ALLOW_SOFTWARE = "1";
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
+    MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
+    MOZ_WEBRENDER = "1"; # for firefox to run on wayland
+    XDG_SESSION_TYPE = "wayland";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    WLR_RENDERER_ALLOW_SOFTWARE = "1";
 
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
-      _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
+    _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
 
-    };
+  };
 
-  services.swayidle.timeouts = [
-    {
-      timeout = 600;
-      command = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms off'";
-      resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
-    }
-  ];
+  services.swayidle.timeouts = [{
+    timeout = 600;
+    command = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms off'";
+    resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
+  }];
 
+  services.cliphist = {
+    enable = true;
+    allowImages = true;
+  };
 
   wayland.windowManager.sway = {
     enable = true;
