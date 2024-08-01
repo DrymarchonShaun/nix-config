@@ -22,7 +22,7 @@
 
         devShells = let inherit (poetry2nix) mkPoetryEnv;
         in {
-          default = pkgs.mkShellNoCC {
+          default = pkgs.mkShell {
             packages = with pkgs; [
               (mkPoetryEnv { projectDir = self; })
               poetry
