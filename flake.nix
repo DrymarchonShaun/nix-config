@@ -129,6 +129,8 @@
       # Custom modifications/overrides to upstream packages.
       overlays = import ./overlays { inherit inputs outputs; };
 
+      templates = import ./templates { inherit inputs outputs; };
+
       # Custom packages to be shared or upstreamed.
       packages = forAllSystems (
         system:
