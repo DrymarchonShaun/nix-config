@@ -5,7 +5,7 @@
 
     ########## Utilities ##########
     ../services/swaync.nix # Notification daemon
-    # ../services/wl-paste.nix # Clipboard functionality
+    ../services/wl-paste.nix # Clipboard functionality
     ../waybar.nix # infobar
     ../swayidle.nix
     ../swaylock.nix
