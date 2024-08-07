@@ -1,4 +1,12 @@
 <div align="center">
+
+### _Forked and Modified by DrymarchonShaun_
+
+#### _For use in [DrymarchonShaun/nix-config](https://github.com/DrymarchonShaun/nix-config)_
+
+</div>
+
+<div align="center">
 <h1>
 <img width="100" src="docs/nixos-ascendancy.png" /> <br>
 </h1>
@@ -78,7 +86,7 @@ For a large screenshot of the concept diagram, as well as previous iterations, s
 <a href="docs/anatomy.md"><img width="400" src="docs/diagrams/anatomy_v3.png" /></a>
 </div>
 
-- `flake.nix` - Entrypoint for hosts and user home configurations. Also exposes a devshell for  manual bootstrapping tasks (`nix develop` or `nix-shell`).
+- `flake.nix` - Entrypoint for hosts and user home configurations. Also exposes a devshell for manual bootstrapping tasks (`nix develop` or `nix-shell`).
 - `hosts` - NixOS configurations accessible via `sudo nixos-rebuild switch --flake .#<host>`.
   - `common` - Shared configurations consumed by the machine specific ones.
     - `core` - Configurations present across all hosts. This is a hard rule! If something isn't core, it is optional.
