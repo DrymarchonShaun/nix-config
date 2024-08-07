@@ -54,6 +54,7 @@ in
         openssh.authorizedKeys.keys = config.users.users.${configVars.username}.openssh.authorizedKeys.keys;
       };
 
+      documentation.dev.enable = true;
       # No matter what environment we are in we want these tools for root, and the user(s)
       programs.zsh.enable = true;
       programs.git.enable = true;
