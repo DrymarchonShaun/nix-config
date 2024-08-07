@@ -43,7 +43,6 @@ let
 
 
   pamixer = "${pkgs.pamixer}/bin/pamixer";
-  pactl = "${pkgs.pulseaudio}/bin/pactl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   swaylock = "${config.programs.swaylock.package}/bin/swaylock";
   playerctl = "${config.services.playerctld.package}/bin/playerctl";
@@ -86,7 +85,7 @@ in
       "XF86AudioPlay" = "exec ${playerctl} play-pause";
       "XF86AudioNext" = "exec ${playerctl}  next";
       "XF86AudioPrev" = "exec ${playerctl} previous";
-
+      "XF86AudioMute" = "exec ${pamixer} --toggle-mute";
       # Screenshots
       "Alt+Print" = "exec ${grimshot} --notify savecopy output";
       "Ctrl+Print" = "exec ${grimshot} --notify savecopy window";

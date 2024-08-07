@@ -1,11 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   wayland.windowManager.hyprland.settings = {
     bindm = [
       "SUPER,mouse:272,movewindow"
       "SUPER,mouse:273,resizewindow"
     ];
-
 
     binde =
       let
@@ -56,7 +60,6 @@
           k = up;
           j = down;
         };
-
 
         swaylock = "${config.programs.swaylock.package}/bin/swaylock";
         #playerctl = "${config.services.playerctld.package}/bin/playerctl";
@@ -111,56 +114,36 @@
         "SUPER,t,lockactivegroup,toggle"
         "SUPER,apostrophe,changegroupactive,f"
         "SUPERSHIFT,apostrophe,changegroupactive,b"
-
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
         "SUPER,l,exec,${swaylock} -f -i ${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png"
 
         # Function Keys
-        ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
+        ",XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer --toggle-mute"
 
-      ] ++
-      # Change workspace
-      (map
-        (n:
-          "SUPER,${n},workspace,name:${n}"
-        )
-        workspaces) ++
-      # Move window to workspace
-      (map
-        (n:
-          "SHIFTSUPER,${n},movetoworkspacesilent,name:${n}"
-        )
-        workspaces) ++
-      # Move focus
-      (lib.mapAttrsToList
-        (key: direction:
-          "SUPER,${key},movefocus,${direction}"
-        )
-        directions) ++
-      # Swap windows
-      (lib.mapAttrsToList
-        (key: direction:
-          "ALTSHIFT,${key},swapwindow,${direction}"
-        )
-        directions) ++
-      # Move windows
-      (lib.mapAttrsToList
-        (key: direction:
-          "SHIFTSUPER,${key},movewindoworgroup,${direction}"
-        )
-        directions) ++
-      # Move monitor focus
-      (lib.mapAttrsToList
-        (key: direction:
-          "SUPERALT,${key},focusmonitor,${direction}"
-        )
-        directions) ++
-      # Move workspace to other monitor
-      (lib.mapAttrsToList
-        (key: direction:
-          "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
-        )
-        directions);
+      ]
+      ++
+        # Change workspace
+        (map (n: "SUPER,${n},workspace,name:${n}") workspaces)
+      ++
+        # Move window to workspace
+        (map (n: "SHIFTSUPER,${n},movetoworkspacesilent,name:${n}") workspaces)
+      ++
+        # Move focus
+        (lib.mapAttrsToList (key: direction: "SUPER,${key},movefocus,${direction}") directions)
+      ++
+        # Swap windows
+        (lib.mapAttrsToList (key: direction: "ALTSHIFT,${key},swapwindow,${direction}") directions)
+      ++
+        # Move windows
+        (lib.mapAttrsToList (key: direction: "SHIFTSUPER,${key},movewindoworgroup,${direction}") directions)
+      ++
+        # Move monitor focus
+        (lib.mapAttrsToList (key: direction: "SUPERALT,${key},focusmonitor,${direction}") directions)
+      ++
+        # Move workspace to other monitor
+        (lib.mapAttrsToList (
+          key: direction: "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
+        ) directions);
   };
 }
