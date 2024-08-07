@@ -32,12 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # vim4LMFQR!
-    nixvim = {
-      #url = "github:nix-community/nixvim/nixos-23.11";
-      url = "github:nix-community/nixvim/nixos-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Nixvim configuration
+    nvix.url = "github:DrymarchonShaun/nvix";
 
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
