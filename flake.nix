@@ -159,24 +159,21 @@
         in
         {
           default = pkgs.mkShell {
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
             inherit (self.checks.${system}.pre-commit-check) shellHook;
             buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
 
-            nativeBuildInputs = builtins.attrValues {
-              inherit (pkgs)
+            nativeBuildInputs = [
+              pkgs.nixVersions.latest
+              pkgs.home-manager
+              pkgs.git
+              pkgs.just
 
-                nix
-                home-manager
-                git
-                just
-
-                age
-                ssh-to-age
-                sops
-                ;
-            };
+              pkgs.age
+              pkgs.ssh-to-age
+              pkgs.sops
+            ];
           };
         }
       );
