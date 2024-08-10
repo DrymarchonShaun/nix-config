@@ -11,7 +11,7 @@
   {
     event = [ "TextYankPost" ];
     callback.__raw = ''
-      function() 
+      function()
         vim.highlight.on_yank()
       end'';
   }
@@ -42,7 +42,10 @@
   }
   {
     event = "FileType";
-    pattern = [ "gitcommit" "markdown" ];
+    pattern = [
+      "gitcommit"
+      "markdown"
+    ];
     callback.__raw = ''
       function()
         vim.opt_local.wrap = true

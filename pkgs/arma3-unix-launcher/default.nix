@@ -1,6 +1,20 @@
-{ lib, stdenv, cmake, curl, curlpp, doctest, fetchFromGitHub, fetchurl, fmt
-, nlohmann_json, qt5, spdlog, substituteAll, trompeloeil
-, buildDayZLauncher ? false, }:
+{
+  lib,
+  stdenv,
+  cmake,
+  curl,
+  curlpp,
+  doctest,
+  fetchFromGitHub,
+  fetchurl,
+  fmt,
+  nlohmann_json,
+  qt5,
+  spdlog,
+  substituteAll,
+  trompeloeil,
+  buildDayZLauncher ? false,
+}:
 stdenv.mkDerivation {
   pname = "arma3-unix-launcher";
   version = "413";
@@ -57,15 +71,13 @@ stdenv.mkDerivation {
 
   meta = {
     homepage = "https://github.com/muttleyxd/arma3-unix-launcher/";
-    description =
-      "A clean, intuitive Arma 3 + DayZ SA Launcher for GNU/Linux and MacOS";
-    license = with lib.licenses;
-      [
-        # Launcher
-        mit
-        # Steamworks SDK
-        # unfree
-      ];
+    description = "A clean, intuitive Arma 3 + DayZ SA Launcher for GNU/Linux and MacOS";
+    license = with lib.licenses; [
+      # Launcher
+      mit
+      # Steamworks SDK
+      # unfree
+    ];
     maintainers = with lib.maintainers; [ DrymarchonShaun ];
     mainProgram = "arma3-unix-launcher";
     platforms = with lib.platforms; linux ++ darwin;

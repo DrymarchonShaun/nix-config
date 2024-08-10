@@ -1,6 +1,9 @@
-{ config, ... }: {
+{ config, ... }:
+{
   home.sessionVariables = {
-    MANGOHUD_CONFIGFILE = "${config.home.homeDirectory}/${config.xdg.configFile."MangoHud/MangoHud.conf".target}";
+    MANGOHUD_CONFIGFILE = "${config.home.homeDirectory}/${
+      config.xdg.configFile."MangoHud/MangoHud.conf".target
+    }";
   };
   programs.mangohud = {
     enable = true;

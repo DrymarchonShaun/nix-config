@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   home.packages = [ pkgs.screen ];
   home.sessionVariables = {
     SCREENRC = "${config.home.homeDirectory}/.config/screen/screenrc";

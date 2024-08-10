@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [ pkgs.hyprpaper ];
   home.file."hyprpaper.conf" = {
     text = ''

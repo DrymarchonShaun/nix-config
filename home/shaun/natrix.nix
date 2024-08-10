@@ -1,8 +1,13 @@
-{ lib, pkgs, configVars, ... }:
+{
+  lib,
+  pkgs,
+  configVars,
+  ...
+}:
 {
   imports = [
     #################### Required Configs ####################
-    common/core #required
+    common/core # required
 
     #################### Host-specific Optional Configs ####################
     common/optional/browsers/brave.nix
@@ -53,11 +58,26 @@
     # ];
     config = {
       workspaceOutputAssign = [
-        { output = "eDP-1"; workspace = "1:1"; }
-        { output = "eDP-1"; workspace = "2:2"; }
-        { output = "eDP-1"; workspace = "3:3"; }
-        { output = "HMDI-A-1"; workspace = "11:F1"; }
-        { output = "DP-1"; workspace = "11:F1"; }
+        {
+          output = "eDP-1";
+          workspace = "1:1";
+        }
+        {
+          output = "eDP-1";
+          workspace = "2:2";
+        }
+        {
+          output = "eDP-1";
+          workspace = "3:3";
+        }
+        {
+          output = "HMDI-A-1";
+          workspace = "11:F1";
+        }
+        {
+          output = "DP-1";
+          workspace = "11:F1";
+        }
       ];
     };
   };
@@ -66,7 +86,10 @@
     "2:2" = [ "eDP-1" ];
     "3:3" = [ "eDP-1" ];
     "4:4" = [ "eDP-1" ];
-    "11:F1" = [ "DP-1" "HDMI-A-1" ];
+    "11:F1" = [
+      "DP-1"
+      "HDMI-A-1"
+    ];
   };
 
   programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon4/temp1_input";
@@ -78,7 +101,6 @@
     interval = 1;
     tooltip = false;
   };
-
 
   home = {
     username = configVars.username;

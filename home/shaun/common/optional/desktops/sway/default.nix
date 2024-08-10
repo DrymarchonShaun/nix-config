@@ -1,4 +1,10 @@
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     # custom key binds
     ./binds.nix
@@ -31,11 +37,13 @@
 
   };
 
-  services.swayidle.timeouts = [{
-    timeout = 600;
-    command = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms off'";
-    resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
-  }];
+  services.swayidle.timeouts = [
+    {
+      timeout = 600;
+      command = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms off'";
+      resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
+    }
+  ];
 
   services.cliphist = {
     enable = true;
@@ -60,10 +68,10 @@
 
     extraSessionCommands = ''
       # for ozone-based and electron apps to run on wayland
-      export NIXOS_OZONE_WL=1 
+      export NIXOS_OZONE_WL=1
 
       # for firefox to run on wayland
-      export MOZ_ENABLE_WAYLAND=1      
+      export MOZ_ENABLE_WAYLAND=1
       export MOZ_WEBRENDER=1
 
       export XDG_SESSION_TYPE=wayland
@@ -80,21 +88,25 @@
 
       # defaultWorkspace = "workspace number 1";
 
-      output = import ./monitors.nix
-        {
+      output =
+        import ./monitors.nix {
           inherit lib;
           inherit (config) monitors;
-        } // {
-        "*" = {
-          bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
+        }
+        // {
+          "*" = {
+            bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
+          };
         };
-      };
 
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
         { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-        { command = "${pkgs.import-gsettings}/bin/import-gsettings"; always = true; }
+        {
+          command = "${pkgs.import-gsettings}/bin/import-gsettings";
+          always = true;
+        }
         { command = "steam"; }
       ];
 
@@ -125,13 +137,44 @@
       window = {
         titlebar = false;
         commands = [
-          { criteria = { class = "^.*"; }; command = "inhibit_idle fullscreen"; }
+          {
+            criteria = {
+              class = "^.*";
+            };
+            command = "inhibit_idle fullscreen";
+          }
 
-          { criteria = { app_id = "nm-connection-editor"; }; command = "floating enable"; }
-          { criteria = { app_id = "pwvucontrol"; }; command = "floating enable"; }
-          { criteria = { app_id = "blueman-manager"; }; command = "floating enable"; }
-          { criteria = { class = "steam"; title = "Friends List"; }; command = "floating enable"; }
-          { criteria = { title = "^Syncthing Tray( \(.*\))?$"; }; command = "floating enable"; }
+          {
+            criteria = {
+              app_id = "nm-connection-editor";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
+              app_id = "pwvucontrol";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
+              app_id = "blueman-manager";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
+              class = "steam";
+              title = "Friends List";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
+              title = "^Syncthing Tray( \(.*\))?$";
+            };
+            command = "floating enable";
+          }
         ];
       };
 
@@ -140,13 +183,8 @@
           { class = "steam"; }
           { class = "heroic"; }
         ];
-        "11:F1" = [
-          { title = ".*Discord"; }
-        ];
+        "11:F1" = [ { title = ".*Discord"; } ];
       };
-
-
-
 
       #windowrule = [
       # Dialogs

@@ -1,24 +1,26 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
     package = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXinerama
-        xorg.libXScrnSaver
-        libpng
-        libpulseaudio
-        libvorbis
-        stdenv.cc.cc.lib
-        libkrb5
-        keyutils
-        gamemode
-        gamemode.lib
-        unstable.gamescope
-        mangohud
-      ];
+      extraPkgs =
+        pkgs: with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+          gamemode
+          gamemode.lib
+          unstable.gamescope
+          mangohud
+        ];
     };
   };
   programs.gamescope = {

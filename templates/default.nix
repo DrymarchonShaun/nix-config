@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   python = {
     path = ./python-playground;
     description = "Python template, using poetry2nix";

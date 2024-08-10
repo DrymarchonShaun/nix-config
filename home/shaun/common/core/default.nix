@@ -1,4 +1,11 @@
-{ config, lib, pkgs, inputs, outputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}:
 {
   imports = [
 
@@ -42,9 +49,7 @@
     username = lib.mkDefault "shaun";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "23.11";
-    sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    sessionPath = [ "$HOME/.local/bin" ];
     sessionVariables = {
       FLAKE = "$HOME/.src/nix-config";
       SHELL = "${pkgs.zsh}/bin/zsh";
@@ -62,29 +67,30 @@
 
       # TODO: spaces before comment are removed by nixpkgs-fmt
       # See: https://github.com/nix-community/nixpkgs-fmt/issues/305
-      borgbackup# backups
-      btop# resource monitor
-      coreutils# basic gnu utils
+      borgbackup # backups
+      btop # resource monitor
+      coreutils # basic gnu utils
       # curl
-      killall# better kill
-      eza# ls replacement
-      fd# tree style ls
-      findutils# find
-      fzf# fuzzy search
-      jq# JSON pretty printer and manipulator
-      nix-tree# nix package tree viewer
-      ncdu# TUI disk usage
+      killall # better kill
+      eza # ls replacement
+      fd # tree style ls
+      findutils # find
+      fzf # fuzzy search
+      jq # JSON pretty printer and manipulator
+      nix-tree # nix package tree viewer
+      ncdu # TUI disk usage
       pciutils
-      pfetch# system info
-      pre-commit# git hooks
-      p7zip# compression & encryption
-      ripgrep# better grep
+      pfetch # system info
+      pre-commit # git hooks
+      p7zip # compression & encryption
+      ripgrep # better grep
       usbutils
-      tree# cli dir tree viewer
-      unzip# zip extraction
-      unrar# rar extraction
-      wget# downloader
-      zip; # zip compression
+      tree # cli dir tree viewer
+      unzip # zip extraction
+      unrar # rar extraction
+      wget # downloader
+      zip
+      ; # zip compression
   };
 
   nixpkgs = {
@@ -101,7 +107,10 @@
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       warn-dirty = false;
     };
   };

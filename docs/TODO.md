@@ -242,7 +242,7 @@ Migrating bash scripts to nix
 
 - plymouth
 - grub - https://www.gnome-look.org/browse?cat=109&ord=latest
-  
+
 - maybe rEFInd
 - greetd
 - p10k - consider config so that line glyphs don't interfere with yanking

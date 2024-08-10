@@ -1,6 +1,4 @@
-{ lib
-, stdenv
-}:
+{ lib, stdenv }:
 
 stdenv.mkDerivation {
   name = "wallpapers";
@@ -20,4 +18,3 @@ stdenv.mkDerivation {
     maintainers = with lib.maintainers; [ DrymarchonShaun ];
   };
 }
-

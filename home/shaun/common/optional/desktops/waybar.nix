@@ -21,9 +21,7 @@ in
       mainBar = {
         layer = "bottom";
         margin = "20 20 0 20";
-        modules-left = [
-          "sway/workspaces"
-        ];
+        modules-left = [ "sway/workspaces" ];
         modules-center = [
           "clock"
           "custom/notification"
@@ -40,13 +38,10 @@ in
           "tray"
         ];
 
-
         ########## Left Modules ##########
         "sway/workspaces" = {
           format = "{name}";
         };
-
-
 
         ########## Center Modules ##########
         clock = {
@@ -69,8 +64,6 @@ in
           on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
           escape = true;
         };
-
-
 
         ########## Right Modules ##########
         cpu = {
@@ -159,9 +152,7 @@ in
               (iconOffset "1pt" "󰕾")
             ];
           };
-          ignored-sinks = [
-            "Easy Effects Sink"
-          ];
+          ignored-sinks = [ "Easy Effects Sink" ];
           on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         };
 
@@ -177,7 +168,7 @@ in
         font-weight: normal;
         font-size: 16px;
       }
-    
+
       window#waybar {
         background: transparent;
       }
@@ -211,7 +202,7 @@ in
       #workspaces button.active {
         color: @text;
       }
-      
+
       #workspaces button.focused {
         color: @blue;
       }

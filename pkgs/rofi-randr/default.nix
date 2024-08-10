@@ -1,9 +1,10 @@
-{ rustPlatform
-, fetchFromGitHub
-, libX11
-, libXrandr
-, makeWrapper
-, pkg-config
+{
+  rustPlatform,
+  fetchFromGitHub,
+  libX11,
+  libXrandr,
+  makeWrapper,
+  pkg-config,
 }:
 let
   version = "d9d2882da7f56c1fb5658b9fb10707620dc9fae3";

@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   home.packages = [ pkgs.xdg-utils ]; # needed by multiple programs for xdg-open
   xdg = {
     enable = true;
@@ -147,4 +148,4 @@
       };
     };
   };
-} 
+}

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.zsh = {
     enable = true;
 
@@ -69,7 +70,7 @@
       #      bindkey '^I' forward-word         # tab
       #      bindkey '^[[Z' backward-word      # shift+tab
       #      bindkey '^ ' autosuggest-accept   # ctrl+space
-       
+
       #      nix shell alias
 
               function ns() {

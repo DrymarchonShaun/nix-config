@@ -11,23 +11,40 @@
 
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }@inputs:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
-      in {
-        packages = let inherit (poetry2nix) mkPoetryApplication;
-        in { default = mkPoetryApplication { projectDir = self; }; };
-
-        devShells = let inherit (poetry2nix) mkPoetryEnv;
-        in {
-          default = pkgs.mkShell {
-            packages = with pkgs; [
-              (mkPoetryEnv { projectDir = self; })
-              poetry
-            ];
+      in
+      {
+        packages =
+          let
+            inherit (poetry2nix) mkPoetryApplication;
+          in
+          {
+            default = mkPoetryApplication { projectDir = self; };
           };
-        };
-      });
+
+        devShells =
+          let
+            inherit (poetry2nix) mkPoetryEnv;
+          in
+          {
+            default = pkgs.mkShell {
+              packages = with pkgs; [
+                (mkPoetryEnv { projectDir = self; })
+                poetry
+              ];
+            };
+          };
+      }
+    );
 }

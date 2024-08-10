@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
@@ -8,9 +9,7 @@
       jnoortheen.nix-ide
 
       # Theme
-      (pkgs.catppuccin-vsc.override {
-        accent = "blue";
-      })
+      (pkgs.catppuccin-vsc.override { accent = "blue"; })
 
       # Misc
       edwinkofler.vscode-hyperupcall-pack-core

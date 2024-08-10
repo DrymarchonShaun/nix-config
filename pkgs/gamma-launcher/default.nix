@@ -1,6 +1,7 @@
-{ python3Packages
-, dev
-, fetchFromGitHub
+{
+  python3Packages,
+  dev,
+  fetchFromGitHub,
 }:
 python3Packages.buildPythonApplication rec {
   pname = "gamma-launcher";
@@ -13,9 +14,7 @@ python3Packages.buildPythonApplication rec {
     hash = "sha256-Ye6VEtCt5Fe5gfo+8eSA+LHawQuWR1XbZt6wBFAC/3c=";
   };
 
-  build-system = [
-    python3Packages.setuptools
-  ];
+  build-system = [ python3Packages.setuptools ];
   doCheck = false;
   dependencies = [
     dev.python3Packages.py7zr

@@ -1,7 +1,15 @@
-{ lib, stdenv, fetchFromGitHub, kernel, kmod }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  kernel,
+  kmod,
+}:
 
-let kernelDirectory = "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build";
-in stdenv.mkDerivation {
+let
+  kernelDirectory = "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build";
+in
+stdenv.mkDerivation {
   pname = "zenergy";
   version = "0-unstable-2024-05-19";
 
@@ -12,7 +20,10 @@ in stdenv.mkDerivation {
     hash = "sha256-10hiUHJvLTG3WGrr4WXMo/mCoJGFqWk2l5PryjNhcHg=";
   };
 
-  hardeningDisable = [ "format" "pic" ];
+  hardeningDisable = [
+    "format"
+    "pic"
+  ];
 
   makeFlags = kernel.makeFlags ++ [ "KDIR=${kernelDirectory}" ];
 
@@ -27,8 +38,7 @@ in stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description =
-      "Based on AMD_ENERGY driver, but with some jiffies added so non-root users can read it safely.";
+    description = "Based on AMD_ENERGY driver, but with some jiffies added so non-root users can read it safely.";
     homepage = "https://github.com/BoukeHaarsma23/zenergy";
     license = licenses.gpl2Only;
     platforms = platforms.linux;

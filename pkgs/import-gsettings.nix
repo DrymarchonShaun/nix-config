@@ -1,6 +1,7 @@
-{ lib
-, glib
-, writeShellScriptBin
+{
+  lib,
+  glib,
+  writeShellScriptBin,
 }:
 
 writeShellScriptBin "import-gsettings" ''

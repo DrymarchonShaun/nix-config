@@ -46,7 +46,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     # nix-index database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -59,8 +58,6 @@
     # vscode extensions/themes
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     catppuccin-vsc.url = "github:catppuccin/vscode";
-
-
 
     # Windows management
     # for now trying to avoid this one because I want stability for my wm
@@ -182,9 +179,7 @@
           inherit specialArgs;
           modules = [
             home-manager.nixosModules.home-manager
-            {
-              home-manager.extraSpecialArgs = specialArgs;
-            }
+            { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/natrix
           ];
         };
@@ -193,9 +188,7 @@
           inherit specialArgs;
           modules = [
             home-manager.nixosModules.home-manager
-            {
-              home-manager.extraSpecialArgs = specialArgs;
-            }
+            { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/corais
           ];
         };

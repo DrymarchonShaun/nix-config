@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [ ./default.nix ];
   virtualisation.oci-containers.containers."openbooks" = {
     image = "evanbuss/openbooks:latest";

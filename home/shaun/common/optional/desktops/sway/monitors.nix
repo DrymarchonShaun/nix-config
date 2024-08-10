@@ -2,7 +2,8 @@
 { lib, monitors }:
 let
   enabledMonitors = lib.filter (m: m.enabled) monitors;
-  outputList = lib.forEach enabledMonitors (m:
+  outputList = lib.forEach enabledMonitors (
+    m:
     let
       w = builtins.toString m.width;
       h = builtins.toString m.height;
@@ -15,6 +16,7 @@ let
         mode = "${w}x${h}@${hz}Hz";
         scale = scale;
       };
-    });
+    }
+  );
 in
 builtins.listToAttrs outputList

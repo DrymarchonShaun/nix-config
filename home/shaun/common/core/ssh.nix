@@ -1,4 +1,9 @@
-{ outputs, pkgs, lib, ... }:
+{
+  outputs,
+  pkgs,
+  lib,
+  ...
+}:
 {
   services.gpg-agent = {
     enableSshSupport = true;
@@ -11,9 +16,7 @@
       "VCS" = {
         host = "gitlab.com github.com";
         identitiesOnly = true;
-        identityFile = [
-          "~/.ssh/id_mimir"
-        ];
+        identityFile = [ "~/.ssh/id_mimir" ];
       };
     };
     # FIXME: This should probably be for git systems only?

@@ -1,1 +1,7 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ wl-clipboard xclip ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    wl-clipboard
+    xclip
+  ];
+}

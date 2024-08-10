@@ -1,4 +1,10 @@
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     # custom key binds
     ./binds.nix
@@ -49,23 +55,21 @@
     settings = {
       # See https://wiki.hyprland.org/Configuring/Monitors/
 
-      monitor = map
-        (m:
-          let
-            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-            position = "${toString (m.x / m.scale)}x${toString (m.y / m.scale)}";
-            scale = "${toString m.scale}";
-          in
-          "${m.name},${if m.enabled then "${resolution},${position},${scale}" else "disable"}"
-        )
-        config.monitors;
+      monitor = map (
+        m:
+        let
+          resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+          position = "${toString (m.x / m.scale)}x${toString (m.y / m.scale)}";
+          scale = "${toString m.scale}";
+        in
+        "${m.name},${if m.enabled then "${resolution},${position},${scale}" else "disable"}"
+      ) config.monitors;
 
       exec-once = [
         "${pkgs.hyprpaper}/bin/hyprpaper"
         #"${pkgs.waybar}/bin/waybar"
         "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"
       ];
-
 
       env = [
         "NIXOS_OZONE_WL, 1" # for ozone-based and electron apps to run on wayland

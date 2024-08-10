@@ -1,4 +1,11 @@
-{ inputs, config, configVars, pkgs, ... }: {
+{
+  inputs,
+  config,
+  configVars,
+  pkgs,
+  ...
+}:
+{
   imports = [
     inputs.NixVirt.nixosModules.default
     ./windows.nix
@@ -25,9 +32,7 @@
       swtpm.enable = true;
       ovmf = {
         enable = true;
-        packages = [
-          pkgs.OVMFFull.fd
-        ];
+        packages = [ pkgs.OVMFFull.fd ];
       };
     };
   };
@@ -44,8 +49,17 @@
       "vfio_iommu_type1"
       # "vfio_virqfd"
     ];
-    kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-    kernelParams = [ "amd_iommu=on" "amd_iommu=pt" "kvm.ignore_msrs=1" ];
+    kernelModules = [
+      "vfio_virqfd"
+      "vfio_pci"
+      "vfio_iommu_type1"
+      "vfio"
+    ];
+    kernelParams = [
+      "amd_iommu=on"
+      "amd_iommu=pt"
+      "kvm.ignore_msrs=1"
+    ];
     extraModprobeConfig = "options vfio-pci ids=10de:2182,10de:1aeb,10de:1aec,10de:1aed";
   };
 }

@@ -1,22 +1,22 @@
 --- a/edk2/MdeModulePkg/MdeModulePkg.dec	2024-01-21 22:22:01.442882704 +0100
 +++ b/edk2/MdeModulePkg/MdeModulePkg.dec	2024-01-21 22:46:45.725778593 +0100
 @@ -1766,7 +1766,7 @@
- 
+
    ## Null-terminated Unicode string of the firmware vendor name that is the default name filled into the EFI System Table.
    # @Prompt Firmware vendor.
 -  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"EDK II"|VOID*|0x00010050
 +  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"American Megatrends"|VOID*|0x00010050
- 
+
    ## Firmware revision that is the default revision filled into the EFI System Table.
    # @Prompt Firmware revision.
 --- a/edk2/ShellPkg/ShellPkg.dec	2024-01-21 22:21:41.642380164 +0100
 +++ b/edk2/ShellPkg/ShellPkg.dec	2024-01-21 22:46:58.606091993 +0100
 @@ -123,7 +123,7 @@
    gEfiShellPkgTokenSpaceGuid.PcdShellScreenLogCount|3|UINT8|0x00000008
- 
+
    ## Unicode string of the shell supplier
 -  gEfiShellPkgTokenSpaceGuid.PcdShellSupplier|L"EDK II"|VOID*|0x00000010
 +  gEfiShellPkgTokenSpaceGuid.PcdShellSupplier|L"American Megatrends"|VOID*|0x00000010
- 
+
    ## Do extended decode of USB for determining media type
    gEfiShellPkgTokenSpaceGuid.PcdUsbExtendedDecode|TRUE|BOOLEAN|0x00000011

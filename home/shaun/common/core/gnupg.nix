@@ -1,4 +1,10 @@
-{ pkgs, lib, configLib, configVars, ... }:
+{
+  pkgs,
+  lib,
+  configLib,
+  configVars,
+  ...
+}:
 let
   update-trust = pkgs.writeShellScript "update-trust" ''
     echo "active user is $(${pkgs.coreutils}/bin/whoami)"
@@ -39,8 +45,18 @@ in
     };
   };
 
-
-  home.activation.importGpgKeys = lib.mkForce (lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "linkGeneration" "onFilesChange" "setupLaunchAgents" "sops-nix" ] ''
-    run ${pkgs.findutils}/bin/find $XDG_RUNTIME_DIR/gpg-keys/ -name "*.asc" -exec ${pkgs.gnupg}/bin/gpg --import {} \; -exec ${pkgs.util-linux}/bin/script -q -O /dev/null -c "${update-trust} {}" \;
-  '');
+  home.activation.importGpgKeys = lib.mkForce (
+    lib.hm.dag.entryAfter
+      [
+        "writeBoundary"
+        "installPackages"
+        "linkGeneration"
+        "onFilesChange"
+        "setupLaunchAgents"
+        "sops-nix"
+      ]
+      ''
+        run ${pkgs.findutils}/bin/find $XDG_RUNTIME_DIR/gpg-keys/ -name "*.asc" -exec ${pkgs.gnupg}/bin/gpg --import {} \; -exec ${pkgs.util-linux}/bin/script -q -O /dev/null -c "${update-trust} {}" \;
+      ''
+  );
 }

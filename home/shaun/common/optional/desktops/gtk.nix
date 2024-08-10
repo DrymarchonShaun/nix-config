@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   gradiencePreset = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/GradienceTeam/Community/next/official/catppuccin-macchiato.json";
@@ -6,7 +11,10 @@ let
   };
   gradienceBuild = pkgs.stdenv.mkDerivation {
     name = "gradience-build";
-    phases = [ "buildPhase" "installPhase" ];
+    phases = [
+      "buildPhase"
+      "installPhase"
+    ];
     nativeBuildInputs = [ pkgs.gradience ];
     buildPhase = ''
       shopt -s nullglob

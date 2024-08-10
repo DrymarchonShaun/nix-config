@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -10,9 +11,18 @@
 
     fontconfig = {
       defaultFonts = {
-        serif = [ "Liberation Serif" "Symbols Nerd Font Mono" ];
-        sansSerif = [ "Roboto" "Symbols Nerd Font Mono" ];
-        monospace = [ "Roboto Mono" "Symbols Nerd Font Mono" ];
+        serif = [
+          "Liberation Serif"
+          "Symbols Nerd Font Mono"
+        ];
+        sansSerif = [
+          "Roboto"
+          "Symbols Nerd Font Mono"
+        ];
+        monospace = [
+          "Roboto Mono"
+          "Symbols Nerd Font Mono"
+        ];
       };
     };
   };
