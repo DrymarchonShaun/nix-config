@@ -5,7 +5,7 @@ default:
   @just --list
 
 rebuild-pre: update-nix-secrets
-  git add *.nix
+  git add \*.nix
 
 rebuild-post:
   just check-sops
