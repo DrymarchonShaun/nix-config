@@ -1,6 +1,7 @@
 {
   stdenv,
   writers,
+  fetchurl,
   python3Packages,
   coreutils,
   libnotify,
@@ -37,14 +38,10 @@ stdenv.mkDerivation rec {
                   "F405" # name may be undefined, or defined from star imports: module
                 ];
               }
-              (
-                builtins.readFile (
-                  builtins.fetchurl {
-                    url = "https://raw.githubusercontent.com/sersorrel/sys/main/hm/discord/krisp-patcher.py";
-                    sha256 = "sha256:1d182pv51sqzp8qnc7cj8gpr29pjb3skvqb80p8lx5k06c7xg22w";
-                  }
-                )
-              );
+              (fetchurl {
+                url = "https://raw.githubusercontent.com/sersorrel/sys/de1ce2ba941318a05d4d029f717ad8be7b4b09ee/hm/discord/krisp-patcher.py";
+                sha256 = "sha256-XIjXDzNglk7RBWjhPfVY8iaR70OSHWYxuh/rUPYVKLQ=";
+              });
         in
         writeShellApplication {
           inherit name;
