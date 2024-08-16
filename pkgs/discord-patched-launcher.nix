@@ -39,8 +39,9 @@ stdenv.mkDerivation rec {
                 ];
               }
               (fetchurl {
-                url = "https://raw.githubusercontent.com/sersorrel/sys/de1ce2ba941318a05d4d029f717ad8be7b4b09ee/hm/discord/krisp-patcher.py";
-                sha256 = "sha256-XIjXDzNglk7RBWjhPfVY8iaR70OSHWYxuh/rUPYVKLQ=";
+                # url = "https://raw.githubusercontent.com/sersorrel/sys/de1ce2ba941318a05d4d029f717ad8be7b4b09ee/hm/discord/krisp-patcher.py";
+                url = "https://raw.githubusercontent.com/sersorrel/sys/main/hm/discord/krisp-patcher.py";
+                sha256 = "sha256-JTK1LnvdT5QVNP2TcCLBV1x4FR069Xd0Y/njmqhuRsw=";
               });
         in
         writeShellApplication {
