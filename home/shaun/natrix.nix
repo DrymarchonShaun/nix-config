@@ -13,6 +13,7 @@
     common/optional/browsers/brave.nix
     common/optional/browsers/firefox.nix
     common/optional/comms/discord.nix
+    common/optional/dev/bambulab.nix
     common/optional/dev/vscode.nix
     common/optional/games/heroic.nix
     common/optional/games/prismlauncher.nix
