@@ -27,7 +27,8 @@
       {
         _module.args = {
           disk = "/dev/nvme0n1";
-          withSwap = false;
+          withSwap = true;
+          swapSize = "24";
         };
       }
     ]
