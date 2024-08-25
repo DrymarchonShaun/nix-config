@@ -56,6 +56,7 @@
       "hosts/common/optional/pipewire.nix" # audio
       "hosts/common/optional/steam.nix" # steam
       "hosts/common/optional/wooting.nix"
+      "hosts/common/optional/bambulab.nix"
 
       #################### Users to Create ####################
       "hosts/common/users/shaun"
