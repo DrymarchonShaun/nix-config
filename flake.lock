@@ -561,6 +561,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-gamescope": {
+      "locked": {
+        "lastModified": 1722812193,
+        "narHash": "sha256-SIvMiKZDpuDBsr13yCBEMHb3aGDRFZNtM0MsaoXBWQs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b7d82aa962dd09b4214379abbc93579d33802f9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b7d82aa962dd09b4214379abbc93579d33802f9b",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1722555339,
@@ -885,6 +901,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-dev": "nixpkgs-dev",
+        "nixpkgs-gamescope": "nixpkgs-gamescope",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvix": "nvix",

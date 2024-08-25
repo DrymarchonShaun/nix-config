@@ -18,14 +18,14 @@
           keyutils
           gamemode
           gamemode.lib
-          unstable.gamescope
+          gamescope
           mangohud
         ];
     };
   };
   programs.gamescope = {
     enable = true;
-    package = pkgs.unstable.gamescope;
+    package = pkgs.gamescope;
   };
   programs.gamemode = {
     enable = true;

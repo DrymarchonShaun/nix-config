@@ -29,8 +29,9 @@
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
-  };
+    gamescope = (import inputs.nixpkgs-gamescope { system = final.system; }).gamescope;
 
+  };
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
