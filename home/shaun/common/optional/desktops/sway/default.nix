@@ -125,6 +125,9 @@
         "4152:5931:SteelSeries_SteelSeries_Rival_650_Wireless*" = {
           pointer_accel = "0.6";
         };
+        "5426:168:Razer_Razer_Naga_V2_Pro*" = {
+          pointer_accel = "0.6";
+        };
         "type:touchpad" = {
           dwt = "enabled";
           tap = "enabled";

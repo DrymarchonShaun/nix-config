@@ -3,6 +3,9 @@
 #
 
 { inputs, ... }:
+let
+  nixpkgs-gamescope = import inputs.nixpkgs-gamescope { system = "x86_64-linux"; };
+in
 {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
@@ -23,13 +26,13 @@
       patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
     });
     p7zip = prev.p7zip.override { enableUnfree = true; };
+    gamescope = nixpkgs-gamescope.gamescope;
     #sway-contrib.grimshot = prev.sway-contrib.grimshot.overrideAttrs (attrs: {
     #  patches = (attrs.patches or [ ]) ++ [ ./patches/grimshot-application-name.patch ];
     #});
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
-    gamescope = (import inputs.nixpkgs-gamescope { system = final.system; }).gamescope;
 
   };
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
