@@ -13,6 +13,19 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+  fileSystems."/run/media/shaun/HDD" = {
+    device = "/dev/disk/by-label/HDD";
+    fsType = "ntfs-3g";
+    options = [
+      "rw"
+      "uid=1000"
+      "nosuid"
+      "nodev"
+      "nofail"
+      "noatime"
+    ];
+  };
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"
