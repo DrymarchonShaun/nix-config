@@ -2,12 +2,12 @@
 {
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {
-      definition = inputs.NixVirt.lib.domain.writeXML {
+      definition = inputs.nixvirt.lib.domain.writeXML {
         type = "kvm";
 
         name = "usb-pcap";
         uuid = "0201cf20-655b-458b-9604-7f24f591662c";
-        metadata = with inputs.NixVirt.lib.xml; [
+        metadata = with inputs.nixvirt.lib.xml; [
           (elem "libosinfo:libosinfo" [
             (attr "xmlns:libosinfo" "http://libosinfo.org/xmlns/libvirt/domain/1.0")
           ] [ (elem "libosinfo:os" [ (attr "id" "http://microsoft.com/win/11") ] [ ]) ])
@@ -272,8 +272,8 @@
         };
 
         clock = {
-          # offset = "timezone";
-          # timezone = "America/Los_Angeles";
+          offset = "timezone";
+          timezone = "America/Los_Angeles";
           timer = [
             {
               name = "rtc";

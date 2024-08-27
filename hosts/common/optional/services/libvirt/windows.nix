@@ -2,12 +2,12 @@
 {
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {
-      definition = inputs.NixVirt.lib.domain.writeXML {
+      definition = inputs.nixvirt.lib.domain.writeXML {
         type = "kvm";
 
         name = "win11gpu";
         uuid = "78103f8f-6a97-437f-9b98-765e21656584";
-        metadata = with inputs.NixVirt.lib.xml; [
+        metadata = with inputs.nixvirt.lib.xml; [
           (elem "libosinfo:libosinfo" [
             (attr "xmlns:libosinfo" "http://libosinfo.org/xmlns/libvirt/domain/1.0")
           ] [ (elem "libosinfo:os" [ (attr "id" "http://microsoft.com/win/11") ] [ ]) ])
@@ -272,8 +272,8 @@
         };
 
         clock = {
-          # offset = "timezone";
-          # timezone = "America/Los_Angeles";
+          offset = "timezone";
+          timezone = "America/Los_Angeles";
           timer = [
             {
               name = "rtc";

@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "NixVirt": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-ovmf": "nixpkgs-ovmf"
-      },
-      "locked": {
-        "lastModified": 1724405219,
-        "narHash": "sha256-Y9Xinz8frbHeUk7TqVbXeQ19z9YD2VwxEXEJ5+5ABq0=",
-        "owner": "AshleyYakeley",
-        "repo": "NixVirt",
-        "rev": "c5519d6fa93aad947fde4a6469480083bcb4c931",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AshleyYakeley",
-        "repo": "NixVirt",
-        "type": "github"
-      }
-    },
     "buffer-manager": {
       "flake": false,
       "locked": {
@@ -758,6 +737,28 @@
         "type": "github"
       }
     },
+    "nixvirt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-ovmf": "nixpkgs-ovmf"
+      },
+      "locked": {
+        "lastModified": 1724723145,
+        "narHash": "sha256-tXy+kQI/mWOgZsIoxPQPLFsTkrMXVf17CMmAwOvhbFI=",
+        "owner": "DrymarchonShaun",
+        "repo": "NixVirt",
+        "rev": "d2669f8e1187a4e4fa55fe8774a289e24b762381",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DrymarchonShaun",
+        "ref": "testing",
+        "repo": "NixVirt",
+        "type": "github"
+      }
+    },
     "ntree-float": {
       "flake": false,
       "locked": {
@@ -888,7 +889,6 @@
     },
     "root": {
       "inputs": {
-        "NixVirt": "NixVirt",
         "catppuccin": "catppuccin",
         "catppuccin-vsc": "catppuccin-vsc",
         "disko": "disko",
@@ -903,6 +903,7 @@
         "nixpkgs-gamescope": "nixpkgs-gamescope",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixvirt": "nixvirt",
         "nvix": "nvix",
         "pre-commit-hooks": "pre-commit-hooks",
         "sops-nix": "sops-nix"

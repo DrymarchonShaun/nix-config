@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    inputs.NixVirt.nixosModules.default
+    inputs.nixvirt.nixosModules.default
     # ./windows.nix
     ./usbpcap.nix
     ./networks.nix
