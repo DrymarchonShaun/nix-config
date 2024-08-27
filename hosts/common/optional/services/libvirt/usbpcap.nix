@@ -364,15 +364,6 @@
 
           input = [
             {
-              type = "evdev";
-              source = {
-                dev = "/dev/input/by-id/usb-Wooting_WootingTwoHE_A02B2130W041H00501-if03-event-kbd";
-                grab = "all";
-                grabToggle = "ctrl-ctrl";
-                repeat = true;
-              };
-            }
-            {
               type = "mouse";
               bus = "ps2";
             }
@@ -398,17 +389,26 @@
               function = 0;
             };
           };
-          audio = {
-            id = 1;
-            type = "pulseaudio";
-            serverName = "/run/user/1000/pulse/native";
-          };
 
           tpm = {
             model = "tpm-crb";
             backend = {
               type = "emulator";
               version = "2.0";
+            };
+          };
+
+          channel = {
+            type = "spicevmc";
+            target = {
+              type = "virtio";
+              name = "com.redhat.spice.0";
+            };
+            address = {
+              type = "virtio-serial";
+              controller = 0;
+              bus = 0;
+              port = 1;
             };
           };
 
@@ -431,12 +431,20 @@
             };
           };
 
-          # GPU passthrough
-          # video = {
-          #   model = {
-          #     type = "none";
-          #   };
-          # };
+          video = {
+            model = {
+              type = "qxl";
+            };
+          };
+
+          graphics = {
+            type = "spice";
+            autoport = true;
+            listen = {
+              type = "address";
+              address = "127.0.0.1";
+            };
+          };
 
           hostdev = [
             # Wired
@@ -502,6 +510,23 @@
               };
             }
             {
+              type = "pci";
+              index = 0;
+              model = "pcie-root";
+            }
+            {
+              type = "pci";
+              index = 7;
+              model = "pcie-to-pci-bridge";
+              address = {
+                type = "pci";
+                domain = 0;
+                bus = 4;
+                slot = 0;
+                function = 0;
+              };
+            }
+            {
               type = "virtio-serial";
               index = 0;
               address = {
@@ -510,6 +535,24 @@
                 bus = 3;
                 slot = 0;
                 function = 0;
+              };
+            }
+          ];
+          redirdev = [
+            {
+              type = "spicevmc";
+              address = {
+                type = "usb";
+                bus = 0;
+                port = 2;
+              };
+            }
+            {
+              type = "spicevmc";
+              address = {
+                type = "usb";
+                bus = 0;
+                port = 3;
               };
             }
           ];
