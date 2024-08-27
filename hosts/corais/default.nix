@@ -40,9 +40,10 @@
       "hosts/common/optional/services/openssh.nix"
       "hosts/common/optional/services/geoclue.nix"
       "hosts/common/optional/services/gvfs.nix"
-      # "hosts/common/optional/services/libvirt/libvirtd.nix"
+      "hosts/common/optional/services/libvirt/libvirtd.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
+      "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/vlc.nix"
 

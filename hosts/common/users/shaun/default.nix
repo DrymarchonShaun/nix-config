@@ -43,13 +43,18 @@ in
             ++ ifTheyExist [
               "audio"
               "disk"
-              "storage"
-              "input"
-              "video"
               "docker"
               "git"
               "gamemode"
+              "git"
+              "input"
+              "libvirtd"
               "networkmanager"
+              "openrazer"
+              "qemu-libvirtd"
+              "storage"
+              "video"
+              "wireshark"
             ];
 
           # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos

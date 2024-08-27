@@ -8,16 +8,15 @@
         "nixpkgs-ovmf": "nixpkgs-ovmf"
       },
       "locked": {
-        "lastModified": 1717803007,
-        "narHash": "sha256-RsMKNR1m+//DtGKnih9Df0KTC528aeh50a5RvW0JatM=",
-        "owner": "DrymarchonShaun",
+        "lastModified": 1724405219,
+        "narHash": "sha256-Y9Xinz8frbHeUk7TqVbXeQ19z9YD2VwxEXEJ5+5ABq0=",
+        "owner": "AshleyYakeley",
         "repo": "NixVirt",
-        "rev": "a94b7c43b90395d9d98a1d65a5046853714a8b15",
+        "rev": "c5519d6fa93aad947fde4a6469480083bcb4c931",
         "type": "github"
       },
       "original": {
-        "owner": "DrymarchonShaun",
-        "ref": "testing",
+        "owner": "AshleyYakeley",
         "repo": "NixVirt",
         "type": "github"
       }

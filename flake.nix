@@ -42,7 +42,8 @@
     };
     # Virtual machine definition
     NixVirt = {
-      url = "github:DrymarchonShaun/NixVirt/testing"; # Dev Fork
+      url = "github:AshleyYakeley/NixVirt"; # Upstream
+      # url = "github:DrymarchonShaun/NixVirt/testing"; # Dev Fork
       # url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz"; # Stable release
       inputs.nixpkgs.follows = "nixpkgs";
     };
