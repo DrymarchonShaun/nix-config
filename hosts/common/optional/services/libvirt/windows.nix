@@ -272,8 +272,8 @@
         };
 
         clock = {
-          offset = "timezone";
-          timezone = "America/Los_Angeles";
+          # offset = "timezone";
+          # timezone = "America/Los_Angeles";
           timer = [
             {
               name = "rtc";
