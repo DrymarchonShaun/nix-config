@@ -13,6 +13,7 @@ in
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://wiki.nixos.org/wiki/Overlays
+
   modifications = final: prev: {
     OVMFFull = prev.OVMFFull.override {
       secureBoot = true;
@@ -25,8 +26,11 @@ in
       pipewireSupport = true;
       patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
     });
+
     p7zip = prev.p7zip.override { enableUnfree = true; };
+
     gamescope = nixpkgs-gamescope.gamescope;
+
     #sway-contrib.grimshot = prev.sway-contrib.grimshot.overrideAttrs (attrs: {
     #  patches = (attrs.patches or [ ]) ++ [ ./patches/grimshot-application-name.patch ];
     #});
@@ -35,6 +39,7 @@ in
     # });
 
   };
+
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
