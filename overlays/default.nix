@@ -29,6 +29,15 @@ in
 
     p7zip = prev.p7zip.override { enableUnfree = true; };
 
+    orca-slicer = prev.orca-slicer.overrideAttrs (attrs: {
+      patches = (attrs.patches or [ ]) ++ [
+        (final.fetchpatch {
+          url = "https://github.com/SoftFever/OrcaSlicer/commit/abb62ca180c7b16263db57e7fefcad8f9fe124de.patch";
+          hash = "sha256-cZQJmT+SKftmtjqam5swUqIW7865vzmPP1qyD2w47YQ=";
+        })
+      ];
+    });
+
     gamescope = nixpkgs-gamescope.gamescope;
 
     #sway-contrib.grimshot = prev.sway-contrib.grimshot.overrideAttrs (attrs: {
