@@ -291,11 +291,14 @@ in
       }
 
       #backlight {
+        padding-right: 0.25em;
         color: @text;
         background: @surface0;
       }
 
       #battery {
+        padding-right: 0.25em;
+        padding-left: 0.25em;
         background: @surface0;
         color: @text;
       }
