@@ -1,5 +1,7 @@
 { inputs, lib }:
 {
+  networking = import ./networking.nix { inherit lib; };
+
   gpgKey = "E1EC37451A645A64!";
   username = "shaun";
   domain = inputs.nix-secrets.domain;

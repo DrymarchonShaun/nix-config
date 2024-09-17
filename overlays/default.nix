@@ -30,12 +30,11 @@ in
     p7zip = prev.p7zip.override { enableUnfree = true; };
 
     orca-slicer = prev.orca-slicer.overrideAttrs (attrs: {
-      patches = (attrs.patches or [ ]) ++ [
-        (final.fetchpatch {
-          url = "https://github.com/SoftFever/OrcaSlicer/commit/abb62ca180c7b16263db57e7fefcad8f9fe124de.patch";
-          hash = "sha256-cZQJmT+SKftmtjqam5swUqIW7865vzmPP1qyD2w47YQ=";
-        })
-      ];
+      version = "2.2.0-beta";
+      src = attrs.src // {
+        rev = "v2.2.0-beta";
+        hash = "";
+      };
     });
 
     gamescope = nixpkgs-gamescope.gamescope;
@@ -48,6 +47,11 @@ in
     # });
 
   };
+  #kernelOverrides = final: prev: {
+  #linuxPackages = super.linuxPackages.extend (
+  #  lpself: lpsuper: { system76 = super.linuxPackages.system76.overrideAttrs (oldAttrs: { }); }
+  #);
+  #};
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'

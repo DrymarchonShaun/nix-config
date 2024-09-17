@@ -38,14 +38,16 @@
       #################### Host-specific Optional Configs ####################
       "hosts/common/optional/services/avahi.nix"
       "hosts/common/optional/services/openssh.nix"
+      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/services/geoclue.nix"
-      "hosts/common/optional/services/gvfs.nix"
-      "hosts/common/optional/services/libvirt/libvirtd.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
+      "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/vlc.nix"
+      "hosts/common/optional/thunar.nix"
+      "hosts/common/optional/gaming.nix"
 
       # Docker Configs
       "hosts/common/optional/virtualization/docker"
@@ -55,10 +57,7 @@
       # "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/sway.nix" # window manager
       # "hosts/common/optional/plasma.nix" # desktop environment
-      "hosts/common/optional/pipewire.nix" # audio
-      "hosts/common/optional/steam.nix" # steam
       "hosts/common/optional/wooting.nix"
-      "hosts/common/optional/bambulab.nix"
 
       #################### Users to Create ####################
       "hosts/common/users/shaun"

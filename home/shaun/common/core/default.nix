@@ -67,7 +67,7 @@
 
       # TODO: spaces before comment are removed by nixpkgs-fmt
       # See: https://github.com/nix-community/nixpkgs-fmt/issues/305
-      borgbackup # backups
+      #borgbackup # backups
       btop # resource monitor
       coreutils # basic gnu utils
       # curl
@@ -84,13 +84,14 @@
       pre-commit # git hooks
       p7zip # compression & encryption
       ripgrep # better grep
+      steam-run # for running non-NixOS-packaged binaries on Nix
       usbutils
       tree # cli dir tree viewer
       unzip # zip extraction
       unrar # rar extraction
       wget # downloader
-      zip
-      ; # zip compression
+      zip # zip compression
+      ;
   };
 
   nixpkgs = {

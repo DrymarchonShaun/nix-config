@@ -25,7 +25,7 @@ in
     flake = "${homeDirectory}/nix-config";
   };
 
-  services.yubikey-agent.enable = true;
+  # services.yubikey-agent.enable = true;
 
   # less delay on failed login
   security.pam.services.login = {

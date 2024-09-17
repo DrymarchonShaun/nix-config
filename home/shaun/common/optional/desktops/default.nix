@@ -1,7 +1,7 @@
 {
   imports = [
     # Packages with custom configs go here
-
+    ./sway
     #./hyprland
     # ./hyprpaper.nix
 

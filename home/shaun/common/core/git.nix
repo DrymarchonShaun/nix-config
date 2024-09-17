@@ -33,7 +33,7 @@ in
         };
       };
 
-      #FIXME stage 3 - Re-enable signing. needs additional setup
+      #FIXME stage 4 - Re-enable signing. needs additional setup
       # commit.gpgsign = true;
       # gpg.format = "openpgp";
       # Taken from https://github.com/clemak27/homecfg/blob/16b86b04bac539a7c9eaf83e9fef4c813c7dce63/modules/git/ssh_signing.nix#L14
@@ -44,6 +44,7 @@ in
       key = publicKey;
     };
     ignores = [
+      ".csvignore"
       ".direnv"
       "result"
     ];

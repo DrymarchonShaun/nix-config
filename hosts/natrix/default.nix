@@ -24,29 +24,31 @@
       inputs.hardware.nixosModules.common-pc-ssd
 
       #################### Disk Layout ####################
-      #  inputs.disko.nixosModules.disko
-      #  (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
-      #  {
-      #    _module.args = {
-      #      disk = "/dev/nvme0n1";
-      #      swapSize = "16";
-      #      withSwap = false;
-      #    };
-      #  }
+      inputs.disko.nixosModules.disko
+      (configLib.relativeToRoot "hosts/common/disks/btrfs-luks-disk.nix")
+      {
+        _module.args = {
+          disk = "/dev/nvme1n1";
+          swapSize = "24";
+          withSwap = true;
+        };
+      }
     ]
     ++ (map configLib.relativeToRoot [
       #################### Required Configs ####################
       "hosts/common/core"
 
-      #################### Host-specific Optional Configs ####################
       "hosts/common/optional/services/avahi.nix"
       "hosts/common/optional/services/openssh.nix"
+      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/services/geoclue.nix"
-      "hosts/common/optional/services/gvfs.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
+      "hosts/common/optional/audio.nix" # pipewire and cli controls
+      "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/vlc.nix"
+      "hosts/common/optional/gaming.nix"
 
       # Docker Configs
       "hosts/common/optional/virtualization/docker"
@@ -55,8 +57,9 @@
       # Desktop
       # "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/sway.nix" # window manager
-      "hosts/common/optional/pipewire.nix" # audio
-      "hosts/common/optional/steam.nix"
+      # "hosts/common/optional/plasma.nix" # desktop environment
+      "hosts/common/optional/wooting.nix"
+
       #################### Users to Create ####################
       "hosts/common/users/shaun"
 
@@ -89,24 +92,6 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       timeout = 3;
-    };
-  };
-
-  fileSystems."/run/media/shaun/storage" = {
-    device = "/dev/mapper/luksmnt";
-    options = [
-      "nofail"
-      "noatime"
-    ];
-  };
-
-  # environment.systemPackages = [ pkgs.libsForQt5.qtstyleplugin-kvantum pkgs.qt6Packages.qtstyleplugin-kvantum ];
-
-  environment.etc = {
-    crypttab = {
-      text = ''
-        luksmnt /dev/disk/by-partlabel/storage /etc/.cryptkey luks,nofail
-      '';
     };
   };
 

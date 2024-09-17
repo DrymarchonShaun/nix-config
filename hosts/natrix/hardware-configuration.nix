@@ -10,9 +10,24 @@
 }:
 
 {
-  imports = [ ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  fileSystems."/run/media/shaun/storage" = {
+    device = "/dev/mapper/luksmnt";
+    options = [
+      "nofail"
+      "noatime"
+    ];
+  };
+
+  environment.etc = {
+    crypttab = {
+      text = ''
+        luksmnt /dev/disk/by-partlabel/storage /etc/.cryptkey luks,nofail
+      '';
+    };
+  };
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "thunderbolt"
@@ -23,18 +38,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.kernelParams = [ "acpi_backlight=native" ];
   boot.extraModulePackages = [ ];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/a3618aeb-b86e-4204-a839-f99fadb039ab";
-    fsType = "ext4";
-  };
-
-  boot.initrd.luks.devices."luksroot".device = "/dev/disk/by-uuid/95a0a7a5-23f2-4df0-959a-e7bc9a20cf1a";
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/BA6E-3751";
-    fsType = "vfat";
-  };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

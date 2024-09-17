@@ -37,13 +37,6 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Virtual machine definition
-    nixvirt = {
-      #url = "github:AshleyYakeley/NixVirt"; # Upstream
-      url = "github:DrymarchonShaun/NixVirt/testing"; # Dev Fork
-      # url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz"; # Stable release
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # nix-index database
     nix-index-database = {
@@ -76,7 +69,7 @@
     # Authenticate via ssh and use shallow clone
     nix-secrets = {
       url = "git+ssh://git@github.com/DrymarchonShaun/nix-secrets?ref=main&shallow=1";
-      flake = false;
+      inputs = { };
     };
   };
 

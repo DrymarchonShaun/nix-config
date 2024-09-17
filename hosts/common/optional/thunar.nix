@@ -7,6 +7,8 @@
 
   # gvfs is for Thunar stuff like Trash folders etc
   services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  users.groups.storage = { };
 
   # thumbnail generation service for Thunar
   services.tumbler.enable = true;

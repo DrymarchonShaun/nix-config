@@ -12,24 +12,16 @@
     #################### Host-specific Optional Configs ####################
     common/optional/browsers/brave.nix
     common/optional/browsers/firefox.nix
-    common/optional/comms/discord.nix
-    common/optional/dev/bambulab.nix
+    common/optional/comms
     common/optional/dev/vscode.nix
     common/optional/games/heroic.nix
+    common/optional/games/mangohud.nix
     common/optional/games/prismlauncher.nix
-    common/optional/media/calibre.nix
-    common/optional/tools/eye-of-gnome.nix
-    common/optional/tools/gimp.nix
-    common/optional/tools/inkscape.nix
-    common/optional/tools/libreoffice.nix
-    common/optional/tools/nemo.nix
-    common/optional/tools/qpwgraph.nix
-    common/optional/tools/syncthing.nix
-    common/optional/tools/wine.nix
-    common/optional/tools/xdg.nix
+    common/optional/games/steam.nix
+    common/optional/media
+    common/optional/tools
 
     common/optional/desktops
-    common/optional/desktops/sway
 
   ];
 
