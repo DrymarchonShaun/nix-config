@@ -3,7 +3,7 @@
 
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     # Declarative partitioning and formatting
     disko.url = "github:nix-community/disko";
   };
@@ -51,6 +51,18 @@
         gusto = newConfig "gusto" "/dev/sda" true "8";
         natrix = newConfig "natrix" "/dev/nvme0n1" false "0";
         corais = newConfig "corais" "/dev/nvme0n1" false "0";
+
+        ghost = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = minimalSpecialArgs;
+          modules = [
+            inputs.disko.nixosModules.disko
+            (configLib.relativeToRoot "hosts/common/disks/ghost.nix")
+            ./minimal-configuration.nix
+            { networking.hostName = "ghost"; }
+            (configLib.relativeToRoot "hosts/ghost/hardware-configuration.nix")
+          ];
+        };
 
         # Custom ISO
         #

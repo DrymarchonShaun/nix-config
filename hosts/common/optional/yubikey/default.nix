@@ -1,6 +1,6 @@
 # Modeled on https://github.com/Mic92/dotfiles for now
 
-{ pkgs, ... }:
+{ pkgs, configVars, ... }:
 let
   yubikey-up = pkgs.writeShellApplication {
     name = "yubikey-up";
@@ -11,6 +11,8 @@ let
     name = "yubikey-down";
     text = builtins.readFile ./scripts/yubikey-down.sh;
   };
+  homeDirectory =
+    if pkgs.stdenv.isLinux then "/home/${configVars.username}" else "/Users/${configVars.username}";
 in
 with pkgs; # FIXME needs to be refactored according to best practices but not sure how in this case. https://nix.dev/guides/best-practices#with-scopes
 {
@@ -22,7 +24,7 @@ with pkgs; # FIXME needs to be refactored according to best practices but not su
     #    yubikey-personalization
     #    yubikey-personalization-gui
     #    yubico-piv-tool
-    #    yubioath-flutter # yubioath-desktop on older nixpkg channels
+    yubioath-flutter # yubioath-desktop on older nixpkg channels
     pam_u2f # for yubikey with sudo
 
     yubikey-up
@@ -44,16 +46,28 @@ with pkgs; # FIXME needs to be refactored according to best practices but not su
     SUBSYSTEM=="input", ACTION=="remove", ENV{ID_VENDOR_ID}=="1050", RUN+="${lib.getBin yubikey-down}/bin/yubikey-down"
   '';
 
-  # FIXME: Need to create symlinks to the sops-decrypted keys
-
-  # enable pam services to allow u2f auth for login and sudo
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth = true;
-  };
-
-  # Yubikey required services and config. See Dr. Duh NixOS config for reference
+  # Yubikey required services and config. See Dr. Duh NixOS config for
+  # reference
   services.pcscd.enable = true; # smartcard service
-
   services.udev.packages = [ yubikey-personalization ];
+
+  services.yubikey-agent.enable = true;
+
+  # yubikey login / sudo
+  security.pam = lib.optionalAttrs pkgs.stdenv.isLinux {
+    sshAgentAuth.enable = true;
+    u2f = {
+      enable = true;
+      cue = false; # Tells user they need to press the button
+      authFile = "${homeDirectory}/.config/Yubico/u2f_keys";
+      #debug = true;
+    };
+    services = {
+      login.u2fAuth = true;
+      sudo = {
+        u2fAuth = true;
+        sshAgentAuth = true; # Use SSH_AUTH_SOCK for sudo
+      };
+    };
+  };
 }

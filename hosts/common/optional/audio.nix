@@ -20,7 +20,9 @@
     inherit (pkgs)
       pamixer # pulseaudio sound mixer
       pwvucontrol # pipewire volume control
-      qpwgraph
-      ; # pipewire plugboard
+      qpwgraph # pipewire plugboard
+      playerctl # cli utility and lib for controlling media players
+      # pamixer # cli pulseaudio sound mixer
+      ;
   };
 }

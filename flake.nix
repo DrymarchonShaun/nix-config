@@ -18,9 +18,6 @@
 
     #################### Utilities ####################
 
-    # Access flake-based devShells with nix-shell seamlessly
-    flake-compat.url = "github:edolstra/flake-compat";
-
     # Declarative partitioning and formatting
     disko = {
       url = "github:nix-community/disko";
@@ -112,6 +109,8 @@
     in
     {
       # Custom modules to enable special functionality for nixos or home-manager oriented configs.
+      #nixosModules = { inherit (import ./modules/nixos); };
+      #homeManagerModules = { inherit (import ./modules/home-manager); };
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
 
@@ -137,7 +136,6 @@
         import ./checks { inherit inputs system pkgs; }
       );
 
-      # TODO change this to something that has better looking output rules
       # Nix formatter available through 'nix fmt' https://nix-community.github.io/nixpkgs-fmt
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
@@ -149,26 +147,9 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          checks = self.checks.${system};
         in
-        {
-          default = pkgs.mkShell {
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-
-            inherit (self.checks.${system}.pre-commit-check) shellHook;
-            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
-
-            nativeBuildInputs = [
-              pkgs.nixVersions.latest
-              pkgs.home-manager
-              pkgs.git
-              pkgs.just
-
-              pkgs.age
-              pkgs.ssh-to-age
-              pkgs.sops
-            ];
-          };
-        }
+        import ./shell.nix { inherit checks pkgs; }
       );
 
       #################### NixOS Configurations ####################
@@ -192,6 +173,15 @@
             home-manager.nixosModules.home-manager
             { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/corais
+          ];
+        };
+        # Main
+        ghost = lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            home-manager.nixosModules.home-manager
+            { home-manager.extraSpecialArgs = specialArgs; }
+            ./hosts/ghost
           ];
         };
         # Qemu VM dev lab
