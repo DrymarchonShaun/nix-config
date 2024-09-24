@@ -4,6 +4,7 @@
     ./eye-of-gnome.nix
     ./qpwgraph.nix
     ./syncthing.nix
+    ./thunar.nix
     ./wine.nix
     ./xdg.nix
   ];

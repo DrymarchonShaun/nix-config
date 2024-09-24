@@ -44,7 +44,7 @@
         "application/vnd.visio" = [ "org.inkscape.Inkscape.desktop" ];
         "application/x-cb7" = [ "calibre-gui.desktop" ];
         "application/x-cd-image" = [ "vlc.desktop" ];
-        "application/x-gnome-saved-search" = [ "nemo.desktop" ];
+        "application/x-gnome-saved-search" = [ "thunar.desktop" ];
         "application/x-kicad-project" = [ "org.kicad.kicad.desktop" ];
         "application/x-matroska" = [ "vlc.desktop" ];
         "application/x-mobipocket-ebook" = [ "calibre-gui.desktop" ];
@@ -102,7 +102,7 @@
         "image/wmf" = [ "org.inkscape.Inkscape.desktop" ];
         "image/png" = [ "org.gnome.eog.desktop" ];
         "image/x-eps" = [ "org.inkscape.Inkscape.desktop" ];
-        "inode/directory" = [ "nemo.desktop" ];
+        "inode/directory" = [ "thunar.desktop" ];
         "text/html" = [ "brave-browser.desktop" ];
         "text/plain" = [ "code.desktop" ];
         "text/x-google-video-pointer" = [ "vlc.desktop" ];
