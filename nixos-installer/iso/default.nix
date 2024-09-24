@@ -47,6 +47,8 @@ in
 
   networking = {
     hostName = "iso";
+    wireless.enable = lib.mkForce false;
+    networkmanager.enable = true;
   };
 
   systemd = {
