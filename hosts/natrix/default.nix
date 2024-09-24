@@ -25,10 +25,10 @@
 
       #################### Disk Layout ####################
       inputs.disko.nixosModules.disko
-      (configLib.relativeToRoot "hosts/common/disks/btrfs-luks-disk.nix")
+      (configLib.relativeToRoot "hosts/common/disks/natrix.nix")
       {
         _module.args = {
-          disk = "/dev/nvme1n1";
+          # disk = "/dev/nvme1n1";
           swapSize = "24";
           withSwap = true;
         };
@@ -40,7 +40,6 @@
 
       "hosts/common/optional/services/avahi.nix"
       "hosts/common/optional/services/openssh.nix"
-      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/services/geoclue.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
@@ -61,8 +60,6 @@
       "hosts/common/optional/wooting.nix"
 
       #################### Users to Create ####################
-      "hosts/common/users/shaun"
-
     ]);
 
   hardware = {

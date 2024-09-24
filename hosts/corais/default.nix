@@ -60,8 +60,6 @@
       "hosts/common/optional/wooting.nix"
 
       #################### Users to Create ####################
-      "hosts/common/users/shaun"
-
     ]);
 
   services.gnome.gnome-keyring.enable = true;
