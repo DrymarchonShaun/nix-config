@@ -5,29 +5,33 @@
 #
 ###############################################################
 
-{ inputs, configLib, ... }:
 {
-  imports =
-    [
-      #################### Every Host Needs This ####################
-      ./hardware-configuration.nix
+  inputs,
+  lib,
+  configVars,
+  configLib,
+  ...
+}:
+{
+  imports = lib.flatten [
+    #################### Every Host Needs This ####################
+    ./hardware-configuration.nix
 
-      #################### Hardware Modules ####################
-      #inputs.hardware.nixosModules.common-cpu-amd
-      #inputs.hardware.nixosModules.common-gpu-amd
-      #inputs.hardware.nixosModules.common-pc-ssd
+    #################### Hardware Modules ####################
+    #inputs.hardware.nixosModules.common-cpu-amd
+    #inputs.hardware.nixosModules.common-gpu-amd
+    #inputs.hardware.nixosModules.common-pc-ssd
 
-      #################### Disk Layout ####################
-      inputs.disko.nixosModules.disko
-      (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
-      {
-        _module.args = {
-          disk = "/dev/vda";
-          withSwap = false;
-        };
-      }
-    ]
-    ++ (map configLib.relativeToRoot [
+    #################### Disk Layout ####################
+    inputs.disko.nixosModules.disko
+    (configLib.relativeToRoot "hosts/common/disks/standard-disk-config.nix")
+    {
+      _module.args = {
+        disk = "/dev/vda";
+        withSwap = false;
+      };
+    }
+    (map configLib.relativeToRoot [
       #################### Required Configs ####################
       "hosts/common/core"
 
@@ -41,18 +45,14 @@
       # Desktop
       "hosts/common/optional/services/greetd.nix" # display manager
       "hosts/common/optional/hyprland.nix" # window manager
+    ])
+  ];
 
-      #################### Users to Create ####################
-      "hosts/common/users/ta"
-    ]);
   # set custom autologin options. see greetd.nix for details
-  # TODO is there a better spot for this?
   autoLogin.enable = true;
-  autoLogin.username = "ta";
+  autoLogin.username = configVars.username;
 
   services.gnome.gnome-keyring.enable = true;
-  # TODO enable and move to greetd area? may need authentication dir or something?
-  # services.pam.services.greetd.enableGnomeKeyring = true;
 
   networking = {
     hostName = "grief";
@@ -67,9 +67,7 @@
   };
   boot.initrd = {
     systemd.enable = true;
-    # FIXME: Not sure we need to be explicit with all, but testing virtio due to luks disk errors on qemu
     # This mostly mirrors what is generated on qemu from nixos-generate-config in hardware-configuration.nix
-    # NOTE: May be important here for this to be kernelModules, not just availableKernelModules
     kernelModules = [
       "xhci_pci"
       "ohci_pci"

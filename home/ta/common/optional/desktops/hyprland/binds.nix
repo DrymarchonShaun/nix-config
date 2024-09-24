@@ -78,7 +78,8 @@
       #terminal = config.home.sessionVariables.TERM;
       #browser = defaultApp "x-scheme-handler/https";
       #editor = defaultApp "text/plain";
-      [
+
+      lib.flatten [
         #################### Program Launch ####################
         "ALT,Return,exec,kitty"
         "CTRL_ALT,v,exec,kitty nvim"
@@ -100,13 +101,12 @@
         #FIXME: play around with fullscreenstate to get a setting that works with maximizing sec cams in window
         #",,fullscreenstate,0"
         "SHIFTALT,space,togglefloating"
-        # "ALT, foo, pin"
+        "SHIFTALT, p, pin" # pins a floating window (i.e. show it on all workspaces)
 
-        "ALT,minus,splitratio,-0.25"
-        "SHIFTALT,minus,splitratio,-0.3333333"
+        "SHIFALT, r, resizeactive"
 
-        "ALT,equal,splitratio,0.25"
-        "SHIFTALT,equal,splitratio,0.3333333"
+        #        "SHIFTALT,minus,splitratio,-0.25"
+        #        "SHIFTALT,equal,splitratio,0.25"
 
         "ALT,g,togglegroup"
         "ALT,t,lockactivegroup,toggle"
@@ -129,30 +129,30 @@
         ", XF86AudioPlay, exec, '${playerctl} --ignore-player=firefox,chromium,brave play-pause'"
         ", XF86AudioNext, exec, '${playerctl} --ignore-player=firefox,chromium,brave next'"
         ", XF86AudioPrev, exec, '${playerctl} --ignore-player=firefox,chromium,brave previous'"
-      ]
-      ++
+
         # Change workspace
         (map (n: "ALT,${n},workspace,name:${n}") workspaces)
-      ++
+
         # Move window to workspace
         (map (n: "SHIFTALT,${n},movetoworkspacesilent,name:${n}") workspaces)
-      ++
+
         # Move focus
         (lib.mapAttrsToList (key: direction: "ALT,${key},movefocus,${direction}") directions)
-      ++
+
         # Swap windows
         #   (lib.mapAttrsToList
         #      (key: direction: "SHIFTALT,${key},swapwindow,${direction}") directions)
-        #    ++
+
         # Move windows
-        (lib.mapAttrsToList (key: direction: "SHIFTALT,${key},movewindoworgroup,${direction}") directions);
-    # Move monitor focus
-    #(lib.mapAttrsToList
-    #      (key: direction: "ALTALT,${key},focusmonitor,${direction}") directions)
-    #    ++
-    # Move workspace to other monitor
-    #    (lib.mapAttrsToList (key: direction:
-    #      "SHIFTALT,${key},movecurrentworkspacetomonitor,${direction}")
-    #      directions);
+        (lib.mapAttrsToList (key: direction: "SHIFTALT,${key},movewindoworgroup,${direction}") directions)
+
+        # Move workspace to other monitor
+        (lib.mapAttrsToList (
+          key: direction: "CTRLSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
+        ) directions)
+        # Move monitor focus
+        #(lib.mapAttrsToList
+        #      (key: direction: "ALTALT,${key},focusmonitor,${direction}") directions)
+      ];
   };
 }

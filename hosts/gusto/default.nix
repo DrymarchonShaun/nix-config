@@ -5,20 +5,25 @@
 #
 ###############################################################
 
-{ inputs, configLib, ... }:
 {
-  imports =
-    [
-      #################### Every Host Needs This ####################
-      ./hardware-configuration.nix
+  inputs,
+  lib,
+  configVars,
+  configLib,
+  ...
+}:
+{
+  imports = lib.flatten [
+    #################### Every Host Needs This ####################
+    ./hardware-configuration.nix
 
-      #################### Hardware Modules ####################
-      inputs.hardware.nixosModules.common-cpu-intel
-      #inputs.hardware.nixosModules.common-gpu-intel #This is apparenlty already declared in `/nix/store/HASH-source/common/gpu/intel
+    #################### Hardware Modules ####################
+    inputs.hardware.nixosModules.common-cpu-intel
+    #inputs.hardware.nixosModules.common-gpu-intel #This is apparenlty already declared in `/nix/store/HASH-source/common/gpu/intel
 
-      #TODO move gusto to disko
-    ]
-    ++ (map configLib.relativeToRoot [
+    #TODO move gusto to disko
+
+    (map configLib.relativeToRoot [
 
       #################### Required Configs ####################
       "hosts/common/core"
@@ -31,9 +36,10 @@
       "hosts/common/optional/vlc.nix" # media player
 
       #################### Users to Create ####################
-      "hosts/common/users/ta"
+      # ta imported via hosts/common/core
       "hosts/common/users/media"
-    ]);
+    ])
+  ];
 
   # Enable some basic X server options
   services.xserver.enable = true;
