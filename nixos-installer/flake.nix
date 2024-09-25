@@ -49,8 +49,19 @@
         grief = newConfig "grief" "/dev/vda" false "0";
         guppy = newConfig "guppy" "/dev/vda" false "0";
         gusto = newConfig "gusto" "/dev/sda" true "8";
-        natrix = newConfig "natrix" "/dev/nvme1n1" true "24";
         corais = newConfig "corais" "/dev/nvme0n1" true "24";
+
+        natrix = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = minimalSpecialArgs;
+          modules = [
+            inputs.disko.nixosModules.disko
+            (configLib.relativeToRoot "hosts/common/disks/natrix.nix")
+            ./minimal-configuration.nix
+            { networking.hostName = "natrix"; }
+            (configLib.relativeToRoot "hosts/natrix/hardware-configuration.nix")
+          ];
+        };
 
         ghost = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

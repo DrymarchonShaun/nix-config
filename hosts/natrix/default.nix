@@ -26,13 +26,6 @@
       #################### Disk Layout ####################
       inputs.disko.nixosModules.disko
       (configLib.relativeToRoot "hosts/common/disks/natrix.nix")
-      {
-        _module.args = {
-          # disk = "/dev/nvme1n1";
-          swapSize = "24";
-          withSwap = true;
-        };
-      }
     ]
     ++ (map configLib.relativeToRoot [
       #################### Required Configs ####################
@@ -47,6 +40,7 @@
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/vlc.nix"
+      "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"
 
       # Docker Configs
@@ -65,6 +59,17 @@
   hardware = {
     system76.enableAll = true;
     # system76.power-daemon.enable = lib.mkForce false;
+  };
+
+  # needed unlock LUKS on secondary drives
+  # use partition UUID
+  # https://wiki.nixos.org/wiki/Full_Disk_Encryption#Unlocking_secondary_drives
+  environment.etc = {
+    crypttab = {
+      text = ''
+        cryptextra /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b456ba8d0-part1 /.luks-secondary-unlock.key luks,nofail
+      '';
+    };
   };
 
   services.udev.extraRules = ''
@@ -101,5 +106,5 @@
   programs.nix-ld.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

@@ -33,8 +33,8 @@ in
           "custom/fan"
           "keyboard-state"
           "backlight"
-          "battery"
           "pulseaudio"
+          "battery"
           "tray"
         ];
 
@@ -243,9 +243,8 @@ in
       }
 
       #pulseaudio {
-        border-radius: 0px 10px 10px 0px;
-        padding-right: 0.5em;
-        padding-left: 0em;
+        padding-right: 0.25em;
+        padding-left: 0.25em;
         color: @text;
         background: @surface0;
       }
@@ -297,7 +296,8 @@ in
       }
 
       #battery {
-        padding-right: 0.25em;
+        border-radius: 0px 10px 10px 0px;
+        padding-right: 0.5em;
         padding-left: 0.25em;
         background: @surface0;
         color: @text;

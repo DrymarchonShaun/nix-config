@@ -12,26 +12,12 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  fileSystems."/run/media/shaun/storage" = {
-    device = "/dev/mapper/luksmnt";
-    options = [
-      "nofail"
-      "noatime"
-    ];
-  };
-
-  environment.etc = {
-    crypttab = {
-      text = ''
-        luksmnt /dev/disk/by-partlabel/storage /etc/.cryptkey luks,nofail
-      '';
-    };
-  };
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "thunderbolt"
     "nvme"
+    "uas"
+    "sd_mod"
     "sdhci_pci"
   ];
   boot.initrd.kernelModules = [ ];
@@ -44,7 +30,9 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp46s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
