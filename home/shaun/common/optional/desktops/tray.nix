@@ -5,8 +5,8 @@
     gammastep = {
       enable = true;
       provider = "manual";
-      latitude = 47.61;
-      longitude = -122.27;
+      latitude = configVars.latitude;
+      longitude = configVars.longitude;
       tray = true;
     };
     network-manager-applet.enable = true;
