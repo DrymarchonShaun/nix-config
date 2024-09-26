@@ -51,6 +51,12 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     catppuccin-vsc.url = "github:catppuccin/vscode";
 
+    # Theming
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Windows management
     # for now trying to avoid this one because I want stability for my wm
     # this is the hyprland development flake package / unstable
@@ -76,9 +82,9 @@
   outputs =
     {
       self,
-      disko,
       nixpkgs,
       home-manager,
+      stylix,
       ...
     }@inputs:
     let
@@ -172,6 +178,7 @@
         ghost = lib.nixosSystem {
           inherit specialArgs;
           modules = [
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/ghost
@@ -199,6 +206,7 @@
         gusto = lib.nixosSystem {
           inherit specialArgs;
           modules = [
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/gusto

@@ -165,9 +165,12 @@ function nixos_anywhere() {
 	# via the config
 	# green "Preparing a temporary password for disko."
 	green "[Optional] Set disk encryption passphrase:"
-	luks_passphrase="passphrase"
 	read -s luks_passphrase
-	$ssh_root_cmd "/bin/sh -c 'echo $luks_passphrase > /tmp/disko-password'"
+	if [ -n "$luks_passphrase" ]; then
+		$ssh_root_cmd "/bin/sh -c 'echo \'$luks_passphrase\' > /tmp/disko-password'"
+	else
+		$ssh_root_cmd "/bin/sh -c 'echo \'passphrase\' > /tmp/disko-password'"
+	fi
 	green "Generating hardware-config.nix for $target_hostname and adding it to the nix-config."
 	$ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
 	$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix "${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
@@ -266,7 +269,7 @@ function setup_luks_secondary_drive_decryption() {
 	readarray -td, drivenames <<<"$luks_secondary_drive_labels"
 	for name in "${drivenames[@]}"; do
 		device_path=$($ssh_root_cmd -q "/bin/sh -c 'cryptsetup status \"$name\" | awk \'/device:/ {print \$2}\''")
-		$ssh_root_cmd "/bin/sh -c 'echo \"passphrase\" | cryptsetup luksAddKey $device_path /luks-secondary-unlock.key'"
+		$ssh_root_cmd "/bin/sh -c 'echo \"$luks_passphrase\" | cryptsetup luksAddKey $device_path /luks-secondary-unlock.key'"
 	done
 }
 
