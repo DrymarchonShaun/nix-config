@@ -111,6 +111,7 @@
                     "@extra" = {
                       mountpoint = "/run/media/shaun/extra";
                       mountOptions = [
+                        "defaults"
                         "compress=zstd"
                         "noatime"
                       ];

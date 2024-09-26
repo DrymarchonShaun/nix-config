@@ -58,7 +58,32 @@
 
   hardware = {
     system76.enableAll = true;
-    # system76.power-daemon.enable = lib.mkForce false;
+    system76.power-daemon.enable = lib.mkForce false;
+  };
+
+  services = {
+    fwupd.enable = true;
+    thermald.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 50;
+        CPU_BOOST_ON_AC = 0;
+        CPU_BOOST_ON_BAT = 0;
+        CPU_HWP_DYN_BOOST_ON_AC = 0;
+        CPU_HWP_DYN_BOOST_ON_BAT = 0;
+        # PCIE_ASPM_ON_BAT = "powersupersave";
+        # PCIE_ASPM_ON_AC = "powersupersave";
+        DISK_DEVICES = "nvme0n1 nvme1n1";
+        RUNTIME_PM_ON_AC = "auto";
+        SOUND_POWER_SAVE_ON_AC = 0;
+        USB_EXCLUDE_BTUSB = 1;
+        USB_EXCLUDE_PHONE = 1;
+      };
+    };
   };
 
   # needed unlock LUKS on secondary drives
@@ -67,7 +92,7 @@
   environment.etc = {
     crypttab = {
       text = ''
-        cryptextra /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b456ba8d0-part1 /.luks-secondary-unlock.key luks,nofail
+        cryptextra /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b456ba8d0-part1 /.luks-secondary-unlock.key luks
       '';
     };
   };

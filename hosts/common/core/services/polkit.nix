@@ -18,6 +18,7 @@
           "org.freedesktop.udisks2.eject-media-other-seat": YES,
           "org.freedesktop.udisks2.encrypted-unlock": YES,
           "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+          "org.freedesktop.udisks2.encrypted-unlock-system": YES,
           "org.freedesktop.udisks2.filesystem-mount": YES,
           "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
           "org.freedesktop.udisks2.filesystem-mount-system": YES,
