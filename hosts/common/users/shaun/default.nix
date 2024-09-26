@@ -75,6 +75,7 @@ in
         # No matter what environment we are in we want these tools for root, and the user(s)
         programs.zsh.enable = true;
         programs.git.enable = true;
+        programs.git.lfs.enable = true;
         environment.systemPackages = [
           pkgs.just
           pkgs.rsync
