@@ -28,6 +28,7 @@
   programs.gamescope = {
     enable = true;
     package = pkgs.gamescope;
+    capSysNice = true;
   };
   programs.gamemode = {
     enable = true;
