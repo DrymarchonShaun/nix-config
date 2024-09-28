@@ -10,20 +10,14 @@
     pulse.enable = true;
     wireplumber.enable = true;
     jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    # media-session.enable = true;
   };
 
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
       pamixer # pulseaudio sound mixer
-      # pavucontrol # replaced with pwvucontrol
       pwvucontrol # pipewire volume control
       qpwgraph # pipewire plugboard
       playerctl # cli utility and lib for controlling media players
-      # pamixer # cli pulseaudio sound mixer
       ;
   };
 

@@ -1,7 +1,5 @@
 { pkgs, configVars, ... }:
 {
-  # Must be installed at the system level
-  # https://discourse.nixos.org/t/ssl-peer-certificate-or-ssh-remote-key-was-not-ok-when-launching-steam/40274
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
@@ -29,6 +27,7 @@
     enable = true;
     package = pkgs.gamescope;
     capSysNice = true;
+
   };
   programs.gamemode = {
     enable = true;
@@ -52,8 +51,4 @@
   environment.variables = {
     STEAM_FORCE_DESKTOPUI_SCALING = configVars.scaling;
   };
-
-  #TODO
-  # path-of-building
-  # awakened-poe-trade
 }

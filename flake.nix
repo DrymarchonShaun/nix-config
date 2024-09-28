@@ -56,24 +56,6 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     catppuccin-vsc.url = "github:catppuccin/vscode";
 
-    # Theming
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Windows management
-    # for now trying to avoid this one because I want stability for my wm
-    # this is the hyprland development flake package / unstable
-    # hyprland = {
-    #   url = "github:hyprwm/hyprland";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    #   hyprland-plugins = {
-    #   url = "github:hyprwm/hyprland-plugins";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
-
     #################### Personal Repositories ####################
 
     # Private secrets repo.  See ./docs/secretsmgmt.md
@@ -177,44 +159,6 @@
             home-manager.nixosModules.home-manager
             { home-manager.extraSpecialArgs = specialArgs; }
             ./hosts/corais
-          ];
-        };
-        # Main
-        ghost = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            ./hosts/ghost
-          ];
-        };
-        # Qemu VM dev lab
-        grief = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            ./hosts/grief
-          ];
-        };
-        # Qemu VM deployment test lab
-        guppy = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            ./hosts/guppy
-          ];
-        };
-        # Theatre - ASUS VivoPC VM40B-S081M
-        gusto = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            ./hosts/gusto
           ];
         };
       };

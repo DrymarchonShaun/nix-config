@@ -46,9 +46,6 @@
       nixosConfigurations = {
         # host = newConfig "name" disk" "withSwap" "swapSize"
         # Swap size is in GiB
-        grief = newConfig "grief" "/dev/vda" false "0";
-        guppy = newConfig "guppy" "/dev/vda" false "0";
-        gusto = newConfig "gusto" "/dev/sda" true "8";
         corais = newConfig "corais" "/dev/nvme0n1" true "24";
 
         natrix = nixpkgs.lib.nixosSystem {
@@ -60,18 +57,6 @@
             ./minimal-configuration.nix
             { networking.hostName = "natrix"; }
             (configLib.relativeToRoot "hosts/natrix/hardware-configuration.nix")
-          ];
-        };
-
-        ghost = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = minimalSpecialArgs;
-          modules = [
-            inputs.disko.nixosModules.disko
-            (configLib.relativeToRoot "hosts/common/disks/ghost.nix")
-            ./minimal-configuration.nix
-            { networking.hostName = "ghost"; }
-            (configLib.relativeToRoot "hosts/ghost/hardware-configuration.nix")
           ];
         };
 

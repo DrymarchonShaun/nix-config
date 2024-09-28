@@ -63,7 +63,6 @@ let
   );
 in
 {
-  imports = [ (configLib.relativeToRoot "hosts/common/optional/msmtp.nix") ];
   options.services.backup = with lib.types; {
     enable = lib.mkEnableOption "Enable borg-based backup service";
     borgUser = lib.mkOption {

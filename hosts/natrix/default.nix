@@ -115,6 +115,7 @@
   };
 
   boot = {
+    kernelParams = [ "acpi_backlight=native" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;

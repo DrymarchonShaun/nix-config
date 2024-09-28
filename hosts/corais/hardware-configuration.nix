@@ -13,19 +13,6 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  fileSystems."/run/media/shaun/HDD" = {
-    device = "/dev/disk/by-label/HDD";
-    fsType = "ntfs-3g";
-    options = [
-      "rw"
-      "uid=1000"
-      "nosuid"
-      "nodev"
-      "nofail"
-      "noatime"
-    ];
-  };
-
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -36,12 +23,6 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [
-    "kvm-amd"
-    "zenergy"
-  ];
-  boot.kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
-  boot.extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../pkgs/zenergy { }) ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

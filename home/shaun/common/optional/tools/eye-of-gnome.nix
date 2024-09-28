@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.gnome.eog ];
+  home.packages = [ pkgs.eog ];
 }

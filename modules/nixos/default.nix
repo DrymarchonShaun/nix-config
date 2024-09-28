@@ -3,5 +3,4 @@
 
 {
   backup = import ./backup;
-  zsa-udev-rules = import ./zsa-udev-rules.nix;
 }

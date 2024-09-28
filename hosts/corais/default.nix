@@ -73,7 +73,26 @@
     enableIPv6 = false;
   };
 
+  fileSystems."/run/media/shaun/HDD" = {
+    device = "/dev/disk/by-label/HDD";
+    fsType = "ntfs-3g";
+    options = [
+      "rw"
+      "uid=1000"
+      "nosuid"
+      "nodev"
+      "nofail"
+      "noatime"
+    ];
+  };
+
   boot = {
+    kernelModules = [
+      "kvm-amd"
+      "zenergy"
+    ];
+    kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
+    extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../pkgs/zenergy { }) ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
