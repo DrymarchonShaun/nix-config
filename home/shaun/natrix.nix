@@ -87,13 +87,21 @@
 
   programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon4/temp1_input";
 
-  programs.waybar.settings.mainBar."custom/fan" = {
-    format = "{}% 󰈐 ";
-    # exec = "${pkgs.fish}/bin/fish -c 'math -s0 (${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input)\" / 8800 * 100\"'";
-    exec = "${pkgs.bash}/bin/bash -c 'echo $((($(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input) * 100) / 8800))'";
-    interval = 1;
-    tooltip = false;
-  };
+  programs.waybar.settings.mainBar."custom/fan" =
+    let
+      waybar-fan = pkgs.writeShellScript "waybar-fan" ''
+          local PWM_PERCENT="$((($(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/pwm1) * 100) / 255))"
+        local RPM="$(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input)"
+        echo -e "{\"text\": \"$PWM_PERCENT\", \"tooltip\": $RPM}"
+      '';
+    in
+    {
+      format = "{}% 󰈐 ";
+      format-tooltip = "{} RPM";
+      exec = "${waybar-fan}";
+      interval = 1;
+      tooltip = true;
+    };
 
   home = {
     username = configVars.username;
