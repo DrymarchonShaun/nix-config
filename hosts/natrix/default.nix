@@ -73,7 +73,7 @@
         CPU_MAX_PERF_ON_BAT = 50;
         CPU_BOOST_ON_AC = 0;
         CPU_BOOST_ON_BAT = 0;
-        CPU_HWP_DYN_BOOST_ON_AC = 0;
+        CPU_HWP_DYN_BOOST_ON_AC = 1;
         CPU_HWP_DYN_BOOST_ON_BAT = 0;
         # PCIE_ASPM_ON_BAT = "powersupersave";
         # PCIE_ASPM_ON_AC = "powersupersave";
