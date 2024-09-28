@@ -13,6 +13,15 @@
     ];
   };
 
+  services.logind = {
+    powerKey = "ignore";
+    lidSwitchDocked = "suspend";
+    extraConfig = ''
+      IdleAction=suspend
+      IdleActionSec=5min
+    '';
+  };
+
   # less delay on failed login
   security.pam.services.swaylock = {
     nodelay = true;

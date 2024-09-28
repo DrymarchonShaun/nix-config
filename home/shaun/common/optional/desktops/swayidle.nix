@@ -3,7 +3,10 @@
   services.swayidle = {
     package = pkgs.swayidle;
     enable = true;
-    extraArgs = [ "idlehint 600" ];
+    extraArgs = [
+      "idlehint"
+      "600"
+    ];
     systemdTarget = "graphical-session.target";
     timeouts = [
       {
