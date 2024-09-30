@@ -2,6 +2,10 @@
 {
   programs.steam = {
     enable = true;
+    protontricks = {
+      enable = true;
+      package = pkgs.master.protontricks;
+    };
     extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
     package = pkgs.steam.override {
       extraPkgs =
