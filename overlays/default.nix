@@ -19,12 +19,12 @@ in
       secureBoot = true;
       tpmSupport = true;
       edk2 = prev.edk2.overrideAttrs (attrs: {
-        patches = (attrs.patches or [ ]) ++ [ ./patches/edk2-to-am.patch ];
+        #patches = (attrs.patches or [ ]) ++ [ ./patches/edk2-to-am.patch ];
       });
     };
     qemu_kvm = prev.qemu_kvm.overrideAttrs (attrs: {
       pipewireSupport = true;
-      patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
+      #patches = (attrs.patches or [ ]) ++ [ ./patches/qemu-anti-detection.patch ];
     });
 
     p7zip = prev.p7zip.override { enableUnfree = true; };
