@@ -9,9 +9,21 @@
   inputs,
   lib,
   pkgs,
+  config,
   configLib,
   ...
 }:
+let
+  natrixKernel = pkgs.linux.override {
+    structuredExtraConfig = with lib.kernel; {
+      # SR-IOV
+      DRM_I915_PXP = yes;
+      INTEL_MEI_PXP = module;
+    };
+  };
+  natrixKernelPackages = pkgs.linuxPackagesFor natrixKernel;
+  i915-sriov = natrixKernelPackages.callPackage ../../pkgs/i915-sriov { };
+in
 {
   imports =
     [
@@ -59,6 +71,19 @@
       #################### Users to Create ####################
     ]);
 
+  #################### Virtualization ####################
+
+  boot.kernelPackages = natrixKernelPackages;
+  boot.extraModulePackages = [ i915-sriov ];
+
+  # Set up module loading order and options
+  boot.extraModprobeConfig = ''
+    options i915 enable_guc=3 max_vfs=7
+    softdep i915 post: mei_pxp
+  '';
+
+  #################### General Config ####################
+
   hardware = {
     system76.enableAll = true;
     system76.power-daemon.enable = lib.mkForce false;
@@ -73,8 +98,8 @@
         CPU_MIN_PERF_ON_AC = 0;
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 50;
-        CPU_BOOST_ON_AC = 0;
+        CPU_MAX_PERF_ON_BAT = 30;
+        CPU_BOOST_ON_AC = 1;
         CPU_BOOST_ON_BAT = 0;
         CPU_HWP_DYN_BOOST_ON_AC = 1;
         CPU_HWP_DYN_BOOST_ON_BAT = 0;
@@ -118,7 +143,10 @@
   };
 
   boot = {
-    kernelParams = [ "acpi_backlight=native" ];
+    kernelParams = [
+      "acpi_backlight=native"
+      "intel_iommu=on"
+    ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
