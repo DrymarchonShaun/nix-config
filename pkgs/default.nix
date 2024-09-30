@@ -17,4 +17,5 @@ rec {
   # zhooks = pkgs.callPackage ./zhooks { };
   zsh-term-title = pkgs.callPackage ./zsh-term-title { };
   gamma-launcher = pkgs.callPackage ./gamma-launcher { };
+  i915-iov = pkgs.callPackage ./i915-iov { };
 }

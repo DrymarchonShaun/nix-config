@@ -35,18 +35,6 @@
   };
 
   boot = {
-    initrd.kernelModules = [
-      "vfio_pci"
-      "vfio"
-      "vfio_iommu_type1"
-      "vfio_virqfd"
-    ];
-    kernelModules = [
-      "vfio_virqfd"
-      "vfio_pci"
-      "vfio_iommu_type1"
-      "vfio"
-    ];
     kernelParams = [
       "kvm.ignore_msrs=1"
     ];
