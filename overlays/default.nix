@@ -46,9 +46,15 @@ in
     # ...
     # });
   };
-  #kernelOverrides = final: prev: {
-  #linuxPackages = super.linuxPackages.extend (
-  #  lpself: lpsuper: { system76 = super.linuxPackages.system76.overrideAttrs (oldAttrs: { }); }
+  # kernelOverrides = final: prev: {
+  # linuxPackages = prev.linuxPackages.extend (
+  #  lpself: lpsuper: {
+  #    system76 = prev.linuxPackages.system76.overrideAttrs (
+  #      attrs:
+  #      {
+  #      }
+  #    );
+  #  }
   #);
   #};
 

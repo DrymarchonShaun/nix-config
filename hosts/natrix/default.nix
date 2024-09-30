@@ -14,14 +14,31 @@
   ...
 }:
 let
-  natrixKernel = pkgs.linux.override {
+  natrixKernel = pkgs.linux_latest.override {
     structuredExtraConfig = with lib.kernel; {
       # SR-IOV
-      DRM_I915_PXP = yes;
-      INTEL_MEI_PXP = module;
+      # DRM_I915_PXP = yes;
+      # INTEL_MEI_PXP = module;
     };
   };
-  natrixKernelPackages = pkgs.linuxPackagesFor natrixKernel;
+  natrixKernelPackages = (pkgs.linuxPackagesFor natrixKernel).extend (
+    final: prev: {
+      system76 = (pkgs.linuxPackagesFor natrixKernel).system76.overrideAttrs (attrs: {
+        version = "1.0.13-unstable";
+        src = attrs.src // {
+          rev = "341bcde2d280e384261019baec1496acf5d04d95";
+          sha256 = "";
+        };
+        patches = [
+          (pkgs.fetchpatch {
+            name = "fix-linux-6_11-build.patch";
+            url = "https://github.com/pop-os/system76-dkms/pull/68.patch";
+            hash = "sha256-kWili/IGIGx4PblfcMUVx821UA2oeZzZngcEba/LNw8=";
+          })
+        ];
+      });
+    }
+  );
   i915-sriov = natrixKernelPackages.callPackage ../../pkgs/i915-sriov { };
 in
 {
@@ -72,15 +89,15 @@ in
     ]);
 
   #################### Virtualization ####################
-
+  # Can't get SR-IOV working at the moment, keeping this for now to allow for use of the system76 module on linux_latest
   boot.kernelPackages = natrixKernelPackages;
-  boot.extraModulePackages = [ i915-sriov ];
+  # boot.extraModulePackages = [ i915-sriov ];
 
   # Set up module loading order and options
-  boot.extraModprobeConfig = ''
-    options i915 enable_guc=3 max_vfs=7
-    softdep i915 post: mei_pxp
-  '';
+  # boot.extraModprobeConfig = ''
+  #  options i915 enable_guc=3 max_vfs=7
+  #  softdep i915 post: mei_pxp
+  # '';
 
   #################### General Config ####################
 
@@ -99,7 +116,7 @@ in
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 30;
-        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_AC = 0;
         CPU_BOOST_ON_BAT = 0;
         CPU_HWP_DYN_BOOST_ON_AC = 1;
         CPU_HWP_DYN_BOOST_ON_BAT = 0;
@@ -133,8 +150,6 @@ in
   '';
 
   services.gnome.gnome-keyring.enable = true;
-  # TODO enable and move to greetd area? may need authentication dir or something?
-  # services.pam.services.greetd.enableGnomeKeyring = true;
 
   networking = {
     hostName = "natrix";
