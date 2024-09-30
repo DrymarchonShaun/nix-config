@@ -43,6 +43,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Virtual machine definition
+    nixvirt = {
+      url = "github:AshleyYakeley/NixVirt"; # Upstream
+      # url = "github:DrymarchonShaun/NixVirt/testing"; # Dev Fork
+      # url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz"; # Stable release
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # nix-index database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
