@@ -43,6 +43,9 @@
       "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"
 
+      # Virtualization
+      "hosts/common/optional/virtualization/libvirt"
+      # "hosts/common/optional/virtualization/libvirt/windows.nix"
       # Docker Configs
       "hosts/common/optional/virtualization/docker"
       "hosts/common/optional/virtualization/docker/openbooks.nix"
