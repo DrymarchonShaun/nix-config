@@ -612,10 +612,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1727292776,
-        "narHash": "sha256-N9Ao0BGWSUOBs2vbSJQ3VC2GoCslPWHuu/CNVxPc0jY=",
+        "lastModified": 1727743927,
+        "narHash": "sha256-Gzim647fUJrkYFxpGXxZ5dBkg93sOb3+DEINrC0d+Y8=",
         "ref": "main",
-        "rev": "e54b44b018ec522186736c4406dec02d559fe4c4",
+        "rev": "196816ba1088dc570f4f381c8e4c5adbf06b034f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"

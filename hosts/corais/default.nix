@@ -8,6 +8,7 @@
 {
   inputs,
   pkgs,
+  config,
   configLib,
   ...
 }:
@@ -38,13 +39,14 @@
       #################### Host-specific Optional Configs ####################
       "hosts/common/optional/services/avahi.nix"
       "hosts/common/optional/services/openssh.nix"
-      "hosts/common/optional/libvirt.nix" # vm tools
+      "hosts/common/optional/virtualization/libvirt" # vm tools
       "hosts/common/optional/services/geoclue.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
+      "hosts/common/optional/distbuild"
       "hosts/common/optional/vlc.nix"
       "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"

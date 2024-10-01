@@ -14,13 +14,7 @@
   ...
 }:
 let
-  natrixKernel = pkgs.linux_latest.override {
-    structuredExtraConfig = with lib.kernel; {
-      # SR-IOV
-      # DRM_I915_PXP = yes;
-      # INTEL_MEI_PXP = module;
-    };
-  };
+  natrixKernel = pkgs.linux_latest.override { };
   natrixKernelPackages = (pkgs.linuxPackagesFor natrixKernel).extend (
     final: prev: {
       system76 = (pkgs.linuxPackagesFor natrixKernel).system76.overrideAttrs (attrs: {
@@ -39,7 +33,6 @@ let
       });
     }
   );
-  i915-sriov = natrixKernelPackages.callPackage ../../pkgs/i915-sriov { };
 in
 {
   imports =
@@ -68,6 +61,7 @@ in
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
+      "hosts/common/optional/distbuild"
       "hosts/common/optional/vlc.nix"
       "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"
@@ -88,18 +82,7 @@ in
       #################### Users to Create ####################
     ]);
 
-  #################### Virtualization ####################
-  # Can't get SR-IOV working at the moment, keeping this for now to allow for use of the system76 module on linux_latest
   boot.kernelPackages = natrixKernelPackages;
-  # boot.extraModulePackages = [ i915-sriov ];
-
-  # Set up module loading order and options
-  # boot.extraModprobeConfig = ''
-  #  options i915 enable_guc=3 max_vfs=7
-  #  softdep i915 post: mei_pxp
-  # '';
-
-  #################### General Config ####################
 
   hardware = {
     system76.enableAll = true;
@@ -161,6 +144,10 @@ in
     kernelParams = [
       "acpi_backlight=native"
       "intel_iommu=on"
+      "iommu=pt"
+      "i915.force_probe=!46a6"
+      "xe.force_probe=46a6"
+      "xe.max_vfs=7"
     ];
     loader = {
       systemd-boot.enable = true;

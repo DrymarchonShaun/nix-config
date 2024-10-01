@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  configVars,
   pkgs,
   lib,
   ...
@@ -16,6 +17,29 @@
     # Making legacy nix commands consistent as well, awesome!
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
+    buildMachines = [
+      # corais
+      {
+        system = "x86_64-linux";
+        sshUser = "nixremote";
+        sshKey = "/home/nixremote/.ssh/id_dvergar";
+        speedFactor = 2;
+        hostName = "corais.local";
+      }
+      #natrix
+      {
+        system = "x86_64-linux";
+        sshUser = "nixremote";
+        sshKey = "/home/nixremote/.ssh/id_dvergar";
+        speedFactor = 1;
+        hostName = "natrix.local";
+      }
+    ];
+    distributedBuilds = true;
+    # optional, useful when the builder has a faster internet connection than yours
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
     settings = {
       # See https://jackson.dev/post/nix-reasonable-defaults/
       connect-timeout = 5;
