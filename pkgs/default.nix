@@ -14,7 +14,7 @@ rec {
   swaync-catppuccin = pkgs.callPackage ./swaync-catppuccin { };
   syncthing-resolve-conflicts = pkgs.callPackage ./syncthing-resolve-conflicts { };
   wallpapers = pkgs.callPackage ./wallpapers { };
-  # zhooks = pkgs.callPackage ./zhooks { };
+  zsh-auto-notify = pkgs.callPackage ./zsh-auto-notify { };
   zsh-term-title = pkgs.callPackage ./zsh-term-title { };
   gamma-launcher = pkgs.callPackage ./gamma-launcher { };
 }
