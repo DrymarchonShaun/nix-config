@@ -145,9 +145,9 @@ in
       "acpi_backlight=native"
       "intel_iommu=on"
       "iommu=pt"
-      "i915.force_probe=!46a6"
-      "xe.force_probe=46a6"
-      "xe.max_vfs=7"
+      #"i915.force_probe=!46a6"
+      #"xe.force_probe=46a6"
+      #"xe.max_vfs=7"
     ];
     loader = {
       systemd-boot.enable = true;
