@@ -31,10 +31,13 @@ in
 
     orca-slicer = prev.orca-slicer.overrideAttrs (attrs: {
       version = "2.2.0-beta";
-      src = attrs.src // {
-        rev = "v2.2.0-beta";
-        hash = "";
+      src = attrs.src.override {
+        hash = "sha256-btEQgkp00ThIgEglr0GjkcIhkKUo77Z/4gskVfOvGMM=";
       };
+      patches = [
+        ./patches/0001-not-for-upstream-CMakeLists-Link-against-webkit2gtk-.patch
+        ./patches/dont-link-opencv-world.patch
+      ];
     });
 
     gamescope = nixpkgs-gamescope.gamescope;
