@@ -25,7 +25,7 @@
     ./git.nix # personal git config
     ./gnupg.nix
     ./foot.nix # terminal
-    ./nixvim # vim goodness
+    ./neovim.nix # vim goodness
     ./screen.nix # hopefully rarely needed but good to have if so
     ./ssh.nix # personal ssh configs
     ./sops.nix
