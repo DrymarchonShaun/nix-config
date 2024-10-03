@@ -40,19 +40,36 @@
         name = "fzf-tab";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
-      {
-        name = "zsh-auto-notify";
-        src = "${pkgs.zsh-auto-notify}/share/zsh/zsh-auto-notify/";
-      }
+      # {
+      #   name = "zsh-auto-notify";
+      #   src = "${pkgs.zsh-auto-notify}/share/zsh/zsh-auto-notify/";
+      #   file = "auto-notify.plugin.zsh";
+      # }
     ];
 
     initExtraFirst = ''
-      # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-      # Initialization code that may require console input (password prompts, [y/n]
-      # confirmations, etc.) must go above this block; everything else may go below.
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
+       # zmodload zsh/zprof
+       # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+       # Initialization code that may require console input (password prompts, [y/n]
+       # confirmations, etc.) must go above this block; everything else may go below.
+       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+       fi
+
+       function bgnotify_formatted {
+         ## $1=exit_status, $2=command, $3=elapsed_time
+        local exit_status=$1
+        local cmd="$2"
+
+        # humanly readable elapsed time
+        local elapsed="$(( $3 % 60 ))s"
+        (( $3 < 60 )) || elapsed="$((( $3 % 3600) / 60 ))m $elapsed"
+        (( $3 < 3600 )) || elapsed="$(( $3 / 3600 ))h $elapsed"
+
+
+        [[ $bgnotify_bell = true ]] && printf '\a' # beep sound
+        bgnotify "Hey! \"$cmd\" has just finished" "It completed in $elapsed with exit code $exit_status"
+      }
     '';
 
     initExtra = ''
@@ -80,6 +97,8 @@
       done
       nix shell "''${args[@]}"
       }
+
+      # zprof
     '';
 
     oh-my-zsh = {
@@ -90,11 +109,12 @@
       plugins = [
         "git"
         "sudo" # press Esc twice to get the previous command prefixed with sudo https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
+        "bgnotify"
       ];
-      # extraConfig = ''
-      #   # Display red dots whilst waiting for completion.
-      #   COMPLETION_WAITING_DOTS="true"
-      # '';
+      extraConfig = ''
+        # Display red dots whilst waiting for completion.
+        COMPLETION_WAITING_DOTS="true"
+      '';
     };
 
     shellAliases = {
@@ -128,4 +148,5 @@
 
     };
   };
+  home.packages = [ pkgs.libnotify ]; # required for bgnotify
 }
