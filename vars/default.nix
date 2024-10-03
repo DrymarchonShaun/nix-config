@@ -1,12 +1,15 @@
 { inputs, lib }:
 {
-  networking = import ./networking.nix { inherit lib; };
+  inherit (inputs.nix-secrets)
+    userFullName
+    domain
+    email
+    networking
+    ;
 
-  domain = inputs.nix-secrets.domain;
   username = "shaun";
   gpgKey = "E1EC37451A645A64!";
   handle = "DrymarchonShaun";
-  userFullName = inputs.nix-secrets.full-name;
   userEmail = inputs.nix-secrets.user-email;
   gitHubEmail = "40149778+DrymarchonShaun@users.noreply.github.com";
   workEmail = inputs.nix-secrets.work-email;
@@ -20,3 +23,45 @@
   scaling = "1"; # Used to indicate what scaling to use. Floating point number
   persistFolder = "/persist";
 }
+
+# README
+#
+# Many of the values here come from my private nix-secrets repository.
+# While the primary purpose of nix-secrets is storing sensitive data
+# encrypted using sops, less-senstive data are simply stored in a simple
+# nix-secrets/flake.nix so they can be kept private but retrieved here
+# without the overhead of sops
+#
+# For reference the basic example structure of my nix-secrets/flake.nix is as follows:
+#
+#{
+#  outputs = {...}:
+#    {
+#        domain = "";
+#        userFullName = "";
+#        email = {
+#            user = "";
+#            work = "";
+#        };
+#        networking = {
+#            subnets = {
+#                foo = {
+#                    name = "foo";
+#                    ip = "0.0.0.0";
+#                };
+#            };
+#            external = {
+#                bar = {
+#                    name = "bar";
+#                    ip = "0.0.0.0";
+#                };
+#            };
+#            ports = {
+#                tcp = {
+#                    ssh = 22;
+#                };
+#            };
+#        };
+#
+#    };
+#}
