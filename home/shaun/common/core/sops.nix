@@ -23,8 +23,6 @@ in
     validateSopsFiles = false;
 
     secrets = {
-      "${configVars.username}/email" = { };
-
       "ssh_keys/mimir" = {
         path = "${homeDirectory}/.ssh/id_mimir";
       };
