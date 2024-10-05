@@ -62,6 +62,7 @@ in
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/distbuild"
+      "hosts/common/optional/recording.nix"
       "hosts/common/optional/vlc.nix"
       "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"
