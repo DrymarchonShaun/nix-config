@@ -11,7 +11,7 @@
 
     ########## Utilities ##########
     ../services/swaync.nix # Notification daemon
-    ../services/wl-paste.nix # Clipboard functionality
+    ../services/clipboard.nix # Clipboard functionality
     ../waybar.nix # infobar
     ../swayidle.nix
     ../swaylock.nix
@@ -44,11 +44,6 @@
       resumeCommand = "${config.wayland.windowManager.sway.package}/bin/swaymsg 'output * dpms on'";
     }
   ];
-
-  services.cliphist = {
-    enable = true;
-    allowImages = true;
-  };
 
   wayland.windowManager.sway = {
     enable = true;
