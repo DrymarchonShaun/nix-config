@@ -90,6 +90,7 @@
   };
 
   boot = {
+    initrd.kernelModules = [ "amdgpu" ];
     kernelModules = [
       "kvm-amd"
       "zenergy"
@@ -102,6 +103,8 @@
       timeout = 3;
     };
   };
+
+  environment.systemPackages = [ pkgs.metasploit ];
 
   # VirtualBox settings for Hyprland to display correctly
   # environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
