@@ -5,9 +5,9 @@
   ...
 }:
 let
-  gradiencePreset = builtins.fetchurl {
+  gradiencePreset = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/GradienceTeam/Community/next/official/catppuccin-macchiato.json";
-    sha256 = "sha256:0pmkq8fgdlikwwwfvc86mdmhcjggkb6mb54gs9y7z3ngmyc2y10n";
+    hash = "sha256-FgQvmK/Pjn980o+UVc2a70kGa6sGse045zPS9hzCs14=";
   };
   gradienceBuild = pkgs.stdenv.mkDerivation {
     name = "gradience-build";
