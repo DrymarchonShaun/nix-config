@@ -2,12 +2,14 @@
 {
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [
-      roboto
-      roboto-mono
-      liberation_ttf
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    ];
+    packages = builtins.attrValues {
+      inherit (pkgs)
+        roboto
+        roboto-mono
+        liberation_ttf
+        ;
+      nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+    };
 
     fontconfig = {
       defaultFonts = {

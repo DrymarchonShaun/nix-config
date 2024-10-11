@@ -21,8 +21,8 @@ stdenv.mkDerivation {
   '';
   meta = {
     homepage = "https://github.com/mollifier/cd-gitroot";
-    license = with lib.licenses; [ mit ];
-    platforms = with lib.platforms; linux ++ darwin;
+    license = [ lib.licenses.mit ];
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
     longDescription = ''
       zsh plugin to send a notification when long-running commands exit.
           You can add the following to your `programs.zsh.plugins` list:
@@ -35,6 +35,6 @@ stdenv.mkDerivation {
           ];
           ```
     '';
-    maintainers = with lib.maintainers; [ DrymarchonShaun ];
+    maintainers = [ lib.maintainers.DrymarchonShaun ];
   };
 }

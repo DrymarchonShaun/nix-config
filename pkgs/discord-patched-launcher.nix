@@ -28,10 +28,12 @@ stdenv.mkDerivation rec {
           krisp-patcher =
             writers.writePython3Bin "krisp-patcher"
               {
-                libraries = with python3Packages; [
-                  capstone
-                  pyelftools
-                ];
+                libraries = builtins.attrValues {
+                  inherit (python3Packages)
+                    capstone
+                    pyelftools
+                    ;
+                };
                 flakeIgnore = [
                   "E501" # line too long (82 > 79 characters)
                   "F403" # ‘from module import *’ used; unable to detect undefined names

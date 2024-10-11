@@ -37,10 +37,10 @@ stdenv.mkDerivation {
     make modules_install KDIR=${kernelDirectory}
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Based on AMD_ENERGY driver, but with some jiffies added so non-root users can read it safely.";
     homepage = "https://github.com/BoukeHaarsma23/zenergy";
-    license = licenses.gpl2Only;
-    platforms = platforms.linux;
+    license = lib.licenses.gpl2Only;
+    platforms = lib.platforms.linux;
   };
 }

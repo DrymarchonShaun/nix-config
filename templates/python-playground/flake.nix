@@ -39,9 +39,9 @@
           in
           {
             default = pkgs.mkShell {
-              packages = with pkgs; [
+              packages = [
                 (mkPoetryEnv { projectDir = self; })
-                poetry
+                pkgs.poetry
               ];
             };
           };

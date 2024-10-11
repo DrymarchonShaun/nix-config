@@ -25,6 +25,6 @@ clangStdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Factorio Achievement Enabler for Linux";
     homepage = "https://github.com/UnlegitSenpaii/FAE_Linux/";
-    maintainers = with lib.maintainers; [ DrymarchonShaun ];
+    maintainers = [ lib.maintainers.DrymarchonShaun ];
   };
 })

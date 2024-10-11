@@ -15,6 +15,6 @@ stdenv.mkDerivation {
   meta = {
     description = "My Wallpapers";
     platforms = lib.platforms.all;
-    maintainers = with lib.maintainers; [ DrymarchonShaun ];
+    maintainers = [ lib.maintainers.DrymarchonShaun ];
   };
 }

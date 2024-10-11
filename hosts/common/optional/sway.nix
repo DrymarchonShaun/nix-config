@@ -6,11 +6,13 @@
   };
   xdg.portal = {
     #    wlr.enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-xapp
-    ];
+    extraPortals = builtins.attrValues {
+      inherit (pkgs)
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-xapp
+        ;
+    };
   };
 
   services.logind = {
