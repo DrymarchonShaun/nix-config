@@ -71,8 +71,7 @@ in
       "hosts/common/optional/virtualization/libvirt"
       # "hosts/common/optional/virtualization/libvirt/windows.nix"
       # Docker Configs
-      "hosts/common/optional/virtualization/docker"
-      "hosts/common/optional/virtualization/docker/openbooks.nix"
+      "hosts/common/optional/virtualization/containers/openbooks.nix"
 
       # Desktop
       # "hosts/common/optional/hyprland.nix" # window manager
