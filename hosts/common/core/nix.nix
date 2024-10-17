@@ -39,7 +39,9 @@
     # optional, useful when the builder has a faster internet connection than yours
     extraOptions = ''
       builders-use-substitutes = true
+      !include ${config.sops.templates."nix-extra-config".path}
     '';
+    checkConfig = false;
     settings = {
       # See https://jackson.dev/post/nix-reasonable-defaults/
       connect-timeout = 5;
@@ -57,12 +59,14 @@
       warn-dirty = false;
       flake-registry = ""; # Disable global flake registry
     };
-
-    # Garbage Collection
-    # Disabled here in favor of using nh based gc. See hosts/common/core/default.nix
-    #    gc = {
-    #      automatic = true;
-    #      options = "--delete-older-than 10d";
-    #    };
   };
+  users.groups.nix-access-tokens = { };
+  sops.templates."nix-extra-config" = {
+    content = ''
+      access-tokens = github.com=${config.sops.placeholder.github-token}
+    '';
+    group = config.users.groups.nix-access-tokens.name;
+    mode = "0440";
+  };
+  sops.secrets.github-token = { };
 }
