@@ -15,6 +15,7 @@
       # 3D Printing
       orca-slicer
       freecad
+      openscad-unstable
 
       # Productivity
       libreoffice
@@ -22,7 +23,7 @@
 
       # imaging
       rpi-imager
-      #etcher #was disable in nixpkgs due to depency on insecure version of Electron
+      #etcher #was disable in nixpkgs due to dependency on insecure version of Electron
 
       # media production
       audacity

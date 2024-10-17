@@ -30,7 +30,7 @@
   programs.gamescope = {
     enable = true;
     package = pkgs.gamescope;
-    capSysNice = true;
+    #capSysNice = true;
 
   };
   programs.gamemode = {

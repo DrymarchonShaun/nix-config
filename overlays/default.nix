@@ -29,8 +29,6 @@ in
 
     p7zip = prev.p7zip.override { enableUnfree = true; };
 
-    gamescope = nixpkgs-gamescope.gamescope;
-
     #sway-contrib.grimshot = prev.sway-contrib.grimshot.overrideAttrs (attrs: {
     #  patches = (attrs.patches or [ ]) ++ [ ./patches/grimshot-application-name.patch ];
     #});
