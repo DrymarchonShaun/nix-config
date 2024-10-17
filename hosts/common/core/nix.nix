@@ -47,7 +47,7 @@
       min-free = 128000000; # 128MB
       max-free = 1000000000; # 1GB
 
-      subsubstituters = [
+      substituters = [
         "https://cache.nixos.org"
         "corais.local"
         "natrix.local"
