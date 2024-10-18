@@ -53,8 +53,9 @@
       "hosts/common/optional/gaming.nix"
 
       # Docker Configs
-      "hosts/common/optional/virtualization/docker"
-      "hosts/common/optional/virtualization/docker/openbooks.nix"
+      "hosts/common/optional/virtualization/containers/openbooks.nix"
+      "hosts/common/optional/virtualization/containers/foxhole-inventory-report.nix"
+      "hosts/common/optional/virtualization/flatpak"
 
       # Desktop
       # "hosts/common/optional/hyprland.nix" # window manager
