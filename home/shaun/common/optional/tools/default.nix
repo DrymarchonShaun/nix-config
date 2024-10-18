@@ -15,6 +15,7 @@
       # 3D Printing
       orca-slicer
       freecad
+      openscad-unstable
 
       # Productivity
       libreoffice
