@@ -6,18 +6,15 @@
   makeWrapper,
   pkg-config,
 }:
-let
-  version = "d9d2882da7f56c1fb5658b9fb10707620dc9fae3";
-in
 rustPlatform.buildRustPackage {
   pname = "rofi-randr";
-  inherit version;
+  version = "0-unstable-07-07-2024";
 
   src = fetchFromGitHub {
     owner = "Rintse";
     repo = "rofi-randr";
-    rev = version;
-    hash = "sha256-9PvuKLTnKYIFolUbnsohSXdPKh0QGDU0Xxirg8076Jc=";
+    rev = "f7d1290833ff93bda1ff9ecfd05a67f00589850e";
+    hash = "sha256-KqHbS5hneLgx37A493fcZbxhlkrxd6hdwlDp31bEwak=";
   };
 
   buildInputs = [
@@ -29,10 +26,5 @@ rustPlatform.buildRustPackage {
     makeWrapper
   ];
 
-  #  postFixup = ''
-  #    wrapProgram $out/bin/rofi-randr \
-  #      --set DISPLAY_SERVER_OVERRIDE "xrandr_cli"
-  #  '';
-
-  cargoHash = "sha256-0Rw625yUlpKGOEV9USalbi4I/hfRfGa7QcNq0mi4KNQ=";
+  cargoHash = "sha256-jkTv/no/EmbyQkFHc091VrOnCMoE/uAtsVUxBGkxMNk=";
 }
