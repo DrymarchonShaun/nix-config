@@ -38,6 +38,7 @@
     distributedBuilds = true;
     # optional, useful when the builder has a faster internet connection than yours
     extraOptions = ''
+      !include ${config.sops.templates."nix-github-token.conf".path}
       builders-use-substitutes = true
     '';
     settings = {
