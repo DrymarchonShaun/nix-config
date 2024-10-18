@@ -68,7 +68,7 @@ in
       "hosts/common/optional/gaming.nix"
 
       # Virtualization
-      "hosts/common/optional/virtualization/libvirt"
+      # "hosts/common/optional/virtualization/libvirt"
       # "hosts/common/optional/virtualization/libvirt/windows.nix"
       # Docker Configs
       "hosts/common/optional/virtualization/containers/openbooks.nix"
