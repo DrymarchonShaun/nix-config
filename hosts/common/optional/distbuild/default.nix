@@ -25,7 +25,7 @@ in
   };
   sops.secrets."ssh_keys/dvergar" = {
     path = "/home/nixremote/.ssh/id_dvergar";
-    mode = "400";
+    mode = "600";
     owner = "nixremote";
     group = "nixremote";
   };
