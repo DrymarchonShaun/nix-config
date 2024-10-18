@@ -110,19 +110,16 @@
       window.border = 2;
 
       input = {
+        #### Default settings by device type ####
+        "type:pointer" = {
+          accel_profile = "flat";
+        };
+
         "type:keyboard" = {
           xkb_layout = "us";
           xkb_numlock = "enabled";
         };
-        "type:pointer" = {
-          accel_profile = "flat";
-        };
-        "4152:5931:SteelSeries_SteelSeries_Rival_650_Wireless*" = {
-          pointer_accel = "0.6";
-        };
-        "5426:168:Razer_Razer_Naga_V2_Pro*" = {
-          pointer_accel = "0.6";
-        };
+
         "type:touchpad" = {
           dwt = "enabled";
           tap = "enabled";
@@ -130,6 +127,25 @@
           tap_button_map = "lrm";
           accel_profile = "adaptive";
         };
+
+        #### Device specific settings ####
+
+        "4152:5931:SteelSeries_SteelSeries_Rival_650_Wireless*" = {
+          pointer_accel = "0.6";
+        };
+        # Razer Naga V2 Pro (bluetooth)
+        "5426:169:Razer_Razer_Naga_V2_Pro*" = {
+          pointer_accel = "0.6";
+        };
+        # Razer Naga V2 Pro (wireless)
+        "5426:168:Razer_Razer_Naga_V2_Pro*" = {
+          pointer_accel = "0.6";
+        };
+        # Razer Naga V2 Pro (wired)
+        "5426:167:Razer_Razer_Naga_V2_Pro*" = {
+          pointer_accel = "0.6";
+        };
+
       };
 
       window = {
