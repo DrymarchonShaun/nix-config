@@ -20,19 +20,18 @@
     inherit (checks.pre-commit-check) shellHook;
     buildInputs = checks.pre-commit-check.enabledPackages;
 
-    nativeBuildInputs =
-      builtins.attrValues {
-        inherit (pkgs)
+    nativeBuildInputs = builtins.attrValues {
+      inherit (pkgs)
 
-          home-manager
-          git
-          just
+        home-manager
+        git
+        just
 
-          age
-          ssh-to-age
-          sops
-          ;
-      }
-      ++ [ pkgs.nixVersions.latest ];
+        age
+        ssh-to-age
+        sops
+        ;
+      inherit (pkgs.nixVersions) latest;
+    };
   };
 }
