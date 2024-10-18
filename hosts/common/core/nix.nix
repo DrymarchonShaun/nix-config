@@ -46,7 +46,7 @@
       connect-timeout = 5;
       log-lines = 50;
       min-free = 128000000; # 128MB
-      max-free = 1000000000; # 1GB
+      max-free = 2000000000; # 2GB
 
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
@@ -58,12 +58,5 @@
       warn-dirty = false;
       flake-registry = ""; # Disable global flake registry
     };
-
-    # Garbage Collection
-    # Disabled here in favor of using nh based gc. See hosts/common/core/default.nix
-    #    gc = {
-    #      automatic = true;
-    #      options = "--delete-older-than 10d";
-    #    };
   };
 }
