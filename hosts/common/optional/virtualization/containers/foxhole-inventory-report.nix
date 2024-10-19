@@ -50,6 +50,7 @@ in
       "--network=localnet"
       "--ip=11.0.0.2"
     ];
+    dependsOn = [ "network-local" ];
     # ports = [ "6855:8000" ];
   };
 }
