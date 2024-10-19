@@ -58,17 +58,13 @@
       "hosts/common/optional/virtualization/flatpak"
 
       # Desktop
-      # "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/sway.nix" # window manager
-      # "hosts/common/optional/plasma.nix" # desktop environment
       "hosts/common/optional/wooting.nix"
 
       #################### Users to Create ####################
     ]);
 
   services.gnome.gnome-keyring.enable = true;
-  # TODO enable and move to greetd area? may need authentication dir or something?
-  # services.pam.services.greetd.enableGnomeKeyring = true;
   hardware.amdgpu.opencl.enable = true;
 
   networking = {

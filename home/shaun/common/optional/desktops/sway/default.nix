@@ -195,6 +195,7 @@
       assigns = {
         "4:4" = [
           { class = "steam"; }
+          { class = "gamescope"; }
           { class = "heroic"; }
         ];
         "11:F1" = [ { title = ".*Discord"; } ];

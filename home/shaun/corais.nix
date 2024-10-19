@@ -14,10 +14,7 @@
     common/optional/browsers/firefox.nix
     common/optional/comms
     common/optional/dev/vscode.nix
-    common/optional/games/heroic.nix
-    common/optional/games/mangohud.nix
-    common/optional/games/prismlauncher.nix
-    common/optional/games/steam.nix
+    common/optional/games
     common/optional/media
     common/optional/tools
 

@@ -23,7 +23,7 @@
 
       # imaging
       rpi-imager
-      #etcher #was disable in nixpkgs due to depency on insecure version of Electron
+      #etcher #was disable in nixpkgs due to dependency on insecure version of Electron
 
       # media production
       audacity

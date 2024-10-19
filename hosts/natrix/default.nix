@@ -67,16 +67,11 @@ in
       "hosts/common/optional/thunar.nix"
       "hosts/common/optional/gaming.nix"
 
-      # Virtualization
-      # "hosts/common/optional/virtualization/libvirt"
-      # "hosts/common/optional/virtualization/libvirt/windows.nix"
       # Docker Configs
       "hosts/common/optional/virtualization/containers/openbooks.nix"
 
       # Desktop
-      # "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/sway.nix" # window manager
-      # "hosts/common/optional/plasma.nix" # desktop environment
       "hosts/common/optional/wooting.nix"
 
       #################### Users to Create ####################
