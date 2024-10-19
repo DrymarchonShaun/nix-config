@@ -23,6 +23,9 @@
     };
     mimeApps = {
       enable = true;
+      associations.added = {
+        "image/png" = [ "gimp.desktop" ];
+      };
       defaultApplications = {
         "application/epub+zip" = [ "calibre-gui.desktop" ];
         "application/illustrator" = [ "org.inkscape.Inkscape.desktop" ];
