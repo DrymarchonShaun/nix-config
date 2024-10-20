@@ -923,11 +923,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1729371700,
-        "narHash": "sha256-bHXl0aZCpibyF7hhUuorqJsnw1FihZ0izIcfMGCO2uQ=",
+        "lastModified": 1729458088,
+        "narHash": "sha256-kzqWlJsQ9hzEUqlilo/EJxjIAb5OaV307x5CwAgHIxk=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "a18a43a0b044889fd51fdc72d165e631414456b1",
+        "rev": "40e02c4d1983a4ff5a0388ee23d62bd7d0ac2e28",
         "type": "github"
       },
       "original": {
