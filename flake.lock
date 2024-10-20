@@ -649,11 +649,11 @@
     },
     "nixpkgs-dev": {
       "locked": {
-        "lastModified": 1729142333,
-        "narHash": "sha256-GMeKPze5KgfUGvujUZbPIV1EMfC0CN9DLECxFkk6k4o=",
+        "lastModified": 1729401770,
+        "narHash": "sha256-3JSp+YSyDrL5UcDi8g8VG4yKfW3jeGVCBUYz9GX6XjU=",
         "owner": "DrymarchonShaun",
         "repo": "nixpkgs",
-        "rev": "73571723d2953df38e7aaa34fcc529605efe8b33",
+        "rev": "307520c98c599cbfd47e999595d9a9c68f1f24fe",
         "type": "github"
       },
       "original": {

@@ -8,7 +8,7 @@
       ffmpeg
       vlc
       ;
-    inherit (pkgs.stable)
+    inherit (pkgs.dev)
       calibre
       ;
   };
