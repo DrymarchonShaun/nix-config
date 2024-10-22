@@ -6,6 +6,7 @@
       inherit (pkgs)
         roboto
         roboto-mono
+        roboto-slab
         liberation_ttf
         ;
       nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
@@ -14,7 +15,7 @@
     fontconfig = {
       defaultFonts = {
         serif = [
-          "Liberation Serif"
+          "Roboto Slab"
           "Symbols Nerd Font Mono"
         ];
         sansSerif = [
