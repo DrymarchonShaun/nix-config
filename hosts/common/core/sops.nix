@@ -5,11 +5,14 @@
   inputs,
   config,
   configVars,
+  lib,
   ...
 }:
 let
   secretsDirectory = builtins.toString inputs.nix-secrets;
   secretsFile = "${secretsDirectory}/secrets.yaml";
+
+  connections = configVars.networking.connections;
 
   # FIXME: Switch to a configLib function
   homeDirectory =
@@ -31,27 +34,41 @@ in
     # e.g. /run/secrets/msmtp-password
     # secrets required for user creation are handled in respective ./users/<username>.nix files
     # because they will be output to /run/secrets-for-users and only when the user is assigned to a host.
-    secrets = {
-      # For home-manager a separate age key is used to decrypt secrets and must be placed onto the host. This is because
-      # the user doesn't have read permission for the ssh service private key. However, we can bootstrap the age key from
-      # the secrets decrypted by the host key, which allows home-manager secrets to work without manually copying over
-      # the age key.
-      # These age keys are are unique for the user on each host and are generated on their own (i.e. they are not derived
-      # from an ssh key).
-      "user_age_keys/${configVars.username}_${config.networking.hostName}" = {
-        owner = config.users.users.${configVars.username}.name;
-        inherit (config.users.users.${configVars.username}) group;
-        # We need to ensure the entire directory structure is that of the user...
-        path = "${homeDirectory}/.config/sops/age/keys.txt";
-      };
+    secrets =
+      {
+        # For home-manager a separate age key is used to decrypt secrets and must be placed onto the host. This is because
+        # the user doesn't have read permission for the ssh service private key. However, we can bootstrap the age key from
+        # the secrets decrypted by the host key, which allows home-manager secrets to work without manually copying over
+        # the age key.
+        # These age keys are are unique for the user on each host and are generated on their own (i.e. they are not derived
+        # from an ssh key).
+        "user_age_keys/${configVars.username}_${config.networking.hostName}" = {
+          owner = config.users.users.${configVars.username}.name;
+          inherit (config.users.users.${configVars.username}) group;
+          # We need to ensure the entire directory structure is that of the user...
+          path = "${homeDirectory}/.config/sops/age/keys.txt";
+        };
 
-      # extract username/password to /run/secrets-for-users/ so it can be used to create the user
-      "${configVars.username}/password".neededForUsers = true;
+        # extract username/password to /run/secrets-for-users/ so it can be used to create the user
+        "${configVars.username}/password".neededForUsers = true;
 
-      github-token = {
-        mode = "0444";
-      };
-    };
+        github-token = {
+          mode = "0444";
+        };
+      }
+      // (builtins.listToAttrs (
+        map
+          (connection: {
+            name = "networks/${connection.wifi.ssid}_psk";
+            value = { };
+          })
+          (
+            builtins.filter (
+              connection: connection ? "wifi-security" && connection."wifi-security" ? psk
+            ) connections
+          )
+      ));
+
     # templates
     templates = {
       "nix-github-token.conf" = {
@@ -59,6 +76,19 @@ in
         content = ''
           access-tokens = github.com=${config.sops.placeholder.github-token}
         '';
+      };
+      "networks.env" = {
+        mode = "0440";
+        content = lib.concatMapStringsSep "\n" (
+          connection:
+          let
+            ssid = connection.wifi.ssid;
+          in
+          if connection ? "wifi-security" && connection."wifi-security" ? psk then
+            "${ssid}_psk=${config.sops.placeholder."networks/${ssid}_psk"}"
+          else
+            ""
+        ) connections;
       };
     };
   };

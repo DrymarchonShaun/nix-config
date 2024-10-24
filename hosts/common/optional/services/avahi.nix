@@ -1,7 +1,8 @@
-{ ... }:
+{ configVars, ... }:
 {
   services.avahi = {
     enable = true;
+    domainName = configVars.domain;
     nssmdns4 = true;
     publish = {
       enable = true;

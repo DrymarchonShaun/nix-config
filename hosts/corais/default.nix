@@ -69,7 +69,6 @@
 
   networking = {
     hostName = "corais";
-    networkmanager.enable = true;
     enableIPv6 = false;
   };
 

@@ -131,7 +131,6 @@ in
 
   networking = {
     hostName = "natrix";
-    networkmanager.enable = true;
     enableIPv6 = false;
   };
 
