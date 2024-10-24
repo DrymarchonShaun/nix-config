@@ -58,7 +58,8 @@ in
             ];
 
           # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-          openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+          # openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+          openssh.authorizedKeys.keyFiles = [ ./keys/ssh/id_odin.pub ];
 
           shell = pkgs.zsh; # default shell
         };
@@ -68,7 +69,8 @@ in
           hashedPasswordFile = config.users.users.${configVars.username}.hashedPasswordFile;
           initialPassword = lib.mkForce config.users.users.${configVars.username}.password;
           # root's ssh keys are mainly used for remote deployment.
-          openssh.authorizedKeys.keys = config.users.users.${configVars.username}.openssh.authorizedKeys.keys;
+          openssh.authorizedKeys.keyFiles =
+            config.users.users.${configVars.username}.openssh.authorizedKeys.keyFiles;
         };
 
         documentation.dev.enable = true;

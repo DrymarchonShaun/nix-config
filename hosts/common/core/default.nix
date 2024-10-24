@@ -25,10 +25,8 @@ in
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    flake = "${homeDirectory}/nix-config";
+    flake = "${homeDirectory}/.src/nix-config";
   };
-
-  # services.yubikey-agent.enable = true;
 
   # less delay on failed login
   security.pam.services.login = {
