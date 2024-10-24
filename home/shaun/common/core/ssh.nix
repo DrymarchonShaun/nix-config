@@ -31,6 +31,8 @@ let
         hostname = "${host}.${configVars.domain}";
         port = configVars.networking.ports.tcp.ssh;
         forwardAgent = true;
+        identitiesOnly = true;
+        identityFile = "${config.home.homeDirectory}/.ssh/id_odin";
       };
     }) vanillaHosts
   );
@@ -39,6 +41,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
+    enableZshIntegration = false;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 
