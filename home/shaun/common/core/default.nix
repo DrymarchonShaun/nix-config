@@ -23,7 +23,6 @@
     ./fonts.nix # core fonts
     ./fzf.nix # fuzzy-finder for shell
     ./git.nix # personal git config
-    ./gnupg.nix
     ./foot.nix # terminal
     ./neovim.nix # vim goodness
     ./screen.nix # hopefully rarely needed but good to have if so
@@ -36,8 +35,6 @@
     # ./shellcolor.nix
 
   ] ++ (builtins.attrValues outputs.homeManagerModules);
-
-  # services.ssh-agent.enable = true;
 
   catppuccin = {
     enable = true;
@@ -65,9 +62,6 @@
 
       # Packages that don't have custom configs go here
 
-      # TODO: spaces before comment are removed by nixpkgs-fmt
-      # See: https://github.com/nix-community/nixpkgs-fmt/issues/305
-      #borgbackup # backups
       btop # resource monitor
       coreutils # basic gnu utils
       # curl

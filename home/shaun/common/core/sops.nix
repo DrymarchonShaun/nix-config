@@ -22,15 +22,6 @@ in
     defaultSopsFile = "${secretsFile}";
     validateSopsFiles = false;
 
-    secrets = {
-      "ssh_keys/mimir" = {
-        path = "${homeDirectory}/.ssh/id_mimir";
-      };
-
-      "gpg_keys/odin" = {
-        mode = "400";
-        path = "%r/gpg-keys/odin.asc";
-      };
-    };
+    secrets = { };
   };
 }

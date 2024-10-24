@@ -10,7 +10,6 @@
     ;
 
   username = "shaun";
-  gpgKey = "E1EC37451A645A64!";
   handle = "DrymarchonShaun";
   gitHubEmail = "40149778+DrymarchonShaun@users.noreply.github.com";
   persistFolder = "/persist";
