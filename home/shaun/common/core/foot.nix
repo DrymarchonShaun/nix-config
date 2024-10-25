@@ -2,6 +2,7 @@
 {
   programs.foot = {
     enable = true;
+    catppuccin.enable = true;
     settings = {
       main = {
         font = "JetBrains Mono:size=10,Symbols Nerd Font Mono:size=10";
