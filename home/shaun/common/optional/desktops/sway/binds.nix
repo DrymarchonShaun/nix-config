@@ -79,8 +79,8 @@ in
         "alt+return" = "fullscreen";
 
         # Function Keys
-        "XF86AudioLowerVolume" = "exec ${pamixer} -d 5";
-        "XF86AudioRaiseVolume" = "exec ${pamixer} -i 5";
+        "XF86AudioLowerVolume" = "exec ${pamixer} -d 1";
+        "XF86AudioRaiseVolume" = "exec ${pamixer} -i 1";
         "XF86MonBrightnessDown" = "exec ${brightnessctl} -q set 5%-";
         "XF86MonBrightnessUp" = "exec ${brightnessctl} -q set +5%";
         "XF86TouchpadToggle" = "input type:touchpad events toggle enabled disabled";
