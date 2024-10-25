@@ -50,9 +50,6 @@
     initExtraFirst = ''
        # zmodload zsh/zprof
 
-       export GPG_TTY=$TTY
-       ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
-
        # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
        # Initialization code that may require console input (password prompts, [y/n]
        # confirmations, etc.) must go above this block; everything else may go below.
@@ -101,6 +98,10 @@
       done
       nix shell "''${args[@]}"
       }
+
+      export GPG_TTY=$TTY
+      ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
+
 
       # zprof
     '';
