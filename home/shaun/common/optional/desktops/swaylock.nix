@@ -10,7 +10,7 @@
       caps-lock-key-hl-color = lib.mkForce "#8aadf4";
       clock = true;
       datestr = "%b %d, %G";
-      font = "Roboto Mono";
+      font = "JetBrains Mono";
       font-size = 45;
       ignore-empty-password = true;
       image = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin-blurred.png";

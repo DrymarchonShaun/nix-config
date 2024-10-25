@@ -97,6 +97,8 @@
 
   programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon2/temp3_input";
 
+  programs.foot.settings.main.font = lib.mkForce "JetBrains Mono:size=13,Symbols Nerd Font Mono:size=13";
+
   home = {
     username = configVars.username;
     homeDirectory = "/home/${configVars.username}";

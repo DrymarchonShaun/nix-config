@@ -39,7 +39,19 @@
           })
           ++ [ pkgs.gamemode.lib ];
       };
-      extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
+      extraCompatPackages = [
+        (pkgs.unstable.proton-ge-bin.overrideAttrs (attrs: {
+          postInstall =
+            (attrs.postInstall or "")
+            + ''
+              sed -i \
+              '/HKCU,Software\\Wine\\Fonts\\Replacements,"Palatino Linotype",,"Times New Roman"/d;                                          ─╯
+              /HKCU,Software\\Wine\\Fonts\\Replacements,"Verdana",,"Times New Roman"/d;
+              /HKCU,Software\\Wine\\Fonts\\Replacements,"Segoe UI",,"Times New Roman"/d' \
+              $out/files/share/wine/wine.inf
+            '';
+        }))
+      ];
     };
     #gamescope launch args set dynamically in home/<user>/common/optional/gaming
     gamescope = {

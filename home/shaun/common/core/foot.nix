@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       main = {
-        font = "Roboto Mono:size=12";
+        font = "JetBrains Mono:size=10,Symbols Nerd Font Mono:size=10";
         dpi-aware = "yes";
       };
 

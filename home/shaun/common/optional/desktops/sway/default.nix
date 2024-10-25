@@ -265,8 +265,8 @@
       };
 
       fonts = {
-        names = [ "Roboto" ];
-        style = "Regular";
+        names = [ "Inter:medium" ];
+        # style = "Regular";
       };
     };
     extraConfig = ''

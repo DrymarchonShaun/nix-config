@@ -11,7 +11,7 @@
       substitutions = [
         "--replace-warn"
         "Ubuntu Nerd Font"
-        "Roboto Mono"
+        "JetBrains Mono"
       ];
     };
 

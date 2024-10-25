@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   # use U+2004 between text and icons
-  smallSpace = ''<span font="Roboto"> </span>'';
+  smallSpace = ''<span font="Inter"> </span>'';
   # offset char by rise
   iconOffset = rise: char: ''<span  font="Symbols Nerd Font Mono" rise="${rise}">${char} </span>'';
 in
@@ -164,7 +164,7 @@ in
     };
     style = ''
       * {
-        font-family: "Roboto Mono", "Symbols Nerd Font Mono";
+        font-family: "JetBrains Mono", "Symbols Nerd Font Mono";
         font-weight: normal;
         font-size: 16px;
       }

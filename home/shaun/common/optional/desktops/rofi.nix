@@ -39,7 +39,7 @@
           fg-col2 = mkLiteral "#ed8796";
           grey = mkLiteral "#6e738d";
           width = 600;
-          font = "JetBrainsMono Nerd Font 14";
+          font = "JetBrains Mono:size=14";
         };
 
         "element-text, element-icon , mode-switcher" = {
