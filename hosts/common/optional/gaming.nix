@@ -1,4 +1,26 @@
 { pkgs, ... }:
+let
+  gamemode-discord-run =
+    let
+      gamemoded = "${pkgs.gamemode}/bin/gamemoded";
+      gamemoderun = "${pkgs.gamemode}/bin/gamemoderun";
+    in
+    pkgs.writeScriptBin "gamemode-discord-run" ''
+        DISCORD_PID=$(pgrep discord)
+        function onexit {
+        if [[ $(${gamemoded} -s$DISCORD_PID) == "gamemode is active and [$DISCORD_PID] is registered" ]]; then
+          ${gamemoded} -r$DISCORD_PID
+        fi
+        ${pkgs.libnotify}/bin/notify-send "GameMode" "GameMode is now inactive"
+      }
+      if [[ $(${gamemoded} -s$DISCORD_PID) == "gamemode is inactive" ]]; then
+      ${gamemoded} -r$DISCORD_PID && \
+          ${pkgs.libnotify}/bin/notify-send "GameMode" "GameMode is now active"
+      fi
+      ${gamemoderun} "$@"
+      trap onexit EXIT INT ABRT KILL TERM
+    '';
+in
 {
   programs = {
     steam = {
@@ -37,7 +59,10 @@
               ;
 
           })
-          ++ [ pkgs.gamemode.lib ];
+          ++ [
+            pkgs.gamemode.lib
+            gamemode-discord-run
+          ];
       };
       extraCompatPackages = [
         (pkgs.unstable.proton-ge-bin.overrideAttrs (attrs: {
@@ -45,7 +70,7 @@
             (attrs.postInstall or "")
             + ''
               sed -i \
-              '/HKCU,Software\\Wine\\Fonts\\Replacements,"Palatino Linotype",,"Times New Roman"/d;                                          ─╯
+              '/HKCU,Software\\Wine\\Fonts\\Replacements,"Palatino Linotype",,"Times New Roman"/d;
               /HKCU,Software\\Wine\\Fonts\\Replacements,"Verdana",,"Times New Roman"/d;
               /HKCU,Software\\Wine\\Fonts\\Replacements,"Segoe UI",,"Times New Roman"/d' \
               $out/files/share/wine/wine.inf
@@ -78,13 +103,13 @@
         };
         gpu = {
           apply_gpu_optimisations = "accept-responsibility";
-          gpu_device = 0;
+          gpu_device = 1;
           amd_performance_level = "high";
         };
-        custom = {
-          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
-          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
-        };
+        # custom = {
+        #   start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+        #   end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        # };
       };
     };
   };
