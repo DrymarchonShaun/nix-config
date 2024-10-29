@@ -17,4 +17,5 @@ rec {
   zsh-auto-notify = pkgs.callPackage ./zsh-auto-notify { };
   zsh-term-title = pkgs.callPackage ./zsh-term-title { };
   gamma-launcher = pkgs.callPackage ./gamma-launcher { };
+  cnijfilter-mx340 = pkgs.callPackage ./cnijfilter-mx340 { };
 }
