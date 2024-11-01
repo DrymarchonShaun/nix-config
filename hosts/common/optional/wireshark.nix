@@ -1,5 +1,8 @@
 { lib, pkgs, ... }:
 {
+  users.users.shaun.extraGroups = [
+    "wireshark"
+  ];
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;

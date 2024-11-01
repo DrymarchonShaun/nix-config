@@ -12,6 +12,11 @@
     jack.enable = true;
   };
 
+  users.users.${configVars.username}.extraGroups = [
+    "pipewire"
+    "audio"
+  ];
+
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
       pamixer # pulseaudio sound mixer

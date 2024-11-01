@@ -10,6 +10,10 @@
     # ./windows.nix
     ./networks.nix
   ];
+  users.users.${configVars.username}.extraGroups = [
+    "libvirt"
+    "libvirt-qemu"
+  ];
   programs.virt-manager.enable = true;
   virtualisation.libvirt.enable = true;
   virtualisation.libvirtd = {

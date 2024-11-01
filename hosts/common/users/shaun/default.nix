@@ -41,20 +41,13 @@ in
           extraGroups =
             [ "wheel" ]
             ++ ifTheyExist [
-              "audio"
+              "git"
               "disk"
-              "docker"
-              "git"
-              "gamemode"
-              "git"
               "input"
-              "libvirtd"
-              "networkmanager"
-              "openrazer"
-              "qemu-libvirtd"
               "storage"
               "video"
-              "wireshark"
+              "lpadmin"
+              "openrazer"
             ];
 
           # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos

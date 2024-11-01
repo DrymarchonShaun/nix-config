@@ -1,5 +1,8 @@
-{ ... }:
+{ configVars, ... }:
 {
+  # users.users.${configVars.username}.extraGroups = [
+  #  "podman"
+  # ];
   virtualisation = {
     podman = {
       enable = true;

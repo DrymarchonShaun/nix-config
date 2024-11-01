@@ -1,5 +1,8 @@
 { config, configVars, ... }:
 {
+  users.users.${configVars.username}.extraGroups = [
+    "networkmanager"
+  ];
   networking.networkmanager = {
     enable = true;
     ensureProfiles = {

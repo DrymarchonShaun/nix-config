@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, configVars, ... }:
 let
   gamemode-discord-run =
     let
@@ -22,6 +22,10 @@ let
     '';
 in
 {
+  users.users.${configVars.username}.extraGroups = [
+    "gamemode"
+  ];
+
   programs = {
     steam = {
       enable = true;
@@ -61,7 +65,6 @@ in
           })
           ++ [
             pkgs.gamemode.lib
-            gamemode-discord-run
           ];
       };
       extraCompatPackages = [
