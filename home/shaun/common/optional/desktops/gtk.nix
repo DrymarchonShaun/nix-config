@@ -44,18 +44,20 @@ in
       extraCss = builtins.readFile "${gradienceBuild}/gtk-3.0/gtk.css";
       extraConfig = {
         gtk-application-prefer-dark-theme = 1;
+        color-scheme = "prefer-dark";
       };
     };
     gtk4 = {
       extraCss = builtins.readFile "${gradienceBuild}/gtk-4.0/gtk.css";
       extraConfig = {
         gtk-application-prefer-dark-theme = 1;
+        color-scheme = "prefer-dark";
       };
     };
   };
   catppuccin.pointerCursor.enable = true;
   home.pointerCursor = {
-    size = 28;
+    size = 24;
     gtk.enable = true;
     x11.enable = true;
   };
