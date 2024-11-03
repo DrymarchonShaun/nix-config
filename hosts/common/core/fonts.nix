@@ -21,13 +21,11 @@
           "Inter:medium"
           "Inter"
           "Noto Sans"
-          "Symbols Nerd Font Mono"
         ];
         sansSerif = [
           "Inter:medium"
           "Inter"
           "Noto Sans"
-          "Symbols Nerd Font Mono"
         ];
         monospace = [
           "JetBrains Mono:medium"
