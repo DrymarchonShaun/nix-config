@@ -12,6 +12,9 @@
   home.packages = builtins.attrValues {
     inherit (pkgs)
 
+      # System Utilities
+      mission-center
+
       # 3D Printing
       orca-slicer
       freecad
