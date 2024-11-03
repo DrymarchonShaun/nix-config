@@ -1,0 +1,14 @@
+diff --git a/printui/po/id.po b/printui/po/id.po
+index 3177067..4f57893 100755
+--- a/printui/po/id.po
++++ b/printui/po/id.po
+@@ -2095,4 +2095,4 @@ msgid ""
+ msgstr ""
+-"Setelan Sumber Kertas saat ini tidak tersedia untuk Tipe Media yang dipilih.\n"
+-"Setelan Sumber Kertas telah diubah."
++"Setelan Sumber %s Kertas saat ini tidak tersedia untuk Tipe Media yang dipilih.\n"
++"Setelan Sumber Kertas telah diubah %s."
+
+@@ -4096,2 +4096 @@ msgstr ""
+ "Utama."
+-

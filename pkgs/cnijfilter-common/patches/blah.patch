@@ -1,0 +1,8 @@
+diff --git a/cngpijmon/cnijnpr/cnijnpr/cnijnpr.c b/cngpijmon/cnijnpr/cnijnpr/cnijnpr.c
+index 162fcda..8744f7e 100755
+--- a/cngpijmon/cnijnpr/cnijnpr/cnijnpr.c
++++ b/cngpijmon/cnijnpr/cnijnpr/cnijnpr.c
+@@ -35,3 +35,2 @@
+ #include <net/if.h>
+-#include <sys/sysctl.h>
+ #include <config.h>

@@ -41,6 +41,7 @@
       "hosts/common/optional/services/openssh.nix"
       "hosts/common/optional/virtualization/libvirt" # vm tools
       "hosts/common/optional/services/geoclue.nix"
+      "hosts/common/optional/services/cups.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
       "hosts/common/optional/audio.nix" # pipewire and cli controls
