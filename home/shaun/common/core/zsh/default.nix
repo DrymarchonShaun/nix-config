@@ -99,10 +99,6 @@
       nix shell "''${args[@]}"
       }
 
-      export GPG_TTY=$TTY
-      ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
-
-
       # zprof
     '';
 

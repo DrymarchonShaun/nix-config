@@ -41,7 +41,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    enableZshIntegration = false;
+    enableZshIntegration = true;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 
