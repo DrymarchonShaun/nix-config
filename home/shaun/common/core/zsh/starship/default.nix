@@ -4,6 +4,7 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
+      command_timeout = 1000; # ms
       add_newline = false;
       format = lib.concatStrings [
         # left side
