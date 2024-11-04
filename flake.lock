@@ -954,11 +954,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1730601275,
-        "narHash": "sha256-nOUn+VEBnT293nDDSVa9EX0DMp/PiJYbo93P1QZkVEo=",
+        "lastModified": 1730854507,
+        "narHash": "sha256-AEGWyuFlUcOSiHfdVpnAF4UyJ9sf11+y9AJet+4BOOk=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "bd77cd7cb378d0aed2d8048c68e0c268a24fa37c",
+        "rev": "6e78571518f1dbf7f2924a910dd883c1659d2267",
         "type": "github"
       },
       "original": {
