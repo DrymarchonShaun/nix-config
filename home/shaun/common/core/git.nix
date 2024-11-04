@@ -21,6 +21,11 @@ in
     userEmail = publicGitEmail;
     aliases = {
       stat = "status";
+      pr = "!f() { git fetch -fu \${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f";
+      pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=\${ref#refs/heads/} ; git branch -D $branch ; done";
+
+      # For Bitbucket/Stash remotes
+      spr = "!f() { git fetch -fu \${2:-$(git remote |grep ^upstream || echo origin)} refs/pull-requests/$1/from:pr/$1 && git checkout pr/$1; }; f";
     };
     extraConfig = {
       init.defaultBranch = "master";
