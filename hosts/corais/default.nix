@@ -43,6 +43,7 @@
       "hosts/common/optional/services/geoclue.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
+      "hosts/common/optional/services/ydotool.nix"
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
