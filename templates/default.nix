@@ -9,4 +9,12 @@
       - Run `poetry run python -m sample_package`
     '';
   };
+  rust = {
+    path = ./rust;
+    description = "Rust template, using rust-overlay";
+    welcomeText = ''
+      # Getting started
+      - Run `direnv allow`
+    '';
+  };
 }

@@ -80,11 +80,11 @@
       self,
       nixpkgs,
       home-manager,
-      stylix,
       ...
     }@inputs:
     let
       inherit (self) outputs;
+      #TODO: switch to flake-utils
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
         #"aarch64-darwin"
