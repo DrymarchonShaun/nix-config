@@ -4,6 +4,21 @@ let
   smallSpace = ''<span font="Inter"> </span>'';
   # offset char by rise
   iconOffset = rise: char: ''<span  font="Symbols Nerd Font Mono" rise="${rise}">${char} </span>'';
+
+  custom-language = pkgs.writeScript "custom-language" ''
+    # Get the current keyboard layout name for the first keyboard device
+    layout_info=$(${pkgs.swayfx}/bin/swaymsg -t get_inputs | ${pkgs.jq}/bin/jq -r '.[] | select(.type == "keyboard") | .xkb_active_layout_name' | head -n 1)
+
+    # Determine the output based on the layout name
+    if [[ "$layout_info" == "English (US)" ]]; then
+        echo "US Standard"
+
+    elif [[ "$layout_info" == "English (Real Programmers Dvorak)" ]]; then
+        echo "US Dvorak"
+    else
+        echo "Unknown Layout"
+    fi
+  '';
 in
 {
   # Let it try to start a few more times
@@ -21,7 +36,10 @@ in
       mainBar = {
         layer = "bottom";
         margin = "20 20 0 20";
-        modules-left = [ "sway/workspaces" ];
+        modules-left = [
+          "sway/workspaces"
+          "custom/language"
+        ];
         modules-center = [
           "clock"
           "custom/notification"
@@ -43,6 +61,12 @@ in
           format = "{name}";
         };
 
+        "custom/language" = {
+          format = "{}";
+          interval = 1;
+          exec = "${custom-language}";
+          on-click = "${pkgs.swayfx}/bin/swaymsg input type:keyboard xkb_switch_layout next";
+        };
         ########## Center Modules ##########
         clock = {
           interval = 1;
@@ -178,13 +202,14 @@ in
       }
 
       #workspaces {
-        border-radius: 10px;
+        border-radius: 10px 0px 0px 10px;
         padding-left: 0em;
         padding-right: 0em;
         background: @surface0;
       }
 
       #workspaces button {
+        border-radius: 10px;
         padding-left: 0.5em;
         padding-right: 0.5em;
         color: @text;
@@ -221,9 +246,17 @@ in
       #workspaces button:hover {
         box-shadow: inherit;
         text-shadow: inherit;
-        border-radius: inherit;
+        border-radius: 10px;
         color: @surface0;
         background: @blue;
+      }
+
+      #custom-language {
+        border-radius: 0px 10px 10px 0px;
+        padding-left: 0.25em;
+        padding-right: 0.50em;
+        color: @text;
+        background: @surface0;
       }
 
       #clock {

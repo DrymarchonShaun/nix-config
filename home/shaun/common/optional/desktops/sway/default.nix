@@ -116,7 +116,7 @@
         };
 
         "type:keyboard" = {
-          xkb_layout = "us";
+          xkb_layout = "us,real-prog-dvorak";
           xkb_numlock = "enabled";
         };
 
