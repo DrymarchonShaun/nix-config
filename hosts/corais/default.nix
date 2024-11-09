@@ -12,6 +12,14 @@
   configLib,
   ...
 }:
+let
+  coraisKernel = pkgs.linux_latest.override { };
+  coraisKernelPackages = (pkgs.linuxPackagesFor coraisKernel).extend (
+    final: prev: {
+      zenergy = final.callPackage ../../pkgs/zenergy { };
+    }
+  );
+in
 {
   imports =
     [
@@ -64,7 +72,7 @@
 
       #################### Users to Create ####################
     ]);
-
+  boot.kernelPackages = coraisKernelPackages;
   services.gnome.gnome-keyring.enable = true;
   hardware.amdgpu.opencl.enable = true;
 
@@ -93,7 +101,6 @@
       "zenergy"
     ];
     kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
-    extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../pkgs/zenergy { }) ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;

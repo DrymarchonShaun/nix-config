@@ -31,6 +31,7 @@ let
           })
         ];
       });
+      #    zenergy = final.callPackage ../../pkgs/zenergy { };
     }
   );
 in
