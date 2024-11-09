@@ -17,7 +17,7 @@
 
   services.xserver = {
     # layout = "us,real-prog-dvorak";
-    extraLayouts.real-prog-dvorak = {
+    xkb.extraLayouts.real-prog-dvorak = {
       description = "Real Programmer's Dvorak";
       languages = [ "eng" ];
       symbolsFile = ../../../vars/symbols/real-prog-dvorak;

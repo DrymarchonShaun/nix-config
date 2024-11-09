@@ -17,20 +17,20 @@ let
   natrixKernel = pkgs.linux_latest.override { };
   natrixKernelPackages = (pkgs.linuxPackagesFor natrixKernel).extend (
     final: prev: {
-      system76 = (pkgs.linuxPackagesFor natrixKernel).system76.overrideAttrs (attrs: {
-        version = "1.0.13-unstable";
-        src = attrs.src // {
-          rev = "341bcde2d280e384261019baec1496acf5d04d95";
-          sha256 = "";
-        };
-        patches = [
-          (pkgs.fetchpatch {
-            name = "fix-linux-6_11-build.patch";
-            url = "https://github.com/pop-os/system76-dkms/pull/68.patch";
-            hash = "sha256-kWili/IGIGx4PblfcMUVx821UA2oeZzZngcEba/LNw8=";
-          })
-        ];
-      });
+      # system76 = (pkgs.linuxPackagesFor natrixKernel).system76.overrideAttrs (attrs: {
+      #   version = "1.0.13-unstable";
+      #   src = attrs.src // {
+      #     rev = "341bcde2d280e384261019baec1496acf5d04d95";
+      #     sha256 = "";
+      #   };
+      #   patches = [
+      #     (pkgs.fetchpatch {
+      #       name = "fix-linux-6_11-build.patch";
+      #       url = "https://github.com/pop-os/system76-dkms/pull/68.patch";
+      #       hash = "sha256-kWili/IGIGx4PblfcMUVx821UA2oeZzZngcEba/LNw8=";
+      #     })
+      #   ];
+      # });
       #    zenergy = final.callPackage ../../pkgs/zenergy { };
     }
   );

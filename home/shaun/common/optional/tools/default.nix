@@ -16,7 +16,6 @@
       mission-center
 
       # 3D Printing
-      orca-slicer
       freecad
       openscad-unstable
 
@@ -30,10 +29,13 @@
 
       # media production
       audacity
-      blender
       gimp
       inkscape
 
+      ;
+    inherit (pkgs.stable)
+      blender
+      orca-slicer
       ;
   };
 }
