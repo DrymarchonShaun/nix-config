@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = [
-    pkgs.unstable.wineWowPackages.stagingFull
+    pkgs.wineWowPackages.stagingFull
     pkgs.winetricks
   ];
 }
