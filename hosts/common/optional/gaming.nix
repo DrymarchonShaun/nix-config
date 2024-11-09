@@ -68,17 +68,15 @@ in
           ];
       };
       extraCompatPackages = [
-        (pkgs.unstable.proton-ge-bin.overrideAttrs (attrs: {
-          postInstall =
-            (attrs.postInstall or "")
-            + ''
-              sed -i \
-              '/HKCU,Software\\Wine\\Fonts\\Replacements,"Palatino Linotype",,"Times New Roman"/d;
-              /HKCU,Software\\Wine\\Fonts\\Replacements,"Verdana",,"Times New Roman"/d;
-              /HKCU,Software\\Wine\\Fonts\\Replacements,"Segoe UI",,"Times New Roman"/d' \
-              $out/files/share/wine/wine.inf
-            '';
-        }))
+        (pkgs.proton-ge-bin.overrideAttrs (
+          finalAttrs: attrs: {
+            version = "GE-Proton9-15";
+            src = pkgs.fetchzip {
+              url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${finalAttrs.version}/${finalAttrs.version}.tar.gz";
+              hash = "sha256-WeqntQxez6XPRZxpPNUAQ8/7sw6TzOKU1yrtPHmQNh0=";
+            };
+          }
+        ))
       ];
     };
     #gamescope launch args set dynamically in home/<user>/common/optional/gaming
