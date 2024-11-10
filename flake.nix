@@ -30,7 +30,7 @@
 
     # Secrets management. See ./docs/secretsmgmt.md
     sops-nix = {
-      url = "github:mic92/sops-nix";
+      url = "github:mic92/sops-nix?ref=fe63071416471abdab06caa234122932a7c4b980";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
