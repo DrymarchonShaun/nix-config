@@ -28,6 +28,12 @@ in
     flake = "${homeDirectory}/.src/nix-config";
   };
 
+  configOptions.silencedWarnings = [
+    # see https://github.com/NixOS/nixpkgs/pull/287506 for more information
+    "The user '${configVars.username}' has multiple of the options\n`hashedPassword`, `password`, `hashedPasswordFile`, `initialPassword`\n& `initialHashedPassword` set to a non-null value.\nThe options silently discard others by the order of precedence\ngiven above which can lead to surprising results. To resolve this warning,\nset at most one of the options above to a non-`null` value.\n\nThe values of these options are:\n* users.users.\"${configVars.username}\".hashedPassword: null\n* users.users.\"${configVars.username}\".hashedPasswordFile: \"/run/secrets-for-users/${configVars.username}/password\"\n* users.users.\"${configVars.username}\".password: \"nixos\"\n"
+    "The user 'root' has multiple of the options\n`hashedPassword`, `password`, `hashedPasswordFile`, `initialPassword`\n& `initialHashedPassword` set to a non-null value.\nThe options silently discard others by the order of precedence\ngiven above which can lead to surprising results. To resolve this warning,\nset at most one of the options above to a non-`null` value.\n\nThe values of these options are:\n* users.users.\"root\".hashedPassword: null\n* users.users.\"root\".hashedPasswordFile: \"/run/secrets-for-users/${configVars.username}/password\"\n* users.users.\"root\".password: \"nixos\"\n"
+  ];
+
   # less delay on failed login
   security.pam.services.login = {
     nodelay = true;
