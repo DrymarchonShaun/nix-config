@@ -17,7 +17,9 @@
 
       # 3D Printing
       freecad
+      orca-slicer
       openscad-unstable
+      blender
 
       # Productivity
       libreoffice
@@ -32,10 +34,6 @@
       gimp
       inkscape
 
-      ;
-    inherit (pkgs.stable)
-      blender
-      orca-slicer
       ;
   };
 }
