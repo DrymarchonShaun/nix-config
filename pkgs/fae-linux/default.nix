@@ -7,19 +7,19 @@
 
 clangStdenv.mkDerivation (finalAttrs: {
   pname = "FAE_Linux";
-  version = "v1.1";
+  version = "v1.3";
 
   src = fetchFromGitHub {
     owner = "UnlegitSenpaii";
     repo = finalAttrs.pname;
     rev = finalAttrs.version;
-    hash = "sha256-H8OSkh6MvD6BA01YoyMH3ZMgxbDpXLyM2dFZz232gtc=";
+    hash = "sha256-lm/s9rc4/2TIT2mzIPwdFoPB9GZm4qluK2yVoL7KwnE=";
   };
 
   nativeBuildInputs = [ cmake ];
 
   installPhase = ''
-    install -Dm755 /build/source/out/bin/FAE_Linux $out/bin/FAE_Linux
+    install -Dm755 out/bin/FAE_Linux $out/bin/FAE_Linux
   '';
 
   meta = {
