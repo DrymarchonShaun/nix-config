@@ -44,6 +44,7 @@ in
   ];
   home.packages = [
     steam-session
+    pkgs.ckan
     pkgs.dev.arma3-unix-launcher
     (pkgs.dev.arma3-unix-launcher.override { buildDayZLauncher = true; })
     pkgs.gamma-launcher
