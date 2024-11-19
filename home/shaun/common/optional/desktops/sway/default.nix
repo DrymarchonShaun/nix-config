@@ -185,6 +185,13 @@
           }
           {
             criteria = {
+              class = "steam";
+              title = "Recordings & Screenshots";
+            };
+            command = "floating enable";
+          }
+          {
+            criteria = {
               title = "^Syncthing Tray( \(.*\))?$";
             };
             command = "floating enable";
