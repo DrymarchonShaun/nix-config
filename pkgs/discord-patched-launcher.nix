@@ -6,7 +6,6 @@
   coreutils,
   libnotify,
   discord,
-  master,
   killall,
   makeDesktopItem,
   writeShellApplication,
@@ -20,20 +19,12 @@ stdenv.mkDerivation rec {
 
           # uncomment when vencord is broken
           # vencord = discord;
-          vencord = discord.override {
-            withVencord = true;
-            vencord = master.vencord;
-          };
+          vencord = discord.override { withVencord = true; };
 
           krisp-patcher =
             writers.writePython3Bin "krisp-patcher"
               {
-                libraries = builtins.attrValues {
-                  inherit (python3Packages)
-                    capstone
-                    pyelftools
-                    ;
-                };
+                libraries = builtins.attrValues { inherit (python3Packages) capstone pyelftools; };
                 flakeIgnore = [
                   "E501" # line too long (82 > 79 characters)
                   "F403" # ‘from module import *’ used; unable to detect undefined names
@@ -41,7 +32,6 @@ stdenv.mkDerivation rec {
                 ];
               }
               (fetchurl {
-                # url = "https://raw.githubusercontent.com/sersorrel/sys/de1ce2ba941318a05d4d029f717ad8be7b4b09ee/hm/discord/krisp-patcher.py";
                 url = "https://raw.githubusercontent.com/sersorrel/sys/main/hm/discord/krisp-patcher.py";
                 sha256 = "sha256-h8Jjd9ZQBjtO3xbnYuxUsDctGEMFUB5hzR/QOQ71j/E=";
               });

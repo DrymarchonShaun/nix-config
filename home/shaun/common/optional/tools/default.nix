@@ -13,7 +13,8 @@
     inherit (pkgs)
 
       # System Utilities
-      mission-center
+      #FIXME: currently fails to build
+      # mission-center
 
       # 3D Printing
       freecad
