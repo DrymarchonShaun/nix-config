@@ -5,9 +5,7 @@
   ...
 }:
 {
-  imports = [
-    ./starship
-  ];
+  imports = [ ./starship ];
   programs.zsh = {
     enable = true;
 
@@ -23,14 +21,6 @@
 
     plugins = [
       {
-        name = "zsh-term-title";
-        src = "${pkgs.zsh-term-title}/share/zsh/zsh-term-title/";
-      }
-      {
-        name = "cd-gitroot";
-        src = "${pkgs.cd-gitroot}/share/zsh/cd-gitroot";
-      }
-      {
         name = "zhooks";
         src = "${pkgs.zsh-zhooks}/share/zsh/zhooks";
       }
@@ -38,11 +28,6 @@
         name = "fzf-tab";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
-      # {
-      #   name = "zsh-auto-notify";
-      #   src = "${pkgs.zsh-auto-notify}/share/zsh/zsh-auto-notify/";
-      #   file = "auto-notify.plugin.zsh";
-      # }
     ];
 
     initExtraFirst = ''
