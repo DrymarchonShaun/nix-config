@@ -3,9 +3,6 @@
 #
 
 { inputs, ... }:
-let
-  nixpkgs-gamescope = import inputs.nixpkgs-gamescope { system = "x86_64-linux"; };
-in
 {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
@@ -56,14 +53,6 @@ in
   };
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-    };
-  };
-  # When applied, the dev/master nixpkgs set (declared in the flake inputs) will
-  # be accessible through 'pkgs.master'
-  master-packages = final: _prev: {
-    master = import inputs.nixpkgs-master {
       system = final.system;
       config.allowUnfree = true;
     };

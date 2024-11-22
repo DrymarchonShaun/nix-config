@@ -4,20 +4,18 @@
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     # These are for pinning to stable vs unstable regardless of what the above is set to
     # See also 'stable-packages' and 'unstable-packages' overlays at 'overlays/default.nix"
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master"; # also see 'master-packages' overlay at 'overlays/default.nix"
     nixpkgs-dev.url = "github:DrymarchonShaun/nixpkgs/dev"; # also see 'dev-packages' overlay at 'overlays/default.nix"
 
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
-      #url = "github:nix-community/home-manager/release-24.05";
-      #inputs.nixpkgs.follows = "nixpkgs-stable";
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/home-manager/release-24.11";
+      # url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #################### Utilities ####################
