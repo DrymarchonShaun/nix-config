@@ -49,6 +49,7 @@ in
       "hosts/common/optional/services/openssh.nix"
       "hosts/common/optional/virtualization/libvirt" # vm tools
       "hosts/common/optional/services/geoclue.nix"
+      "hosts/common/optional/services/greetd.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
       "hosts/common/optional/services/ydotool.nix"
@@ -72,6 +73,9 @@ in
 
       #################### Users to Create ####################
     ]);
+
+  autoLogin.enable = true;
+
   boot.kernelPackages = coraisKernelPackages;
   services.gnome.gnome-keyring.enable = true;
   hardware.amdgpu.opencl.enable = true;

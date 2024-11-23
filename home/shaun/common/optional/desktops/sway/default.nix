@@ -276,11 +276,15 @@
         # style = "Regular";
       };
     };
-    extraConfig = ''
-      workspace number 1
-      blur enable
-      corner_radius 7
-    '';
+    extraConfig =
+      ''
+        workspace number 1
+        blur enable
+        corner_radius 7
+      ''
+      + lib.optionalString osConfig.autoLogin.enable ''
+        exec swaylock -f
+      '';
   };
 
   # # TODO: move below into individual .nix files with their own configs

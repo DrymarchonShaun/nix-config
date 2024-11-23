@@ -57,6 +57,7 @@ in
       "hosts/common/optional/services/avahi.nix"
       "hosts/common/optional/services/openssh.nix"
       "hosts/common/optional/services/geoclue.nix"
+      "hosts/common/optional/services/greetd.nix"
       "hosts/common/optional/services/bluetooth.nix"
       "hosts/common/optional/services/syncthing.nix"
       "hosts/common/optional/services/ydotool.nix"
