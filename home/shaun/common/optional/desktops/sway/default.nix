@@ -286,26 +286,4 @@
         exec swaylock -f
       '';
   };
-
-  # # TODO: move below into individual .nix files with their own configs
-  # home.packages = builtins.attrValues {
-  #   inherit (pkgs)
-  #   nm-applet --indicator &  # notification manager applet.
-  #   bar
-  #   waybar  # closest thing to polybar available
-  #   where is polybar? not supported yet: https://github.com/polybar/polybar/issues/414
-  #   eww # alternative - complex at first but can do cool shit apparently
-  #
-  #   # Wallpaper daemon
-  #   hyprpaper
-  #   swaybg
-  #   wpaperd
-  #   mpvpaper
-  #   swww # vimjoyer recoomended
-  #   nitrogen
-  #
-  #   # app launcher
-  #   rofi-wayland;
-  #   wofi # gtk rofi
-  # };
 }
