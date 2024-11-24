@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   lib,
   ...
 }:
@@ -86,7 +87,7 @@
       output =
         import ./monitors.nix {
           inherit lib;
-          inherit (config) monitors;
+          inherit (osConfig) monitors;
         }
         // {
           "*" = {

@@ -22,27 +22,6 @@
 
   ];
 
-  monitors = [
-    {
-      name = "DP-1";
-      width = 2560;
-      height = 1440;
-      refreshRate = 165;
-      noBar = false;
-      scale = 1.0;
-      x = 0;
-      primary = true;
-    }
-    {
-      name = "DP-2";
-      width = 2560;
-      height = 1440;
-      refreshRate = 165;
-      scale = 1.0;
-      x = 2560;
-    }
-  ];
-
   home.sessionVariables = {
     GDK_DPI_SCALE = 1.15;
   };

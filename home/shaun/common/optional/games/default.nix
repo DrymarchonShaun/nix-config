@@ -2,13 +2,13 @@
 # host's monitors configuration
 {
   pkgs,
-  config,
+  osConfig,
   lib,
   ...
 }:
 
 let
-  monitor = lib.head (lib.filter (m: m.primary) config.monitors);
+  monitor = lib.head (lib.filter (m: m.primary) osConfig.monitors);
 
   steam-session =
     let

@@ -4,4 +4,5 @@
 {
   metasploit = import ./metasploit.nix;
   warnings = import ./warnings.nix;
+  monitors = import ./monitors.nix;
 }
