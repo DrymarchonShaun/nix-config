@@ -159,10 +159,20 @@
         };
         # Desktop
         corais = lib.nixosSystem {
-          inherit specialArgs;
+          specialArgs = specialArgs // {
+            configVars = specialArgs.configVars // {
+              isHeadless = true;
+            };
+          };
           modules = [
             home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
+            {
+              home-manager.extraSpecialArgs = specialArgs // {
+                configVars = specialArgs.configVars // {
+                  isHeadless = true;
+                };
+              };
+            }
             ./hosts/corais
           ];
         };

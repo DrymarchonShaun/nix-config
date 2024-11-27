@@ -17,6 +17,7 @@
   # System-specific settings (FIXME: Likely make options)
   isMinimal = false; # Used to indicate nixos-installer build
   isWork = false; # Used to indicate a host that uses work resources
+  isHeadless = false; # Used to indicate a headless host
   scaling = "1"; # Used to indicate what scaling to use. Floating point number
 }
 

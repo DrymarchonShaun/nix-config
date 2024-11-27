@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  configVars,
   osConfig,
   lib,
   ...
@@ -24,19 +25,24 @@
 
   # NOTE: xdg portal package is currently set in /hosts/common/optional/hyprland.nix
 
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
-    MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
-    MOZ_WEBRENDER = "1"; # for firefox to run on wayland
-    XDG_SESSION_TYPE = "wayland";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    WLR_RENDERER_ALLOW_SOFTWARE = "1";
+  home.sessionVariables =
+    {
+      NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
+      MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
+      MOZ_WEBRENDER = "1"; # for firefox to run on wayland
+      XDG_SESSION_TYPE = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      WLR_RENDERER_ALLOW_SOFTWARE = "1";
 
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
-    _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
+      _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
 
-  };
+    }
+    // lib.mkIf configVars.isHeadless {
+      WLR_BACKENDS = "headless";
+      WLR_LIBINPUT_NO_DEVICES = "1";
+    };
 
   services.swayidle.timeouts = [
     {
@@ -85,16 +91,15 @@
       # defaultWorkspace = "workspace number 1";
 
       output =
-        import ./monitors.nix {
-          inherit lib;
-          inherit (osConfig) monitors;
-        }
-        // {
+        {
           "*" = {
             bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
           };
-        };
-
+        }
+        // (import ./monitors.nix {
+          inherit lib;
+          inherit (osConfig) monitors;
+        });
       startup = [
         { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
         { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
@@ -104,6 +109,7 @@
           always = true;
         }
         { command = "steam"; }
+        (lib.optionalAttrs configVars.isHeadless { command = "${lib.getExe pkgs.wayvnc}"; })
       ];
 
       gaps.inner = 5;

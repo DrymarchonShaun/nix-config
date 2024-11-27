@@ -8,6 +8,8 @@
 {
   inputs,
   pkgs,
+  lib,
+  configVars,
   config,
   configLib,
   ...
@@ -74,26 +76,40 @@ in
       #################### Users to Create ####################
     ]);
 
-  monitors = [
-    {
-      name = "DP-1";
-      width = 2560;
-      height = 1440;
-      refreshRate = 165;
-      noBar = false;
-      scale = 1.0;
-      x = 0;
-      primary = true;
-    }
-    {
-      name = "DP-2";
-      width = 2560;
-      height = 1440;
-      refreshRate = 165;
-      scale = 1.0;
-      x = 2560;
-    }
-  ];
+  monitors =
+    if configVars.isHeadless then
+      [
+        {
+          name = "HEADLESS-1";
+          width = 1920;
+          height = 1080;
+          refreshRate = 60;
+          scale = 1.0;
+          x = 0;
+          primary = true;
+        }
+      ]
+    else
+      [
+        {
+          name = "DP-1";
+          width = 2560;
+          height = 1440;
+          refreshRate = 165;
+          noBar = false;
+          scale = 1.0;
+          x = 0;
+          primary = true;
+        }
+        {
+          name = "DP-2";
+          width = 2560;
+          height = 1440;
+          refreshRate = 165;
+          scale = 1.0;
+          x = 2560;
+        }
+      ];
 
   autoLogin.enable = true;
 
