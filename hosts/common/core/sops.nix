@@ -59,7 +59,7 @@ in
       // (builtins.listToAttrs (
         map
           (connection: {
-            name = "networks/${connection.wifi.ssid}_psk";
+            name = "networks/${connection.connection.id}_psk";
             value = { };
           })
           (
@@ -82,10 +82,10 @@ in
         content = lib.concatMapStringsSep "\n" (
           connection:
           let
-            ssid = connection.wifi.ssid;
+            id = connection.connection.id;
           in
           if connection ? "wifi-security" && connection."wifi-security" ? psk then
-            "${ssid}_psk=${config.sops.placeholder."networks/${ssid}_psk"}"
+            "${id}_psk=${config.sops.placeholder."networks/${id}_psk"}"
           else
             ""
         ) connections;

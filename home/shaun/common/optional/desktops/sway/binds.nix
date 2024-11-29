@@ -97,6 +97,9 @@ in
         # Layouts
         "${modifier}+s" = "layout stacking";
         "${modifier}+t" = "layout tabbed";
+
+        # Modes
+        "${modifier}+End" = "mode passthrough";
       }
       # Change workspace
       // builtins.listToAttrs (
@@ -152,5 +155,10 @@ in
           value = "move workspace output ${direction}";
         }) directions
       );
+    modes = {
+      passthrough = {
+        "${modifier}+Home" = "mode default";
+      };
+    };
   };
 }

@@ -100,17 +100,20 @@
           inherit lib;
           inherit (osConfig) monitors;
         });
-      startup = [
-        { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
-        { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
-        { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-        {
-          command = "${pkgs.import-gsettings}/bin/import-gsettings";
-          always = true;
-        }
-        { command = "steam"; }
-        (lib.optionalAttrs configVars.isHeadless { command = "${lib.getExe pkgs.wayvnc}"; })
-      ];
+      startup =
+        [
+          { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
+          { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
+          { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+          {
+            command = "${pkgs.import-gsettings}/bin/import-gsettings";
+            always = true;
+          }
+          { command = "steam"; }
+        ]
+        ++ lib.optionals configVars.isHeadless [
+          { command = "${lib.getExe pkgs.wayvnc}"; }
+        ];
 
       gaps.inner = 5;
       gaps.outer = 15;
