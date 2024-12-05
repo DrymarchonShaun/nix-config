@@ -1,6 +1,11 @@
-{ lib, pkgs, ... }:
 {
-  users.users.shaun.extraGroups = [
+  lib,
+  configVars,
+  pkgs,
+  ...
+}:
+{
+  users.users.${configVars.username}.extraGroups = [
     "wireshark"
   ];
   programs.wireshark = {

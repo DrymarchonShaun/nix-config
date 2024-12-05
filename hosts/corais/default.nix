@@ -56,6 +56,7 @@ in
       "hosts/common/optional/services/syncthing.nix"
       "hosts/common/optional/services/ydotool.nix"
       "hosts/common/optional/audio.nix" # pipewire and cli controls
+      "hosts/common/optional/android.nix" # sudoless adb / fastboot
       "hosts/common/optional/wireshark.nix"
       "hosts/common/optional/unbound.nix"
       "hosts/common/optional/recording.nix"
