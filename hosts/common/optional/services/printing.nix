@@ -4,7 +4,6 @@
 {
   services.printing = {
     enable = true;
-    drivers = [ pkgs.samsung-unified-linux-driver ];
     #logging = "debug";
   };
 

@@ -17,7 +17,8 @@ in
       shell = pkgs.zsh; # default shell
 
       # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      # openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      openssh.authorizedKeys.keyFiles = [ ./keys/id_odin.pub ];
     }
     #FIXME: remove this define in the iso and installer using mkForce
     // lib.optionalAttrs (hostSpec.isMinimal || hostSpec.hostName == "iso") {
