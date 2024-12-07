@@ -51,7 +51,17 @@
         in
         if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
     };
-    # FIXME(hostSpec): This should probably just switch to an impermenance option?
+    longitude = lib.mkOption {
+      default = null;
+      type = lib.types.str;
+      description = "longitude";
+    };
+    latitude = lib.mkOption {
+      default = null;
+      type = lib.types.str;
+      description = "latitude";
+    };
+    # FIXME: This should probably just switch to an impermenance option?
     persistFolder = lib.mkOption {
       type = lib.types.str;
       description = "The folder to persist data if impermenance is enabled";

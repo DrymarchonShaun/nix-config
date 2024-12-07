@@ -4,7 +4,7 @@ SOPS_FILE := "../nix-secrets/.sops.yaml"
 default:
   @just --list
 
-rebuild-pre: update-nix-secrets
+rebuild-pre: update-nix-secrets && update-nvix
   @git add --intent-to-add .
 
 rebuild-post:
@@ -49,6 +49,10 @@ check-sops:
 update-nix-secrets:
   @(cd ~/src/nix/nix-secrets && git fetch && git rebase > /dev/null) || true
   nix flake update nix-secrets --timeout 5
+
+update-nvix:
+  (cd ../nvix && git fetch && git rebase) || true
+  nix flake update nvix
 
 iso:
   # If we dont remove this folder, libvirtd VM doesnt run with the new iso...

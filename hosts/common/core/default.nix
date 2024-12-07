@@ -24,6 +24,7 @@ in
       "hosts/common/core/sops.nix" # Core because it's used for backups, mail
       "hosts/common/core/ssh.nix"
       #"hosts/common/core/services" #not used yet
+      "hosts/common/core/services/remote-builders.nix" # not used yet
       "hosts/common/users/primary"
       "hosts/common/users/primary/${platform}.nix"
     ])
@@ -33,13 +34,15 @@ in
   # ========== Core Host Specifications ==========
   #
   hostSpec = {
-    username = "ta";
-    handle = "emergentmind";
+    username = "shaun";
+    handle = "DrymarchonShaun";
     inherit (inputs.nix-secrets)
       domain
       email
       userFullName
       networking
+      latitude
+      longitude
       ;
   };
 
@@ -70,6 +73,7 @@ in
   # ========== Nix Nix Nix ==========
   #
   nix = {
+    # package = lib.mkDefault pkgs.nixVersions.latest;
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
@@ -77,6 +81,10 @@ in
     # This will add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+
+    extraOptions = ''
+      !include ${config.sops.templates."nix-github-token.conf".path}
+    '';
 
     settings = {
       # See https://jackson.dev/post/nix-reasonable-defaults/
@@ -106,6 +114,5 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    promptInit = "source ''${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 }

@@ -1,5 +1,4 @@
 # hosts level sops. see home/[user]/common/optional/sops.nix for home/user level
-
 {
   pkgs,
   lib,
@@ -12,6 +11,7 @@ let
   #  sopsFolder = builtins.toString inputs.nix-secrets;
   #  secretsFile = "${sopsFolder}/secrets.yaml";
   sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
+  connections = config.hostSpec.networking.connections;
 in
 {
   #the import for inputs.sops-nix.nixosModules.sops is handled in hosts/common/core/default.nix so that it can be dynamically input according to the platform
@@ -52,7 +52,9 @@ in
         sopsFile = "${sopsFolder}/shared.yaml";
         neededForUsers = true;
       };
-      "passwords/msmtp" = { };
+      github-token = {
+        mode = "0444";
+      };
     }
     # only reference borg password if host is using backup
     (lib.mkIf config.services.backup.enable {
@@ -63,7 +65,42 @@ in
         path = "/etc/borg/passphrase";
       };
     })
+
+      (builtins.listToAttrs (
+      map
+        (connection: {
+          name = "networks/${connection.connection.id}_psk";
+          value = { };
+        })
+        (
+          builtins.filter (
+            connection: connection ? "wifi-security" && connection."wifi-security" ? psk
+          ) connections
+        )
+    ))
   ];
+  # Templates
+  sops.templates = {
+    "nix-github-token.conf" = {
+      mode = "0444";
+      content = ''
+        access-tokens = github.com=${config.sops.placeholder.github-token}
+      '';
+    };
+    "networks.env" = {
+      mode = "0440";
+      content = lib.concatMapStringsSep "\n" (
+        connection:
+        let
+          id = connection.connection.id;
+        in
+        if connection ? "wifi-security" && connection."wifi-security" ? psk then
+          "${id}_psk=${config.sops.placeholder."networks/${id}_psk"}"
+        else
+          ""
+      ) connections;
+    };
+  };
   # The containing folders are created as root and if this is the first ~/.config/ entry,
   # the ownership is busted and home-manager can't target because it can't write into .config...
   # FIXME(sops): We might not need this depending on how https://github.com/Mic92/sops-nix/issues/381 is fixed
