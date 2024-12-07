@@ -48,6 +48,14 @@
       settings = {
         #see gamemode man page for settings info
         general = {
+          reaper_freq = 5;
+          desiredgov = "performance";
+
+          igpu_desiredgov = "performance";
+          igpu_power_threshold = 0.3;
+
+          renice = 0;
+          ioprio = 0;
           softrealtime = "on";
           inhibit_screensaver = 1;
         };

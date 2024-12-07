@@ -1,6 +1,17 @@
 # Core functionality for every nixos host
 { config, lib, ... }:
 {
+  imports = [
+    # disable sleep on servers
+    (lib.mkIf (config.hostSpec.isServer) {
+      systemd.sleep.extraConfig = ''
+        AllowSuspend=no
+        AllowHibernation=no
+        AllowHybridSleep=no
+        AllowSuspendThenHibernate=no
+      '';
+    })
+  ];
   # Database for aiding terminal-based programs
   environment.enableAllTerminfo = true;
   # Enable firmware with a license allowing redistribution
@@ -15,6 +26,24 @@
     Defaults env_keep+=SSH_AUTH_SOCK
   '';
 
+  # less delay on failed login
+  # security.pam.services.login = {
+  #   nodelay = true;
+  #   failDelay = {
+  #     enable = true;
+  #     delay = 500000;
+  #   };
+  # };
+  # security.pam.services.sudo = {
+  #   nodelay = true;
+  #   failDelay = {
+  #     enable = true;
+  #     delay = 500000;
+  #   };
+  # };
+
+  services.gnome.gnome-keyring.enable = true;
+
   #
   # ========== Nix Helper ==========
   #
@@ -23,12 +52,12 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    flake = "/home/user/${config.hostSpec.home}/nix-config";
+    flake = "/home/user/${config.hostSpec.home}/.src/nix-config";
   };
 
   #
   # ========== Localization ==========
   #
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
-  time.timeZone = lib.mkDefault "America/Edmonton";
+  time.timeZone = lib.mkDefault "America/Los_Angeles";
 }

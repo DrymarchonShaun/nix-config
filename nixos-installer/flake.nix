@@ -62,6 +62,20 @@
             ../hosts/nixos/ghost/hardware-configuration.nix
           ];
         };
+
+        corais = newConfig "corais" "/dev/nvme0n1" true "24";
+
+        natrix = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = minimalSpecialArgs;
+          modules = [
+            inputs.disko.nixosModules.disko
+            ../hosts/common/disks/natrix.nix
+            ./minimal-configuration.nix
+            { networking.hostName = "natrix"; }
+            ../hosts/nixos/natrix/hardware-configuration.nix
+          ];
+        };
       };
     };
 }

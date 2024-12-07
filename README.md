@@ -1,4 +1,13 @@
 <div align="center">
+
+### _Forked and Modified by DrymarchonShaun_
+
+#### _For use in [DrymarchonShaun/nix-config](https://github.com/DrymarchonShaun/nix-config)_
+
+</div>
+
+
+<div align="center">
 <h1>
 <img width="100" src="docs/nixos-ascendancy.png" /> <br>
 </h1>
