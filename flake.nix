@@ -1,5 +1,5 @@
 {
-  description = "EmergentMind's Nix-Config";
+  description = "DrymarchonShaun's Nix-Config";
   outputs =
     { self, nixpkgs, ... }@inputs:
     let
@@ -114,9 +114,10 @@
     # This is particularly useful when an upcoming stable release is in beta because you can effectively
     # keep 'nixpkgs-stable' set to stable for critical packages while setting 'nixpkgs' to the beta branch to
     # get a jump start on deprecation changes.
-    # See also 'stable-packages' and 'unstable-packages' overlays at 'overlays/default.nix"
+    # See also 'stable-packages' and 'unstable-packages' and 'dev-packages' overlays at 'overlays/default.nix"
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-dev.url = "github:DrymarchonShaun/nixpkgs/dev";
 
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
@@ -144,11 +145,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # vim4LMFQR!
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-      #url = "github:nix-community/nixvim";
-      #inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nvix = {
+      url = "github:DrymarchonShaun/nvix";
     };
     # Pre-commit
     pre-commit-hooks = {
@@ -158,14 +156,18 @@
     # Theming
     stylix.url = "github:danth/stylix/release-24.11";
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
-
+    catppuccin.url = "github:catppuccin/nix";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     #
     # ========= Personal Repositories =========
     #
     # Private secrets repo.  See ./docs/secretsmgmt.md
     # Authenticate via ssh and use shallow clone
     nix-secrets = {
-      url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
+      url = "git+ssh://git@github.com/DrymarchonShaun/nix-secrets?ref=main&shallow=1";
       inputs = { };
     };
   };

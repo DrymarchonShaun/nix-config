@@ -51,6 +51,16 @@
         in
         if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
     };
+    longitude = lib.mkOption {
+      default = null;
+      type = lib.types.str;
+      description = "longitude";
+    };
+    latitude = lib.mkOption {
+      default = null;
+      type = lib.types.str;
+      description = "latitude";
+    };
     # FIXME: This should probably just switch to an impermenance option?
     persistFolder = lib.mkOption {
       type = lib.types.str;

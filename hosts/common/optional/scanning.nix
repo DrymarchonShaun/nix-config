@@ -4,7 +4,6 @@
   hardware.sane = {
     enable = true;
     extraBackends = [
-      pkgs.samsung-unified-linux-driver
       pkgs.hplipWithPlugin
       pkgs.sane-airscan
     ];

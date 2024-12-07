@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   hardware.xone.enable = true; # xbox controller
 
@@ -35,11 +35,12 @@
           });
       };
       extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
+      remotePlay.openFirewall = true;
     };
     #gamescope launch args set dynamically in home/<user>/common/optional/gaming
     gamescope = {
       enable = true;
-      capSysNice = true;
+      # capSysNice = true;
     };
     # to run steam games in game mode, add the following to the game's properties from within steam
     # gamemoderun %command%
@@ -48,6 +49,14 @@
       settings = {
         #see gamemode man page for settings info
         general = {
+          reaper_freq = 5;
+          desiredgov = "performance";
+
+          igpu_desiredgov = "performance";
+          igpu_power_threshold = 0.3;
+
+          renice = 0;
+          ioprio = 0;
           softrealtime = "on";
           inhibit_screensaver = 1;
         };
@@ -63,4 +72,8 @@
       };
     };
   };
+  users.users.${config.hostSpec.username}.extraGroups = [
+    "gamemode"
+  ];
+
 }

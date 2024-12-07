@@ -46,6 +46,15 @@ let
     };
   };
 
+  dev-packages = final: _prev: {
+    dev = import inputs.nixpkgs-dev {
+      inherit (final) system;
+      config.allowUnfree = true;
+      #      overlays = [
+      #     ];
+    };
+  };
+
 in
 {
   default =
@@ -55,5 +64,6 @@ in
     // (modifications final prev)
     // (linuxModifications final prev)
     // (stable-packages final prev)
-    // (unstable-packages final prev);
+    // (unstable-packages final prev)
+    // (dev-packages final prev);
 }

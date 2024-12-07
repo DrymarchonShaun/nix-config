@@ -33,12 +33,12 @@ in
       restart = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
-          user = "ta";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd sway";
+          user = "${config.hostSpec.username}";
         };
 
         initial_session = lib.mkIf cfg.enable {
-          command = "${pkgs.hyprland}/bin/Hyprland";
+          command = "${config.programs.sway.package}/bin/sway";
           user = "${cfg.username}";
         };
       };
