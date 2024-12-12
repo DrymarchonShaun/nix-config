@@ -13,7 +13,13 @@
   ...
 }:
 let
-  natrixKernel = pkgs.linux_latest.override { };
+  natrixKernel = pkgs.linux_latest.override {
+    # natrixKernel = pkgs.linux_6_11.override {
+    extraConfig = ''
+      DRM_I915_PXP y
+      INTEL_MEI_PXP m
+    '';
+  };
   natrixKernelPackages = (pkgs.linuxPackagesFor natrixKernel).extend (
     final: prev: {
       system76 = (pkgs.linuxPackagesFor natrixKernel).system76.overrideAttrs (attrs: {
@@ -30,6 +36,7 @@ let
           })
         ];
       });
+      i915 = final.callPackage ../../../pkgs/common/i915-sriov-dkms.nix { };
       #    zenergy = final.callPackage ../../pkgs/zenergy { };
     }
   );
@@ -133,7 +140,19 @@ in
 
   boot = {
     kernelPackages = natrixKernelPackages;
-    kernelParams = [ "acpi_backlight=native" ];
+    extraModulePackages = [ natrixKernelPackages.i915 ];
+    blacklistedKernelModules = [
+      "xe"
+    ];
+    kernelModules = [
+      "mei_pxp"
+    ];
+    kernelParams = [
+      "intel_iommu=on"
+      "iommu=pt"
+      "i915.enable_guc=3"
+      "i915.max_vfs=3"
+    ];
   };
 
   boot.loader = {
