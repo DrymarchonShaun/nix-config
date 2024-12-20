@@ -35,6 +35,7 @@
           });
       };
       extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
+      remotePlay.openFirewall = true;
     };
     #gamescope launch args set dynamically in home/<user>/common/optional/gaming
     gamescope = {
