@@ -26,6 +26,16 @@ let
     #        (prev.lib.cmakeBool "USE_WAYLAND_CLIPBOARD" true)
     #      ];
     #    };
+    orca-slicer-overridden = prev.stdenv.mkDerivation {
+      name = "orca-slicer-overridden";
+      version = prev.orca-slicer.version;
+      src = prev.orca-slicer;
+      buildCommand = ''
+        cp -r $src $out
+        chmod -R u+w $out
+        sed -i 's/gcode\;//' $out/share/applications/OrcaSlicer.desktop
+      '';
+    };
   };
 
   stable-packages = final: _prev: {
