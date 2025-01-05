@@ -7,7 +7,7 @@
 let
   defaultBuildConfig = {
     sshUser = "nixbuilder";
-    sshKey = config.sops.secrets."ssh_keys/dvergar".path;
+    sshKey = config.sops.secrets."keys/ssh/dvergar".path;
     systems = [
       "x86_64-linux"
       "aarch64-linux"
@@ -65,7 +65,7 @@ in
     ];
   };
   users.groups.nixbuilder = { };
-  sops.secrets."ssh_keys/dvergar" = { };
+  sops.secrets."keys/ssh/dvergar" = { };
   nix.buildMachines = build_hosts;
   programs.ssh.extraConfig = sshConfigString;
 

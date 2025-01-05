@@ -63,7 +63,8 @@ in
       "hosts/common/optional/services/bluetooth.nix" # bluetooth
       "hosts/common/optional/services/geoclue.nix" # location services
       "hosts/common/optional/services/greetd.nix" # display manager
-      "hosts/common/optional/services/network-manager.nix" # display manager
+      "hosts/common/optional/services/syncthing.nix" # syncthing
+      "hosts/common/optional/services/network-manager.nix" # network password management
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
       "hosts/common/optional/services/polkit.nix" # allow remote SSH access
       "hosts/common/optional/services/printing.nix" # CUPS

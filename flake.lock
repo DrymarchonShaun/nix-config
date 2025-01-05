@@ -1038,11 +1038,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1735380403,
-        "narHash": "sha256-UHRiWOkTPMAH9uXtVrurVDv9cbPCxLnR8yY12tQfN48=",
+        "lastModified": 1736056338,
+        "narHash": "sha256-Szz6/gTiyp/AJ8x1OmTJJp+ibjOokFsogXYR5cm9Vr8=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "cfa60ca88747af50395c3d5e17a569820ebd9096",
+        "rev": "c4d4c2f501041d5c25ba2302eba6069b4e197484",
         "type": "github"
       },
       "original": {

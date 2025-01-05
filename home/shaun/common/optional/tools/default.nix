@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    ./syncthing.nix
     ./thunar.nix
     ./lazygit.nix
   ];
