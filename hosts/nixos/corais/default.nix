@@ -33,6 +33,17 @@ in
     # (use beta.wootility.io instead)
     { services.udev.packages = [ pkgs.wooting-udev-rules ]; }
 
+    {
+      programs.corectrl = {
+        enable = true;
+        gpuOverclock.enable = true;
+      };
+      hardware.amdgpu.amdvlk = {
+        enable = true;
+        support32Bit.enable = true;
+      };
+    }
+
     #
     # ========== Disk Layout ==========
     #

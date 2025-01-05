@@ -1,6 +1,13 @@
 { pkgs, config, ... }:
 {
-  hardware.xone.enable = true; # xbox controller
+
+  environment.systemPackages = with pkgs; [
+    umr
+  ];
+  hardware = {
+    xone.enable = true; # xbox controller
+    steam-hardware.enable = true;
+  };
 
   programs = {
     steam = {
