@@ -22,10 +22,10 @@ in
     validateSopsFiles = false;
 
     secrets = {
-      "ssh_keys/mimir" = {
+      "keys/ssh/mimir" = {
         path = "${config.home.homeDirectory}/.ssh/id_mimir";
       };
-      "ssh_keys/odin" = {
+      "keys/ssh/odin" = {
         path = "${config.home.homeDirectory}/.ssh/id_odin";
       };
     };

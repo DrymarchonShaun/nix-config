@@ -744,10 +744,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1736046618,
-        "narHash": "sha256-Oq+UNQqToPG1yW/GMwOTL8MyZAhJELiAIc4dprXgVDs=",
+        "lastModified": 1736060373,
+        "narHash": "sha256-ZVYLjl/nOZSaKyA3sJFByPSANWj/tO/md3DJSytgewE=",
         "ref": "main",
-        "rev": "04a3f81a7dc502f2c02b0c3c8b48509593ed9971",
+        "rev": "25b74e6e040c3ed9866b04ccb513b866480e7de7",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/DrymarchonShaun/nix-secrets"
@@ -979,16 +979,15 @@
     "none-ls": {
       "flake": false,
       "locked": {
-        "lastModified": 1735319362,
-        "narHash": "sha256-xeQkhK7QHZU9CMfGdQS10Z9aHzsKhogS9sgtq8nut8o=",
-        "owner": "jfly",
+        "lastModified": 1736008944,
+        "narHash": "sha256-FIAl4n8wfWsOOsjfUJRf+Q8TVUMX1V043BEX0P2PH3k=",
+        "owner": "nvimtools",
         "repo": "none-ls.nvim",
-        "rev": "84cef8a4fc176e098b035dd4e890c7d6f7eef3fc",
+        "rev": "20f5650988cd849e18c7f3d2dce4b0e6a260e126",
         "type": "github"
       },
       "original": {
-        "owner": "jfly",
-        "ref": "add-nix-fmt",
+        "owner": "nvimtools",
         "repo": "none-ls.nvim",
         "type": "github"
       }
@@ -1075,11 +1074,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1735380403,
-        "narHash": "sha256-UHRiWOkTPMAH9uXtVrurVDv9cbPCxLnR8yY12tQfN48=",
+        "lastModified": 1736056338,
+        "narHash": "sha256-Szz6/gTiyp/AJ8x1OmTJJp+ibjOokFsogXYR5cm9Vr8=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "cfa60ca88747af50395c3d5e17a569820ebd9096",
+        "rev": "c4d4c2f501041d5c25ba2302eba6069b4e197484",
         "type": "github"
       },
       "original": {
