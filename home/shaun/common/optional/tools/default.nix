@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./openscad.nix
     ./thunar.nix
     ./lazygit.nix
   ];
@@ -12,7 +13,6 @@
     # 3D Printing
     freecad
     orca-slicer-overridden # modified .desktop file to not show up when searching for "code"
-    openscad-unstable
 
     # Device imaging
     rpi-imager
