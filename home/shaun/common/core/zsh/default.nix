@@ -8,6 +8,8 @@
   imports = [ ./starship.nix ];
   programs.zsh = {
     enable = true;
+    generateCompletions = true;
+    generateSystemCompletions = true;
 
     # relative to ~
     dotDir = ".config/zsh";

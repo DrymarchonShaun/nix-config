@@ -115,7 +115,6 @@ in
       pciutils
       pfetch # system info
       pre-commit # git hooks
-      peazip # compression & encryption
       ripgrep # better grep
       steam-run # for running non-NixOS-packaged binaries on Nix
       usbutils
