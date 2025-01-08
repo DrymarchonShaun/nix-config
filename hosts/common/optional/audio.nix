@@ -1,9 +1,9 @@
 { pkgs, config, ... }:
 let
   quantum = {
-    def = 256;
+    def = 512;
     min = 256;
-    max = 512;
+    max = 2048;
   };
   rate = 48000;
 in
