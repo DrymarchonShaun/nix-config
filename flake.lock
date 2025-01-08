@@ -979,11 +979,11 @@
     "none-ls": {
       "flake": false,
       "locked": {
-        "lastModified": 1736008944,
-        "narHash": "sha256-FIAl4n8wfWsOOsjfUJRf+Q8TVUMX1V043BEX0P2PH3k=",
+        "lastModified": 1736243134,
+        "narHash": "sha256-su5+A5MUoYFseunX5TRwa13F7WgkbA+TGf8Etxtcjy4=",
         "owner": "nvimtools",
         "repo": "none-ls.nvim",
-        "rev": "20f5650988cd849e18c7f3d2dce4b0e6a260e126",
+        "rev": "cc810f70852bd37334fad658372a8cfedd1da4e8",
         "type": "github"
       },
       "original": {
@@ -1074,11 +1074,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1736056338,
-        "narHash": "sha256-Szz6/gTiyp/AJ8x1OmTJJp+ibjOokFsogXYR5cm9Vr8=",
+        "lastModified": 1736246353,
+        "narHash": "sha256-EPR3yeHnmJMUIhE3wsHsJU5LGmwpZy4dfOrhBlLX+Is=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "c4d4c2f501041d5c25ba2302eba6069b4e197484",
+        "rev": "eb1c1167ab857226fcac32662048b84de36b5756",
         "type": "github"
       },
       "original": {
