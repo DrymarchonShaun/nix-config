@@ -134,7 +134,7 @@ in
       "kvm-amd"
       "zenergy"
     ];
-    kernelParams = [ "amdgpu.gpu_recovery=0" ];
+    kernelParams = [ ];
   };
   boot.loader = {
     systemd-boot = {
