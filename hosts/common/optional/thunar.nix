@@ -1,5 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
+  # home-manager.users.${config.hostSpec.username}.xfconf.settings = {
+  #   "thunar" = {
+  #     "last-show-hidden" = true;
+  #     "misc-show-delete-action" = true;
+  #   };
+  # };
   programs = {
     thunar = {
       enable = true;
