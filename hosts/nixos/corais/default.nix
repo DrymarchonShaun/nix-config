@@ -13,7 +13,7 @@
   ...
 }:
 let
-  coraisKernel = pkgs.linux_latest.override { };
+  coraisKernel = pkgs.linux_6_11.override { };
   coraisKernelPackages = (pkgs.linuxPackagesFor coraisKernel).extend (
     final: prev: {
       # zenergy = final.callPackage ../../pkgs/zenergy/package.nix { };
