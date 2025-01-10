@@ -56,6 +56,9 @@ in
       };
       ExtensionUpdate = false;
 
+      "3rdparty".Extensions = {
+        "uBlock0@raymondhill.net" = import ./ublock-origin.nix;
+      };
       # To copy extensions from an existing profile you can do something like this:
       # cat ~/.mozilla/firefox/fb8sickr.default/extensions.json | jq '.addons[] | [.defaultLocale.name, .id]'
       #
@@ -67,40 +70,41 @@ in
       ExtensionSettings =
         (
           let
-            extension = shortId: uuid: {
+            extension = shortId: uuid: on_navbar: {
               name = uuid;
               value = {
                 install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
                 installation_mode = "normal_installed";
+                default_area = if on_navbar then "navbar" else "menupanel";
               };
             };
           in
           builtins.listToAttrs [
 
-            (extension "catppuccin-macchiato-blue" "{d49033ac-8969-488c-afb0-5cdb73957f41}")
+            (extension "catppuccin-macchiato-blue" "{d49033ac-8969-488c-afb0-5cdb73957f41}" false)
             #TODO Add more of these and test. not high priority though since mozilla sync will pull them in too
             # Development
             #(extension "user-agent-switcher" "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}") # failed
 
             # Privacy / Security
-            (extension "ublock-origin" "uBlock0@raymondhill.net")
-            (extension "proton-pass" "78272b6fa58f4a1abaac99321d503a20@proton.me")
+            (extension "ublock-origin" "uBlock0@raymondhill.net" true)
+            (extension "proton-pass" "78272b6fa58f4a1abaac99321d503a20@proton.me" true)
 
             # Layout / Themeing
-            (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp")
-            (extension "darkreader" "addon@darkreader.org")
+            (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp" false)
+            (extension "darkreader" "addon@darkreader.org" true)
 
             # Misc
-            (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}")
-            (extension "youtube-addon" "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}")
-            (extension "dearrow" "deArrow@ajay.app")
-            (extension "sponsorblock" "sponsorBlocker@ajay.app")
-            (extension "inde-wiki-buddy" "{cb31ec5d-c49a-4e5a-b240-16c767444f62}")
-            (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}")
-            (extension "return-youtube-dislikes" "{762f9885-5a13-4abd-9c77-433dcd38b8fd}")
-            (extension "flagfox" "{1018e4d6-728f-4b20-ad56-37578a4de76b}")
-            (extension "languagetool" "languagetool-webextension@languagetool.org")
-            (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
+            (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" false)
+            (extension "youtube-addon" "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}" false)
+            (extension "dearrow" "deArrow@ajay.app" false)
+            (extension "sponsorblock" "sponsorBlocker@ajay.app" false)
+            (extension "inde-wiki-buddy" "{cb31ec5d-c49a-4e5a-b240-16c767444f62}" false)
+            (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}" false)
+            (extension "return-youtube-dislikes" "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" false)
+            (extension "flagfox" "{1018e4d6-728f-4b20-ad56-37578a4de76b}" false)
+            (extension "languagetool" "languagetool-webextension@languagetool.org" false)
+            (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" true)
           ]
         )
         // {
@@ -110,21 +114,14 @@ in
           #  blocked_install_message = "blocked extension install";
           #};
         };
-
-      #"3rdparty".Extensions = { };
-
     };
 
     profiles =
       let
-        # FIXME:(firefox) Should check ~/.mozilla/firefox/PROFILE_NAME/prefs.js | user.js
-        # from your old profiles too
         profileDefault = {
           settings = {
             "signon.rememberSignons" = false; # Disable built-in password manager
             "services.passwordSavingEnabled" = false;
-            # "browser.compactmode.show" = true;
-            # "browser.uidensity" = 1; # enable compact mode
             "browser.aboutConfig.showWarning" = false;
             "browser.download.dir" = "${config.xdg.userDirs.download}";
             "browser.urlbar.suggest.quicksuggest.sponsored" = false;
