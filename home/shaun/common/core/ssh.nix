@@ -29,20 +29,17 @@ let
       yubikeys
   );
 
-  identityFiles = [
+  vcsIdentityFiles = [
     "id_mimir" # for VCS
-    "id_odin" # fallback to id_odin
+  ];
+  identityFiles = [
+    "id_odin"
   ];
 
   # Lots of hosts have the same default config, so don't duplicate
   vanillaHosts = [
     "natrix"
     "corais"
-    "genoa"
-    "ghost"
-    "grief"
-    "guppy"
-    "gusto"
   ];
   vanillaHostsConfig = lib.attrsets.mergeAttrsList (
     lib.lists.map (host: {
@@ -51,6 +48,7 @@ let
         hostname = "${host}.${config.hostSpec.domain}";
         port = config.hostSpec.networking.ports.tcp.ssh;
         forwardAgent = true;
+        identityFile = lib.lists.forEach identityFiles (file: "${config.home.homeDirectory}/.ssh/${file}");
       };
     }) vanillaHosts
   );
@@ -80,45 +78,14 @@ in
       # };
 
       "git" = {
-        host = "gitlab.com github.com";
+        host = "gitlab.com github.com codeberg.org";
         user = "git";
         forwardAgent = true;
         identitiesOnly = true;
-        identityFile = lib.lists.forEach identityFiles (file: "${config.home.homeDirectory}/.ssh/${file}");
+        identityFile = lib.lists.forEach vcsIdentityFiles (
+          file: "${config.home.homeDirectory}/.ssh/${file}"
+        );
       };
-      # "gooey" = lib.hm.dag.entryAfter [ "yubikey-hosts" ] {
-      #   host = "gooey";
-      #   hostname = "gooey.${config.hostSpec.domain}";
-      #   user = "pi";
-      #   forwardAgent = true;
-      #   identitiesOnly = true;
-      #   identityFile = lib.lists.forEach identityFiles (file: "${config.home.homeDirectory}/.ssh/${file}");
-      # };
-      # "oops" = lib.hm.dag.entryAfter [ "yubikey-hosts" ] {
-      #   host = "oops";
-      #   hostname = "${config.hostSpec.networking.subnets.oops.ip}";
-      #   user = "${config.hostSpec.username}";
-      #   port = config.hostSpec.networking.subnets.oops.port;
-      #   forwardAgent = true;
-      #   identitiesOnly = true;
-      #   identityFile = [
-      #     "~/.ssh/id_yubikey"
-      #     "~/.ssh/id_borg"
-      #   ];
-      # };
-      # "cakes" = {
-      #   host = "${config.hostSpec.networking.external.cakes.name}";
-      #   hostname = "${config.hostSpec.networking.external.cakes.ip}";
-      #   user = "${config.hostSpec.networking.external.cakes.username}";
-      #   localForwards = [
-      #     {
-      #       bind.address = "localhost";
-      #       bind.port = config.hostSpec.networking.external.cakes.localForwardsPort;
-      #       host.address = "localhost";
-      #       host.port = config.hostSpec.networking.external.cakes.localForwardsPort;
-      #     }
-      #   ];
-      # };
     } // vanillaHostsConfig;
 
   };
