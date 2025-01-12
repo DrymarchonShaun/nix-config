@@ -16,6 +16,9 @@ let
     # "text/html" = browser;
     "application/x-zerosize" = editor; # empty files
 
+    # archives
+    "application/zip" = "org.gnome.FileRoller.desktop";
+
     "application/x-shellscript" = editor;
     "application/x-perl" = editor;
     "application/json" = editor;
