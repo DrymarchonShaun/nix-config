@@ -44,8 +44,8 @@ in
     steam-session
     pkgs.ckan
     pkgs.lug-helper
-    pkgs.dev.arma3-unix-launcher
-    (pkgs.dev.arma3-unix-launcher.override { buildDayZLauncher = true; })
+    pkgs.arma3-unix-launcher
+    (pkgs.arma3-unix-launcher.override { buildDayZLauncher = true; })
     pkgs.gamma-launcher
     pkgs.heroic
     (pkgs.prismlauncher.override {
