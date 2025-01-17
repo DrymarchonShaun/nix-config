@@ -75,6 +75,7 @@ in
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/fonts.nix" # vm tools
       "hosts/common/optional/gaming.nix" # steam, gamescope, gamemode, and related hardware
+      "hosts/common/optional/minecraft" # declarative minecraft server
       "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/plymouth.nix" # fancy boot screen
@@ -91,6 +92,8 @@ in
     #
 
   ];
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   #
   # ========== Host Specification ==========
