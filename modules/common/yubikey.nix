@@ -146,9 +146,6 @@ in
     services.pcscd.enable = true; # smartcard service
     services.udev.packages = [ pkgs.yubikey-personalization ];
 
-    # FIXME(yubikey): Check if this exists on darwin
-    services.yubikey-agent.enable = true;
-
     # yubikey login / sudo
     security.pam = lib.optionalAttrs pkgs.stdenv.isLinux {
       u2f = {
