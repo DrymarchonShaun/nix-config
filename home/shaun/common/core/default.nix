@@ -20,15 +20,12 @@ in
     ])
     ./${platform}.nix
     ./zsh
-    # ./nixvim
     ./neovim.nix
     ./bash.nix
     ./bat.nix
     ./direnv.nix
-    # ./fonts.nix
     ./foot.nix
     ./git.nix
-    # ./kitty.nix
     ./screen.nix
     ./ssh.nix
     ./zoxide.nix
@@ -60,7 +57,7 @@ in
       "$HOME/.local/bin"
     ];
     sessionVariables = {
-      FLAKE = "$HOME/.src/nix-config";
+      FLAKE = "$HOME/.src/nix/nix-config";
       SHELL = "zsh";
       TERM = "foot";
       TERMINAL = "foot";
@@ -71,7 +68,7 @@ in
     preferXdgDirectories = true; # whether to make programs use XDG directories whenever supported
 
   };
-  #TODO:(xdg) maybe move this to its own xdg.nix?
+  # TODO(xdg): maybe move this to its own xdg.nix?
   # xdg packages are pulled in below
   xdg = {
     enable = true;
@@ -81,17 +78,20 @@ in
     userDirs = {
       enable = true;
       createDirectories = true;
-      extraConfig = {
-        "XDG_SCREENSHOTS_DIR" = "${config.xdg.userDirs.pictures}/Screenshots";
-      };
       desktop = "${config.home.homeDirectory}/Desktop";
       documents = "${config.home.homeDirectory}/Documents";
       download = "${config.home.homeDirectory}/Downloads";
       music = "${config.home.homeDirectory}/Music";
       pictures = "${config.home.homeDirectory}/Pictures";
-      publicShare = null;
-      templates = null;
       videos = "${config.home.homeDirectory}/Videos";
+      # publicshare = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
+      # templates = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
+      extraConfig = {
+        # publicshare and templates defined as null here instead of as options because
+        XDG_PUBLICSHARE_DIR = "/var/empty";
+        XDG_TEMPLATES_DIR = "/var/empty";
+        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+      };
     };
   };
 
@@ -102,29 +102,32 @@ in
       btop # resource monitor
       copyq # clipboard manager
       coreutils # basic gnu utils
-      # curl
+      curl
       eza # ls replacement
       dust # disk usage
       fd # tree style ls
       findutils # find
       fzf # fuzzy search
-      jq # JSON pretty printer and manipulator
+      jq # json pretty printer and manipulator
       nix-tree # nix package tree viewer
-      inxi # lighter system info than neofetch
+      inxi # lighter than neofetch
       ncdu # TUI disk usage
       pciutils
       pfetch # system info
       pre-commit # git hooks
+      p7zip # compression & encryption
       ripgrep # better grep
       steam-run # for running non-NixOS-packaged binaries on Nix
       usbutils
       tree # cli dir tree viewer
       unzip # zip extraction
       unrar # rar extraction
+      wev # show wayland events. also handy for detecting keypress codes
+      wlprop # show sway window properties
+      wget # downloader
       xdg-utils # provide cli tools such as `xdg-mime` and `xdg-open`
       xdg-user-dirs
-      wev # show wayland events. also handy for detecting keypress codes
-      wget # downloader
+      yq-go # yaml pretty printer and manipulator
       zip # zip compression
       ;
   };

@@ -1,5 +1,5 @@
 {
-  programs.brave = {
+  programs.chromium = {
     enable = true;
     commandLineArgs = [
       "--no-default-browser-check"

@@ -64,21 +64,16 @@ in
               delay = 0;
             };
             ipv6 = false;
-            ip =
-              let
-                subnet = inputs.nix-secrets.networking.subnets.vm-lan;
-              in
-              {
-                address = subnet.gateway;
-                netmask = "255.255.255.0";
-                dhcp = {
-                  range = {
-                    start = "${subnet.triplet}.100";
-                    end = "${subnet.triplet}.254";
-                  };
+            ip = {
+              address = "192.168.122.1";
+              netmask = "255.255.255.0";
+              dhcp = {
+                range = {
+                  start = "192.168.122.100";
+                  end = "192.168.122.254";
                 };
-                hosts = lib.attrValues subnet.hosts;
               };
+            };
           };
         }
       ];

@@ -4,47 +4,33 @@
   ...
 }:
 let
-  yubikeyHosts = [
-    "genoa"
-    "ghost"
-    "gooey"
-    "grief"
-    "guppy"
-    "gusto"
-  ];
-  # add my domain to each yubikey host
-  yubikeyDomains = map (h: "${h}.${config.hostSpec.domain}") yubikeyHosts;
-  yubikeyHostAll = yubikeyHosts ++ yubikeyDomains;
-  yubikeyHostsString = lib.concatStringsSep " " yubikeyHostAll;
 
   pathtokeys = lib.custom.relativeToRoot "hosts/common/users/primary/keys";
-  yubikeys =
+  keys =
     lib.lists.forEach (builtins.attrNames (builtins.readDir pathtokeys))
       # Remove the .pub suffix
       (key: lib.substring 0 (lib.stringLength key - lib.stringLength ".pub") key);
-  yubikeyPublicKeyEntries = lib.attrsets.mergeAttrsList (
-    lib.lists.map
-      # list of dicts
-      (key: { ".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub"; })
-      yubikeys
+  publicKeyEntries = lib.attrsets.mergeAttrsList (
+    lib.lists.map (key: {
+      ".ssh/${key}.pub".source = "${pathtokeys}/${key}.pub";
+    }) keys
   );
 
   vcsIdentityFiles = [
-    "id_mimir" # for VCS
+    "id_mimir"
   ];
   identityFiles = [
     "id_odin"
   ];
 
-  # Lots of hosts have the same default config, so don't duplicate
   vanillaHosts = [
     "natrix"
     "corais"
   ];
   vanillaHostsConfig = lib.attrsets.mergeAttrsList (
     lib.lists.map (host: {
-      "${host}" = lib.hm.dag.entryAfter [ "yubikey-hosts" ] {
-        host = host;
+      "${host}" = lib.hm.dag.entryAfter [ "vanilla-hosts" ] {
+        match = "host ${host},${host}.${config.hostSpec.domain}";
         hostname = "${host}.${config.hostSpec.domain}";
         port = config.hostSpec.networking.ports.tcp.ssh;
         forwardAgent = true;
@@ -54,28 +40,27 @@ let
   );
 in
 {
-
   programs.ssh = {
     enable = true;
 
-    # FIXME:(ssh) This should probably be for git systems only?
+    # FIXME(ssh): This should probably be for git systems only?
     controlMaster = "auto";
-    controlPath = "~/.ssh/sockets/S.%r@%h:%p";
-    controlPersist = "10m";
+    controlPath = "${config.home.homeDirectory}/.ssh/sockets/S.%r@%h:%p";
+    controlPersist = "20m";
+    # Avoids infinite hang if control socket connection interrupted. ex: vpn goes down/up
+    serverAliveCountMax = 3;
+    serverAliveInterval = 5; # 3 * 5s
+    #updateHostKeys = "ask";
+    hashKnownHosts = true;
 
-    # req'd for enabling yubikey-agent
+    # Bring in decrypted config
     extraConfig = ''
       AddKeysToAgent yes
+      # Prevent initrd ssh and regular ssh key server IDs wanting to replace eachother
+      UpdateHostKeys ask
     '';
 
     matchBlocks = {
-      # Not all of this systems I have access to can use yubikey.
-      # "yubikey-hosts" = lib.hm.dag.entryAfter [ "*" ] {
-      #   host = "${yubikeyHostsString}";
-      #   forwardAgent = true;
-      #   identitiesOnly = true;
-      #   identityFile = lib.lists.forEach identityFiles (file: "${config.home.homeDirectory}/.ssh/${file}");
-      # };
 
       "git" = {
         host = "gitlab.com github.com codeberg.org";
@@ -92,5 +77,5 @@ in
   home.file = {
     ".ssh/config.d/.keep".text = "# Managed by Home Manager";
     ".ssh/sockets/.keep".text = "# Managed by Home Manager";
-  } // yubikeyPublicKeyEntries;
+  } // publicKeyEntries;
 }

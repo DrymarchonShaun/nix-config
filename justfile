@@ -47,12 +47,12 @@ check-sops:
   scripts/check-sops.sh
 
 update-nix-secrets:
-  @(cd ~/src/nix/nix-secrets && git fetch && git rebase > /dev/null) || true
+  @(cd ~/.src/nix/nix-secrets && git fetch && git rebase > /dev/null) || true
   nix flake update nix-secrets --timeout 5
 
 update-nvix:
   (cd ../nvix && git fetch && git rebase) || true
-  nix flake update nvix
+  nix flake update nvix --timeout 5
 
 iso:
   # If we dont remove this folder, libvirtd VM doesnt run with the new iso...

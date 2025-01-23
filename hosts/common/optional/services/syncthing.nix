@@ -1,20 +1,16 @@
 {
   config,
-  options,
   lib,
   ...
 }:
-let
-  syncthingHosts = lib.mapAttrsToList (name: device: name) config.services.syncthing.settings.devices;
-in
 {
   # Initialize the certificate and key for the current host, and the device IDs for all devices
   sops.secrets = {
-    "keys/syncthing/${config.hostSpec.hostName}/cert" = {
+    "keys/syncthing/cert" = {
       owner = config.hostSpec.username;
       mode = "0400";
     };
-    "keys/syncthing/${config.hostSpec.hostName}/key" = {
+    "keys/syncthing/key" = {
       owner = config.hostSpec.username;
       mode = "0400";
     };
@@ -25,8 +21,8 @@ in
     user = config.hostSpec.username;
     configDir = "${config.hostSpec.home}/.config/syncthing";
     dataDir = "${config.hostSpec.home}/.local/share/syncthing";
-    cert = config.sops.secrets."keys/syncthing/${config.hostSpec.hostName}/cert".path;
-    key = config.sops.secrets."keys/syncthing/${config.hostSpec.hostName}/key".path;
+    cert = config.sops.secrets."keys/syncthing/cert".path;
+    key = config.sops.secrets."keys/syncthing/key".path;
     settings = {
       folders =
         let

@@ -1,65 +1,89 @@
-#TODO: add better rules for forcing ssh as per fb
+# git is core no matter what but additional settings may could be added made in optional/foo   eg: development.nix
 {
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
-let
-  handle = config.hostSpec.handle;
-  publicGitHubEmail = config.hostSpec.email.github;
-  publicCodebergEmail = config.hostSpec.email.codeberg;
-  publicKey = "${config.home.homeDirectory}/.ssh/id_mimir.pub";
-in
 {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = handle;
-    userEmail = config.hostSpec.email.user;
     aliases = {
       stat = "status";
       pr = "!f() { git fetch -fu \${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f";
       pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=\${ref#refs/heads/} ; git branch -D $branch ; done";
     };
-    extraConfig = {
-      init.defaultBranch = "main";
-      pull.rebase = "true";
-      url = {
-        # Only force ssh if it's not minimal
 
-        "ssh://git@github.com" = {
-          insteadOf = "https://github.com";
-        };
-        "ssh://git@codeberg.org" = {
-          insteadOf = "https://codeberg.org";
-        };
-        "ssh://git@gitlab.com" = {
-          insteadOf = "https://gitlab.com";
-        };
-      };
-
-      commit.gpgsign = true;
-      gpg.format = "ssh";
-      # Taken from https://github.com/clemak27/homecfg/blob/16b86b04bac539a7c9eaf83e9fef4c813c7dce63/modules/git/ssh_signing.nix#L14
-      # gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
-
-      # save.directory = "${config.home.homeDirectory}/sync/obsidian-vault-01/wiki";
-    };
-    signing = {
-      signByDefault = true;
-      key = publicKey;
-    };
     ignores = [
       ".csvignore"
-      ".direnv"
+      # nix
+      "*.drv"
       "result"
+      # python
+      "*.py?"
+      "__pycache__/"
+      ".venv/"
+      # direnv
+      ".direnv"
     ];
+
+    extraConfig = {
+      core.pager = "delta";
+      delta = {
+        enable = true;
+        features = [
+          "side-by-side"
+          "line-numbers"
+          "hyperlinks"
+          "line-numbers"
+          "commit-decoration"
+        ];
+      };
+
+      url =
+        { }
+        // lib.optionalAttrs (!config.hostSpec.isMinimal) {
+          # Only force ssh if it's not minimal
+          "ssh://git@github.com" = {
+            pushInsteadOf = "https://github.com";
+          };
+          "ssh://git@codeberg.org" = {
+            pushInsteadOf = "https://codeberg.org";
+          };
+          "ssh://git@gitlab.com" = {
+            pushInsteadOf = "https://gitlab.com";
+          };
+        };
+
+      # pre-emptively ignore mac crap
+      core.excludeFiles = builtins.toFile "global-gitignore" ''
+        .DS_Store
+        .DS_Store?
+        ._*
+        .Spotlight-V100
+        .Trashes
+        ehthumbs.db
+        Thumbs.db
+        node_modules
+      '';
+      core.attributesfile = builtins.toFile "global-gitattributes" ''
+        Cargo.lock -diff
+        flake.lock -diff
+        *.drawio -diff
+        *.svg -diff
+        *.json diff=json
+        *.bin diff=hex difftool=hex
+        *.dat diff=hex difftool=hex
+        *aarch64.bin diff=objdump-aarch64 difftool=objdump-aarch64
+        *arm.bin diff=objdump-arm difftool=objdump-arm
+        *x64.bin diff=objdump-x86_64 difftool=objdump-x64
+        *x86.bin diff=objdump-x86 difftool=objdump-x86
+      '';
+      # Makes single line json diffs easier to read
+      diff.json.textconv = "jq --sort-keys .";
+    };
   };
-  # NOTE: To verify github.com update commit signatures, you need to manually import
-  # https://github.com/web-flow.gpg... would be nice to do that here
-  home.file.".ssh/allowed_signers".text = ''
-    ${publicGitHubEmail} ${lib.fileContents (lib.custom.relativeToRoot "hosts/common/users/primary/keys/id_mimir.pub")}
-    ${publicCodebergEmail} ${lib.fileContents (lib.custom.relativeToRoot "hosts/common/users/primary/keys/id_mimir.pub")}
-  '';
+
 }

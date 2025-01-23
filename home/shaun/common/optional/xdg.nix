@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  # FIXME:(xdg) That should use config options and just reference whatever is configured as the default
+  # FIXME(xdg): That should use config options and just reference whatever is configured as the default
   browser = [ "firefox.desktop" ];
   editor = [ "code.desktop" ];
   media = [ "vlc.desktop" ];
@@ -114,12 +114,22 @@ let
     "application/vnd.sun.xml.writer.global" = writer;
     "application/vnd.sun.xml.writer.template" = writer;
     "application/vnd.wordperfect" = writer;
+
+  };
+  removals = {
+    # Calibre steals odt association from libreoffic so need to remove
+    "application/vnd.oasis.opendocument.text" = [
+      "calibre-ebook-viewer.desktop"
+      "calibre-ebook-edit.desktop"
+      "calibre-gui.desktop"
+    ];
   };
 in
 {
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = associations;
+  xdg.mimeApps.associations.removed = removals;
   xdg.mimeApps.associations.added = associations;
 
   home.packages = builtins.attrValues {

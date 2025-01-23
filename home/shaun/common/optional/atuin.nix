@@ -1,10 +1,14 @@
 #Note: ctrl+r to cycle filter modes
 {
   config,
+  inputs,
   ...
 }:
+let
+  sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
+in
 {
-  # FIXME:(atuin) Add the background sync service
+  # FIXME(atuin): Add the background sync service
   # https://forum.atuin.sh/t/getting-the-daemon-working-on-nixos/334
   programs.atuin = {
     enable = true;
@@ -15,14 +19,14 @@
 
     settings = {
       auto_sync = true;
-      #FIXME:(atuin) move to private server
+      # FIXME(atuin): move to private server
       sync_address = "https://api.atuin.sh";
       sync_frequency = "30m";
       update_check = false;
       filter_mode = "global";
       invert = true;
       enter_accept = true;
-      #TODO:(atuin) disable when comfortable
+      # TODO(atuin): disable when comfortable
       show_help = true;
       prefers_reduced_motion = true;
 
@@ -43,6 +47,7 @@
     # flags = [ "--disable-up-arrow" ];
   };
   sops.secrets."keys/atuin" = {
+    sopsFile = "${sopsFolder}/shared.yaml";
     path = "${config.home.homeDirectory}/.local/share/atuin/key";
   };
 

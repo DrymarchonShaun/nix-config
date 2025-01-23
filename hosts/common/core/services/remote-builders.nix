@@ -1,10 +1,11 @@
 {
   config,
+  inputs,
   lib,
-  pkgs,
   ...
 }:
 let
+  sopsFolder = (builtins.toString inputs.nix-secrets) + "/sops";
   defaultBuildConfig = {
     sshUser = "nixbuilder";
     sshKey = config.sops.secrets."keys/ssh/dvergar".path;
@@ -65,7 +66,9 @@ in
     ];
   };
   users.groups.nixbuilder = { };
-  sops.secrets."keys/ssh/dvergar" = { };
+  sops.secrets."keys/ssh/dvergar" = {
+    sopsFile = "${sopsFolder}/shared.yaml";
+  };
   nix.buildMachines = build_hosts;
   programs.ssh.extraConfig = sshConfigString;
 

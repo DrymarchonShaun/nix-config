@@ -53,6 +53,7 @@ in
         neededForUsers = true;
       };
       github-token = {
+        sopsFile = "${sopsFolder}/shared.yaml";
         mode = "0444";
       };
     }
@@ -66,11 +67,13 @@ in
       };
     })
 
-      (builtins.listToAttrs (
+    (builtins.listToAttrs (
       map
         (connection: {
           name = "networks/${connection.connection.id}_psk";
-          value = { };
+          value = {
+            sopsFile = "${sopsFolder}/shared.yaml";
+          };
         })
         (
           builtins.filter (

@@ -1,12 +1,11 @@
 { pkgs, config, ... }:
 {
   hardware.xone.enable = true; # xbox controller
-  
+
   # required for star citizen
   boot.kernel.sysctl = {
     "vm.max_map_count" = 16777216;
   };
-
 
   programs = {
     steam = {

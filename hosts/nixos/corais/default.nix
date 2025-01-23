@@ -85,7 +85,6 @@ in
       "hosts/common/optional/thunar.nix" # file manager
       "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/vlc.nix" # media player
-      "hosts/common/optional/wayland.nix" # wayland components and pkgs not available in home-manager
     ])
     #
     # ========== Corais Specific ==========
@@ -117,7 +116,7 @@ in
     enableIPv6 = false;
   };
 
-  #FIXME:(clamav) something not working. disabled to reduce log spam
+  # FIXME(clamav): something not working. disabled to reduce log spam
   semi-active-av.enable = false;
 
   services.backup = {
@@ -178,7 +177,7 @@ in
       "noatime"
     ];
   };
-  #TODO:(stylix) move this stuff to separate file but define theme itself per host
+  # TODO(stylix): move this stuff to separate file but define theme itself per host
   # host-wide styling
   # stylix = {
   #   enable = true;
