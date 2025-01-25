@@ -151,9 +151,9 @@
         ''[workspace 8 silent]${pkgs.virt-manager}/bin/virt-manager''
         ''[workspace 8 silent]${pkgs.obsidian}/bin/obsidian''
         ''[workspace 9 silent]${pkgs.signal-desktop}/bin/signal-desktop''
-        ''[workspace 0 silent]${pkgs.yubioath-flutter}/bin/yubioath-flutter''
         ''[workspace 0 silent]${pkgs.copyq}/bin/copyq''
         ''[workspace 0 silent]${pkgs.spotify}/bin/spotify''
+        ''[workspace special silent]${pkgs.yubioath-flutter}/bin/yubioath-flutter''
         ''[workspace special silent]${pkgs.keymapp}/bin/keymapp''
       ];
       #
@@ -234,8 +234,8 @@
         "workspace 9, class:^(signal)$"
         "workspace 9, class:^(org.telegram.desktop)$"
         "workspace 9, class:^(discord)$"
-        "workspace 0, class:^(yubioath-flutter)$"
         "workspace 0, title:^([Ss]potify*)$"
+        "workspace special, class:^(yubioath-flutter)$"
       ];
 
       # load at the end of the hyperland set
