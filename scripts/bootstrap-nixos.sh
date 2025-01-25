@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+# Helpers library
+# shellcheck disable=SC1091
+source "$(dirname "${BASH_SOURCE[0]}")/helpers.sh"
+
 # User variables
 target_hostname=""
 target_destination=""
@@ -18,60 +22,6 @@ function cleanup() {
 	rm -rf "$temp"
 }
 trap cleanup exit
-
-function red() {
-	echo -e "\x1B[31m[!] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[31m[!] $($2) \x1B[0m"
-	fi
-}
-
-function green() {
-	echo -e "\x1B[32m[+] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[32m[+] $($2) \x1B[0m"
-	fi
-}
-
-function blue() {
-	echo -e "\x1B[34m[*] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[34m[*] $($2) \x1B[0m"
-	fi
-}
-
-function yellow() {
-	echo -e "\x1B[33m[*] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[33m[*] $($2) \x1B[0m"
-	fi
-}
-
-# Ask yes or no, with yes being the default
-function yes_or_no() {
-	echo -en "\x1B[34m[?] $* [y/n] (default: y): \x1B[0m"
-	while true; do
-		read -rp "" yn
-		yn=${yn:-y}
-		case $yn in
-		[Yy]*) return 0 ;;
-		[Nn]*) return 1 ;;
-		esac
-	done
-}
-
-# Ask no or yes, with no being the default
-function no_or_yes() {
-	echo -en "\x1B[34m[?] $* [y/n] (default: n): \x1B[0m"
-	while true; do
-		read -rp "" yn
-		yn=${yn:-n}
-		case $yn in
-		[Yy]*) return 0 ;;
-		[Nn]*) return 1 ;;
-		esac
-	done
-}
 
 # Copy data to the target machine
 function sync() {
@@ -158,10 +108,10 @@ if [ -z "$target_hostname" ] || [ -z "$target_destination" ] || [ -z "$ssh_key" 
 fi
 
 # SSH commands
-ssh_cmd="ssh -oport=${ssh_port} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $ssh_key -t $target_user@$target_destination"
+ssh_cmd="ssh -oControlMaster=no -oport=${ssh_port} -oForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $ssh_key -t $target_user@$target_destination"
 # shellcheck disable=SC2001
 ssh_root_cmd=$(echo "$ssh_cmd" | sed "s|${target_user}@|root@|") # uses @ in the sed switch to avoid it triggering on the $ssh_key value
-scp_cmd="scp -oport=${ssh_port} -o StrictHostKeyChecking=no -i $ssh_key"
+scp_cmd="scp -oControlMaster=no -oport=${ssh_port} -o StrictHostKeyChecking=no -i $ssh_key"
 
 git_root=$(git rev-parse --show-toplevel)
 
@@ -188,7 +138,7 @@ function nixos_anywhere() {
 
 	green "Adding ssh host fingerprint at $target_destination to ~/.ssh/known_hosts"
 	# This will fail if we already know the host, but that's fine
-	ssh-keyscan -p "$ssh_port" "$target_destination" 2>/dev/null | grep -v '^#' >>~/.ssh/known_hosts || true
+	ssh-keyscan -p "$ssh_port" "$target_destination" | grep -v '^#' >>~/.ssh/known_hosts || true
 
 	###
 	# nixos-anywhere installation
@@ -220,42 +170,13 @@ function nixos_anywhere() {
 	fi
 
 	green "Adding $target_destination's ssh host fingerprint to ~/.ssh/known_hosts"
-	ssh-keyscan -p "$ssh_port" "$target_destination" 2>/dev/null | grep -v '^#' >>~/.ssh/known_hosts || true
-
-	$ssh_root_cmd "chown $target_user:users /home/$target_user/.ssh && chmod 700 /home/$target_user/.ssh"
+	ssh-keyscan -p "$ssh_port" "$target_destination" | grep -v '^#' >>~/.ssh/known_hosts || true
 
 	if [ -n "$persist_dir" ]; then
 		$ssh_root_cmd "cp /etc/machine-id $persist_dir/etc/machine-id || true"
 		$ssh_root_cmd "cp -R /etc/ssh/ $persist_dir/etc/ssh/ || true"
 	fi
-	cd -
-}
-
-# Updates the .sops.yaml file with a new host or user age key.
-# Assumptions:
-# - a secrets folder containing .sops.yaml is located at ../nix-secrets from the git root
-# - per-host .yaml secret files
-# args: $1 = key name, $2 = key type, $3 key
-function update_sops_file() {
-	key_name=$1
-	key_type=$2
-	key=$3
-
-	if [ ! "$key_type" == "hosts" ] && [ ! "$key_type" == "users" ]; then
-		red "Invalid key type passed to update_sops_file. Must be either 'hosts' or 'users'."
-		exit 1
-	fi
-	cd "${git_root}"/../nix-secrets
-
-	SOPS_FILE=".sops.yaml"
-	sed -i "{
-	# Remove any & entries for this host
-	/&$key_name/ d;
-	# Inject a new hosts or user: entry
-	/&$key_type:/{n; p; s/\(.*- &\).*/\1$key_name $key/}
-	}" $SOPS_FILE
-	green "Updating nix-secrets/.sops.yaml"
-	cd -
+	cd - >/dev/null
 }
 
 function generate_host_age_key() {
@@ -274,39 +195,47 @@ function generate_host_age_key() {
 		yellow "Result: $host_age_key"
 		yellow "Expected format: age10000000000000000000000000000000000000000000000000000000000"
 		exit 1
-	else
-		echo "$host_age_key"
 	fi
 
 	green "Updating nix-secrets/.sops.yaml"
-	update_sops_file "$target_hostname" "hosts" "$host_age_key"
+	sops_update_age_key "hosts" "$target_hostname" "$host_age_key"
 }
 
-# FIXME: This will need to be adjusted because we now have multiple secret files.
-# We may have to associate the key with the <hostname>.yaml as well
+age_secret_key=""
+# Generate a user age key
 function generate_user_age_key() {
-	green "First checking if ${target_hostname} age key already exists"
+	green "Age key does not exist. Generating."
+	user_age_key=$(nix shell nixpkgs#age -c "age-keygen")
+	readarray -t entries <<<"$user_age_key"
+	age_secret_key=${entries[2]}
+	public_key=$(echo "${entries[1]}" | rg key: | cut -f2 -d: | xargs)
+	key_name="${target_user}_${target_hostname}"
+	green "Generated age key for ${key_name}"
+	# Place the anchors into .sops.yaml so other commands can reference them
+	sops_update_age_key "users" "$key_name" "$public_key"
+	sops_add_creation_rules "${target_user}" "${target_hostname}"
+}
 
-	# FIXME:(starter-repo) remove old secrets.yaml line once starter repo is completed
-	secret_file="${git_root}"/../nix-secrets/secrets.yaml
-	#	secret_file="${git_root}"/../nix-secrets/sops/${target_hostname}.yaml
-
+function generate_user_age_key_and_file() {
+	# FIXME(starter-repo): remove old secrets.yaml line once starter repo is completed
+	#secret_file="${git_root}"/../nix-secrets/secrets.yaml
+	secret_file="${git_root}"/../nix-secrets/sops/${target_hostname}.yaml
+	config="${git_root}"/../nix-secrets/.sops.yaml
+	# If the secret file doesn't exist, it means we're generating a new user key as well
 	if [ ! -f "$secret_file" ]; then
-		red "Secret file does not exist. Exiting."
-		exit 1
+		green "Host secret file does not exist. Creating $secret_file"
+		generate_user_age_key
+		echo "{}" >"$secret_file"
+		sops --config "$config" -e "$secret_file" >"$secret_file.enc"
+		mv "$secret_file.enc" "$secret_file"
 	fi
-
-	if ! sops -d --extract '["keys]["age"]' "$secret_file" >/dev/null ||
-		! sops -d --extract "[\"keys\"][\"age\"][\"${target_hostname}\"]" "$secret_file" >/dev/null 2>&1; then
-		green "Age key does not exist. Generating."
-		user_age_key=$(nix shell nixpkgs#age -c "age-keygen")
-		readarray -t entries <<<"$user_age_key"
-		secret_key=${entries[2]}
-		public_key=$(echo "${entries[1]}" | rg key: | cut -f2 -d: | xargs)
-		key_name="${target_user}_${target_hostname}"
+	if ! sops --config "$config" -d --extract '["keys]["age"]' "$secret_file" >/dev/null 2>&1; then
+		if [ -z "$age_secret_key" ]; then
+			generate_user_age_key
+		fi
+		echo "Secret key $age_secret_key"
 		# shellcheck disable=SC2116,SC2086
-		sops --set "$(echo '["keys"]["age"]["'${key_name}'"] "'$secret_key'"')" "$secret_file"
-		update_sops_file "$key_name" "users" "$public_key"
+		sops --config "$config" --set "$(echo '["keys"]["age"] "'$age_secret_key'"')" "$secret_file"
 	else
 		green "Age key already exists for ${target_hostname}"
 	fi
@@ -326,7 +255,7 @@ function setup_luks_secondary_drive_decryption() {
 }
 
 # Validate required options
-# FIXME:(bootstrap) The ssh key and destination aren't required if only rekeying, so could be moved into specific sections?
+# FIXME(bootstrap): The ssh key and destination aren't required if only rekeying, so could be moved into specific sections?
 if [ -z "${target_hostname}" ] || [ -z "${target_destination}" ] || [ -z "${ssh_key}" ]; then
 	red "ERROR: -n, -d, and -k are all required"
 	echo
@@ -343,11 +272,15 @@ if yes_or_no "Generate host (ssh-based) age key?"; then
 fi
 
 if yes_or_no "Generate user age key?"; then
-	generate_user_age_key
+	# This may end up creating the host.yaml file, so add creation rules in advance
+	generate_user_age_key_and_file
 	updated_age_keys=1
 fi
 
 if [[ $updated_age_keys == 1 ]]; then
+	# If the age generation commands added previously unseen keys (and associated anchors) we want to add those
+	# to some creation rules, namely <host>.yaml and shared.yaml
+	sops_add_creation_rules "${target_user}" "${target_hostname}"
 	# Since we may update the sops.yaml file twice above, only rekey once at the end
 	just rekey
 	green "Updating flake input to pick up new .sops.yaml"
@@ -373,12 +306,10 @@ if yes_or_no "Do you want to copy your full nix-config and nix-secrets to $targe
 	green "Copying full nix-secrets to $target_hostname"
 	sync "$target_user" "${git_root}"/../nix-secrets
 
-	# FIXME: Add some sort of key access from the target to download the config (if it's a cloud system)
+	# FIXME(bootstrap): Add some sort of key access from the target to download the config (if it's a cloud system)
 	if yes_or_no "Do you want to rebuild immediately? (requires yubikey-agent)"; then
 		green "Rebuilding nix-config on $target_hostname"
-		$ssh_cmd -oForwardAgent=yes "cd nix-config && sudo nixos-rebuild --impure --show-trace --flake .#$target_hostname switch"
-		#FIXME:(bootstrap) This fails because `just rebuild` tries to run `nix flake update nix-secrets` but the flake registry doesn't exist yet
-		#$ssh_cmd -oForwardAgent=yes "cd nix-config && just rebuild"
+		$ssh_cmd "cd nix-config && sudo nixos-rebuild --impure --show-trace --flake .#$target_hostname switch"
 	fi
 else
 	echo
@@ -388,9 +319,7 @@ else
 	echo "just sync $target_user $target_destination"
 	echo "To rebuild, sign into $target_hostname and run the following command"
 	echo "cd nix-config"
-	# FIXME:(bootstrap) see above FIXME
 	echo "sudo nixos-rebuild --show-trace --flake .#$target_hostname switch"
-	# echo "just rebuild"
 	echo
 fi
 
@@ -400,4 +329,3 @@ if yes_or_no "Do you want to commit and push the nix-config, which includes the 
 fi
 
 green "Success!"
-green "If you are using a disko config with luks partitions, update luks to use non-temporary credentials."
