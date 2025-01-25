@@ -1,7 +1,28 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
   nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+
+  sops = {
+    secrets."tokens/mc-bot-token" = { };
+    templates = {
+      "discord-mc-chat.json" = {
+        mode = "0444";
+        file = (pkgs.formats.json { }).generate "discord-mc-chat.json" {
+          bot-token = config.sops.placeholder."tokens/mc-bot-token";
+          channelId = "1329723974610980938";
+          announceAdvancements = false;
+          allowedMentions = [ "users" ];
+          adminsIds = [ "312992893495148545" ];
+        };
+      };
+    };
+  };
 
   services.minecraft-servers = {
     enable = true;
@@ -75,6 +96,7 @@
             '';
           };
           "config/configurabledespawntimer/specific_despawn_times.txt" = ./specific_despawn_times.txt;
+          # "config/discord-mc-chat.json" = config.sops.templates."tokens/mc-bot-token".path;
         };
 
         symlinks = {
@@ -104,6 +126,10 @@
                 url = "https://cdn.modrinth.com/data/Y8o1j1Sf/versions/3d1g5aTY/better-fabric-console-mc1.21.4-1.2.2.jar";
                 sha512 = "aa7ea5e6fad06927462655331985e58d270bf2f6ac31a9c685830e8d4249c6a3de51f2a2e63ddef150432040448926c3238d3bab4722a26733c5e7db64359563";
               };
+              cloth-config = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/9s6osm5g/versions/TJ6o2sr4/cloth-config-17.0.144-fabric.jar";
+                sha512 = "ecc59da51149250284b0752475c7b328e0b0325888948391597afc638d6e67fa436297af12d2067376de0098ffa6ca86aa3b8d6011356c179222404c701c6345";
+              };
               clumps = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/Wnxd13zP/versions/1ZHtT6Xo/Clumps-fabric-1.21.4-22.0.0.1.jar";
                 sha512 = "86909659af2f4b481ae9b230996e86658e622424e28b808d069144bf116bf47191df74cfec8b88bbc37ec9ad8cf5a4a24a0f21b39d6c456132331881c8575aeb";
@@ -119,6 +145,10 @@
               debugify = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/QwxR6Gcd/versions/yjpSgPEw/Debugify-1.21.4%2B1.1.jar";
                 sha512 = "6fcc75db9606e443b976b913aee9cba244dc288f652c1d992329087eefae174f92b345966c925e3749d7b819634f0db4e5a285200597b9641788f22a7c7e2ea5";
+              };
+              discord-mc-chat = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/D0sHdnXY/versions/fgxnpAd1/Discord-MC-Chat-2.4.0.jar";
+                sha512 = "09f88bf9ab1347a5eb90ed7a55a7c30846d3451557c9a9c366d3d68deed4655e5e4e124f2cc9404df5d3841a28dc73890191e9ea97e5655d0f1d1321f83a3128";
               };
               fabric-api = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/r5NCKSxv/fabric-api-0.114.3%2B1.21.4.jar";
@@ -167,6 +197,10 @@
               noisium = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/KuNKN7d2/versions/9NHdQfkN/noisium-fabric-2.5.0%2Bmc1.21.4.jar";
                 sha512 = "3119f9325a9ce13d851d4f6eddabade382222c80296266506a155f8e12f32a195a00a75c40a8d062e4439f5a7ef66f3af9a46f9f3b3cb799f3b66b73ca2edee8";
+              };
+              rei = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/nfn13YXA/versions/aBHkMOqF/RoughlyEnoughItems-18.0.796-fabric.jar";
+                sha512 = "d54516e02f8e0b5a11ddad70ffb6e6f3fa8c8dfc906456163cd26b628b4f5bacb9a97b20eca984ce4a549a370f61b5b03ba99be58dc1182b404446d2d1cc96e7";
               };
               rightclickharvest = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/Cnejf5xM/versions/lylk05D8/rightclickharvest-fabric-4.4.4%2B1.21.4.jar";

@@ -105,6 +105,13 @@ in
     hdr = lib.mkForce true;
   };
 
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
+
   # set custom autologin options. see greetd.nix for details
   autoLogin.enable = lib.mkIf (config.hostSpec.isServer) true;
   autoLogin.username = config.hostSpec.username;
