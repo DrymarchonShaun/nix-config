@@ -18,6 +18,7 @@ configuration tweaks.
   - [2. Deploying the main flake's NixOS configuration](#2-deploying-the-main-flakes-nixos-configuration)
   - [3. Change LUKS2's passphrase and enroll yubikeys](#3-change-luks2s-passphrase-and-enroll-yubikeys)
   - [4. Everything else](#4-everything-else)
+- [Troubleshooting](#Troubleshooting)
 
 ## Why an extra flake?
 
@@ -49,7 +50,7 @@ This is only relevant if you are not using a physical system.
 
 - If you are using swap, remember a lot of space will be used for swap from your main disk (maybe 16GB) so setup a 40GB
   if you want a 20GB disk, or pass `withSwap = false;` to the disko module in `nixos-installer/flake.nix`
-- Setup UEFI
+- Setup UEFI!!!
 - Add the DVD-rom pointing to the iso
 - Add the yubikey device
 - Record the ip address after initial boot
@@ -325,3 +326,11 @@ Here you should have a fully working system, but some stuff you still need to do
 - Re-link signal
 - Manually set syncthing username/password
 - login to spotify
+-
+
+## Troubleshooting
+
+### Rebooting a VM into the minimal-config environment hangs indefinitely on "booting in to hard disk..."
+
+The VM __must__ be created with the hypervisor firmware set to UEFI instead of BIOS
+You will likely have to re-create the VM as this can't be changed after the fact.
