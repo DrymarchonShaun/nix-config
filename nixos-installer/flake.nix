@@ -69,7 +69,7 @@
           ];
         };
 
-        corais = newConfig "corais" "/dev/nvme0n1" false true "24";
+        corais = newConfig "corais" "/dev/disk/by-id/nvme-eui.00253854119048ec" 24 false;
 
         natrix = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
