@@ -18,6 +18,7 @@ let
 
   yubikeyHostsWithoutDomain = [
     config.hostSpec.networking.subnets.grove.wildcard
+    config.hostSpec.networking.subnets.vm-lan.wildcard
   ] ++ inputs.nix-secrets.networking.ssh.yubikeyHosts;
 
   # Add domain to each host name
