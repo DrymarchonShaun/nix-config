@@ -156,10 +156,11 @@ function nixos_anywhere() {
 	fi
 
 	# If you are rebuilding a machine without any hardware changes, this is likely unneeded or even possibly disruptive
-	if yes_or_no "Generate a new hardware config for this host?"; then
+	if no_or_yes "Generate a new hardware config for this host?\nSay yes only if you don't already have a local hardware-configuration.nix for the target host in your repo."; then
 		green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
 		$ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
 		$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix "${git_root}"/hosts/nixos/"$target_hostname"/hardware-configuration.nix
+		generated_hardware_config=1
 	fi
 
 	# --extra-files here picks up the ssh host key we generated earlier and puts it onto the target machine
@@ -323,9 +324,11 @@ else
 	echo
 fi
 
-if yes_or_no "Do you want to commit and push the nix-config, which includes the hardware-configuration.nix for $target_hostname?"; then
-	(pre-commit run --all-files 2>/dev/null || true) &&
-		git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" && (git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) && git push
+if [[ $generated_hardware_config == 1 ]]; then
+	if yes_or_no "Do you want to commit and push the generated hardware-configuration.nix for $target_hostname to nix-config?"; then
+		(pre-commit run --all-files 2>/dev/null || true) &&
+			git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" && (git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) && git push
+	fi
 fi
 
 green "Success!"
