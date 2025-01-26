@@ -25,7 +25,11 @@ in
       user = config.users.users.${hostSpec.username}.name;
       group = config.users.users.${hostSpec.username}.group;
     in
-    [ "d /home/${hostSpec.username}/.ssh/sockets 0750 ${user} ${group} -" ];
+    # you must set the rule for .ssh separately first, otherwise it will be automatically created as root:root and .ssh/sockects will fail
+    [
+      "d /home/${hostSpec.username}/.ssh 0750 ${user} ${group} -"
+      "d /home/${hostSpec.username}/.ssh/sockets 0750 ${user} ${group} -"
+    ];
 
   # No matter what environment we are in we want these tools
   programs.zsh.enable = true;
