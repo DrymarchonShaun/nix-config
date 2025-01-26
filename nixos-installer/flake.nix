@@ -22,7 +22,7 @@
 
       # This mkHost is way better: https://github.com/linyinfeng/dotfiles/blob/8785bdb188504cfda3daae9c3f70a6935e35c4df/flake/hosts.nix#L358
       newConfig =
-        name: disk: useLuks: withSwap: swapSize:
+        name: disk: swapSize: useLuks:
         (
           let
             diskSpecPath =
@@ -36,7 +36,9 @@
               diskSpecPath
               {
                 _module.args = {
-                  inherit disk withSwap swapSize;
+                  inherit disk;
+                  withSwap = swapSize > 0;
+                  swapSize = builtins.toString swapSize;
                 };
               }
               ./minimal-configuration.nix
@@ -49,11 +51,11 @@
     in
     {
       nixosConfigurations = {
-        # host = newConfig "name" disk" "useLuks" "withSwap" "swapSize"
+        # host = newConfig "name" disk" "swapSize" "useLuks"
         # Swap size is in GiB
-        grief = newConfig "grief" "/dev/vda" false false "0";
-        guppy = newConfig "guppy" "/dev/vda" false false "0";
-        gusto = newConfig "gusto" "/dev/nvme0n1" false true "8";
+        grief = newConfig "grief" "/dev/vda" 0 false;
+        guppy = newConfig "guppy" "/dev/vda" 0 false;
+        gusto = newConfig "gusto" "/dev/nvme0n1" 8 false;
 
         ghost = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
