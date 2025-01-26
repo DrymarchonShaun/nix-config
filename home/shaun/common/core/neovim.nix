@@ -1,24 +1,30 @@
 {
   inputs,
   pkgs,
+  lib,
   config,
-  osConfig,
   ...
 }:
+let
+  flakeRoot = lib.custom.relativeToRoot "./.";
+in
 {
   home.packages = [
     (inputs.nvix.packages.${pkgs.system}.default.extend {
-      plugins.lsp.servers.nixd.settings =
-        let
-          flake = ''builtins.getFlake "/home/${config.hostSpec.username}/.src/nix-config"'';
-        in
-        {
-          nixpkgs.expr = "${flake}.inputs.nixpkgs { }";
-          formatting.command = [ "nixfmt" ];
+      plugins.lsp.servers.nixd = {
+        settings = {
+          nixpkgs.expr = ''import (builtins.getFlake "${flakeRoot}").inputs.nixpkgs {}'';
           options = {
-            nixOptions.expr = ''(${flake}).nixosConfigurations.${osConfig.networking.hostName}.options'';
+            nixos.expr = ''
+              let configs = (builtins.getFlake "${flakeRoot}").nixosConfigurations;
+              in (builtins.head (builtins.attrValues configs)).options
+            '';
+            home_manager.expr = ''
+              (builtins.getFlake "${flakeRoot}").nixosConfigurations.${config.hostSpec.hostName}.options.home-manager.users.value.${config.hostSpec.username}
+            '';
           };
         };
+      };
     })
   ];
 }
