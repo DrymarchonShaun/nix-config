@@ -116,6 +116,7 @@ in
       pfetch # system info
       pre-commit # git hooks
       p7zip # compression & encryption
+      unar # decompression
       ripgrep # better grep
       steam-run # for running non-NixOS-packaged binaries on Nix
       usbutils
