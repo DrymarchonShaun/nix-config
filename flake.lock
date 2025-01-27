@@ -1052,11 +1052,11 @@
         "windows-mc": "windows-mc"
       },
       "locked": {
-        "lastModified": 1737621391,
-        "narHash": "sha256-MsfHrR6sVvecJyfDOhFLZpA7RPp+BmZ45wV0KTt1ILY=",
+        "lastModified": 1737938978,
+        "narHash": "sha256-hMcRciZktjcAuEsS6PGnhETinticU5FHd3s1mlBVRQI=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "05d968bbd7b4847a9da0b57ac8e13fa0b3a28abb",
+        "rev": "c0ccf0f4308f3a3ae84b4332fe38b18647700de4",
         "type": "github"
       },
       "original": {

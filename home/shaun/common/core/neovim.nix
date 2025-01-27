@@ -22,6 +22,9 @@ in
             home_manager.expr = ''
               (builtins.getFlake "${flakeRoot}").nixosConfigurations.${config.hostSpec.hostName}.options.home-manager.users.value.${config.hostSpec.username}
             '';
+            nixvim.expr = ''
+              (builtins.getFlake "${flakeRoot}").inputs.nvix.packages.${pkgs.system}.default.options
+            '';
           };
         };
       };
