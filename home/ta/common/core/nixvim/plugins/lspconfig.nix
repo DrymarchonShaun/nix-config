@@ -51,7 +51,7 @@ in
                 options = {
                   nixos = {
                     expr = ''
-                      let configs = (builtins.getFlake ${flakeRoot}).nixosConfigurations;
+                      let configs = (builtins.getFlake "${flakeRoot}").nixosConfigurations;
                       in (builtins.head (builtins.attrValues configs)).options
                     '';
                   };
@@ -62,7 +62,7 @@ in
                   };
                   darwin = {
                     expr = ''
-                      let configs = (builtins.getFlake ${flakeRoot}).darwinConfigurations;
+                      let configs = (builtins.getFlake "${flakeRoot}").darwinConfigurations;
                       in (builtins.head (builtins.attrValues configs)).options
                     '';
                   };
