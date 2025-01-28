@@ -4,16 +4,12 @@
 
 ## Short Term
 
-- complete firewall and services.per-network-services branch when genoa is nixified
-
 - consider tagging with version numbers that match roadmap
 
 ### Current roadmap focus items - 5.2
 
-- Revise:
-    - ~~nixos-installer~~
-    - bootstrap script - TESTING
-    - ~~complete migration to granular secrets files~~
+- final bootstrap testing and fixes
+- fix installation docs
 
 #### General workflow improvements
 
@@ -167,38 +163,45 @@ Migrate primary box to NixOS
 - ~~hotkey for sleeping monitors (all or non-primary)~~
 - ~~set up copyq clipboard mgr~~
 
-##### Stage 4 References
-
-- [stylix](https://github.com/danth/stylix)
-- [nix-colors](https://github.com/Misterio77/nix-colors)
-
-#### 5. Squeaky clean
+#### 5. Refactoring
 Some of the original parts of this stage have been split off to later stages because they are more Nice to Have at the moment.
 
-##### 5.1 reduce duplication and modularize
+##### 5.1 Reduce duplication and modularize
 
 - ~~Refactor nix-config to use more extensive specialArgs and extraSpecial Args for common user and host settings~~
 - ~~Refactor from configVars to modularized hostSpec~~
 - ~~Re-implement modules to make use of options for enablement~~ deferred, nice to have
 
-##### 5.2 bootstrap fix
+##### 5.2 Refactor secrets
+
+- ~~separate soft and hard secrets~~
+- ~~per-host sops secrets~~
+- ~~create example, public repo for nix-secrets~~
+
+##### 5.3 Bootstrap fix
 
 - Revise bootstrap script and roll in granular secrets hierarchy
+
+##### 5.4 Starter repo
+
+Set up separate, stripped-down and simplified nix-config for new comers
 
 ##### 5.x Extras
 
 - ~~move Gusto to disko~~~
-- revisit scanPaths. Usage in hosts/common/core is doubled up when hosts/common/core/services is imported. Options are: declare services imports individually in services/default.nix, move services modules into parent core directory... or add a recursive variant of scanPaths.
 
-#### 6. Laptops
+#### 6. Laptops and improved network handling
 
 Add laptop support to the mix to handle stuff like power, lid state, wifi, and the like.
 
+##### 6.1 Laptops
 - nixify genoa
 - add laptop utils
-- declarative wifi network handling
 
-#### 7. Impermanence and Lanzaboote
+##### 6.2 Improved network handling
+- complete firewall and services.per-network-services branch
+
+#### 7. Squeaky clean
 
 ##### 7.1 Impermanence
 
@@ -223,6 +226,7 @@ Some stage 1 with systemd info for reference (not specific to lanzaboote)
 - Overhaul just file
   - clean up
   - add {{just.executable()}} to just entries
+- revisit scanPaths. Usage in hosts/common/core is doubled up when hosts/common/core/services is imported. Options are: declare services imports individually in services/default.nix, move services modules into parent core directory... or add a recursive variant of scanPaths.
 
 ##### Stage 7 references
 
@@ -246,13 +250,13 @@ Migrating bash scripts to nix
 
 #### 8. Improving remote
 
-##### 8.1 automate config deployment
+##### 8.1 Automate config deployment
 
 - Per host branch scheme
 - Automated machine update on branch release
 - Handle general auto updates as well
 
-##### 8.2 remote luks decryption
+##### 8.2 Remote luks decryption
 
 The following has to happen on bare metal because I can't seem to get the yubikey's to redirect to the VM for use with git-agecrypt.
 
@@ -289,6 +293,12 @@ The following has to happen on bare metal because I can't seem to get the yubike
 
 Inspirational sets:
 - see FF bookmarks > Nix > Rice >
+
+##### Stage 9 References
+
+- [stylix](https://github.com/danth/stylix)
+- [nix-colors](https://github.com/Misterio77/nix-colors)
+
 
 #### 8. tbd
 
