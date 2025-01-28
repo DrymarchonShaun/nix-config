@@ -85,9 +85,10 @@ in
       #updateHostKeys = "ask";
       hashKnownHosts = true;
 
+      addKeysToAgent = "yes";
+
       # Bring in decrypted config
       extraConfig = ''
-        AddKeysToAgent yes
         # Prevent initrd ssh and regular ssh key server IDs wanting to replace eachother
         UpdateHostKeys ask
         ${workConfig}
