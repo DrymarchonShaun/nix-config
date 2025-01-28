@@ -144,6 +144,9 @@ in
       vi = "nvim";
       vim = "nvim";
 
+      #-------------SSH---------------
+      ssh = "TERM=xterm ssh";
+
       #-------------Git Goodness-------------
       # just reference `$ alias` and use the defaults, they're good.
     };
