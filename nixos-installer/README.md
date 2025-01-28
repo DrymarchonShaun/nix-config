@@ -1,9 +1,12 @@
 #FIXME(docs): this needs cleanup and correction to a few things
+#TODO: add info about sops-nix failing to start when rebuilding full config on completely new hosts. nix-config will expect entries for secrets such as u2f that won't exist yet.
+# As part of installation process, the various passwords/keys (other than auto generated age host key) will need to be manually added to the <host>.yaml file.
+# This is unavoidable on new boxes unless you take the time to create and key the secrets file for the host prior to installation
 
 # Nix Environment Setup for an existing host
 
-This flake prepares a Nix environment for setting my systems up on a new machine, which allows easier testing and early
-configuration tweaks.
+This flake prepares a Nix environment for bootstrapping a host on a new machine, which allows easier testing and early
+configuration tweaks:
 
 - [Nix Environment Setup for an existing host](#nix-environment-setup-for-an-existing-host)
   - [Why an extra flake?](#why-an-extra-flake)
@@ -25,9 +28,9 @@ configuration tweaks.
 The configuration of the main flake, [/flake.nix](/flake.nix), is heavy, and it takes time to debug
 & deploy. This simplified flake is tiny and can be deployed very quickly, it helps to:
 
-1. Adjust & verify my `hardware-configuration.nix` modification quickly before deploying the main
+1. Adjust & verify the new host's `hardware-configuration.nix` modification quickly before deploying the main
    flake.
-2. Test some new filesystem related features on a NixOS virtual machine, such as impermanence,
+2. Test new filesystem related features on a NixOS virtual machine, such as impermanence,
    Secure Boot, TPM2, Encryption, etc.
 
 ## Brand new host
@@ -35,13 +38,12 @@ The configuration of the main flake, [/flake.nix](/flake.nix), is heavy, and it 
 - Add `hosts/<hostname>/` files
 - Find disk name from livecd with `lsblk`
 - Find RAM amount form livcde with `free -m`
-- Add `nixos-installer/flake.nix` entry, and pass disk name and swap
-- Add an age key to keys/age entry in nix-secrets (# FIXME(docs): This can be automated)
+- Add an entry for the host in `nixos-installer/flake.nix`, passing in the required args
 - If you'll be using backup, add a borg passphrase to nix-secrets
 
 ## Steps to Deploying this flake
 
-- Run `just iso` to generate the iso file and use the `result/iso/*.iso` file to boot into it on the target machine/vm
+- Run `just iso` to generate the iso file and use the `latest.iso` symlink or the actual `result/iso/*.iso` path to boot into it on the target machine/vm
 - Run `just iso-install <disk>` to generate the iso file automatically copy it to a USB drive
 
 ### 0. VM setup (optional)
@@ -49,8 +51,9 @@ The configuration of the main flake, [/flake.nix](/flake.nix), is heavy, and it 
 This is only relevant if you are not using a physical system.
 
 - If you are using swap, remember a lot of space will be used for swap from your main disk (maybe 16GB) so setup a 40GB
-  if you want a 20GB disk, or pass `withSwap = false;` to the disko module in `nixos-installer/flake.nix`
-- Setup UEFI!!!
+  if you want a 20GB disk, or pass a swapSize of `0` in the newConfig arguments for this host in `nixos-installer/flake.nix`
+- You _must_ set up the hypervisor firmware as UEFI instead of BIOS or the vm will fail to boot into the minimal-configuration.
+  When creating the vm using virtmanager, you must select "Customize configuration before install" during step 5 of 5, and then change BIOS to UEFI on the next screen.
 - Add the DVD-rom pointing to the iso
 - Add the yubikey device
 - Record the ip address after initial boot
@@ -81,9 +84,6 @@ This will give you of few yes/no questions, but if everything works you should e
 running the main flake (even though it first transitions through nixos-installer flake first).
 
 You should test the passwords work as expected.
-
-
-
 
 
 ### 1b. Manual Setup (Host/VM)
@@ -301,7 +301,7 @@ You need the UUID of the partition that the volume exists on, not the uuid of th
   ''
 }
 ```
-exmaple:
+example:
 ```nix
 {
    environment.etc.crypttab.text = ''
@@ -314,6 +314,7 @@ With this approach, the secondary drive is unlocked just before the boot process
 The secondary drive will be unlocked and made available under /dev/mapper/cryptstorage for mounting.
 
 ## 4. Everything else
+
 
 Here you should have a fully working system, but some stuff you still need to do:
 
