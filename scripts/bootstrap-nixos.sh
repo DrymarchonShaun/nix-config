@@ -26,7 +26,7 @@ trap cleanup exit
 # Copy data to the target machine
 function sync() {
 	# $1 = user, $2 = source, $3 = destination
-	rsync -av --filter=':- .gitignore' -e "ssh -l $1 -oport=${ssh_port}" "$2" "$1@${target_destination}:"
+	rsync -av --filter=':- .gitignore' -e "ssh -oControlMaster=no -l $1 -oport=${ssh_port}" "$2" "$1@${target_destination}:"
 }
 
 # Usage function
@@ -108,10 +108,10 @@ if [ -z "$target_hostname" ] || [ -z "$target_destination" ] || [ -z "$ssh_key" 
 fi
 
 # SSH commands
-ssh_cmd="ssh -oControlMaster=no -oport=${ssh_port} -oForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $ssh_key -t $target_user@$target_destination"
+ssh_cmd="ssh -oControlPath=none -oport=${ssh_port} -oForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $ssh_key -t $target_user@$target_destination"
 # shellcheck disable=SC2001
 ssh_root_cmd=$(echo "$ssh_cmd" | sed "s|${target_user}@|root@|") # uses @ in the sed switch to avoid it triggering on the $ssh_key value
-scp_cmd="scp -oControlMaster=no -oport=${ssh_port} -o StrictHostKeyChecking=no -i $ssh_key"
+scp_cmd="scp -oControlPath=none -oport=${ssh_port} -o StrictHostKeyChecking=no -i $ssh_key"
 
 git_root=$(git rev-parse --show-toplevel)
 
@@ -229,6 +229,9 @@ function generate_user_age_key_and_file() {
 		echo "{}" >"$secret_file"
 		sops --config "$config" -e "$secret_file" >"$secret_file.enc"
 		mv "$secret_file.enc" "$secret_file"
+		cd ../nix-secrets
+		git add sops/"${target_hostname}".yaml
+		cd - >/dev/null
 	fi
 	if ! sops --config "$config" -d --extract '["keys]["age"]' "$secret_file" >/dev/null 2>&1; then
 		if [ -z "$age_secret_key" ]; then
