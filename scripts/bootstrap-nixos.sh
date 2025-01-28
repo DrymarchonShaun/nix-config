@@ -108,7 +108,14 @@ if [ -z "$target_hostname" ] || [ -z "$target_destination" ] || [ -z "$ssh_key" 
 fi
 
 # SSH commands
-ssh_cmd="ssh -oControlPath=none -oport=${ssh_port} -oForwardAgent=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $ssh_key -t $target_user@$target_destination"
+ssh_cmd="ssh \
+        -oControlPath=none \
+        -oport=${ssh_port} \
+        -oForwardAgent=yes \
+        -oStrictHostKeyChecking=no \
+        -oUserKnownHostsFile=/dev/null \
+        -i $ssh_key \
+        -t $target_user@$target_destination"
 # shellcheck disable=SC2001
 ssh_root_cmd=$(echo "$ssh_cmd" | sed "s|${target_user}@|root@|") # uses @ in the sed switch to avoid it triggering on the $ssh_key value
 scp_cmd="scp -oControlPath=none -oport=${ssh_port} -o StrictHostKeyChecking=no -i $ssh_key"
@@ -156,15 +163,21 @@ function nixos_anywhere() {
 	fi
 
 	# If you are rebuilding a machine without any hardware changes, this is likely unneeded or even possibly disruptive
-	if no_or_yes "Generate a new hardware config for this host?\nSay yes only if you don't already have a local hardware-configuration.nix for the target host in your repo."; then
+	if no_or_yes "Generate a new hardware config for this host? Yes if your nix-config doesn't have an entry for this host."; then
 		green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
 		$ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
-		$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix "${git_root}"/hosts/nixos/"$target_hostname"/hardware-configuration.nix
+		$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
+			"${git_root}"/hosts/nixos/"$target_hostname"/hardware-configuration.nix
 		generated_hardware_config=1
 	fi
 
 	# --extra-files here picks up the ssh host key we generated earlier and puts it onto the target machine
-	SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- --ssh-port "$ssh_port" --post-kexec-ssh-port "$ssh_port" --extra-files "$temp" --flake .#"$target_hostname" root@"$target_destination"
+	SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- \
+		--ssh-port "$ssh_port" \
+		--post-kexec-ssh-port "$ssh_port" \
+		--extra-files "$temp" \
+		--flake .#"$target_hostname" \
+		root@"$target_destination"
 
 	if ! yes_or_no "Has your system restarted and are you ready to continue? (no exits)"; then
 		exit 0
@@ -229,6 +242,7 @@ function generate_user_age_key_and_file() {
 		echo "{}" >"$secret_file"
 		sops --config "$config" -e "$secret_file" >"$secret_file.enc"
 		mv "$secret_file.enc" "$secret_file"
+		# We need to add the new file before we rekey later
 		cd ../nix-secrets
 		git add sops/"${target_hostname}".yaml
 		cd - >/dev/null
@@ -330,7 +344,9 @@ fi
 if [[ $generated_hardware_config == 1 ]]; then
 	if yes_or_no "Do you want to commit and push the generated hardware-configuration.nix for $target_hostname to nix-config?"; then
 		(pre-commit run --all-files 2>/dev/null || true) &&
-			git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" && (git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) && git push
+			git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" &&
+			(git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) &&
+			aaagit push
 	fi
 fi
 
