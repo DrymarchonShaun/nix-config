@@ -82,14 +82,11 @@ in
       # Avoids infinite hang if control socket connection interrupted. ex: vpn goes down/up
       serverAliveCountMax = 3;
       serverAliveInterval = 5; # 3 * 5s
-      #updateHostKeys = "ask";
       hashKnownHosts = true;
-
       addKeysToAgent = "yes";
 
       # Bring in decrypted config
       extraConfig = ''
-        # Prevent initrd ssh and regular ssh key server IDs wanting to replace eachother
         UpdateHostKeys ask
         ${workConfig}
       '';
