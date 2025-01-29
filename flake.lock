@@ -1028,11 +1028,11 @@
         "tokyodark": "tokyodark"
       },
       "locked": {
-        "lastModified": 1738007276,
-        "narHash": "sha256-O2iMoC2n7tvoXjwdPXPone0m+Y+aqjsA8W157qZfRqo=",
+        "lastModified": 1738181256,
+        "narHash": "sha256-vPzihOkY6lb8KLmGs9n96lTqTaXjtva2A5ZHOavfcTs=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "a24cb35e451815eafd64c724b389fd34a3d02b7e",
+        "rev": "6f13abbe9431c7407db278b89c0e87b987d02be7",
         "type": "github"
       },
       "original": {
