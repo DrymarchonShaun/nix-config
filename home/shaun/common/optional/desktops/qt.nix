@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   catppuccin.kvantum.enable = true;
   qt = {

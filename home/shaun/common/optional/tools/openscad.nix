@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   gridfinity-rebuilt = pkgs.stdenv.mkDerivation {
     name = "gridfinity-rebuilt";

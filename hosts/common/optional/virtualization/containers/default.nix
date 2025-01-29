@@ -1,4 +1,4 @@
-{ configVars, ... }:
+{ ... }:
 {
   # users.users.${configVars.username}.extraGroups = [
   #  "podman"

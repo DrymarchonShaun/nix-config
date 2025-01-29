@@ -1,13 +1,8 @@
 {
   config,
   pkgs,
-  inputs,
-  lib,
   ...
 }:
-let
-  homeDir = config.home.homeDirectory;
-in
 {
   # Inspiration:
   # - https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/20

@@ -1,8 +1,5 @@
 # NOTE: ... is needed because dikso passes diskoFile
 {
-
-  lib,
-  pkgs,
   config,
   ...
 }:

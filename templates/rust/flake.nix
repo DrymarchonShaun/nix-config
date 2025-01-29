@@ -20,7 +20,7 @@
       flake-utils,
       rust-overlay,
       ...
-    }@inputs:
+    }:
     flake-utils.lib.eachdefaultsystem (
       system:
       let

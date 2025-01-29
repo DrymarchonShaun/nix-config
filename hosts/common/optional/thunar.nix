@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   # home-manager.users.${config.hostSpec.username}.xfconf.settings = {
   #   "thunar" = {
