@@ -426,7 +426,7 @@
 'minecraft:drowned_spawn_egg' : -1,
 'minecraft:dune_armor_trim_smithing_template' : -1,
 'minecraft:echo_shard' : -1,
-'minecraft:egg' : 600,
+'minecraft:egg' : 400,
 'minecraft:elder_guardian_spawn_egg' : -1,
 'minecraft:elytra' : -1,
 'minecraft:emerald' : -1,
