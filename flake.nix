@@ -90,7 +90,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
-        import ./checks { inherit inputs system pkgs; }
+        import ./checks.nix { inherit inputs system pkgs; }
       );
       #
       # ========= DevShell =========
