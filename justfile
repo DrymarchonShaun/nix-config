@@ -41,6 +41,7 @@ update:
 # Update and then rebuild
 rebuild-update: update rebuild
 
+# Git diff there entire repo expcept for flake.lock
 diff:
   git diff ':!flake.lock'
 
@@ -89,7 +90,7 @@ sync USER HOST PATH:
 build-host HOST:
 	NIX_SSHOPTS="-p22" nixos-rebuild --target-host {{HOST}} --use-remote-sudo --show-trace --impure --flake .#"{{HOST}}" switch
 
-# ========== Nix-Secrets manipulation recipes ==========
+# Called by the rekey recipe
 sops-rekey:
   cd ../nix-secrets && for file in $(ls sops/*.yaml); do \
     sops updatekeys -y $file; \
