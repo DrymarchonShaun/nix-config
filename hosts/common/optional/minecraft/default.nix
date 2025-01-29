@@ -102,6 +102,19 @@
         symlinks = {
           mods = pkgs.linkFarmFromDrvs "mods" (
             builtins.attrValues {
+
+              # GitHub
+              carpet = pkgs.fetchurl {
+                url = "https://github.com/gnembon/fabric-carpet/releases/download/1.4.161/fabric-carpet-1.21.4-1.4.161+v241203.jar";
+                sha512 = "fd42f43ae89af7553ee1b8240efda178a05f5b0f45fe359651cea468cfd11fe24996e991c338522f4a17b07b917e9ebda4a5cfa8551fca280c81e536b240a96c";
+              };
+              carpet-extra = pkgs.fetchurl {
+                url = "https://github.com/gnembon/carpet-extra/releases/download/1.4.161/carpet-extra-1.21.4-1.4.161.jar";
+                sha512 = "8afefbc2827151209141b3cbb7d7f3b3ed84befe497446ba384dc0d5cd4e63149aac91c10eb3f6bcc1e942b94df504703fd5cba7814419ead3d0154b229d3203";
+              };
+
+              # Modrinth
+
               amber = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/vjGZJDu5/versions/UOQGwZI8/amber-fabric-1.21.4-2.1.0%2B1.21.4.jar";
                 sha512 = "58d4d73038ea6145ca9f40f9e6ca231e151c9f7ffefbd90fb5d3cb6c0dc6796d96d5f6b83447e90efbd870e4527f646a99cb896490b75b037c2d428ffe6e812e";
@@ -205,6 +218,10 @@
               rightclickharvest = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/Cnejf5xM/versions/lylk05D8/rightclickharvest-fabric-4.4.4%2B1.21.4.jar";
                 sha512 = "c972c4539652adb01f2d7d7e313be39dd49f44a71510a0fce64ae1915b44968b2450ace3e5c38af8959e76792f813ca56ee7fbc4f012e7b6f27d10934828e7f3";
+              };
+              servux = pkgs.fetchurl {
+                url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/fKoMLUos/servux-fabric-1.21.4-0.5.1.jar";
+                sha512 = "49510a9e8d6894567f5d3461fb4b6e87e4d8ecb0664f337fe38f3a79b47887dbe1ac6a233aa0cc4e115b67c4d15ca895fd88a4ee941cdc6f86237a2bbd0c36f1";
               };
               sodium = pkgs.fetchurl {
                 url = "https://cdn.modrinth.com/data/AANobbMI/versions/tu8qILqH/sodium-fabric-0.6.6%2Bmc1.21.4.jar";
