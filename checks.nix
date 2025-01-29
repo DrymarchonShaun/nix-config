@@ -1,9 +1,20 @@
 {
   inputs,
   system,
+  pkgs,
   ...
 }:
 {
+  bats-test =
+    pkgs.runCommand "bats-test"
+      {
+        buildInputs = [ pkgs.bats ];
+      }
+      ''
+        bats tests
+        touch $out
+      '';
+
   pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
     src = ./.;
     default_stages = [ "pre-commit" ];
