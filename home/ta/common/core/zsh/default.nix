@@ -26,7 +26,7 @@ in
         {
           name = "powerlevel10k-config";
           src = ./p10k;
-          file = "p10k.zsh";
+          file = "p10k.zsh.theme";
         }
         {
           name = "zsh-powerlevel10k";
