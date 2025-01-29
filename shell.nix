@@ -33,7 +33,8 @@
         just
         pre-commit
         deadnix
-        yq-go
+        yq-go # jq for yaml, used for build scripts
+        bats # bash testing
 
         age
         ssh-to-age
