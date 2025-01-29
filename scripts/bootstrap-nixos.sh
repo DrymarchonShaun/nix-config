@@ -305,7 +305,6 @@ if [[ $updated_age_keys == 1 ]]; then
 	nix flake update nix-secrets
 fi
 
-green "NOTE: If this is the first time running this script on $target_hostname, the next step is required to continue"
 if yes_or_no "Add ssh host fingerprints for git{lab,hub}?"; then
 	if [ "$target_user" == "root" ]; then
 		home_path="/root"
@@ -325,7 +324,7 @@ if yes_or_no "Do you want to copy your full nix-config and nix-secrets to $targe
 	sync "$target_user" "${git_root}"/../nix-secrets
 
 	# FIXME(bootstrap): Add some sort of key access from the target to download the config (if it's a cloud system)
-	if yes_or_no "Do you want to rebuild immediately? (requires yubikey-agent)"; then
+	if yes_or_no "Do you want to rebuild immediately?"; then
 		green "Rebuilding nix-config on $target_hostname"
 		$ssh_cmd "cd nix-config && sudo nixos-rebuild --impure --show-trace --flake .#$target_hostname switch"
 	fi
@@ -346,7 +345,7 @@ if [[ $generated_hardware_config == 1 ]]; then
 		(pre-commit run --all-files 2>/dev/null || true) &&
 			git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" &&
 			(git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) &&
-			aaagit push
+			git push
 	fi
 fi
 
