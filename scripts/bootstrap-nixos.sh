@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -euo pipefail
 
 # Helpers library
 # shellcheck disable=SC1091
@@ -152,14 +152,18 @@ function nixos_anywhere() {
 	###
 	cd nixos-installer
 	# when using luks, disko expects a passphrase on /tmp/disko-password, so we set it for now and will update the passphrase later
-	temp_luks_passphrase="passphrase"
-	if no_or_yes "Manually set luks encryption passphrase? (Default: \"$temp_luks_passphrase\")"; then
+	luks_passphrase="passphrase"
+	if no_or_yes "Manually set luks encryption passphrase? (Default: \"$luks_passphrase\")"; then
 		blue "Enter your luks encryption passphrase:"
 		read -rs luks_passphrase
 		$ssh_root_cmd "/bin/sh -c 'echo $luks_passphrase > /tmp/disko-password'"
 	else
-		green "Using '$temp_luks_passphrase' as the luks encryption passphrase. Change after installation."
-		$ssh_root_cmd "/bin/sh -c 'echo $temp_luks_passphrase > /tmp/disko-password'"
+		green "Using '$luks_passphrase' as the luks encryption passphrase. Change after installation."
+		$ssh_root_cmd "/bin/sh -c 'echo $luks_passphrase > /tmp/disko-password'"
+	fi
+	# this will run if luks_secondary_drive_labels cli argument was set, regardless of whether the luks_passphrase is default or not
+	if [ -z "${luks_secondary_drive_labels}" ]; then
+		luks_setup_secondary_drive_decryption
 	fi
 
 	# If you are rebuilding a machine without any hardware changes, this is likely unneeded or even possibly disruptive
@@ -259,16 +263,16 @@ function generate_user_age_key_and_file() {
 	fi
 }
 
-function setup_luks_secondary_drive_decryption() {
+function luks_setup_secondary_drive_decryption() {
 	green "Generating /luks-secondary-unlock.key"
 	local key=${persist_dir}/luks-secondary-unlock.key
-	$ssh_root_cmd "/bin/sh -c 'dd bs=512 count=4 if=/dev/random of=$key iflag=fullblock && chmod 400 $key'"
+	$ssh_root_cmd "dd bs=512 count=4 if=/dev/random of=$key iflag=fullblock && chmod 400 $key"
 
 	green "Cryptsetup luksAddKey will now be used to add /luks-secondary-unlock.key for the specified secondary drive names."
 	readarray -td, drivenames <<<"$luks_secondary_drive_labels"
 	for name in "${drivenames[@]}"; do
-		device_path=$($ssh_root_cmd -q "/bin/sh -c 'cryptsetup status \"$name\" | awk \'/device:/ {print \$2}\''")
-		$ssh_root_cmd "/bin/sh -c 'echo \"$luks_passphrase\" | cryptsetup luksAddKey $device_path /luks-secondary-unlock.key'"
+		device_path=$($ssh_root_cmd -q "cryptsetup status \"$name\" | awk \'/device:/ {print \$2}\'")
+		$ssh_root_cmd "echo \"$luks_passphrase\" | cryptsetup luksAddKey $device_path /luks-secondary-unlock.key"
 	done
 }
 
