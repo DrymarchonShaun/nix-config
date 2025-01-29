@@ -7,10 +7,12 @@
 }:
 let
   # FIXME(starter-repo):
-  #  sopsFolder = builtins.toString inputs.nix-secrets;
-  #  secretsFilePath = "${sopsFolder}/secrets.yaml";
+  # sopsFolder = builtins.toString inputs.nix-secrets;
+  # secretsFilePath = "${sopsFolder}/secrets.yaml";
   sopsFolder = (builtins.toString inputs.nix-secrets) + "/sops";
   homeDirectory = config.home.homeDirectory;
+  # FIXME(yubikey): move this, u2f sops extraction, and other yubi stuff to be set as yubikey module options
+  # so it doesn't doesn't interfere with bootstrapping
   yubikeys = [
     "maya"
     "mara"
