@@ -61,7 +61,7 @@ Watch NixOS related videos on my [YouTube channel](https://www.youtube.com/@Emer
   - Optional configs for user and host-specific needs
   - Facilitation for custom modules, overlays, packages, and library
 
-- Secrets management via sops-nix and a _private_ nix-secrets repo which is included as a flake input
+- Secrets management via sops-nix and a _private_ nix-secrets repo that is included as a flake input
 - Declarative, LUKS-encrypted btrfs partitions via disko
 - Automated remote-bootstrapping of NixOS, nix-config, and _private_ nix-secrets
 - Handles multiple YubiKey devices and agent forwarding for touch-based/passwordless authentication during:
@@ -138,9 +138,9 @@ For a large screenshot of the concept diagram, as well as previous iterations, s
 
 ## Secrets Management
 
-Secrets for this config are stored in a private repository called nix-secrets that is pulled in as a flake input and managed using the sops-nix tool.
+Secrets for this config are stored in a private repository called `nix-secrets` that is pulled in as a flake input and managed using the sops-nix tool.
 
-For details on how this is accomplished, how to approach different scenarios, and troubleshooting for some common hurdles, please see my article and accompanying YouTube video [NixOS Secrets Management](https://unmovedcentre.com/posts/secrets-management/) available on my website. There is a [nix-secrets-reference](https://github.com/EmergentMind/nix-secrets-reference) repository that can be used in conjunction with the article.
+For details on how this is accomplished, how to approach different scenarios, and troubleshooting for some common hurdles, please see my article and accompanying YouTube video [NixOS Secrets Management](https://unmovedcentre.com/posts/secrets-management/) available on my website. There is also a [nix-secrets-reference](https://github.com/EmergentMind/nix-secrets-reference) repository that can be used in conjunction with the article.
 
 ## Support
 
@@ -152,10 +152,14 @@ I intentionally keep all of my content ad-free but some platforms, such as YouTu
 
 ## Guidance and Resources
 
+- [NixOS.org Manuals](https://nixos.org/learn/)
 - [Official Nix Documentation](https://nix.dev)
   - [Best practices](https://nix.dev/guides/best-practices)
 - [Noogle](https://noogle.dev/) - Nix API reference documentation.
 - [Official NixOS Wiki](https://wiki.nixos.org/)
+- [NixOS Package Search](https://search.nixos.org/packages)
+- [NixOS Options Search](https://search.nixos.org/options?)
+- [Home Manager Option Search](https://home-manager-options.extranix.com/)
 - [NixOS & Flakes Book](https://nixos-and-flakes.thiscute.world/) - an excellent introductory book by Ryan Yin
 - [Impermanence](https://github.com/nix-community/impermanence)
 - Yubikey

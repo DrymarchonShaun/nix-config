@@ -38,12 +38,12 @@ If you are installing on a bare metal machine, write the .iso to a USB device. Y
 
 ### Pre-installation steps:
 
-1. Add `nix-config/hosts/nixos/<hostname>/` and `nix-config/home/<user>/<hostname>.nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
+1. Add `nix-config/hosts/nixos/[hostname]/` and `nix-config/home/[user]/[hostname].nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
    Be sure to specify the device name (e.g. sda, nvme0n1, vda, etc) you want to install to along with the desired `nix-config/hosts/common/disks` disko spec.
 
    If needed, you can find the device name on the target machine itself by booting it into the iso environment and running `lsblk` to see a list of the devices. Virtual Machines often using a device called `vda`.
 2. Add a `newConfig` entry for the target host in `nix-config/nixos-installer/flake.nix`, passing in the required arguments as noted in the file comments.
-3. If you are planning to use the `yubikey` and/or `backup` modules on the target host, you _must_ temporarily disable them in the target host's config options until bootstrapping is complete. Failure to disable these two modules, will cause nix-config to look for the associated secrets in the new `<hostname>.yaml` secrets file where they have not yet been added, causing sops-nix to fail to start during the build process. After rebuilding, we'll add the required keys to secrets and re-enable these modules.
+3. If you are planning to use the `yubikey` and/or `backup` modules on the target host, you _must_ temporarily disable them in the target host's config options until bootstrapping is complete. Failure to disable these two modules, will cause nix-config to look for the associated secrets in the new `[hostname].yaml` secrets file where they have not yet been added, causing sops-nix to fail to start during the build process. After rebuilding, we'll add the required keys to secrets and re-enable these modules.
     For example:
     ```nix
     # nix-config/hosts/nixos/guppy/default.nix
@@ -72,11 +72,11 @@ In brief, the script will:
 
 - create a host-specific age key pair
 - create a host-specific user age key pair for the primary user
-- create a `nix-secrets/sops/<hostname>.yaml` secrets file with the user age private key (the host age private key is always derived from the host ssh key and therefore does not need to be stored in secrets)
+- create a `nix-secrets/sops/[hostname].yaml` secrets file with the user age private key (the host age private key is always derived from the host ssh key and therefore does not need to be stored in secrets)
 - update the `.sops.yaml` file with:
     - public age keys entries for both the host and user
     - update the `creation_rules` for `shared.yaml` with the host and user age keys for the target host.
-    - create a new `creation_rules` entry for `<hostname>.yaml` specifying that the secrets file can be encrypted and decrypted by the primary user and host of both the target host _AND_ the host from which the installation script is being executed. This is important because until the target host has been fully bootstrapped, its `<hostname>.yaml` must be accessible by something.
+    - create a new `creation_rules` entry for `[hostname].yaml` specifying that the secrets file can be encrypted and decrypted by the primary user and host of both the target host _AND_ the host from which the installation script is being executed. This is important because until the target host has been fully bootstrapped, its `[hostname].yaml` must be accessible by something.
 
         For example, a host `ghost` running the installer script on target host `guppy` will result in the following sops `creation_rules` entry in `.sops.yaml`:
 
@@ -94,7 +94,7 @@ As mentioned, the time for manual steps will be noted below.
 
 ## Requirements for installing an existing nix-config host on a new machine
 
-Prior to installing an existing host config onto a new machine you likely only need to ensure that the `nix-config//hosts/nixos/<hostname>/default.nix`specific the correct disk device for disko.
+Prior to installing an existing host config onto a new machine you likely only need to ensure that the `nix-config//hosts/nixos/[hostname]/default.nix`specific the correct disk device for disko.
 
 Your existing config should already have a `hardware-configuration.nix` and a functioning compliment of sops secrets and sops creation rules. Therefore, many of the steps presented by the script can be safely skipped. The applicable steps will be noted below.
 
@@ -127,11 +127,11 @@ If necessary, note the IP address of the machine by running `ip a`.
 On the source machine where nix-config already resides, run the following command from the root of `nix-confg`.
 
 ```bash
-./scripts/bootstrap-nixos.sh -n <hostname> -d <destination/ip>
+./scripts/bootstrap-nixos.sh -n [hostname] -d [destination]
 ```
 
-Replace `<hostname>` with the name of the target host you are installing.
-Replace `<destination/ip>` with the location of the target machine.
+Replace `[hostname]` with the name of the target host you are installing.
+Replace `[destination]` with the location of the target machine.
 Be sure to specify `--impermanence` if necessary. Use `--debug` if something goes wrong...
 
 This is an example of running the script from `nix-config` base folder installing on a VM (`guppy`) with the `--debug` flag enabled:
@@ -182,15 +182,15 @@ If you've already configured the module for other hosts and just need to get it 
    The -n flag will instruct pamu2fcg to output the registration data as an append to the data for the first key, thus skipping the prefix information.
 5. Repeat the step 4 to add any additional YubiKeys you have.
 6. Copy the `u2f_keys` data by running `cat ~/u2f_keys` and copying the printed data.
-7. Navigate to your `nix-secrets` directory and decrypt the host's secrtes fiel by running `sops ./sops/<hostname>.yaml`, replacing `<hostname>` with the actual hostname.
-8. In the `<hostname>.yaml` file, add a `u2f:` anchor underneath the `age:` key entry that was created by the boostrap script and paste your `u2f_keys` data.
+7. Navigate to your `nix-secrets` directory and decrypt the host's secrtes file by running `sops ./sops/[hostname].yaml`, replacing `[hostname]` with the actual hostname.
+8. In the `[hostname].yaml` file, add a `u2f:` anchor underneath the `age:` key entry that was created by the bootstrap script and paste your `u2f_keys` data.
    For example:
    ```yaml
    keys:
        age: <KEY DATA>
        u2f: <KEY DATA>
    ```
-9. Save and exit `<hostname>.yaml`
+9. Save and exit `[hostname].yaml`
 10. Commit and push the changes to `nix-secrets`
 11. Navigate to your `nix-config` and enable the `yubikey` module in your `hosts/nixos/<host>/default.nix` file or wherever you choose to enable it.
     For example:
