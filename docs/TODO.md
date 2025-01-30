@@ -4,12 +4,21 @@
 
 ## Short Term
 
+- start using issues more than fixmes
 - consider tagging with version numbers that match roadmap
 
-### Current roadmap focus items - 5.2
+### Current roadmap focus items - 5.3
 
-- final bootstrap testing and fixes
-- fix installation docs
+- update to installer blog post
+
+### Current roadmap focus items - 5.4
+- tests
+    - setup a gitlab token for nix-secrets to grant access to github runner
+    - setup a mock nix-secrets folder in tests/ that will be used by the tests
+    - refactor bootstrap script to use an overridable folder for nix-secrets
+    - change helpers.sh to use the overridable folder for nix-secrets
+    - setup .bats file in tests/ to run tests and have a new flake check that runs bats
+    - setup github workflow to run nix flake check
 
 #### General workflow improvements
 
@@ -180,9 +189,15 @@ Some of the original parts of this stage have been split off to later stages bec
 
 ##### 5.3 Bootstrap fix
 
-- Revise bootstrap script and roll in granular secrets hierarchy
+- ~~Revise bootstrap script and roll in granular secrets hierarchy~~
+- ~~Rewrite install steps~~
 
-##### 5.4 Starter repo
+##### 5.4 Tests
+
+- Re-enable CI pipeline.
+- Write bats tests for helpers.sh
+
+##### 5.5 Starter repo
 
 Set up separate, stripped-down and simplified nix-config for new comers
 
@@ -267,7 +282,6 @@ The following has to happen on bare metal because I can't seem to get the yubike
 ##### 8.x Extras
 
 - Automatic scheduled sops rotate
-- Look at re-enabling CI pipelines. These were disabled during stage 2 because I moved to inputting the private nix-secrets repo in flake.nix. Running nix flake check in a gitlab pipeline now requires figuring out access tokens. There were higher priorities considering the check can be run locally prior to pushing.
 - Disk usage notifier
 
 
