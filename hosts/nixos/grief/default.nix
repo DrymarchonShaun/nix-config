@@ -38,8 +38,6 @@
       # ========== Optional Configs ==========
       #
       "hosts/common/optional/services/openssh.nix"
-      #"hosts/common/optional/initrd-ssh.nix"
-      "hosts/common/optional/yubikey.nix"
     ])
   ];
 
@@ -49,14 +47,7 @@
 
   hostSpec = {
     hostName = "grief";
-    useYubikey = lib.mkForce true;
   };
-
-  # set custom autologin options. see greetd.nix for details
-  #  autoLogin.enable = true;
-  #  autoLogin.username = config.hostSpec.username;
-  #
-  #  services.gnome.gnome-keyring.enable = true;
 
   networking = {
     networkmanager.enable = true;
@@ -76,7 +67,6 @@
       "ohci_pci"
       "ehci_pci"
       "virtio_pci"
-      #"virtio_scsci"
       "ahci"
       "usbhid"
       "sr_mod"

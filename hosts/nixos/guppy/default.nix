@@ -16,9 +16,6 @@
     # ========== Hardware ==========
     #
     ./hardware-configuration.nix
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
-    inputs.hardware.nixosModules.common-pc-ssd
 
     #
     # ========== Disk Layout ==========
@@ -41,7 +38,6 @@
       #
       # ========== Optional Configs ==========
       #
-      #"hosts/common/optional/initrd-ssh.nix"
       "hosts/common/optional/services/openssh.nix"
 
     ])
@@ -50,10 +46,8 @@
   #
   # ========== Host Specification ==========
   #
-
   hostSpec = {
     hostName = "guppy";
-    useYubikey = lib.mkForce true;
   };
 
   services.gnome.gnome-keyring.enable = true;
