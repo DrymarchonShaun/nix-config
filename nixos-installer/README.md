@@ -1,6 +1,6 @@
 # NixOS Installer
 
-This flake prepares a Nix environment for bootstrapping a nix-config host on a new machine. Most of the process is automated with the `nixos-bootstrap.sh` script that is run on a "source" host to install NixOS on a "target" machine. There are a couple of small manual steps that are typical of any OS installation procedure, such defining information about the target host and adding host-specific secrets to the relevant sops secrets file. This document explains some of the reasoning behind the use of a separate flake and then provides installation steps. For a more indepth look at some of the concepts, reasoning, and automation process, see the blog post [Remotely Installing NixOS and nix-config with Secrets](https://unmovedcentre.com/posts/remote-install-nixos-config/) on my website. Note that the blog post was written during the first iteration of the bootstrap script and there have been significant enhancements to the code since that time. The general idea and flow still stand and may provide useful insight to understanding the script itself, for those who want to learn more about what it does.
+This flake prepares a Nix environment for bootstrapping a nix-config host on a new machine. Most of the process is automated with the [`nixos-bootstrap.sh`](../scripts/nixos-bootstraph.sh) script that is run on a "source" host to install NixOS on a "target" machine. There are a couple of small manual steps that are typical of any OS installation procedure, such defining information about the target host and adding host-specific secrets to the relevant sops secrets file. This document explains some of the reasoning behind the use of a separate flake and then provides installation steps. For a more indepth look at some of the concepts, reasoning, and automation process, see the blog post [Remotely Installing NixOS and nix-config with Secrets](https://unmovedcentre.com/posts/remote-install-nixos-config/) on my website. Note that the blog post was written during the first iteration of the bootstrap script and there have been significant enhancements to the code since that time. The general idea and flow still stand and may provide useful insight to understanding the script itself, for those who want to learn more about what it does.
 
 - [Why an extra flake?](#why-an-extra-flake)
 - [Assumptions](#assumptions)
@@ -12,9 +12,9 @@ This flake prepares a Nix environment for bootstrapping a nix-config host on a n
 
 ## Why an extra flake?
 
-The main flake, `/flake.nix`, takes longer to build, debug, and deploy because even the core modules are focused on a broad set of functional requirements. In contrast, this simplified flake is focused only on providing an environment with which to accomplish the following:
+The main flake, `nix-config/flake.nix`, takes longer to build, debug, and deploy because even the core modules are focused on a broad set of functional requirements. In contrast, this simplified flake is focused only on providing an environment with which to accomplish the following:
 
-- Prepare the machine to successfully authenticate with our private nix-secrets repo _and_ decrypt an required secrets during when the main flake is built.
+- Prepare the machine to successfully authenticate with our private nix-secrets repo _and_ decrypt the required secrets when the main flake is built.
 - Adjust and verify the new host's `hardware-configuration.nix` and potentially modify it prior to building the main flake.
 - We also have the option of testing new filesystem related features such as impermanence, Secure Boot, TPM2, Encryption, etc in a light weight environment prior to finalizing the main flake.
 
@@ -26,11 +26,11 @@ For users new to Nix and NixOS it may be worth noting that because this script i
 
 ## Generating a custom NixOS ISO
 
-We recommend using a custom ISO similar to what is defined in `/hosts/nixos/iso`. The official minimal NixOS iso has historical omitted some basic tty utilities that are expected by the installer scripts. The config for the ISO used in nix-config are similarly light-weight to `nixos-installer/flake.nix`.
+We recommend using a custom ISO similar to what is defined in `nix-config/hosts/nixos/iso`. The official minimal NixOS iso has historical omitted some basic tty utilities that are expected by the installer scripts. The config for the ISO used in nix-config are similarly light-weight to [`nixos-installer/flake.nix`](flake.nix).
 
 To generate the ISO, simply run `just iso` from the root of your `nix-config` directory. The resulting .iso file will be saved to `nix-config/result/iso/foo.iso`. A symlink to the file is also created at `nix-config/latest.iso`. The filename is time stamped for convenient reference when frequently trying out different ISOs in VMs. For example, `nixos-24.11.20250123.035f8c0-x86_64-linux.iso`.
 
-If you are installing the host to a VM or remote infrastructure, configurat the machine to boot into the .iso file.
+If you are installing the host to a VM or remote infrastructure, configure the machine to boot into the .iso file.
 
 If you are installing on a bare metal machine, write the .iso to a USB device. You can generate the iso and write it to a device in one command, using `just iso /path/to/usb/device`.
 
@@ -38,11 +38,11 @@ If you are installing on a bare metal machine, write the .iso to a USB device. Y
 
 ### Pre-installation steps:
 
-1. Add `hosts/nixos/<hostname>/` and `home/<user>/<hostname>.nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
-   Be sure to specify the device name (e.g. sda, nvme0n1, vda, etc) you want to install to along with the desired `hosts/common/disks` disko spec.
+1. Add `nix-config/hosts/nixos/<hostname>/` and `nix-config/home/<user>/<hostname>.nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
+   Be sure to specify the device name (e.g. sda, nvme0n1, vda, etc) you want to install to along with the desired `nix-config/hosts/common/disks` disko spec.
 
    If needed, you can find the device name on the target machine itself by booting it into the iso environment and running `lsblk` to see a list of the devices. Virtual Machines often using a device called `vda`.
-2. Add a `newConfig` entry for the target host in `nixos-installer/flake.nix`, passing in the required arguments as noted in the file comments.
+2. Add a `newConfig` entry for the target host in `nix-config/nixos-installer/flake.nix`, passing in the required arguments as noted in the file comments.
 3. If you are planning to use the `yubikey` and/or `backup` modules on the target host, you _must_ temporarily disable them in the target host's config options until bootstrapping is complete. Failure to disable these two modules, will cause nix-config to look for the associated secrets in the new `<hostname>.yaml` secrets file where they have not yet been added, causing sops-nix to fail to start during the build process. After rebuilding, we'll add the required keys to secrets and re-enable these modules.
     For example:
     ```nix
@@ -94,11 +94,11 @@ As mentioned, the time for manual steps will be noted below.
 
 ## Requirements for installing an existing nix-config host on a new machine
 
-Prior to installing an existing host config onto a new machine you likely only need to ensure that the `/hosts/nixos/<hostname>/default.nix`specific the correct disk device for disko.
+Prior to installing an existing host config onto a new machine you likely only need to ensure that the `nix-config//hosts/nixos/<hostname>/default.nix`specific the correct disk device for disko.
 
 Your existing config should already have a `hardware-configuration.nix` and a functioning compliment of sops secrets and sops creation rules. Therefore, many of the steps presented by the script can be safely skipped. The applicable steps will be noted below.
 
-If you haven't already, add a `newConfig` entry for the target host in `nixos-installer/flake.nix`, passing in the required arguments as noted in the file comments.
+If you haven't already, add a `newConfig` entry for the target host in `nix-config/nixos-installer/flake.nix`, passing in the required arguments as noted in the file comments.
 
 ## Installation Steps
 
