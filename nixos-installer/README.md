@@ -237,7 +237,7 @@ sudo systemd-cryptenroll --fido2-device=auto /path/to/dev/
 You will need to do it for each yubikey you want to use.
 
 #### Update the unlock passphrase for secondary drive unlock
-If you passed the `--luks-secondary-drive-labels` arg when running the bootstrap script, it automatically created a `/luks-seocndary-unlock.key` file for you using the passphrase you specified during bootstrap.
+If you passed the `--luks-secondary-drive-labels` arg when running the bootstrap script, it automatically created a `/luks-secondary-unlock.key` file for you using the passphrase you specified during bootstrap.
 If you used a temporary passphrase during bootstrap, you can update the secondary unlock key by running the following command and following the prompts.
 
 ```bash
