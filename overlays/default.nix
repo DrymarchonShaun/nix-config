@@ -56,6 +56,15 @@ let
     };
   };
 
+  master-packages = final: _prev: {
+    master = import inputs.nixpkgs-master {
+      inherit (final) system;
+      config.allowUnfree = true;
+      #      overlays = [
+      #     ];
+    };
+  };
+
   dev-packages = final: _prev: {
     dev = import inputs.nixpkgs-dev {
       inherit (final) system;
@@ -75,5 +84,6 @@ in
     // (linuxModifications final prev)
     // (stable-packages final prev)
     // (unstable-packages final prev)
+    // (master-packages final prev)
     // (dev-packages final prev);
 }

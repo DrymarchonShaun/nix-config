@@ -117,6 +117,7 @@
     # See also 'stable-packages' and 'unstable-packages' and 'dev-packages' overlays at 'overlays/default.nix"
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-dev.url = "github:DrymarchonShaun/nixpkgs/dev";
 
     hardware.url = "github:nixos/nixos-hardware";

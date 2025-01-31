@@ -2,6 +2,15 @@
   stdenv,
   writers,
   fetchurl,
+  master ? # If master is not defined, instantiate from locked commit
+    let
+      lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs-master.locked;
+      nixpkgs-master = fetchTarball {
+        url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
+        sha256 = lock.narHash;
+      };
+    in
+    import nixpkgs-master { overlays = [ ]; },
   python3Packages,
   coreutils,
   libnotify,
@@ -19,7 +28,10 @@ stdenv.mkDerivation rec {
 
           # uncomment when vencord is broken
           # vencord = discord;
-          vencord = discord.override { withVencord = true; };
+          vencord = discord.override {
+            vencord = master.vencord;
+            withVencord = true;
+          };
 
           krisp-patcher =
             writers.writePython3Bin "krisp-patcher"

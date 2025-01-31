@@ -800,6 +800,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/e9b51731911566bbf7e4895475a87fe06961de0b.tar.gz"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1738356475,
+        "narHash": "sha256-Qi9qNueYKTmzxGUOO4v9gL1QBymgEBtCiu74+W6nQCg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "135ca8c849b041beebc4682ded3557a2fb16848b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-ovmf": {
       "locked": {
         "lastModified": 1708984720,
@@ -1108,6 +1124,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-dev": "nixpkgs-dev",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvirt": "nixvirt",
