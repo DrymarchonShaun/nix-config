@@ -86,6 +86,7 @@ in
       "hosts/common/optional/thunar.nix" # file manager
       "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/vlc.nix" # media player
+      "hosts/common/optional/net-analysis.nix" # network analysis tools
     ])
     #
     # ========== Corais Specific ==========
