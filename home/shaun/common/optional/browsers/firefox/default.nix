@@ -52,7 +52,12 @@
       ExtensionUpdate = false;
 
       "3rdparty".Extensions = {
-        "uBlock0@raymondhill.net" = import ./ublock-origin.nix;
+        "uBlock0@raymondhill.net" = {
+          permissions = [ "internal:privateBrowsingAllowed" ];
+        } // import ./ublock-origin.nix;
+        "addon@darkreader.org" = {
+          permissions = [ "internal:privateBrowsingAllowed" ];
+        };
       };
       # To copy extensions from an existing profile you can do something like this:
       # cat ~/.mozilla/firefox/fb8sickr.default/extensions.json | jq '.addons[] | [.defaultLocale.name, .id]'
@@ -86,7 +91,6 @@
             (extension "proton-pass" "78272b6fa58f4a1abaac99321d503a20@proton.me" true)
 
             # Layout / Themeing
-            (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp" false)
             (extension "darkreader" "addon@darkreader.org" true)
 
             # Misc
@@ -136,6 +140,19 @@
             "browser.tabs.loadInBackground" = true; # load tabs automaticlaly
             "ui.systemUsesDarkTheme" = 1; # force dark theme
             "extensions.pocket.enabled" = false;
+
+            "privacy.resistFingerprinting.block_mozAddonManager" = true;
+            "extensions.webextensions.restrictedDomains" = builtins.concatStringsSep "," [
+              "accounts-static.cdn.mozilla.net"
+              "addons.cdn.mozilla.net"
+              "api.accounts.firefox.com"
+              "content.cdn.mozilla.net"
+              "discovery.addons.mozilla.org"
+              "install.mozilla.org"
+              "oauth.accounts.firefox.com"
+              "profile.accounts.firefox.com"
+              "sync.services.mozilla.com"
+            ];
           };
 
           search = {
