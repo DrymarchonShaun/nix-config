@@ -13,7 +13,7 @@ let
   # Decrypt password to /run/secrets-for-users/ so it can be used to create the user
   sopsHashedPasswordFile = lib.optionalString (
     !config.hostSpec.isMinimal
-  ) config.sops.secrets."passwords/${hostSpec.username}".path;
+  ) config.sops.secrets."passwords/users/${hostSpec.username}".path;
 in
 {
   users.mutableUsers = false; # Only allow declarative credentials; Required for password to be set via sops during system activation!

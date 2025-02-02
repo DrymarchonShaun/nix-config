@@ -11,7 +11,6 @@ let
   #  sopsFolder = builtins.toString inputs.nix-secrets;
   #  secretsFile = "${sopsFolder}/secrets.yaml";
   sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
-  connections = config.hostSpec.networking.connections;
 in
 {
   #the import for inputs.sops-nix.nixosModules.sops is handled in hosts/common/core/default.nix so that it can be dynamically input according to the platform
@@ -48,11 +47,11 @@ in
         path = "${config.hostSpec.home}/.config/sops/age/keys.txt";
       };
       # extract password/username to /run/secrets-for-users/ so it can be used to create the user
-      "passwords/${config.hostSpec.username}" = {
+      "passwords/users/${config.hostSpec.username}" = {
         sopsFile = "${sopsFolder}/shared.yaml";
         neededForUsers = true;
       };
-      github-token = {
+      "tokens/github" = {
         sopsFile = "${sopsFolder}/shared.yaml";
         mode = "0444";
       };
@@ -67,42 +66,16 @@ in
       };
     })
 
-    (builtins.listToAttrs (
-      map
-        (connection: {
-          name = "networks/${connection.connection.id}_psk";
-          value = {
-            sopsFile = "${sopsFolder}/shared.yaml";
-          };
-        })
-        (
-          builtins.filter (
-            connection: connection ? "wifi-security" && connection."wifi-security" ? psk
-          ) connections
-        )
-    ))
   ];
   # Templates
   sops.templates = {
     "nix-github-token.conf" = {
       mode = "0444";
       content = ''
-        access-tokens = github.com=${config.sops.placeholder.github-token}
+        access-tokens = github.com=${config.sops.placeholder."tokens/github"}
       '';
     };
-    "networks.env" = {
-      mode = "0440";
-      content = lib.concatMapStringsSep "\n" (
-        connection:
-        let
-          id = connection.connection.id;
-        in
-        if connection ? "wifi-security" && connection."wifi-security" ? psk then
-          "${id}_psk=${config.sops.placeholder."networks/${id}_psk"}"
-        else
-          ""
-      ) connections;
-    };
+
   };
   # The containing folders are created as root and if this is the first ~/.config/ entry,
   # the ownership is busted and home-manager can't target because it can't write into .config...
