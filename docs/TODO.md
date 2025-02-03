@@ -4,6 +4,7 @@
 
 ## Short Term
 
+- setup backup for extra drive
 - start using issues more than fixmes
 - consider tagging with version numbers that match roadmap
 
