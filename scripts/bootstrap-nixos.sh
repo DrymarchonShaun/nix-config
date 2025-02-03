@@ -219,7 +219,6 @@ function generate_host_age_key() {
 	sops_update_age_key "hosts" "$target_hostname" "$host_age_key"
 }
 
-age_secret_key=""
 # Generate a user age key
 function generate_user_age_key() {
 	green "Age key does not exist. Generating."
@@ -284,15 +283,18 @@ if [ -z "${target_hostname}" ] || [ -z "${target_destination}" ] || [ -z "${ssh_
 	help_and_exit
 fi
 
+generated_hardware_config=0
 if yes_or_no "Run nixos-anywhere installation?"; then
 	nixos_anywhere
 fi
 
+updated_age_keys=0
 if yes_or_no "Generate host (ssh-based) age key?"; then
 	generate_host_age_key
 	updated_age_keys=1
 fi
 
+age_secret_key=""
 if yes_or_no "Generate user age key?"; then
 	# This may end up creating the host.yaml file, so add creation rules in advance
 	generate_user_age_key_and_file
