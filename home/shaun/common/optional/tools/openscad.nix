@@ -7,8 +7,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "kennetek";
       repo = "gridfinity-rebuilt-openscad";
-      rev = "e1e5dcc49e8ffb5f8d718059830b4313d52f2ed7";
-      sha256 = "sha256-CqWq43CAS4PSfttJfyKUbh9To6OC3wkO4Cg6GY2LcDo=";
+      rev = "993814227204b942fc1c13e64a604427f835742a";
+      hash = "sha256-QluKnfcMsFb1X67E0L2N+uK4DB+yjLwnksYiLMYp22Q=";
     };
 
     dontBuild = true;
