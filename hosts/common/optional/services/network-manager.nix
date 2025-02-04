@@ -14,7 +14,7 @@ in
   ];
 
   sops = {
-    sops.secrets = lib.mkMerge [
+    secrets = lib.mkMerge [
       (builtins.listToAttrs (
         map
           (connection: {
