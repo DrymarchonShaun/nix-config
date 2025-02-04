@@ -14,6 +14,7 @@
     common/optional/development
     common/optional/comms
     common/optional/gaming
+    common/optional/gaming/arma.nix
     common/optional/media
     common/optional/tools
 
