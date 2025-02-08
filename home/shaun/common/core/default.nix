@@ -24,6 +24,7 @@ in
     ./bash.nix
     ./bat.nix
     ./direnv.nix
+    ./ghostty.nix
     ./foot.nix
     ./git.nix
     ./screen.nix
@@ -59,8 +60,8 @@ in
     sessionVariables = {
       FLAKE = "$HOME/.src/nix/nix-config";
       SHELL = "zsh";
-      TERM = "foot";
-      TERMINAL = "foot";
+      TERM = "ghostty";
+      TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
       MANPAGER = "batman"; # see ./cli/bat.nix
@@ -107,6 +108,7 @@ in
       dust # disk usage
       fd # tree style ls
       findutils # find
+      file # file
       fzf # fuzzy search
       jq # json pretty printer and manipulator
       nix-tree # nix package tree viewer
