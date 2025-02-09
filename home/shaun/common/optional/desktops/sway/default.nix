@@ -195,6 +195,13 @@
           }
           {
             criteria = {
+              class = "steam_app_107410";
+            };
+            command = "shortcuts_inhibitor enable";
+          }
+
+          {
+            criteria = {
               title = "^Syncthing Tray( \(.*\))?$";
             };
             command = "floating enable";
