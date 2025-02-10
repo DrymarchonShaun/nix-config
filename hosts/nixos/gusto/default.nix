@@ -36,7 +36,7 @@
     #
     # ========== Misc Inputs ==========
     #
-    #inputs.stylix.nixosModules.stylix
+    inputs.stylix.nixosModules.stylix
 
     (map lib.custom.relativeToRoot [
       #
@@ -99,7 +99,7 @@
   # host-wide styling
   stylix = {
     enable = true;
-    image = ~/ad-01.jpg;
+    image = home/media/ad-01.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-moon.yaml";
     opacity = {
       applications = 1.0;
