@@ -99,7 +99,7 @@
   # host-wide styling
   stylix = {
     enable = true;
-    image = home/media/ad-01.jpg;
+    image = home/ta/ad-01.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-moon.yaml";
     opacity = {
       applications = 1.0;
