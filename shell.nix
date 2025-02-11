@@ -33,6 +33,7 @@
         just
         pre-commit
         deadnix
+        sops
         yq-go # jq for yaml, used for build scripts
         bats # for bash testing
         age # for bootstrap script
