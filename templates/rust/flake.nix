@@ -21,7 +21,7 @@
       rust-overlay,
       ...
     }:
-    flake-utils.lib.eachdefaultsystem (
+    flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = (nixpkgs.legacyPackages.${system}.extend rust-overlay.overlays.default);
