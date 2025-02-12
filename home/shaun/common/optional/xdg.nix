@@ -11,6 +11,7 @@ let
   # https://github.com/iggut/GamiNiX/blob/8070528de419703e13b4d234ef39f05966a7fafb/system/desktop/home-main.nix#L77
   associations = {
     "text/*" = editor;
+    "text/x-*" = editor;
     "text/plain" = editor;
 
     # "text/html" = browser;
@@ -134,7 +135,13 @@ in
 
   home.packages = builtins.attrValues {
     inherit (pkgs)
+      xdg-user-dirs
       handlr-regex # better xdg-open for desktop apps
       ;
+  };
+
+  programs.zsh.shellAliases = {
+    xdg-open = "echo \"Use handlr instead of xdg-open\"; handlr --help";
+    xdg-mime = "echo \"Use handlr instead of xdg-mime\"; handlr --help";
   };
 }

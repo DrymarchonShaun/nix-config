@@ -128,8 +128,6 @@ in
       wev # show wayland events. also handy for detecting keypress codes
       wlprop # show sway window properties
       wget # downloader
-      xdg-utils # provide cli tools such as `xdg-mime` and `xdg-open`
-      xdg-user-dirs
       yq-go # yaml pretty printer and manipulator
       zip # zip compression
       ;
