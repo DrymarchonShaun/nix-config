@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     disko.url = "github:nix-community/disko"; # Declarative partitioning and formatting
+    nvix.url = "github:DrymarchonShaun/nvix";
   };
 
   outputs =
@@ -53,23 +54,24 @@
       nixosConfigurations = {
         # host = newConfig "name" disk" "swapSize" "useLuks"
         # Swap size is in GiB
-        grief = newConfig "grief" "/dev/vda" 0 false;
-        guppy = newConfig "guppy" "/dev/vda" 0 false;
-        gusto = newConfig "gusto" "/dev/nvme0n1" 8 false;
-
-        ghost = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = minimalSpecialArgs;
-          modules = [
-            inputs.disko.nixosModules.disko
-            ../hosts/common/disks/ghost.nix
-            ./minimal-configuration.nix
-            { networking.hostName = "ghost"; }
-            ../hosts/nixos/ghost/hardware-configuration.nix
-          ];
-        };
+        # grief = newConfig "grief" "/dev/vda" 0 false;
+        # guppy = newConfig "guppy" "/dev/vda" 0 false;
+        # gusto = newConfig "gusto" "/dev/nvme0n1" 8 false;
+        #
+        # ghost = nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   specialArgs = minimalSpecialArgs;
+        #   modules = [
+        #     inputs.disko.nixosModules.disko
+        #     ../hosts/common/disks/ghost.nix
+        #     ./minimal-configuration.nix
+        #     { networking.hostName = "ghost"; }
+        #     ../hosts/nixos/ghost/hardware-configuration.nix
+        #   ];
+        # };
 
         corais = newConfig "corais" "/dev/disk/by-id/nvme-eui.00253854119048ec" 24 false;
+        getula = newConfig "getula" "/dev/disk/by-id/wwn-0x50026b738033a0f0" 16 false;
 
         natrix = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

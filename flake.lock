@@ -725,10 +725,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1738479734,
-        "narHash": "sha256-EXU7CgJC+cgmngEK8iJ9t9PV5bFQfy78XEdotKR3tgg=",
+        "lastModified": 1739599217,
+        "narHash": "sha256-n297WoluKSZjJADyzrCywJIvdZNlJbyn7dYNIz0j0hQ=",
         "ref": "main",
-        "rev": "6722a297fae3b152b0adf89c3cb01d92ba523646",
+        "rev": "030d9d589477bb84d922c207e17ea93bcea60a4f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@codeberg.org/DrymarchonShaun/nix-secrets"
@@ -774,11 +774,11 @@
     },
     "nixpkgs-dev": {
       "locked": {
-        "lastModified": 1736707368,
-        "narHash": "sha256-q7IMoh6NL04s0IU17r/kTlkRhIX24ITonJasTCfKWb4=",
+        "lastModified": 1739482194,
+        "narHash": "sha256-Nl80fEaIxxGr6qdY7jpmuppuHgfeeJYeHe5XcPWrt6s=",
         "owner": "DrymarchonShaun",
         "repo": "nixpkgs",
-        "rev": "1ec9fae2c6fd1a1ecc88a43c53db84728f14e22f",
+        "rev": "73527a21e391e232cadb45f34987937cf9b359a8",
         "type": "github"
       },
       "original": {

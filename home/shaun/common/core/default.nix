@@ -24,8 +24,6 @@ in
     ./bash.nix
     ./bat.nix
     ./direnv.nix
-    ./ghostty.nix
-    ./foot.nix
     ./git.nix
     ./screen.nix
     ./ssh.nix

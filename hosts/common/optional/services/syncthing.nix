@@ -44,7 +44,13 @@
             // override;
         in
         {
-          "Documents" = defaultFolder "Documents" { };
+          "Documents" = defaultFolder "Documents" {
+            devices = [
+              "corais"
+              "natrix"
+              "getula"
+            ];
+          };
           "Games" = defaultFolder "Games" {
             path = "${config.hostSpec.home}/Games/Shared";
           };
@@ -57,6 +63,7 @@
               "corais"
               "natrix"
               "dekayi"
+              "getula"
             ];
           };
           "PrismInstances" = defaultFolder "PrismInstances" {
@@ -75,6 +82,10 @@
         "dekayi" = {
           name = "dekayi";
           id = "2VG3CY3-ECCBLGF-V4E3OMN-X5NERGR-PNZ664G-MVY5VTL-TSCM3GY-IZ5WHAH";
+        };
+        "getula" = {
+          name = "getula";
+          id = "2INLTFY-LID25YN-MDYG5GD-CHINDJH-JWJ6BUC-AQBH4L3-4SEND3E-6RBW3QW";
         };
       };
     };

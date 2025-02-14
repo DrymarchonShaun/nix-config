@@ -26,6 +26,9 @@ let
     #        (prev.lib.cmakeBool "USE_WAYLAND_CLIPBOARD" true)
     #      ];
     #    };
+
+    steam = final.dev.steam;
+
     arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
       patches = oldAttrs.patches or [ ] ++ [
         (prev.fetchpatch {

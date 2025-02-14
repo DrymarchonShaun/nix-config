@@ -19,6 +19,10 @@
       type = lib.types.attrsOf lib.types.str;
       description = "The email of the user";
     };
+    usernames = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      description = "An attribute set of usernames";
+    };
     # FIXME(hostSpec): Set an assert to make sure this is set if isWork is true
     work = lib.mkOption {
       default = { };

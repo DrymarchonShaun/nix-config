@@ -1,59 +1,162 @@
-#Note: ctrl+r to cycle filter modes
 {
-  config,
   inputs,
+  config,
+  pkgs,
+  lib,
   ...
 }:
 let
-  sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
+  sopsFolder = (builtins.toString inputs.nix-secrets) + "/sops";
+
+  inherit (pkgs.stdenv) isLinux isDarwin;
+
+  atuin = "${config.programs.atuin.package}/bin/atuin";
+
+  automaticLogin = config.programs.atuin.enable;
+  automaticLoginScript = pkgs.writeShellScript "automatic-atuin-login.sh" ''
+    if [ -e ${config.home.homeDirectory}/.local/share/atuin/session ]; then
+      echo "atuin session exists already"
+    else
+      echo "Logging into atuin server"
+      ${atuin} login \
+        -u "${config.hostSpec.usernames.atuin}" \
+        -p "$(cat ${config.sops.secrets."passwords/misc/atuin".path})" \
+        -k "$(cat ${config.sops.secrets."keys/atuin".path})"
+    fi
+  '';
 in
-{
-  # FIXME(atuin): Add the background sync service
-  # https://forum.atuin.sh/t/getting-the-daemon-working-on-nixos/334
-  programs.atuin = {
-    enable = true;
+lib.mkMerge [
+  {
+    sops.secrets = {
+      "passwords/misc/atuin" = {
+        sopsFile = "${sopsFolder}/shared.yaml";
+      };
+      "keys/atuin" = {
+        sopsFile = "${sopsFolder}/shared.yaml";
+      };
+    };
+  }
+  {
+    programs.atuin = {
+      enable = true;
+      flags = [ ];
+      settings = {
+        update_check = false;
+        sync_frequency = "15m";
+        search_mode = "fuzzy";
+        inline_height = 33;
+        enter_accept = "false";
+        common_subcommands = [ "nixos" ];
+        common_prefix = [ "sudo" ];
+        daemon = {
+          enabled = true;
+        };
+      };
+    };
+    programs.zsh.initExtra = ''
+      bindkey '^r' _atuin_search_widget
+    '';
+  }
+  (lib.mkIf isLinux {
 
-    enableBashIntegration = false;
-    enableZshIntegration = true;
-    enableFishIntegration = false;
-
-    settings = {
-      auto_sync = true;
-      # FIXME(atuin): move to private server
-      sync_address = "https://api.atuin.sh";
-      sync_frequency = "30m";
-      update_check = false;
-      filter_mode = "global";
-      invert = true;
-      enter_accept = true;
-      # TODO(atuin): disable when comfortable
-      show_help = true;
-      prefers_reduced_motion = true;
-
-      style = "compact";
-      inline_height = 10;
-      search_mode = "fuzzy";
-      filter_mode_shell_up_key_binding = "session";
-
-      # This came from https://github.com/nifoc/dotfiles/blob/ce5f9e935db1524d008f97e04c50cfdb41317766/home/programs/atuin.nix#L2
-      history_filter = [
-        "^base64decode"
-        "^instagram-dl"
-        "^mp4concat"
-      ];
+    programs.atuin = {
+      settings = {
+        daemon = {
+          systemd_socket = true;
+        };
+      };
+    };
+    home.sessionVariables = {
+      ATUIN_DAEMON__SOCKET_PATH = "$XDG_RUNTIME_DIR/atuin.sock";
     };
 
-    # We use down to trigger, and use up to quickly edit the last entry only
-    # flags = [ "--disable-up-arrow" ];
-  };
-  sops.secrets."keys/atuin" = {
-    sopsFile = "${sopsFolder}/shared.yaml";
-    path = "${config.home.homeDirectory}/.local/share/atuin/key";
-  };
+    systemd.user.services.atuin-daemon = {
+      Unit = {
+        Description = "atuin daemon";
+        After = lib.optionals automaticLogin [ "sops-nix.service" ];
+        Requires = [ "atuin-daemon.socket" ];
+      };
+      Install = {
+        Also = [ "atuin-daemon.socket" ];
+        WantedBy = [ "default.target" ];
+      };
+      Service = {
+        ExecStart = "${atuin} daemon";
+        Environment = [
+          "ATUIN_LOG=info"
+          "ATUIN_DAEMON__SOCKET_PATH=%t/atuin.sock"
+        ];
+        Restart = "on-failure";
+        RestartSteps = 3;
+        RestartMaxDelaySec = 6;
+      };
+    };
 
-  programs.zsh.initExtra = ''
-    # Bind down key for atuin, specifically because we use invert
-    bindkey "$key[Down]"  atuin-search
-  '';
+    systemd.user.sockets.atuin-daemon = {
+      Unit = {
+        Description = "atuin daemon socket";
+      };
+      Install = {
+        WantedBy = [ "sockets.target" ];
+      };
+      Socket = {
+        ListenStream = "%t/atuin.sock";
+        SocketMode = "0600";
+        RemoveOnStop = true;
+      };
+    };
 
-}
+    systemd.user.services.atuin-automatic-login = lib.mkIf automaticLogin {
+      Unit = {
+        Description = "automatic atuin login";
+        Requires = [
+          "sops-nix.service"
+          "atuin-daemon.service"
+        ];
+      };
+
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${automaticLoginScript}";
+        Restart = "on-failure";
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+  })
+  (lib.mkIf isDarwin {
+    launchd.agents.atuin-daemon = {
+      enable = true;
+      config = {
+        ProgramArguments = [
+          "${atuin}"
+          "daemon"
+        ];
+        EnvironmentVariables = {
+          ATUIN_LOG = "info";
+        };
+        KeepAlive = {
+          Crashed = true;
+          SuccessfulExit = false;
+        };
+        ProcessType = "Background";
+      };
+    };
+
+    launchd.agents.atuin-automatic-login = lib.mkIf automaticLogin {
+      enable = true;
+      config = {
+        ProgramArguments = [ "${automaticLoginScript}" ];
+        RunAtLoad = true;
+        KeepAlive = false;
+        Requires = [
+          "org.nix-community.home.sops-nix"
+          "org.nix-community.home.atuin-daemon"
+        ];
+        ProcessType = "Background";
+      };
+    };
+  })
+]

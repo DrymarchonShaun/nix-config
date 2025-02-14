@@ -75,7 +75,8 @@
       authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
     };
   };
-
+  # allow unfree in minimal configuration or first full build will fail
+  nixpkgs.config.allowUnfree = true;
   nix = {
     #FIXME(installer): registry and nixPath shouldn't be required here because flakes but removal results in warning spam on build
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;

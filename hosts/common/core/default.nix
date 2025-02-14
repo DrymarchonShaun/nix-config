@@ -40,6 +40,7 @@ in
       domain
       email
       userFullName
+      usernames
       networking
       latitude
       longitude

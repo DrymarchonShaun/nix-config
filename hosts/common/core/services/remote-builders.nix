@@ -26,12 +26,11 @@ let
   };
   hosts = [
     # Servers First
-    # {
-    #   hostName = "syno-vm";
-    #   speedFactor = 2;
-    #   maxJobs = 4;
-    # }
-
+    {
+      hostName = "getula";
+      speedFactor = 10;
+      maxJobs = 12;
+    }
     # Then Desktops
     {
       hostName = "corais";

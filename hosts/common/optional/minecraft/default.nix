@@ -23,6 +23,11 @@
     };
   };
 
+  networking.firewall.allowedTCPPorts = [
+    config.hostSpec.networking.ports.minecraft
+    (config.hostSpec.networking.ports.minecraft + 1)
+  ];
+
   services.minecraft-servers = {
     enable = true;
     eula = true;
@@ -36,7 +41,7 @@
       autoStart = true;
       restart = "always";
       serverProperties = {
-        server-port = inputs.nix-secrets.networking.ports.minecraft;
+        server-port = config.hostSpec.networking.ports.minecraft;
         white-list = true;
         difficulty = "normal";
         view-distance = 16;
@@ -78,7 +83,7 @@
             announceDeathMessages = true;
             announceHighMspt = true;
             announcePlayerJoinLeave = true;
-            announceServerStartStop = true;
+            announceServerStartStop = false;
             avatarApi = "https://mc-heads.net/avatar/{player_uuid}.png";
             botListeningActivity = "";
             botPlayingActivity = "Minecraft (%onlinePlayerCount%/%maxPlayerCount%)";
@@ -203,7 +208,7 @@
         };
         "config/voicechat/voicechat-server.properties" = pkgs.writeText "voicechat-server.properties" ''
           # Setting this to "-1" sets the port to the Minecraft servers port (Not recommended)
-          port=${builtins.toString (inputs.nix-secrets.networking.ports.minecraft + 1)}
+          port=${builtins.toString (config.hostSpec.networking.ports.minecraft + 1)}
           # Leave empty to use 'server-ip' of server.properties
           bind_address=
           # The distance to where the voice can be heard

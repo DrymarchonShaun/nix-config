@@ -64,6 +64,9 @@ in
   wayland.windowManager.sway.config = {
     keybindings =
       {
+        # FIXME(workarounds): remove when mangohud 0.8.0 is released
+        "Super_R" = "exec mangohudctl toggle no_display";
+
         #################### Program Launch ####################
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+b" = "exec ${browser}";

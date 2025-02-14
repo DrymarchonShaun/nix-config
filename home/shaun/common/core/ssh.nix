@@ -26,6 +26,7 @@ let
   vanillaHosts = [
     "natrix"
     "corais"
+    "getula"
   ];
   vanillaHostsConfig = lib.attrsets.mergeAttrsList (
     lib.lists.map (host: {

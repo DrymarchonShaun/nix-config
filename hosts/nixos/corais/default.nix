@@ -1,7 +1,7 @@
 #############################################################
 #
 #  Corais - Main Desktop
-#  NixOS running on Ryzen 7 3700X, Radeon RX 5700 XT, 32GB RAM
+#  NixOS running on Ryzen 7 3700X, Radeon RX 7800 XT, 32GB RAM
 #
 ###############################################################
 
@@ -76,7 +76,6 @@ in
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/fonts.nix" # vm tools
       "hosts/common/optional/gaming.nix" # steam, gamescope, gamemode, and related hardware
-      "hosts/common/optional/minecraft" # declarative minecraft server
       "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/plymouth.nix" # fancy boot screen
