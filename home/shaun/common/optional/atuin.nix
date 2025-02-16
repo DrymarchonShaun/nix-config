@@ -45,7 +45,7 @@ lib.mkMerge [
         sync_frequency = "15m";
         search_mode = "fuzzy";
         inline_height = 33;
-        enter_accept = "false";
+        enter_accept = "true";
         common_subcommands = [ "nixos" ];
         common_prefix = [ "sudo" ];
         daemon = {

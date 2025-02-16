@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }:
@@ -32,10 +31,6 @@
   services.logind = {
     powerKey = "ignore";
     lidSwitchDocked = "suspend";
-    extraConfig = lib.mkIf (!config.hostSpec.isServer) ''
-      IdleAction=suspend
-      IdleActionSec=5min
-    '';
   };
 
   # less delay on failed login

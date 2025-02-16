@@ -1,0 +1,83 @@
+From e345b73b88df398e4fb1bdb2d9b89ddfc59db39e Mon Sep 17 00:00:00 2001
+From: yk <yk@archlinuxcn.org>
+Date: Tue, 11 Feb 2025 17:28:22 +0800
+Subject: [PATCH] hyprland/workspaces: fix duplicate persistent workspaces
+ entries
+
+---
+ src/modules/hyprland/workspaces.cpp | 40 ++++++-----------------------
+ 1 file changed, 8 insertions(+), 32 deletions(-)
+
+diff --git a/src/modules/hyprland/workspaces.cpp b/src/modules/hyprland/workspaces.cpp
+index 047703cc9..fe9097c94 100644
+--- a/src/modules/hyprland/workspaces.cpp
++++ b/src/modules/hyprland/workspaces.cpp
+@@ -186,10 +186,17 @@ void Workspaces::initializeWorkspaces() {
+
+   // get all current workspaces
+   auto const workspacesJson = gIPC->getSocket1JsonReply("workspaces");
++  auto const workspacerulesJson = gIPC->getSocket1JsonReply("workspacerules");
+   auto const clientsJson = gIPC->getSocket1JsonReply("clients");
+
+   for (Json::Value workspaceJson : workspacesJson) {
+     std::string workspaceName = workspaceJson["name"].asString();
++    for (Json::Value workspaceRule: workspacerulesJson) {
++      if (workspaceJson["id"].asString() == workspaceRule["workspaceString"].asString() &&
++        workspaceRule["persistent"] == true) {
++        workspaceJson["persistent-rule"] = true;
++      }
++    }
+     if ((allOutputs() || m_bar.output->name == workspaceJson["monitor"].asString()) &&
+         (!workspaceName.starts_with("special") || showSpecial()) &&
+         !isWorkspaceIgnored(workspaceName)) {
+@@ -199,13 +206,11 @@ void Workspaces::initializeWorkspaces() {
+     }
+   }
+
+-  spdlog::debug("Initializing persistent workspaces");
++  spdlog::debug("Initializing persistent workspaces from config");
+   if (m_persistentWorkspaceConfig.isObject()) {
+     // a persistent workspace config is defined, so use that instead of workspace rules
+     loadPersistentWorkspacesFromConfig(clientsJson);
+   }
+-  // load Hyprland's workspace rules
+-  loadPersistentWorkspacesFromWorkspaceRules(clientsJson);
+ }
+
+ bool isDoubleSpecial(std::string const &workspace_name) {
+@@ -282,35 +287,6 @@ void Workspaces::loadPersistentWorkspacesFromConfig(Json::Value const &clientsJs
+   }
+ }
+
+-void Workspaces::loadPersistentWorkspacesFromWorkspaceRules(const Json::Value &clientsJson) {
+-  spdlog::info("Loading persistent workspaces from Hyprland workspace rules");
+-
+-  auto const workspaceRules = gIPC->getSocket1JsonReply("workspacerules");
+-  for (Json::Value const &rule : workspaceRules) {
+-    if (!rule["workspaceString"].isString()) {
+-      spdlog::warn("Workspace rules: invalid workspaceString, skipping: {}", rule);
+-      continue;
+-    }
+-    if (!rule["persistent"].asBool()) {
+-      continue;
+-    }
+-    auto const &workspace = rule["workspaceString"].asString();
+-    auto const &monitor = rule["monitor"].asString();
+-    // create this workspace persistently if:
+-    // 1. the allOutputs config option is enabled
+-    // 2. the rule's monitor is the current monitor
+-    // 3. no monitor is specified in the rule => assume it needs to be persistent on every monitor
+-    if (allOutputs() || m_bar.output->name == monitor || monitor.empty()) {
+-      // => persistent workspace should be shown on this monitor
+-      auto workspaceData = createMonitorWorkspaceData(workspace, m_bar.output->name);
+-      workspaceData["persistent-rule"] = true;
+-      m_workspacesToCreate.emplace_back(workspaceData, clientsJson);
+-    } else {
+-      m_workspacesToRemove.emplace_back(workspace);
+-    }
+-  }
+-}
+-
+ void Workspaces::onEvent(const std::string &ev) {
+   std::lock_guard<std::mutex> lock(m_mutex);
+   std::string eventName(begin(ev), begin(ev) + ev.find_first_of('>'));

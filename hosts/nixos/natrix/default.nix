@@ -85,7 +85,7 @@ in
       "hosts/common/optional/plymouth.nix" # fancy boot screen
       "hosts/common/optional/recording.nix" # obs / virtual camera
       "hosts/common/optional/scanning.nix" # SANE and simple-scan
-      "hosts/common/optional/sway.nix" # window manager
+      "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/thunar.nix" # file manager
       "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/vlc.nix" # media player

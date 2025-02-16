@@ -27,6 +27,12 @@ let
     #      ];
     #    };
 
+    waybar = final.unstable.waybar.overrideAttrs (oldAttrs: rec {
+      patches = oldAttrs.patches or [ ] ++ [
+        ./3934.patch
+      ];
+    });
+
     steam = final.dev.steam;
 
     arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {

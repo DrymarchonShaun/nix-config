@@ -26,4 +26,8 @@ rustPlatform.buildRustPackage {
   ];
 
   cargoHash = "sha256-jkTv/no/EmbyQkFHc091VrOnCMoE/uAtsVUxBGkxMNk=";
+
+  meta = {
+    mainProgram = "rofi-randr";
+  };
 }

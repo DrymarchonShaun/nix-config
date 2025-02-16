@@ -1,0 +1,261 @@
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+
+{
+  imports = [
+    ./binds.nix
+    ./hyprlock.nix
+    ./hyprpaper.nix
+    ./wlogout.nix
+  ];
+
+  catppuccin.hyprland.enable = true;
+  catppuccin.cursors.enable = true;
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    systemd = {
+      enable = true;
+      variables = [ "--all" ]; # fix for https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
+      # TODO(hyprland): experiment with whether this is required.
+      # Same as default, but stop the graphical session too
+      extraCommands = lib.mkBefore [
+        "systemctl --user stop graphical-session.target"
+        "systemctl --user start hyprland-session.target"
+      ];
+    };
+
+    plugins = [
+      pkgs.hyprlandPlugins.hy3
+    ];
+
+    settings = {
+      #
+      # ========== Environment Vars ==========
+      #
+      env = [
+        "NIXOS_OZONE_WL, 1" # for ozone-based and electron apps to run on wayland
+        "MOZ_ENABLE_WAYLAND, 1" # for firefox to run on wayland
+        "MOZ_WEBRENDER, 1" # for firefox to run on wayland
+        "XDG_SESSION_TYPE,wayland"
+        "WLR_NO_HARDWARE_CURSORS,1"
+        "WLR_RENDERER_ALLOW_SOFTWARE,1"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "_JAVA_AWT_WM_NONREPARENTING,1" # Fixing java apps
+      ];
+
+      #
+      # ========== Monitor ==========
+      #
+      # parse the monitor spec defined in nix-config/home/<user>/<host>.nix
+      monitor = (
+        map (
+          m:
+          "${m.name},${
+            if m.enabled then
+              "${toString m.width}x${toString m.height}@${toString m.refreshRate},${toString m.x}x${toString m.y},1,transform,${toString m.transform},vrr,${toString m.vrr}"
+            else
+              "disable"
+          }"
+        ) (config.monitors)
+      );
+
+      #
+      # ========== Behavior ==========
+      #
+      binds = {
+        workspace_center_on = 1; # Whether switching workspaces should center the cursor on the workspace (0) or on the last active window for that workspace (1)
+        movefocus_cycles_fullscreen = false; # If enabled, when on a fullscreen window, movefocus will cycle fullscreen, if not, it will move the focus in a direction.
+      };
+      input = {
+        # kb_layout = "us,real-prog-dvorak";
+        numlock_by_default = true;
+        accel_profile = "flat";
+        #sensitivity = -0.2;
+
+        follow_mouse = 1;
+        # follow_mouse options:
+        # 0 - Cursor movement will not change focus.
+        # 1 - Cursor movement will always change focus to the window under the cursor.
+        # 2 - Cursor focus will be detached from keyboard focus. Clicking on a window will move keyboard focus to that window.
+        # 3 - Cursor focus will be completely separate from keyboard focus. Clicking on a window will not change keyboard focus.
+        mouse_refocus = false;
+
+        touchpad = {
+          tap-to-click = true;
+          tap_button_map = "lrm";
+          natural_scroll = true;
+          disable_while_typing = true;
+        };
+      };
+
+      device = [
+        {
+          name = "razer-razer-naga-v2-pro";
+          # sensitivity = -0.2;
+        }
+        {
+          name = "razer-razer-naga-v2-pro-mouse";
+          # sensitivity = -0.2;
+        }
+        {
+          name = "elan0412:00-04f3:3240-touchpad";
+          accel_profile = "adaptive";
+        }
+      ];
+
+      cursor.inactive_timeout = 10;
+      misc = {
+        disable_hyprland_logo = true;
+        animate_manual_resizes = true;
+        animate_mouse_windowdragging = true;
+        font_family = "Inter";
+        #disable_autoreload = true;
+        new_window_takes_over_fullscreen = 2; # 0 - behind, 1 - takes over, 2 - unfullscreen/unmaxize
+        middle_click_paste = false;
+
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = true;
+      };
+
+      #
+      # ========== Appearance ==========
+      #
+      #FIXME-rice colors conflict with stylix
+      general = {
+        gaps_in = 7;
+        gaps_out = 7;
+        border_size = 1;
+        resize_on_border = true;
+        hover_icon_on_border = true;
+        allow_tearing = true; # used to reduce latency and/or jitter in games
+      };
+      decoration = {
+        active_opacity = 1.0;
+        inactive_opacity = 1.0;
+        fullscreen_opacity = 1.0;
+        rounding = 10;
+        blur = {
+          enabled = true;
+          size = 4;
+          passes = 2;
+          new_optimizations = true;
+          popups = true;
+        };
+        shadow = {
+          enabled = true;
+          range = 12;
+          offset = "3 3";
+        };
+      };
+
+      #
+      # ========== Auto Launch ==========
+      #
+      # exec-once = ''${startupScript}/path'';
+      # To determine path, run `which foo`
+      exec-once = [
+        ''${lib.getExe pkgs.xorg.xhost} si:localuser:root''
+        ''${lib.getExe pkgs.hyprpolkitagent}''
+        ''${pkgs.import-gsettings}/bin/import-gsettings''
+        ''steam''
+      ];
+      #
+      # ========== Layer Rules ==========
+      #
+      layer = [
+        #"blur, rofi"
+        #"ignorezero, rofi"
+        #"ignorezero, logout_dialog"
+
+      ];
+      #
+      # ========== Window Rules ==========
+      #
+      windowrule = [
+        # Dialogs
+        "float, title:^(Open File)(.*)$"
+        "float, title:^(Select a File)(.*)$"
+        "float, title:^(Choose wallpaper)(.*)$"
+        "float, title:^(Open Folder)(.*)$"
+        "float, title:^(Save As)(.*)$"
+        "float, title:^(Library)(.*)$"
+        "float, title:^(Accounts)(.*)$"
+      ];
+      windowrulev2 = [
+        "float, class:^(galculator)$"
+        "float, class:^(waypaper)$"
+        "float, class:^(keymapp)$"
+
+        #
+        # ========== Always opaque ==========
+        #
+        "opaque, class:^([Gg]imp)$"
+        "opaque, class:^([Ff]lameshot)$"
+        "opaque, class:^([Ii]nkscape)$"
+        "opaque, class:^([Bb]lender)$"
+        "opaque, class:^([Oo][Bb][Ss])$"
+        "opaque, class:^([Ss]team)$"
+        "opaque, class:^([Ss]team_app_*)$"
+        "opaque, class:^([Vv]lc)$"
+
+        # Remove transparency from video
+        "opaque, title:^(Netflix)(.*)$"
+        "opaque, title:^(.*YouTube.*)$"
+        "opaque, title:^(Picture-in-Picture)$"
+        #
+        # ========== Scratch rules ==========
+        #
+        #"size 80% 85%, workspace:^(special:special)$"
+        #"center, workspace:^(special:special)$"
+
+        #
+        # ========== Steam rules ==========
+        #
+        "stayfocused, title:^()$,class:^([Ss]team)$"
+        "minsize 1 1, title:^()$,class:^([Ss]team)$"
+        "workspace 6, title:^()$,class:^([Ss]team)$"
+        "monitor 0,   title:^()$,class:^([Ss]team)$"
+
+        "immediate, class:^([Ss]team_app_*)$"
+        "workspace 7, class:^([Ss]team_app_*)$"
+        "monitor 0, class:^([Ss]team_app_*)$"
+
+        #
+        # ========== Fameshot rules ==========
+        #
+        # flameshot currently doesn't have great wayland support so needs some tweaks
+        #"rounding 0, class:^([Ff]lameshot)$"
+        #"noborder, class:^([Ff]lameshot)$"
+        #"float, class:^([Ff]lameshot)$"
+        #"move 0 0, class:^([Ff]lameshot)$"
+        #"suppressevent fullscreen, class:^([Ff]lameshot)$"
+        # "monitor:DP-1, ${flameshot}"
+
+        #
+        # ========== Workspace Assignments ==========
+        #
+        "workspace 11, class:^(discord)$"
+      ];
+
+      # load at the end of the hyperland set
+      # extraConfig = '''';
+
+      #
+      # ========== hy3 config ==========
+      #
+      #TODO enable this and config
+      general.layout = "hy3";
+      plugin = {
+        hy3 = {
+
+        };
+      };
+    };
+  };
+
+}
