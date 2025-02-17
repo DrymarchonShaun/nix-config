@@ -16,7 +16,7 @@
     #
     # ========== Hardware ==========
     #
-    #inputs.nixos-hardware.nixosModules.asus-zenbook-ux371
+    #inputs.nixos-hardware.nixosModules.lenovo-thinkpad-e14
     ./hardware-configuration.nix
 
     #
@@ -24,6 +24,13 @@
     #
     inputs.disko.nixosModules.disko
     (lib.custom.relativeToRoot "hosts/common/disks/btrfs-luks-disk.nix")
+    {
+      _module.args = {
+        disk = "/dev/nvme0n1";
+        withSwap = true;
+        swapSize = 16;
+      };
+    }
 
     #
     # ========== Misc Inputs ==========
