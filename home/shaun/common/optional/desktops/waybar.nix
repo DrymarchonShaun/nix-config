@@ -43,6 +43,7 @@ in
         margin = "20 20 0 20";
         modules-left = [
           "hyprland/workspaces"
+          "hyprland/submap"
           #"hyprland/window"
           #"sway/workspaces"
           #"custom/language"

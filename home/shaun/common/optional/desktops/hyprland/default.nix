@@ -33,10 +33,20 @@
       pkgs.hyprlandPlugins.hy3
     ];
 
+    extraConfig = ''
+      submap=shortcuts-inhibited
+      bind=ALT,return,fullscreenstate,2 -1
+      submap=reset
+    '';
+
     settings = {
       #
       # ========== Environment Vars ==========
       #
+      debug = {
+        disable_logs = false;
+      };
+
       env = [
         "NIXOS_OZONE_WL, 1" # for ozone-based and electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND, 1" # for firefox to run on wayland
@@ -55,9 +65,35 @@
       monitor = (
         map (
           m:
+          let
+            # if either width or height are 0, use highest supported resolution
+            resolution =
+              if (m.width == 0 || m.height == 0) then "highres" else "${toString m.width}x${toString m.height}";
+            # if refresh rate isn't specified, use highest supported refresh rate
+            refreshRate = if m.refreshRate == null then "highrr" else "${toString m.refreshRate}";
+            # automatically calculate the proper position by dividing by the scale as described at https://wiki.hyprland.org/Configuring/Monitors/
+            scaleAdjustedx = m.x / m.scale;
+            scaleAdjustedy = m.y / m.scale;
+          in
           "${m.name},${
             if m.enabled then
-              "${toString m.width}x${toString m.height}@${toString m.refreshRate},${toString m.x}x${toString m.y},1,transform,${toString m.transform},vrr,${toString m.vrr}"
+              lib.concatStringsSep "," [
+                (lib.concatStrings [
+                  resolution
+                  "@"
+                  refreshRate
+                ])
+
+                "${toString scaleAdjustedx}x${toString scaleAdjustedy}"
+
+                "${toString m.scale}"
+
+                "transform"
+                "${toString m.transform}"
+
+                "vrr"
+                "${toString m.vrr}"
+              ]
             else
               "disable"
           }"
@@ -161,7 +197,8 @@
       exec-once = [
         ''${lib.getExe pkgs.xorg.xhost} si:localuser:root''
         ''${lib.getExe pkgs.hyprpolkitagent}''
-        ''${pkgs.import-gsettings}/bin/import-gsettings''
+
+        # ''${pkgs.import-gsettings}/bin/import-gsettings''
         ''steam''
       ];
       #
@@ -218,12 +255,17 @@
         #
         "stayfocused, title:^()$,class:^([Ss]team)$"
         "minsize 1 1, title:^()$,class:^([Ss]team)$"
-        "workspace 6, title:^()$,class:^([Ss]team)$"
         "monitor 0,   title:^()$,class:^([Ss]team)$"
 
+        "workspace 6, title:^([Ss]team)$,class:^([Ss]team)$"
+
         "immediate, class:^([Ss]team_app_*)$"
-        "workspace 7, class:^([Ss]team_app_*)$"
+        "fullscreen, class:^([Ss]team_app_*)$"
+        "workspace 5, class:^([Ss]team_app_*)$"
         "monitor 0, class:^([Ss]team_app_*)$"
+
+        "workspace 13, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
+        "monitor 1, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
 
         #
         # ========== Fameshot rules ==========
@@ -239,7 +281,7 @@
         #
         # ========== Workspace Assignments ==========
         #
-        "workspace 11, class:^(discord)$"
+        "workspace 11, class:^([Dd]iscord)$"
       ];
 
       # load at the end of the hyperland set
@@ -249,12 +291,12 @@
       # ========== hy3 config ==========
       #
       #TODO enable this and config
-      general.layout = "hy3";
       plugin = {
         hy3 = {
 
         };
       };
+      general.layout = "hy3";
     };
   };
 

@@ -112,7 +112,7 @@
         "SUPER,p,exec,${rofi} -modi \"display:${lib.getExe pkgs.rofi-randr}\" -show display"
 
         "SUPER,Return,exec,${terminal}"
-        "SUPER,e,exec,${terminal} ${editor-cli}"
+        "SUPER,e,exec,${terminal} -e ${editor-cli}"
         "SUPER_SHIFT,e,exec,${editor}"
         "SUPER,f,exec,${file-manager}"
         "SUPER,b,exec,${browser}"
@@ -149,7 +149,7 @@
 
         # Fullscreen
         #"ALT,f,fullscreen,0" # 0 - fullscreen (takes your entire screen), 1 - maximize (keeps gaps and bar(s))
-        "ALT,enter,fullscreenstate,2 -1" # `internal client`, where `internal` and `client` can be -1 - current, 0 - none, 1 - maximize, 2 - fullscreen, 3 - maximize and fullscreen
+        "ALT,return,fullscreenstate,2 -1" # `internal client`, where `internal` and `client` can be -1 - current, 0 - none, 1 - maximize, 2 - fullscreen, 3 - maximize and fullscreen
         # Float
         "SUPER,space,togglefloating"
         # Pin Active Floatting window
@@ -198,7 +198,7 @@
         #
         "SHIFTALT,r,exec,hyprctl reload" # reload the configuration file
         "SUPER,l,exec,hyprlock" # lock the wm
-        "SUPER,e,exec,wlogout" # lock the wm
+        "SUPERCTRLSHIFT,e,exec,wlogout" # lock the wm
       ];
   };
 }

@@ -42,15 +42,18 @@
       noBar = false;
       scale = 1.0;
       x = 0;
+      vrr = 0;
       primary = true;
     }
     {
       name = "DP-2";
       width = 2560;
       height = 1440;
+      # FIXME(hyprland): having both monitors set to 165 causes hyprland to freeze after dpms off
       refreshRate = 165;
       scale = 1.0;
       x = 2560;
+      vrr = 0;
     }
   ];
   home.sessionVariables = {
