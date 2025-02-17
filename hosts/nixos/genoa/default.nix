@@ -105,7 +105,7 @@
   # host-wide styling
   stylix = {
     enable = true;
-    image = /home/ta/sync/wallpaper/1126712.png;
+    image = /home/ta/sync/wallpaper/zen-01.png;
     #      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
     #      cursor = {
