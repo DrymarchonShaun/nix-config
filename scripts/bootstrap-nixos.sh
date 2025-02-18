@@ -14,6 +14,7 @@ ssh_key=${BOOTSTRAP_SSH_KEY-}
 persist_dir=""
 luks_passphrase="passphrase"
 luks_secondary_drive_labels=""
+nix_src_path="src/nix" # Used in sync to specific where nix-config and nix-secrets are written in the users home
 git_root=$(git rev-parse --show-toplevel)
 nix_secrets_dir=${NIX_SECRETS_DIR:-"${git_root}"/../nix-secrets}
 
@@ -29,7 +30,7 @@ trap cleanup exit
 # Copy data to the target machine
 function sync() {
 	# $1 = user, $2 = source, $3 = destination
-	rsync -av --filter=':- .gitignore' -e "ssh -oControlMaster=no -l $1 -oport=${ssh_port}" "$2" "$1@${target_destination}:"
+	rsync -av --filter=':- .gitignore' -e "ssh -oControlMaster=no -l $1 -oport=${ssh_port}" "$2" "$1@${target_destination}:${nix_src_path}"
 }
 
 # Usage function
