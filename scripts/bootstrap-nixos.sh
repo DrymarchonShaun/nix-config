@@ -15,7 +15,7 @@ persist_dir=""
 luks_passphrase="passphrase"
 luks_secondary_drive_labels=""
 git_root=$(git rev-parse --show-toplevel)
-nix_secrets_dir=${NIX_SECRETS_DIR:-"${git_root}"/../nix-secrets/}
+nix_secrets_dir=${NIX_SECRETS_DIR:-"${git_root}"/../nix-secrets}
 
 # Create a temp directory for generated host keys
 temp=$(mktemp -d)
