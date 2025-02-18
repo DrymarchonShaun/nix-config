@@ -129,7 +129,7 @@
   # host-wide styling
   stylix = {
     enable = true;
-    image = /home/ta/sync/wallpaper/zen-01.png;
+    image = (lib.custom.relativeToRoot "assets/wallpapers/zen-01.png");
     #      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
     #      cursor = {
