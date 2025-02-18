@@ -49,9 +49,14 @@
             type = lib.types.bool;
             default = true;
           };
-          workspace = lib.mkOption {
-            type = lib.types.nullOr lib.types.str;
-            description = "Defines a workspace that should persist on this monitor.";
+          #  workspace = lib.mkOption {
+          #   type = lib.types.nullOr lib.types.str;
+          #   description = "Defines a workspace that should persist on this monitor.";
+          #   default = null;
+          # };
+          workspaces = lib.mkOption {
+            type = lib.types.nullOr (lib.types.listOf lib.types.str);
+            description = "Defines workspaces that should persist on this monitor.";
             default = null;
           };
           vrr = lib.mkOption {
