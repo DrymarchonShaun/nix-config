@@ -14,7 +14,7 @@ ssh_key=${BOOTSTRAP_SSH_KEY-}
 persist_dir=""
 luks_passphrase="passphrase"
 luks_secondary_drive_labels=""
-nix_src_path="src/nix" # Used in sync to specific where nix-config and nix-secrets are written in the users home
+nix_src_path="src/nix/" # path relative to /home/${target_user} where nix-config and nix-secrets are written in the users home
 git_root=$(git rev-parse --show-toplevel)
 nix_secrets_dir=${NIX_SECRETS_DIR:-"${git_root}"/../nix-secrets}
 
@@ -285,7 +285,7 @@ if yes_or_no "Do you want to copy your full nix-config and nix-secrets to $targe
 	# FIXME(bootstrap): Add some sort of key access from the target to download the config (if it's a cloud system)
 	if yes_or_no "Do you want to rebuild immediately?"; then
 		green "Rebuilding nix-config on $target_hostname"
-		$ssh_cmd "cd nix-config && sudo nixos-rebuild --impure --show-trace --flake .#$target_hostname switch"
+		$ssh_cmd "cd ${nix_src_path}nix-config && sudo nixos-rebuild --impure --show-trace --flake .#$target_hostname switch"
 	fi
 else
 	echo
