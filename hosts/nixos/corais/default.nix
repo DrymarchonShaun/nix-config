@@ -37,7 +37,7 @@ in
     # ========== Disk Layout ==========
     #
     inputs.disko.nixosModules.disko
-    (lib.custom.relativeToRoot "hosts/common/disks/btrfs-disk.nix")
+    (lib.custom.relativeToRoot "hosts/common/disks/btrfs-impermanence-disk.nix")
     {
       _module.args = {
         disk = "/dev/disk/by-id/nvme-eui.00253854119048ec";
@@ -104,6 +104,7 @@ in
     # isServer = true;
     useYubikey = lib.mkForce false;
     hdr = lib.mkForce true;
+    persistFolder = "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
   };
 
   systemd.sleep.extraConfig = ''

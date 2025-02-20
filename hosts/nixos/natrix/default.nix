@@ -104,6 +104,7 @@ in
     hostName = "natrix";
     useYubikey = lib.mkForce false;
     hdr = lib.mkForce false;
+    persistFolder = "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
   };
 
   # set custom autologin options. see greetd.nix for details

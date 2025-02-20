@@ -33,7 +33,7 @@ in
     # ========== Disk Layout ==========
     #
     inputs.disko.nixosModules.disko
-    (lib.custom.relativeToRoot "hosts/common/disks/btrfs-disk.nix")
+    (lib.custom.relativeToRoot "hosts/common/disks/btrfs-impermanence-disk.nix")
     {
       _module.args = {
         disk = "/dev/disk/by-id/wwn-0x50026b738033a0f0";
@@ -84,6 +84,7 @@ in
     hostName = "getula";
     isServer = true;
     useYubikey = lib.mkForce false;
+    persistFolder = "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
   };
 
   systemd.sleep.extraConfig = ''
