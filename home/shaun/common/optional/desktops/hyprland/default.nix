@@ -309,10 +309,10 @@
 
         "workspace 6 silent, title:^([Ss]team)$,class:^([Ss]team)$"
 
-        "immediate, class:^([Ss]team_app_*)$"
-        "fullscreen, class:^([Ss]team_app_*)$"
-        "workspace 5, class:^([Ss]team_app_*)$"
-        "monitor 0, class:^([Ss]team_app_*)$"
+        "immediate, class:^([Ss]team_app_\d+)$"
+        "fullscreen, class:^([Ss]team_app_\d+)$"
+        "workspace 5, class:^([Ss]team_app_\d+)$"
+        "monitor 0, class:^([Ss]team_app\d+)$"
 
         "workspace 13, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
         "monitor 1, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
