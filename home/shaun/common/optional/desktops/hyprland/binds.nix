@@ -123,9 +123,9 @@
         # TODO check on status of flameshot and multimonitor wayland. as of Oct 2024, it's a clusterfuck
         # so resorting to grimblast in the meantime
         #"CTRL_ALT,p,exec,flameshot gui"
-        ",Print,exec,${grimblast} --notify --freeze savecopy window"
-        "ALT,Print,exec,${grimblast} --notify --freeze savecopy output"
-        "CTRL,Print,exec,${grimblast} --notify --freeze savecopy area"
+        ",Print,exec,${grimblast} --notify --freeze copysave active"
+        "ALT,Print,exec,${grimblast} --notify --freeze copysave output"
+        "CTRL,Print,exec,${grimblast} --notify --freeze copysave area"
 
         #
         # ========== Media Controls ==========
