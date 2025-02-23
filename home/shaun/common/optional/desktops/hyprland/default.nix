@@ -33,18 +33,12 @@
       pkgs.hyprlandPlugins.hy3
     ];
 
-    extraConfig = ''
-      submap=shortcuts-inhibited
-      bind=ALT,return,fullscreenstate,2 -1
-      submap=reset
-    '';
-
     settings = {
       #
       # ========== Environment Vars ==========
       #
       debug = {
-        disable_logs = false;
+        disable_logs = true;
       };
 
       env = [
@@ -247,7 +241,7 @@
       exec-once = [
         ''${lib.getExe pkgs.xorg.xhost} si:localuser:root''
         ''${lib.getExe pkgs.hyprpolkitagent}''
-
+        ''${lib.getExe pkgs.ipc-daemon}''
         # ''${pkgs.import-gsettings}/bin/import-gsettings''
         ''steam''
       ];
@@ -309,10 +303,10 @@
 
         "workspace 6 silent, title:^([Ss]team)$,class:^([Ss]team)$"
 
-        "immediate, class:^([Ss]team_app_\d+)$"
-        "fullscreen, class:^([Ss]team_app_\d+)$"
-        "workspace 5, class:^([Ss]team_app_\d+)$"
-        "monitor 0, class:^([Ss]team_app\d+)$"
+        "immediate, class:^([Ss]team_app_.*)$"
+        "fullscreen, class:^([Ss]team_app_.*)$"
+        "workspace 5, class:^([Ss]team_app_.*)$"
+        "monitor 0, class:^([Ss]team_app.*)$"
 
         "workspace 13, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
         "monitor 1, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
@@ -343,7 +337,9 @@
       #TODO enable this and config
       plugin = {
         hy3 = {
-
+          autotile = {
+            enable = true;
+          };
         };
       };
       general.layout = "hy3";

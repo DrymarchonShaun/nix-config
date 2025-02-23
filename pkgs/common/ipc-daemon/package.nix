@@ -1,10 +1,10 @@
 {
-  writeShellScript,
+  writeShellScriptBin,
   lib,
   socat,
   ...
 }:
-writeShellScript ''ipc-watcher'' ''
+writeShellScriptBin ''ipc-daemon'' ''
 
     function disable-keybind() {
       case $1 in
