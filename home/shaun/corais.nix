@@ -11,6 +11,7 @@
     #
     common/optional/browsers
     common/optional/desktops # default is sway
+    common/optional/desktops/easyeffects.nix
     common/optional/development
     common/optional/comms
     common/optional/gaming
