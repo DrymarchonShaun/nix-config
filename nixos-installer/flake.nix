@@ -59,22 +59,6 @@
       nixosConfigurations = {
         # host = newConfig "name" disk" "swapSize" "useLuks" "isImp"
         # Swap size is in GiB
-        # genoa = newConfig "genoa" "/dev/nvme0n1" 16 true true;
-        # grief = newConfig "grief" "/dev/vda" 0 false false;
-        # guppy = newConfig "guppy" "/dev/vda" 0 false false;
-        # gusto = newConfig "gusto" "/dev/nvme0n1" 8 false false;
-        #
-        # ghost = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   specialArgs = minimalSpecialArgs;
-        #   modules = [
-        #     inputs.disko.nixosModules.disko
-        #     ../hosts/common/disks/ghost.nix
-        #     ./minimal-configuration.nix
-        #     { networking.hostName = "ghost"; }
-        #     ../hosts/nixos/ghost/hardware-configuration.nix
-        #   ];
-        # };
 
         corais = newConfig "corais" "/dev/disk/by-id/nvme-eui.00253854119048ec" 24 false true;
         getula = newConfig "getula" "/dev/disk/by-id/wwn-0x50026b738033a0f0" 16 false true;
