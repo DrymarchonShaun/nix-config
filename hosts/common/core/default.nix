@@ -19,7 +19,7 @@ in
 
     (map lib.custom.relativeToRoot [
       "modules/common"
-      "modules/${platform}"
+      "modules/hosts/${platform}"
       "hosts/common/core/${platform}.nix"
       "hosts/common/core/sops.nix" # Core because it's used for backups, mail
       # "hosts/common/core/ssh.nix"
