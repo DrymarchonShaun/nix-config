@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  osConfig,
   lib,
   ...
 }:
@@ -9,44 +8,33 @@
   imports = [
     # custom key binds
     ./binds.nix
+    ./swayidle.nix
+    ./swaylock.nix
+    ./waybar.nix
 
     ########## Utilities ##########
-    ../services/swaync.nix # Notification daemon
-    ../services/clipboard.nix # Clipboard functionality
-    ../waybar.nix # infobar
-    ../swayidle.nix
-    ../swaylock.nix
-    ../rofi.nix
-    ../tray.nix
-
+    ../common/gtk.nix
+    ../common/qt.nix
+    ../common/services/clipboard.nix
+    ../common/services/gammastep.nix
+    ../common/services/playerctl.nix
+    ../common/services/swaync.nix
+    ../common/services/tray.nix
   ];
 
-  home.sessionVariables =
-    {
-      NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
-      MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
-      MOZ_WEBRENDER = "1"; # for firefox to run on wayland
-      XDG_SESSION_TYPE = "wayland";
-      WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_RENDERER_ALLOW_SOFTWARE = "1";
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; # for ozone-based and electron apps to run on wayland
+    MOZ_ENABLE_WAYLAND = "1"; # for firefox to run on wayland
+    MOZ_WEBRENDER = "1"; # for firefox to run on wayland
+    XDG_SESSION_TYPE = "wayland";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    WLR_RENDERER_ALLOW_SOFTWARE = "1";
 
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
-      _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
+    _JAVA_AWT_WM_NONREPARENTING = "1"; # Fixing java apps (especially idea)
 
-    }
-    // lib.mkIf config.hostSpec.isServer {
-      WLR_BACKENDS = "headless";
-      WLR_LIBINPUT_NO_DEVICES = "1";
-    };
-
-  services.swayidle.timeouts = [
-    {
-      timeout = 600;
-      command = "${osConfig.programs.sway.package}/bin/swaymsg 'output * dpms off'";
-      resumeCommand = "${osConfig.programs.sway.package}/bin/swaymsg 'output * dpms on'";
-    }
-  ];
+  };
 
   wayland.windowManager.sway = {
     enable = true;
@@ -61,21 +49,7 @@
       ];
       variables = [ "--all" ];
     };
-    # workaround for nix-community/home-manager#5379
-    # checkConfig = false;
 
-    extraSessionCommands = ''
-      # for ozone-based and electron apps to run on wayland
-      export NIXOS_OZONE_WL=1
-
-      # for firefox to run on wayland
-      export MOZ_ENABLE_WAYLAND=1
-      export MOZ_WEBRENDER=1
-
-      export XDG_SESSION_TYPE=wayland
-      export WLR_NO_HARDWARE_CURSORS=1
-      export WLR_RENDERER_ALLOW_SOFTWARE=1
-    '';
     config = {
       # Modifier (super key)
       modifier = "Mod4";
@@ -89,24 +63,49 @@
             bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
           };
         }
-        // (import ./monitors.nix {
-          inherit lib;
-          inherit (config) monitors;
-        });
-      startup =
-        [
-          { command = "${pkgs.xorg.xhost}/bin/xhost si:localuser:root"; }
-          { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
-          { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-          {
-            command = "${pkgs.import-gsettings}/bin/import-gsettings";
-            always = true;
-          }
-          { command = "steam"; }
-        ]
-        ++ lib.optionals config.hostSpec.isServer [
-          { command = "${lib.getExe pkgs.wayvnc}"; }
-        ];
+        // (builtins.listToAttrs (
+          map (
+            m:
+            let
+              scaleAdjustedx = m.x / m.scale;
+              scaleAdjustedy = m.y / m.scale;
+            in
+            {
+              name = m.name;
+              value = (
+                if m.enabled then
+                  {
+                    mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
+                    scale = toString m.scale;
+                    pos = "${toString scaleAdjustedx} ${toString scaleAdjustedy}";
+                  }
+                else
+                  "disable"
+              );
+            }
+          ) config.monitors
+        ));
+
+      workspaceOutputAssign = lib.flatten (
+        map (
+          m:
+          lib.mapAttrsToList (workspace: key: {
+            output = m.name;
+            workspace = "${workspace}:${key}";
+          }) m.workspaces
+        ) config.monitors
+      );
+
+      startup = [
+        { command = "${lib.getExe pkgs.xorg.xhost} si:localuser:root"; }
+        { command = "${pkgs.autotiling-rs}/bin/autotiling-rs"; }
+        { command = "${lib.getExe pkgs.hyprpolkitagent}"; }
+        {
+          command = "${pkgs.import-gsettings}/bin/import-gsettings";
+          always = true;
+        }
+        { command = "steam"; }
+      ];
 
       gaps.inner = 5;
       gaps.outer = 15;
@@ -218,36 +217,6 @@
         "11:F1" = [ { title = ".*Discord"; } ];
       };
 
-      #windowrule = [
-      # Dialogs
-      #  "float, title:^(Open File)(.*)$"
-      #  "float, title:^(Select a File)(.*)$"
-      #  "float, title:^(Choose wallpaper)(.*)$"
-      #  "float, title:^(Open Folder)(.*)$"
-      #  "float, title:^(Save As)(.*)$"
-      #  "float, title:^(Library)(.*)$"
-      #  "float, title:^(Accounts)(.*)$"
-      #];
-
-      #windowrulev2 = [
-      # Steam
-      #  "center, title:(Steam), class:(), floating:1"
-      #  "float, title:(Steam Settings), class:(steam)"
-      #  "float, title:(Friends List), class:(steam)"
-
-      # Polkit
-      #"dimaround, class:(polkit-gnome-authentication-agent-1)"
-      #  "center,    class:(polkit-gnome-authentication-agent-1)"
-      #  "float,     class:(polkit-gnome-authentication-agent-1)"
-      #  "pin,       class:(polkit-gnome-authentication-agent-1)"
-
-      # Disable borders on floating windows
-      #  "noborder, floating:1"
-
-      # Inhibit idle whenever an application is fullscreened
-      #  "idleinhibit always, fullscreen:1"
-      #];
-
       colors = {
         focused = {
           background = "$base";
@@ -286,14 +255,10 @@
         # style = "Regular";
       };
     };
-    extraConfig =
-      ''
-        workspace number 1
-        blur enable
-        corner_radius 7
-      ''
-      + lib.optionalString osConfig.autoLogin.enable ''
-        exec swaylock -f
-      '';
+    extraConfig = ''
+      workspace number 1
+      blur enable
+      corner_radius 7
+    '';
   };
 }

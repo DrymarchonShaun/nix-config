@@ -31,7 +31,7 @@
       #
       binde =
         let
-          pamixer = lib.getExe pkgs.pamixer; # installed via /hosts/common/optional/audio.nix
+          wpctl = lib.getExe' pkgs.wireplumber "wpctl"; # installed via /hosts/common/optional/audio.nix
           brightnessctl = lib.getExe pkgs.brightnessctl;
         in
         [
@@ -43,8 +43,8 @@
 
           #FIXME: repeat is not working for these
           # Volume
-          ",XF86AudioLowerVolume,exec,${pamixer} -d 5"
-          ",XF86AudioRaiseVolume,exec,${pamixer} -i 5"
+          ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           # Display Brightness
           ",XF86MonBrightnessDown,exec,${brightnessctl} -q set 5%-"
           ",XF86MonBrightnessUp,exec,${brightnessctl} -q set +5%"
@@ -54,30 +54,8 @@
       #
       bind =
         let
-          workspaces = {
-            "1" = "1";
-            "2" = "2";
-            "3" = "3";
-            "4" = "4";
-            "5" = "5";
-            "6" = "6";
-            "7" = "7";
-            "8" = "8";
-            "9" = "9";
-            "10" = "0";
-            "11" = "F1";
-            "12" = "F2";
-            "13" = "F3";
-            "14" = "F4";
-            "15" = "F5";
-            "16" = "F6";
-            "17" = "F7";
-            "18" = "F8";
-            "19" = "F9";
-            "20" = "F10";
-            "21" = "F11";
-            "22" = "F12";
-          };
+          workspaces = lib.mergeAttrsList (map (m: m.workspaces) config.monitors);
+
           # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
           directions = rec {
             left = "l";
@@ -89,7 +67,7 @@
             k = up;
             j = down;
           };
-          pamixer = lib.getExe pkgs.pamixer; # installed via /hosts/common/optional/audio.nix
+          wpctl = lib.getExe' pkgs.wireplumber "wpctl"; # installed via /hosts/common/optional/audio.nix
           handlr = lib.getExe pkgs.handlr;
           playerctl = lib.getExe pkgs.playerctl;
           rofi = lib.getExe config.programs.rofi.package;
@@ -133,7 +111,7 @@
           #
           # see "binde" above for volume ctrls that need repeat binding
           # Output
-          ", XF86AudioMute, exec, ${pamixer} --toggle-mute"
+          ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_SINK@ toggle"
           # Player
           ", XF86AudioPlay, exec, '${playerctl} play-pause'"
           ", XF86AudioNext, exec, '${playerctl} next'"
@@ -200,12 +178,15 @@
           "SHIFTALT,r,exec,hyprctl reload" # reload the configuration file
           "SUPERSHIFT,l,exec,hyprlock" # lock the wm
           "SUPERCTRLSHIFT,e,exec,wlogout" # lock the wm
+          # FIXME(workarounds): remove when mangohud 0.8.0 is released
+          "SUPER_R,,exec,mangohudctl toggle no_display"
         ];
     };
     extraConfig = ''
       submap=shortcuts-inhibited
       bind=ALT,return,fullscreenstate,2 -1
       bindm="SUPER,mouse:272,movewindow"
+      bind="SUPER_R,,exec,mangohudctl toggle no_display"
       submap=reset
     '';
   };

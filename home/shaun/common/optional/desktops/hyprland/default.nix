@@ -11,9 +11,19 @@
     ./hyprlock.nix
     ./hyprpaper.nix
     ./wlogout.nix
+    ../common/gtk.nix
+    ../common/qt.nix
+    ../common/services/clipboard.nix
+    ../common/services/gammastep.nix
+    ../common/services/playerctl.nix
+    ../common/services/swaync.nix
+    ../common/services/tray.nix
   ];
 
-  catppuccin.hyprland.enable = true;
+  catppuccin.hyprland = {
+    enable = true;
+    accent = "blue";
+  };
   catppuccin.cursors.enable = true;
 
   wayland.windowManager.hyprland = {
@@ -94,55 +104,19 @@
         ) (config.monitors)
       );
 
-      workspace =
-        let
-          workspaceIDs = {
-            "1" = "1";
-            "2" = "2";
-            "3" = "3";
-            "4" = "4";
-            "5" = "5";
-            "6" = "6";
-            "7" = "7";
-            "8" = "8";
-            "9" = "9";
-            "10" = "0";
-            "11" = "F1";
-            "12" = "F2";
-            "13" = "F3";
-            "14" = "F4";
-            "15" = "F5";
-            "16" = "F6";
-            "17" = "F7";
-            "18" = "F8";
-            "19" = "F9";
-            "20" = "F10";
-            "21" = "F11";
-            "22" = "F12";
-          };
-
-        in
-        (
-          # workspace structure to build "[workspace], monitor:[name], default:[bool], persistent:[bool]"
+      workspace = lib.flatten (
+        map (
+          m:
           lib.mapAttrsToList (
             workspace: key:
-            # map over workspace IDs first, then map over monitors to check for entries, and contact the empty
-            # string elements created for ws and m combinations that don't match our actual conditions
-            lib.concatMapStrings (
-              m:
-              # check if ws is present in m.workspaces (a list of strings)
-              if builtins.elem workspace m.workspaces then
-                "${workspace}, monitor:${m.name}, defaultName:${key}, default:true, persistent:true"
-              else
-              # workspace 1 is persistent on the primary monitor
-              if (workspace == 1 || workspace == "special") && m.primary == true then
-                "${workspace}, monitor:${m.name}, defaultName:${key}, default:true, persistent:true"
-              # FIXME(monitors): need logic to set primary as default monitor for workspaces that don't match above conditions but because we're limited to 'map' it seems to add more complexity than it's worth
-              else
-                ""
-            ) config.monitors
-          ) workspaceIDs
-        );
+            if (workspace == 1 || workspace == "special") && m.primary == true then
+              "${workspace}, monitor:${m.name}, defaultName:${key}, default:true, persistent:true"
+            else
+              "${workspace}, monitor:${m.name}, defaultName:${key}, default:false, persistent:true"
+            # FIXME(monitors): need logic to set primary as default monitor for workspaces that don't match above conditions but because we're limited to 'map' it seems to add more complexity than it's worth
+          ) m.workspaces
+        ) config.monitors
+      );
 
       #
       # ========== Behavior ==========

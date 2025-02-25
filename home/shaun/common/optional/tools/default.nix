@@ -4,6 +4,7 @@
     ./openscad.nix
     ./thunar.nix
     ./lazygit.nix
+    ./easyeffects.nix
   ];
 
   home.packages = with pkgs; [

@@ -17,7 +17,7 @@
         lines = 10000;
       };
       url = {
-        launch = "xdg-open \${url}";
+        launch = "handlr open \${url}";
         protocols = "http, https, ftp, ftps, file, gemini, gopher, steam, ssh";
       };
       colors = {

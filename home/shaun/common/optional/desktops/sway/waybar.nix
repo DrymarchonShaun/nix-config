@@ -8,21 +8,21 @@ let
   # offset char by rise
   iconOffset = rise: char: ''<span  font="Symbols Nerd Font Mono" rise="${rise}">${char} </span>'';
 
+  custom-language = pkgs.writeScript "custom-language" ''
+    # Get the current keyboard layout name for the first keyboard device
+    layout_info=$(${pkgs.swayfx}/bin/swaymsg -t get_inputs | ${pkgs.jq}/bin/jq -r '.[] | select(.type == "keyboard") | .xkb_active_layout_name' | head -n 1)
+
+    # Determine the output based on the layout name
+    if [[ "$layout_info" == "English (US)" ]]; then
+        echo "US Standard"
+
+    elif [[ "$layout_info" == "English (Real Programmers Dvorak)" ]]; then
+        echo "US Dvorak"
+    else
+        echo "Unknown Layout"
+    fi
+  '';
 in
-# custom-language = pkgs.writeScript "custom-language" ''
-#   # Get the current keyboard layout name for the first keyboard device
-#   layout_info=$(${pkgs.swayfx}/bin/swaymsg -t get_inputs | ${pkgs.jq}/bin/jq -r '.[] | select(.type == "keyboard") | .xkb_active_layout_name' | head -n 1)
-#
-#   # Determine the output based on the layout name
-#   if [[ "$layout_info" == "English (US)" ]]; then
-#       echo "US Standard"
-#
-#   elif [[ "$layout_info" == "English (Real Programmers Dvorak)" ]]; then
-#       echo "US Dvorak"
-#   else
-#       echo "Unknown Layout"
-#   fi
-# '';
 {
   # Let it try to start a few more times
   systemd.user.services.waybar = {
@@ -34,7 +34,7 @@ in
 
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar;
+    package = pkgs.unstable.waybar;
     systemd.enable = true;
     systemd.target = "graphical-session.target";
     settings = {
@@ -42,11 +42,8 @@ in
         layer = "bottom";
         margin = "20 20 0 20";
         modules-left = [
-          "hyprland/workspaces"
-          "hyprland/submap"
-          #"hyprland/window"
-          #"sway/workspaces"
-          #"custom/language"
+          "sway/workspaces"
+          "custom/language"
         ];
         modules-center = [
           "clock"
@@ -65,27 +62,16 @@ in
         ];
 
         ########## Left Modules ##########
-        #TODO
-        #"hyprland/window" ={};
-
-        "hyprland/workspaces" = {
-          all-outputs = false;
-          disable-scroll = true;
-          on-click = "activate";
+        "sway/workspaces" = {
           format = "{name}";
-          show-special = true; # display special workspaces along side regular ones (scratch for example)
         };
 
-        # "sway/workspaces" = {
-        #   format = "{name}";
-        # };
-
-        # "custom/language" = {
-        #   format = "{}";
-        #   interval = 1;
-        #   exec = "${custom-language}";
-        #   on-click = "${pkgs.swayfx}/bin/swaymsg input type:keyboard xkb_switch_layout next";
-        # };
+        "custom/language" = {
+          format = "{}";
+          interval = 1;
+          exec = "${custom-language}";
+          on-click = "${pkgs.swayfx}/bin/swaymsg input type:keyboard xkb_switch_layout next";
+        };
         ########## Center Modules ##########
         clock = {
           interval = 1;
@@ -235,8 +221,8 @@ in
         background: transparent;
       }
 
-      #workspaces button.empty {
-        color: @overlay1
+      #workspaces button.persistent {
+        color: @overlay1;
       }
 
       #workspaces button.visible {
@@ -244,6 +230,10 @@ in
       }
 
       #workspaces button.active {
+        color: @text;
+      }
+
+      #workspaces button.focused {
         color: @blue;
       }
 

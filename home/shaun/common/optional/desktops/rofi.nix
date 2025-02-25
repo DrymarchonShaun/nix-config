@@ -9,8 +9,8 @@
     enable = true;
     package = pkgs.rofi-wayland;
     extraConfig = {
-      # modi = "run,drun";
-      modes = "run,drun,display:${pkgs.rofi-randr}/bin/rofi-randr";
+      # FIXME: rofi-randr doesn't work in hyprland, it should only be used for sway
+      modes = "run,drun";
       icon-theme = "Oranchelo";
       show-icons = true;
       terminal = "foot";

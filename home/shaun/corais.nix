@@ -10,8 +10,10 @@
     # ========== Host-specific Optional Configs ==========
     #
     common/optional/browsers
-    common/optional/desktops # default is sway
-    common/optional/desktops/easyeffects.nix
+    common/optional/desktops/hyprland
+    common/optional/desktops/rofi.nix
+    # common/optional/desktops/sway
+    common/optional/desktops/common/ghostty.nix
     common/optional/development
     common/optional/comms
     common/optional/gaming
@@ -23,6 +25,8 @@
     common/optional/xdg.nix # file associations
     common/optional/sops.nix
   ];
+
+  services.xembed-sni-proxy.enable = true;
 
   #
   # ========== Host-specific Monitor Spec ==========
@@ -50,25 +54,24 @@
       primary = true;
       noBar = false;
 
-      workspaces = [
-        "1"
-        "2"
-        "3"
-        "4"
-        "5"
-        "6"
-        "7"
-        "8"
-        "9"
-        "10"
-      ];
+      workspaces = {
+        "1" = "1";
+        "2" = "2";
+        "3" = "3";
+        "4" = "4";
+        "5" = "5";
+        "6" = "6";
+        "7" = "7";
+        "8" = "8";
+        "9" = "9";
+        "10" = "0";
+      };
     }
     {
       name = "DP-2";
 
       width = 2560;
       height = 1440;
-      # FIXME(hyprland): having both monitors set to 165 causes hyprland to freeze after dpms off
       refreshRate = 165;
 
       x = 2560;
@@ -77,20 +80,20 @@
 
       vrr = 0;
 
-      workspaces = [
-        "11"
-        "12"
-        "13"
-        "14"
-        "15"
-        "16"
-        "17"
-        "18"
-        "19"
-        "20"
-        "21"
-        "22"
-      ];
+      workspaces = {
+        "11" = "F1";
+        "12" = "F2";
+        "13" = "F3";
+        "14" = "F4";
+        "15" = "F5";
+        "16" = "F6";
+        "17" = "F7";
+        "18" = "F8";
+        "19" = "F9";
+        "20" = "F10";
+        "21" = "F11";
+        "22" = "F12";
+      };
     }
   ];
   home.sessionVariables = {
