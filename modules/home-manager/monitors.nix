@@ -55,8 +55,34 @@
           #   default = null;
           # };
           workspaces = lib.mkOption {
-            type = lib.types.nullOr (lib.types.listOf lib.types.str);
-            description = "Defines workspaces that should persist on this monitor.";
+            type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+            description = "Defines workspaces assigned to this monitor in the form of \"WORKSPACE_ID\"=\"MAIN_KEYBIND\".";
+            example = ''
+              monitors = [
+                {
+                  name = "DP-1";
+                  ...
+
+                  workspaces = {
+                        "1" = "1";
+                        "2" = "2";
+                        "3" = "3";
+                        "4" = "4";
+                  };
+                }
+                {
+                  name = "DP-2";
+                  ...
+
+                  workspaces = {
+                        "11" = "F1";
+                        "12" = "F2";
+                        "13" = "F3";
+                        "14" = "F4";
+                  };
+                }
+              ];
+            '';
             default = null;
           };
           vrr = lib.mkOption {

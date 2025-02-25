@@ -10,6 +10,8 @@ writeShellScriptBin ''ipc-daemon'' ''
       case $1 in
         activewindow\>\>steam_app_107410,Arma*)
           echo "YES $1" && hyprctl dispatch submap shortcuts-inhibited ;;
+        activewindow\>\>steam_app_553850,HELLDIVERS*)
+          echo "YES $1" && hyprctl dispatch submap shortcuts-inhibited ;;
         activewindow*)
           echo "NO $1" && hyprctl dispatch submap reset ;;
       esac
