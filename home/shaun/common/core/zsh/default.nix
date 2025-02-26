@@ -115,9 +115,9 @@ in
 
         #-------------Bat related------------
         cat = "bat --paging=never";
-        diff = "batdiff";
-        rg = "batgrep";
-        man = "batman";
+        # diff = "batdiff";
+        # rg = "batgrep";
+        # man = "batman";
 
         #------------Navigation------------
         doc = "cd $HOME/Documents";

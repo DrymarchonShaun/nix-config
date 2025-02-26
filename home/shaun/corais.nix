@@ -26,8 +26,6 @@
     common/optional/sops.nix
   ];
 
-  services.xembed-sni-proxy.enable = true;
-
   #
   # ========== Host-specific Monitor Spec ==========
   #
