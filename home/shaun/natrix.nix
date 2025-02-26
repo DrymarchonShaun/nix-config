@@ -24,6 +24,10 @@
     common/optional/sops.nix
   ];
 
+  wayland.windowManager.hyprland.settings.bindl = [
+    ",switch:Lid Switch,exec,hyprlock"
+  ];
+
   #
   # ========== Host-specific Monitor Spec ==========
   #
