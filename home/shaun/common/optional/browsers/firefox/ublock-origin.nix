@@ -100,6 +100,9 @@
 
       # URL Shortener tools (replaces clearurls)
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
+
+      # complements sponsorblock
+      "https://neuter.mchang.xyz/filter/sponsorblock"
     ];
     filters = [
       "##body:style(overflow: auto !important)"

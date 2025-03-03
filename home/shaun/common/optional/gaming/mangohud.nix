@@ -28,7 +28,7 @@
       resolution = true;
       round_corners = 0;
       table_columns = 3;
-      # toggle_hud = "Super_R";
+      toggle_hud = "Super_R";
       vram = true;
       vulkan_driver = true;
       wine = true;
