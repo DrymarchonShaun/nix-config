@@ -21,7 +21,7 @@
 
     # Media production
     audacity
-    blender
+    blender-hip
     gimp
     inkscape
     obs-studio
