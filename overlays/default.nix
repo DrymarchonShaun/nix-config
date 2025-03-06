@@ -29,14 +29,14 @@ let
 
     steam = final.dev.steam;
 
-    arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
-      patches = oldAttrs.patches or [ ] ++ [
-        (prev.fetchpatch {
-          url = "https://patch-diff.githubusercontent.com/raw/muttleyxd/arma3-unix-launcher/pull/291.patch";
-          hash = "sha256-fBwWfu4IR02zJuiCGhkAKzMlkJEHw/+whw3potR++fA=";
-        })
-      ];
-    });
+    # arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
+    #   patches = oldAttrs.patches or [ ] ++ [
+    #     (prev.fetchpatch {
+    #       url = "https://patch-diff.githubusercontent.com/raw/muttleyxd/arma3-unix-launcher/pull/291.patch";
+    #       hash = "sha256-fBwWfu4IR02zJuiCGhkAKzMlkJEHw/+whw3potR++fA=";
+    #     })
+    #   ];
+    # });
     orca-slicer-overridden = prev.stdenv.mkDerivation {
       name = "orca-slicer-overridden";
       version = prev.orca-slicer.version;
