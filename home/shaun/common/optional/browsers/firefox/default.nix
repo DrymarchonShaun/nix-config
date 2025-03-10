@@ -49,7 +49,7 @@
         ProviderURL = "https://dns.quad9.net/dns-query";
         Fallback = false;
       };
-      ExtensionUpdate = false;
+      ExtensionUpdate = true;
 
       "3rdparty".Extensions = {
         "uBlock0@raymondhill.net" = {
