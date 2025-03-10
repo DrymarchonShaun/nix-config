@@ -4,7 +4,10 @@
   lib,
   ...
 }:
-
+let
+  # TODO(theming): do this better
+  palette = lib.importJSON "${config.catppuccin.sources.palette}/palette.json";
+in
 {
   imports = [
     ./binds.nix
@@ -183,7 +186,10 @@
       general = {
         gaps_in = 7;
         gaps_out = 7;
-        border_size = 1;
+        "col.active_border" = lib.mkForce "rgb(${
+          (builtins.replaceStrings [ "#" ] [ "" ] palette.macchiato.colors.blue.hex)
+        })";
+        border_size = 2;
         resize_on_border = true;
         hover_icon_on_border = true;
         allow_tearing = true; # used to reduce latency and/or jitter in games
