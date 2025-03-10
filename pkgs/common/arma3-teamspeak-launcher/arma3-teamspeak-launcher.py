@@ -5,9 +5,6 @@ import subprocess
 import sys
 import requests
 
-# Define the version of the script
-_SCRIPTVER = "1v18-7"
-
 # Default Variables
 PROTON_VERSION = ""
 COMPAT_DATA_PATH = ""
@@ -55,7 +52,9 @@ def install_teamspeak():
     with open(file_path, "wb") as file:
         file.write(response.content)
     # Run the installer
-    subprocess.call(f'protontricks-launch --appid 107410 "{file_path}"', shell=True)
+    subprocess.call(
+        f'protontricks-launch --appid 107410 "{file_path}"', shell=True, cwd="/tmp/"
+    )
 
 
 # Main Logic
@@ -73,7 +72,11 @@ def main():
 
     if os.path.exists(TS_PATH):
         print("TeamSpeak is already installed. Launching...")
-        subprocess.call(f'protontricks-launch --appid 107410 "{TS_PATH}" /S', shell=True)
+        subprocess.call(
+            f'protontricks-launch --appid 107410 "{TS_PATH}" /S',
+            shell=True,
+            cwd="/tmp/",
+        )
     else:
         print("TeamSpeak is not installed. Installing...")
         install_teamspeak()
