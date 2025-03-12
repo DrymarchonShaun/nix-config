@@ -23,13 +23,13 @@
 
       # This mkHost is way better: https://github.com/linyinfeng/dotfiles/blob/8785bdb188504cfda3daae9c3f70a6935e35c4df/flake/hosts.nix#L358
       newConfig =
-        name: disk: swapSize: useLuks: isImp:
+        name: disk: swapSize: useLuks: useImpermanence:
         (
           let
             diskSpecPath =
-              if useLuks && isImp then
+              if useLuks && useImpermanence then
                 ../hosts/common/disks/btrfs-luks-impermanence-disk.nix
-              else if !useLuks && isImp then
+              else if !useLuks && useImpermanence then
                 ../hosts/common/disks/btrfs-impermanence-disk.nix
               else
                 ../hosts/common/disks/btrfs-disk.nix;
@@ -57,7 +57,7 @@
     in
     {
       nixosConfigurations = {
-        # host = newConfig "name" disk" "swapSize" "useLuks" "isImp"
+        # host = newConfig "name" disk" "swapSize" "useLuks" "useImpermanence"
         # Swap size is in GiB
 
         corais = newConfig "corais" "/dev/disk/by-id/nvme-eui.00253854119048ec" 24 false true;
