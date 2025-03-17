@@ -12,6 +12,7 @@ in
   imports = [
     ./binds.nix
     ./hyprlock.nix
+    ./hyprpanel.nix
     ./hyprpaper.nix
     ./wlogout.nix
     ../common/gtk.nix
@@ -19,7 +20,7 @@ in
     ../common/services/clipboard.nix
     ../common/services/gammastep.nix
     ../common/services/playerctl.nix
-    ../common/services/swaync.nix
+    # ../common/services/swaync.nix
     ../common/services/tray.nix
   ];
 

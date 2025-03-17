@@ -65,6 +65,7 @@ in
   nixpkgs = {
     overlays = [
       outputs.overlays.default
+      inputs.hyprpanel.overlay
     ];
     config = {
       allowUnfree = true;

@@ -5,8 +5,8 @@
       enable = true;
       package = pkgs.xembed-sni-proxy;
     };
-    blueman-applet.enable = true;
-    gammastep.tray = true;
-    network-manager-applet.enable = true;
+    # blueman-applet.enable = true;
+    # gammastep.tray = true;
+    # network-manager-applet.enable = true;
   };
 }

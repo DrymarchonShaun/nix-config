@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     #
@@ -24,6 +24,7 @@
     common/optional/sops.nix
   ];
 
+  programs.hyprpanel.hasBattery = true;
   wayland.windowManager.hyprland.settings.bindl = [
     ",switch:Lid Switch,exec,hyprlock"
   ];
@@ -87,29 +88,4 @@
       };
     }
   ];
-
-  # TODO(wm migration): update this for hyprland
-  programs.waybar.settings.mainBar = {
-    outputs = [
-      "eDP-1"
-      "HDMI-A-1"
-    ];
-  };
-  programs.waybar.settings.mainBar.temperature.hwmon-path = "/sys/class/hwmon/hwmon4/temp1_input";
-
-  programs.waybar.settings.mainBar."custom/fan" =
-    let
-      waybar-fan = pkgs.writeShellScript "waybar-fan" ''
-        PWM_PERCENT="$((($(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/pwm1) * 100) / 255))"
-        RPM="$(${pkgs.bat}/bin/bat /sys/class/hwmon/hwmon4/fan1_input)"
-        echo -e "{\"text\": \"$PWM_PERCENT\", \"tooltip\": \"$RPM RPM\"}" | ${pkgs.jq}/bin/jq --compact-output --unbuffered
-      '';
-    in
-    {
-      format = "{}% 󰈐 ";
-      exec = "${waybar-fan}";
-      return-type = "json";
-      interval = 1;
-      tooltip = true;
-    };
 }
