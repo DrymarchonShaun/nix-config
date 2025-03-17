@@ -1,12 +1,12 @@
 {
   inputs,
   pkgs,
-  lib,
   config,
   ...
 }:
 let
-  flakeRoot = lib.custom.relativeToRoot "./.";
+  # TODO(nvim): janky, hardcoded path to nix config rep - find a better way to do this that doesn't require a hardcoded path.
+  flakeRoot = "git+file://${config.hostSpec.home}/.src/nix/nix-config?ref=stable";
 in
 {
   home.packages = [
@@ -16,8 +16,7 @@ in
           nixpkgs.expr = ''import (builtins.getFlake "${flakeRoot}").inputs.nixpkgs {}'';
           options = {
             nixos.expr = ''
-              let configs = (builtins.getFlake "${flakeRoot}").nixosConfigurations;
-              in (builtins.head (builtins.attrValues configs)).options
+              (builtins.getFlake "${flakeRoot}").nixosConfigurations.${config.hostSpec.hostName}.options
             '';
             home_manager.expr = ''
               (builtins.getFlake "${flakeRoot}").nixosConfigurations.${config.hostSpec.hostName}.options.home-manager.users.value.${config.hostSpec.username}
