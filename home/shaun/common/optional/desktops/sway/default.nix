@@ -16,7 +16,7 @@
     ../common/gtk.nix
     ../common/qt.nix
     ../common/services/clipboard.nix
-    ../common/services/gammastep.nix
+    ../common/services/wlsunset.nix
     ../common/services/playerctl.nix
     # ../common/services/swaync.nix
     ../common/services/tray.nix
