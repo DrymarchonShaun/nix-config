@@ -99,7 +99,6 @@ in
 
       # Packages that don't have custom configs go here
       btop # resource monitor
-      copyq # clipboard manager
       coreutils # basic gnu utils
       curl
       eza # ls replacement

@@ -8,7 +8,7 @@
       ;
   };
 
-  services.copyq = {
+  services.cliphist = {
     enable = true;
   };
 
