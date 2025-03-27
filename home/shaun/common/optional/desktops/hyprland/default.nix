@@ -278,30 +278,17 @@ in
         #
         # ========== Steam rules ==========
         #
-        "stayfocused, title:^()$,class:^([Ss]team)$"
+        # "stayfocused, title:^()$,class:^([Ss]team)$"
         "minsize 1 1, title:^()$,class:^([Ss]team)$"
         "monitor 0,   title:^()$,class:^([Ss]team)$"
 
         "workspace 6 silent, title:^([Ss]team)$,class:^([Ss]team)$"
 
-        "immediate, class:^([Ss]team_app_.*)$"
-        "fullscreen, class:^([Ss]team_app_.*)$"
         "workspace 5, class:^([Ss]team_app_.*)$"
         "monitor 0, class:^([Ss]team_app.*)$"
 
-        "workspace 13, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
+        "workspace 11, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
         "monitor 1, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
-
-        #
-        # ========== Fameshot rules ==========
-        #
-        # flameshot currently doesn't have great wayland support so needs some tweaks
-        #"rounding 0, class:^([Ff]lameshot)$"
-        #"noborder, class:^([Ff]lameshot)$"
-        #"float, class:^([Ff]lameshot)$"
-        #"move 0 0, class:^([Ff]lameshot)$"
-        #"suppressevent fullscreen, class:^([Ff]lameshot)$"
-        # "monitor:DP-1, ${flameshot}"
 
         #
         # ========== Workspace Assignments ==========
