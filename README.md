@@ -30,6 +30,8 @@
 
 ---
 
+Questions? Check out the upstream [Discord server](https://discord.gg/XTFg57xGxC).
+
 ## Feature Highlights
 
 - Flake-based multi-host, multi-user configurations for NixOS, Darwin, and Home-Manager
