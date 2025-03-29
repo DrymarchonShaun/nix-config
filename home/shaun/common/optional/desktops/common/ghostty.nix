@@ -1,11 +1,17 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  home.packages = [ pkgs.unstable.ghostty ];
+  programs.ghostty = {
+    enable = true;
 
-  xdg.configFile."ghostty/config".text = ''
-    theme = catppuccin-macchiato
-    window-decoration = false
-    background-opacity = 0.6
-    keybind = ctrl+enter=unbind
-  '';
+    enableZshIntegration = true;
+
+    settings = {
+      theme = "catppuccin-macchiato";
+      window-decoration = false;
+      background-opacity = 0.6;
+      keybind = [
+        "ctrl+enter=unbind"
+      ];
+    };
+  };
 }

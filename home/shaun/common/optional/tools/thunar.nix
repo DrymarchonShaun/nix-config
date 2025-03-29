@@ -1,11 +1,12 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }:
 let
   startInDirectoryScript = pkgs.writeShellScript "exec-terminal-in-directory" ''
-    ${config.programs.foot.package}/bin/foot --working-directory "$@"
+    ${lib.getExe config.programs.ghostty.package} --working-directory="$@"
   '';
 in
 {
