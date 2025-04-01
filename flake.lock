@@ -835,11 +835,11 @@
     },
     "nixpkgs-dev": {
       "locked": {
-        "lastModified": 1740602577,
-        "narHash": "sha256-loKW8ZnIepVU0CF8NqccMa2Ft+M5gkUmszMp3SITFdI=",
+        "lastModified": 1743136409,
+        "narHash": "sha256-CXHGswoI28C6BQoGClFHSyB9+MOB/AMMWETRCSL57Tk=",
         "owner": "DrymarchonShaun",
         "repo": "nixpkgs",
-        "rev": "81892ffc6328cce8d800dcaf4d9f90a38a08d72b",
+        "rev": "d00ff850b020f366dcdae54b4ed21def37d10230",
         "type": "github"
       },
       "original": {
