@@ -51,9 +51,6 @@
               "getula"
             ];
           };
-          "Games" = defaultFolder "Games" {
-            path = "${config.hostSpec.home}/Games/Shared";
-          };
           "Music" = defaultFolder "Music" { };
           "Pictures" = defaultFolder "Pictures" { };
           "Videos" = defaultFolder "Videos" { };
