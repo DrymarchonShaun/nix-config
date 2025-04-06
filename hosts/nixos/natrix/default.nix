@@ -71,9 +71,10 @@ in
       "hosts/common/optional/services/syncthing.nix" # syncthing
       "hosts/common/optional/services/network-manager.nix" # display manager
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
-      "hosts/common/optional/services/polkit.nix" # allow remote SSH access
+      "hosts/common/optional/services/polkit.nix" # polkit agent
       "hosts/common/optional/services/printing.nix" # CUPS
-      "hosts/common/optional/services/ydotool.nix" # CUPS
+      "hosts/common/optional/services/ydotool.nix" # autoclicker / input automation
+      "hosts/common/optional/services/openrazer.nix" # razer peripherals
       "hosts/common/optional/virtualization/flatpak" # container subsystem, primarily used for sober (roblox)
       "hosts/common/optional/virtualization/containers/openbooks.nix"
       "hosts/common/optional/android.nix" # adb / fastboot

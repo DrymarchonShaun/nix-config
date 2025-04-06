@@ -16,6 +16,30 @@ let
 
   linuxModifications = final: prev: prev.lib.mkIf final.stdenv.isLinux { };
 
+  pythonModifications = final: prev: {
+    pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+      (
+        python-final: python-prev:
+        let
+          src = prev.fetchFromGitHub {
+            owner = "openrazer";
+            repo = "openrazer";
+            rev = "refs/pull/2348/head";
+            hash = "sha256-S7zNGihLJ2vfvGqm+ZbbxMB/FsY9XSVrtBvLeKNwHjc=";
+          };
+        in
+        {
+          openrazer = python-prev.openrazer.overridePythonAttrs (oldAttrs: {
+            inherit src;
+          });
+          openrazer-daemon = python-prev.openrazer-daemon.overridePythonAttrs (oldAttrs: {
+            inherit src;
+          });
+        }
+      )
+    ];
+  };
+
   modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
@@ -93,6 +117,7 @@ in
     (additions final prev)
     // (modifications final prev)
     // (linuxModifications final prev)
+    // (pythonModifications final prev)
     // (stable-packages final prev)
     // (unstable-packages final prev)
     // (master-packages final prev)
