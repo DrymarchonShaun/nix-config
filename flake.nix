@@ -5,6 +5,7 @@
       self,
       nixpkgs,
       # nix-darwin,
+      treefmt-nix,
       ...
     }@inputs:
     let
@@ -83,7 +84,15 @@
       # ========= Formatting =========
       #
       # Nix formatter available through 'nix fmt' https://github.com/NixOS/nixfmt
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+        in
+        treefmtEval.config.build.wrapper
+      );
+
       # Pre-commit checks
       checks = forAllSystems (
         system:
@@ -157,6 +166,11 @@
     # Pre-commit
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Formatter
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Theming
