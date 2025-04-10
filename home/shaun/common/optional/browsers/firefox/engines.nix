@@ -70,6 +70,6 @@
       }
     ];
     updateInterval = 24 * 60 * 60 * 1000; # every day
-    definedAliases = [ "@nw" ];
+    definedAliases = [ "@hmopts" ];
   };
 }
