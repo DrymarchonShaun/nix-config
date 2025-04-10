@@ -93,14 +93,18 @@
             # Layout / Themeing
             (extension "darkreader" "addon@darkreader.org" true)
 
-            # Misc
-            (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" false)
+            # Youtube
             (extension "youtube-addon" "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}" false)
             (extension "dearrow" "deArrow@ajay.app" false)
             (extension "sponsorblock" "sponsorBlocker@ajay.app" false)
+            (extension "return-youtube-dislikes" "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" false)
+
+            # Misc
+            (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}" false)
+            (extension "multi-account-containers" "@testpilot-containers" false)
+            (extension "user-agent-string-switcher" "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" false)
             (extension "inde-wiki-buddy" "{cb31ec5d-c49a-4e5a-b240-16c767444f62}" false)
             (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}" false)
-            (extension "return-youtube-dislikes" "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" false)
             (extension "flagfox" "{1018e4d6-728f-4b20-ad56-37578a4de76b}" false)
             (extension "languagetool" "languagetool-webextension@languagetool.org" false)
             (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" true)
