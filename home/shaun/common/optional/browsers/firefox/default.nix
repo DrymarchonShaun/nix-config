@@ -58,6 +58,16 @@
         "addon@darkreader.org" = {
           permissions = [ "internal:privateBrowsingAllowed" ];
         };
+        # User agent switcher and manager
+        "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}" = {
+          "json" = builtins.toJSON {
+            container-uas = {
+              "firefox-container-1" =
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pkgs.google-chrome.version} Safari/537.36";
+            };
+            json-forced = true;
+          };
+        };
       };
       # To copy extensions from an existing profile you can do something like this:
       # cat ~/.mozilla/firefox/fb8sickr.default/extensions.json | jq '.addons[] | [.defaultLocale.name, .id]'
