@@ -166,21 +166,16 @@
             engines = import ./engines.nix;
           };
 
-          #      containers = {
-          #        FCWA = {
-          #            name = "FCWA";
-          #            color = "blue";
-          #            icon = "circle";
-          #            id = 1;
-          #        };
-          #        FenceStore = {
-          #            name = "The Fence Store";
-          #            color = "red";
-          #            icon = "fence";
-          #            id = 2;
-          #        };
-          #
-          #      } ;
+          containersForce = true;
+          containers = {
+            # Container for sites that require a Chrome useragent
+            Chrome = {
+              name = "Chrome";
+              color = "yellow";
+              icon = "circle";
+              id = 1;
+            };
+          };
           #
           # This just uses the default suggestion from home-manager for now
           userChrome = ''
