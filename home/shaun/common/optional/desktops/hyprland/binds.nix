@@ -113,9 +113,9 @@
           # Output
           ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_SINK@ toggle"
           # Player
-          ", XF86AudioPlay, exec, '${playerctl} play-pause'"
-          ", XF86AudioNext, exec, '${playerctl} next'"
-          ", XF86AudioPrev, exec, '${playerctl} previous'"
+          ", XF86AudioPlay, exec, ${playerctl} play-pause"
+          ", XF86AudioNext, exec, ${playerctl} next"
+          ", XF86AudioPrev, exec, ${playerctl} previous"
 
           #
           # ========== Windows and Groups ==========
