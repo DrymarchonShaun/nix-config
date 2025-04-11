@@ -64,31 +64,32 @@ in
       #
       # ========== Optional Configs ==========
       #
-      "hosts/common/optional/services/avahi.nix" # host discovery
-      "hosts/common/optional/services/bluetooth.nix" # bluetooth
-      "hosts/common/optional/services/geoclue.nix" # location services
-      "hosts/common/optional/services/greetd.nix" # display manager
-      "hosts/common/optional/services/syncthing.nix" # syncthing
-      "hosts/common/optional/services/network-manager.nix" # display manager
-      "hosts/common/optional/services/openssh.nix" # allow remote SSH access
-      "hosts/common/optional/services/polkit.nix" # polkit agent
-      "hosts/common/optional/services/printing.nix" # CUPS
-      "hosts/common/optional/services/ydotool.nix" # autoclicker / input automation
-      "hosts/common/optional/services/openrazer.nix" # razer peripherals
-      "hosts/common/optional/virtualization/flatpak" # container subsystem, primarily used for sober (roblox)
-      "hosts/common/optional/virtualization/containers/openbooks.nix"
       "hosts/common/optional/android.nix" # adb / fastboot
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/fonts.nix" # vm tools
       "hosts/common/optional/gaming.nix" # steam, gamescope, gamemode, and related hardware
+      "hosts/common/optional/hyprland.nix" # window manager
       "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
+      "hosts/common/optional/obsidian.nix" # notes
       "hosts/common/optional/plymouth.nix" # fancy boot screen
       "hosts/common/optional/recording.nix" # obs / virtual camera
       "hosts/common/optional/scanning.nix" # SANE and simple-scan
-      "hosts/common/optional/hyprland.nix" # window manager
+      "hosts/common/optional/services/avahi.nix" # host discovery
+      "hosts/common/optional/services/bluetooth.nix" # bluetooth
+      "hosts/common/optional/services/geoclue.nix" # location services
+      "hosts/common/optional/services/greetd.nix" # display manager
+      "hosts/common/optional/services/network-manager.nix" # display manager
+      "hosts/common/optional/services/openrazer.nix" # razer peripherals
+      "hosts/common/optional/services/openssh.nix" # allow remote SSH access
+      "hosts/common/optional/services/polkit.nix" # polkit agent
+      "hosts/common/optional/services/printing.nix" # CUPS
+      "hosts/common/optional/services/syncthing.nix" # syncthing
+      "hosts/common/optional/services/ydotool.nix" # autoclicker / input automation
       "hosts/common/optional/thunar.nix" # file manager
       "hosts/common/optional/unbound.nix" # dns server
+      "hosts/common/optional/virtualization/containers/openbooks.nix"
+      "hosts/common/optional/virtualization/flatpak" # container subsystem, primarily used for sober (roblox)
       "hosts/common/optional/vlc.nix" # media player
     ])
     #

@@ -55,17 +55,16 @@ in
       #
       # ========== Optional Configs ==========
       #
-      "hosts/common/optional/services/avahi.nix" # host discovery
-      "hosts/common/optional/services/syncthing.nix" # syncthing
-      # shouldn't need this as getula should always be connected to ethernet
-      # "hosts/common/optional/services/network-manager.nix" # network password management
-      "hosts/common/optional/services/openssh.nix" # allow remote SSH access
-      "hosts/common/optional/services/polkit.nix" # allow remote SSH access
-      "hosts/common/optional/virtualization/containers/openbooks.nix"
       "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/plymouth.nix" # fancy boot screen
+      "hosts/common/optional/services/avahi.nix" # host discovery
+      "hosts/common/optional/services/openssh.nix" # allow remote SSH access
+      "hosts/common/optional/services/polkit.nix" # allow remote SSH access
+      "hosts/common/optional/services/syncthing.nix" # syncthing
       "hosts/common/optional/unbound.nix" # dns server
+      "hosts/common/optional/virtualization/containers/openbooks.nix"
+
       #
       # ========== getula Specific ==========
       #
