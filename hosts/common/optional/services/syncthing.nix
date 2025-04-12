@@ -66,6 +66,15 @@
           "PrismInstances" = defaultFolder "PrismInstances" {
             path = "${config.hostSpec.home}/.local/share/PrismLauncher/instances";
           };
+          "obsidian-vault" = defaultFolder "obsidian-vault" {
+            path = "${config.hostSpec.home}/.src/obsidian-vault";
+            devices = [
+              "corais"
+              "natrix"
+              "getula"
+              "dekayi"
+            ];
+          };
         };
       devices = {
         "corais" = {
