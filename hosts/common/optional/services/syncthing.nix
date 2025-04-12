@@ -16,6 +16,8 @@
     };
   };
 
+  # FIXME(syncthing): This doesn't take into account the fact that not all nix hosts have these folders, currently any nixos host tries to sync all folders, but isn't accepted by the other devices
+
   services.syncthing = {
     enable = true;
     user = config.hostSpec.username;
