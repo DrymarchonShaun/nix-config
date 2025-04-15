@@ -4,9 +4,9 @@ let
   browser = [ "firefox.desktop" ];
   editor = [ "code.desktop" ];
   media = [ "vlc.desktop" ];
-  writer = [ "libreoffic-writer.desktop" ];
-  spreadsheet = [ "libreoffice-calc.desktop" ];
-  slidedeck = [ "libreoffice-impress.desktop" ];
+  writer = [ "writer.desktop" ];
+  spreadsheet = [ "calc.desktop" ];
+  slidedeck = [ "impress.desktop" ];
   # Extensive list of associations here:
   # https://github.com/iggut/GamiNiX/blob/8070528de419703e13b4d234ef39f05966a7fafb/system/desktop/home-main.nix#L77
   associations = {
@@ -141,7 +141,7 @@ in
   };
 
   programs.zsh.shellAliases = {
-    xdg-open = "echo \"Use handlr instead of xdg-open\"; handlr --help";
-    xdg-mime = "echo \"Use handlr instead of xdg-mime\"; handlr --help";
+    xdg-open = "echo -e \"\\e[31m\\e[1mUse `handlr open` instead of xdg-open\\e[0m\"";
+    xdg-mime = "echo -e \"\\e[31m\\e[1mUse `handlr` instead of xdg-mime\\e[0m\"";
   };
 }
