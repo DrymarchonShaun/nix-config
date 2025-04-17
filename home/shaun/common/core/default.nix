@@ -19,7 +19,7 @@ in
       "modules/home"
     ])
     ./${platform}.nix
-    ./zsh
+    ./fish.nix
     ./neovim.nix
     ./bash.nix
     ./bat.nix
@@ -44,7 +44,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 
@@ -57,12 +57,11 @@ in
     ];
     sessionVariables = {
       FLAKE = "$HOME/.src/nix/nix-config";
-      SHELL = "zsh";
+      # SHELL = "fish";
       TERM = "ghostty";
       TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
-      # MANPAGER = "batman"; # see ./cli/bat.nix
     };
     preferXdgDirectories = true; # whether to make programs use XDG directories whenever supported
 

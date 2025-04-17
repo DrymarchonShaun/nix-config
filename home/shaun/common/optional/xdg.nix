@@ -140,7 +140,7 @@ in
       ;
   };
 
-  programs.zsh.shellAliases = {
+  programs.fish.shellAliases = {
     xdg-open = "echo -e \"\\e[31m\\e[1mUse `handlr open` instead of xdg-open\\e[0m\"";
     xdg-mime = "echo -e \"\\e[31m\\e[1mUse `handlr` instead of xdg-mime\\e[0m\"";
   };

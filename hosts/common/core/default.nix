@@ -114,8 +114,21 @@ in
   # ========== Basic Shell Enablement ==========
   #
   # On darwin it's important this is outside home-manager
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    enableCompletion = true;
+    shellInit = ''
+      set fish_greeting # Disable greeting
+    '';
+    shellAliases = {
+      # Overrides those provided by plugins, and themes.
+      # For a full list of active aliases, run `alias`.
+
+      #------------Navigation------------
+      l = "eza -lah";
+      la = "eza -lah";
+      ll = "eza -lh";
+      ls = "eza";
+      lsa = "eza -lah";
+    };
   };
 }

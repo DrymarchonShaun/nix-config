@@ -138,7 +138,7 @@
           "ALT,v,hy3:makegroup,v" # make a vertical split
           "SHIFTALT,v,hy3:makegroup,h" # make a horizontal split
           "ALT,x,hy3:changegroup,opposite" # toggle btwn splits if untabbed
-          "ALT,s,togglesplit"
+          # "ALT,s,togglesplit"
 
           # Tab groups
           "ALT,g,hy3:changegroup,toggletab" # tab or untab the group

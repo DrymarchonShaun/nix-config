@@ -53,8 +53,8 @@ lib.mkMerge [
         };
       };
     };
-    programs.zsh.initExtra = ''
-      bindkey '^r' _atuin_search_widget
+    programs.fish.interactiveShellInit = ''
+      bind \cR '_atuin_search'
     '';
   }
   (lib.mkIf isLinux {

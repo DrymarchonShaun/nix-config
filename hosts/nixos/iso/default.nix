@@ -15,7 +15,7 @@
     inputs.home-manager.nixosModules.home-manager
     (map lib.custom.relativeToRoot [
       "modules/common/host-spec.nix"
-      # We want primary default so we get ssh authorized keys, zsh, and some basic tty tools. It also pulls in the hm spec for iso.
+      # We want primary default so we get ssh authorized keys, fish, and some basic tty tools. It also pulls in the hm spec for iso.
       # Note that we are not pulling in "hosts/common/users/primary/nixos.nix" for the iso as it's not needed.
       "hosts/common/users/primary/"
       "hosts/common/optional/minimal-user.nix"
