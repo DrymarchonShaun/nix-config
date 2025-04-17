@@ -16,46 +16,44 @@
       hyprland.enable = true;
       overwrite.enable = true;
 
-      theme = "catppuccin_macchiato";
-
-      layout = {
-        "bar.layouts" = {
-          "*" = {
-            left = [
-              "dashboard"
-              "workspaces"
-              "windowtitle"
-            ];
-            middle = [ "media" ];
-            right = [
-              "volume"
-              "clock"
-              "notifications"
-            ];
-          };
-          "0" = {
-            left = [
-              "dashboard"
-              "workspaces"
-              "windowtitle"
-            ];
-            middle = [ "media" ];
-            right = [
-              "volume"
-              "network"
-              "bluetooth"
-              (lib.mkIf config.programs.hyprpanel.hasBattery "battery")
-              "systray"
-              "clock"
-              "notifications"
-            ];
+      settings = {
+        layout = {
+          "bar.layouts" = {
+            "*" = {
+              left = [
+                "dashboard"
+                "workspaces"
+                "windowtitle"
+              ];
+              middle = [ "media" ];
+              right = [
+                "volume"
+                "clock"
+                "notifications"
+              ];
+            };
+            "0" = {
+              left = [
+                "dashboard"
+                "workspaces"
+                "windowtitle"
+              ];
+              middle = [ "media" ];
+              right = [
+                "volume"
+                "network"
+                "bluetooth"
+                (lib.mkIf config.programs.hyprpanel.hasBattery "battery")
+                "systray"
+                "clock"
+                "notifications"
+              ];
+            };
           };
         };
-      };
-
-      settings = {
 
         theme = {
+          name = "catppuccin_macchiato";
           font.name = "Inter";
           bar.outer_spacing = "0.5em";
         };

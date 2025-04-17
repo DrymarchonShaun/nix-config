@@ -28,7 +28,7 @@ in
     ./screen.nix
     ./ssh.nix
     ./zoxide.nix
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
 
     inputs.nix-index-database.hmModules.nix-index
   ];

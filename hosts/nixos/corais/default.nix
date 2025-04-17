@@ -76,7 +76,6 @@ in
       "hosts/common/optional/services/bluetooth.nix" # bluetooth
       "hosts/common/optional/services/geoclue.nix" # location services
       "hosts/common/optional/services/greetd.nix" # display manager
-      "hosts/common/optional/services/openrazer.nix" # razer peripherals
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
       "hosts/common/optional/services/polkit.nix" # polkit agent
       "hosts/common/optional/services/printing.nix" # CUPS
