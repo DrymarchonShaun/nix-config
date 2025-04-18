@@ -7,6 +7,7 @@
     publish = {
       enable = true;
       addresses = true;
+      workstation = true;
     };
     denyInterfaces = [
       "podman0"
