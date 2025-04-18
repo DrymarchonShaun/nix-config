@@ -26,7 +26,7 @@
 
   programs.hyprpanel.hasBattery = true;
   wayland.windowManager.hyprland.settings.bindl = [
-    ",switch:Lid Switch,exec,hyprlock"
+    ",switch:Lid Switch,exec,pidof hyprlock || hyprlock"
   ];
 
   #

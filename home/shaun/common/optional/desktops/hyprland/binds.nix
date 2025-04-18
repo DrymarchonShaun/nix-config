@@ -176,7 +176,7 @@
           # ========== Misc ==========
           #
           "SHIFTALT,r,exec,hyprctl reload" # reload the configuration file
-          "SUPERSHIFT,l,exec,hyprlock" # lock the wm
+          "SUPERSHIFT,l,exec,pidof hyprlock || hyprlock" # lock the wm
           "SUPERCTRLSHIFT,e,exec,wlogout" # lock the wm
           # FIXME(workarounds): remove when mangohud 0.8.0 is released
           "SUPER_R,,exec,mangohudctl toggle no_display"
