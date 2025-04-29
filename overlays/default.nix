@@ -10,7 +10,7 @@ let
   additions =
     final: prev:
     (prev.lib.packagesFromDirectoryRecursive {
-      callPackage = prev.lib.callPackageWith final;
+      callPackage = prev.lib.callPackageWith (final // { inherit inputs; });
       directory = ../pkgs/common;
     });
 

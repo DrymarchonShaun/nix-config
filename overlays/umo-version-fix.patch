@@ -1,0 +1,69 @@
+diff --git a/Makefile b/Makefile
+index 684b71f..5d0522c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -104,10 +104,10 @@ endif
+ 	--macos-app-icon=icons/KeenderL.png                         \
+ 	--macos-signed-app-name=com.modding-openmw.umo              \
+ 	--macos-app-name=com.modding-openmw.umo                     \
+-	--macos-app-version=0.8.22                                   \
++	--macos-app-version=0.8.23                                   \
+ 	--linux-icon=icons/KeenderM.png                             \
+ 	--product-name=umo                                          \
+-	--file-version=0.8.22
++	--file-version=0.8.23
+
+ web-all: web-clean web-build local-web
+
+diff --git a/appimage/AppImageBuilder.yml b/appimage/AppImageBuilder.yml
+index 5d231ba..61aef8a 100644
+--- a/appimage/AppImageBuilder.yml
++++ b/appimage/AppImageBuilder.yml
+@@ -19,7 +19,7 @@ AppDir:
+     id: umo
+     name: umo
+     icon: "KeenderM"
+-    version: 0.8.22
++    version: 0.8.23
+     # Set the python executable as entry point
+     exec: usr/src/umo
+     # Set the application main script path as argument. Use '$@' to forward CLI parameters
+diff --git a/macos/umo.plist b/macos/umo.plist
+index 08b37a4..a2a7280 100644
+--- a/macos/umo.plist
++++ b/macos/umo.plist
+@@ -15,7 +15,7 @@
+         <key>CFBundleName</key>
+         <string>umo</string>
+         <key>CFBundleShortVersionString</key>
+-        <string>0.8.22</string>
++        <string>0.8.23</string>
+         <key>NSHighResolutionCapable</key>
+         <true/>
+         <key>CFBundleURLTypes</key>
+diff --git a/pyproject.toml b/pyproject.toml
+index 38c9dc7..8987349 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,7 +1,7 @@
+ [project]
+ license = {text = "GNU AGPLv3"}
+ name = "umo"
+-version = "0.8.22"
++version = "0.8.23"
+ dependencies = [
+   "coloredlogs >= 15.0.1",
+   "desktop-notifier >= 6.0.0",
+diff --git a/src/config.py b/src/config.py
+index 6848b3d..4e754e1 100644
+--- a/src/config.py
++++ b/src/config.py
+@@ -34,7 +34,7 @@ class Config:
+     # headers for nexusmods (see
+     # https://help.nexusmods.com/article/114-api-acceptable-use-policy)
+     APP_VER_HEADER = "Application-Version"
+-    APP_VER = "0.8.22"
++    APP_VER = "0.8.23"
+     APP_NAME_HEADER = "Application-Name"
+     APP_NAME = "umo"
+     USER_AGENT = f"{APP_NAME}/{APP_VER}"

@@ -77,7 +77,10 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlays.default ];
+            overlays = [
+              self.overlays.default
+              inputs.rust-overlay.overlays.default
+            ];
           };
         in
         nixpkgs.lib.packagesFromDirectoryRecursive {
@@ -194,8 +197,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # OpenMW modding
+    openmw-nix = {
+      url = "git+https://codeberg.org/PopeRigby/openmw-nix.git";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     hyprpanel = {
       url = "github:Jas-SinghFSU/HyprPanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     #
