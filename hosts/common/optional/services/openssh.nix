@@ -35,6 +35,8 @@ in
     ];
   };
 
+  services.fail2ban.enable = true;
+
   # yubikey login / sudo
   security.pam = {
     rssh.enable = true;
