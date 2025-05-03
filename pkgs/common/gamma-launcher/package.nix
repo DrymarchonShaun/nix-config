@@ -6,96 +6,9 @@
   fetchFromGitHub,
   makeWrapper,
   unrar,
+  py7zr,
 }:
 let
-  inflate64 = python3Packages.buildPythonPackage rec {
-    pname = "inflate64";
-    version = "0.3.1";
-    format = "pyproject";
-    src = fetchPypi {
-      inherit version pname;
-      sha256 = "sha256-tS3Y/v0roXnl36GNbsp+L8giWEYWJxwDnV7x+cqQxxw=";
-    };
-    buildInputs = with python3Packages; [
-      setuptools-scm
-    ];
-    propagatedBuildInputs = with python3Packages; [
-      setuptools
-    ];
-    doCheck = false;
-  };
-
-  multivolumefile = python3Packages.buildPythonPackage rec {
-    pname = "multivolumefile";
-    version = "0.2.3";
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-oGSNCq+8luWRmNXBfprK1+tTGr6lEDXQjOgGDcrXCdY=";
-    };
-    propagatedBuildInputs = with python3Packages; [ setuptools-scm ]; # No Python deps
-    doCheck = false;
-  };
-
-  pybcj = python3Packages.buildPythonPackage rec {
-    pname = "pybcj";
-    version = "1.0.1";
-    src = fetchPypi {
-      inherit version pname; # Corrected: inherit 'name' as well
-      sha256 = "sha256-i2gu0Iyqv7fAQtS+CD4o3caSr7He/1VnER+IVQcbdcM=";
-    };
-    propagatedBuildInputs = with python3Packages; [
-      setuptools-scm
-      toml
-    ];
-    doCheck = false;
-  };
-
-  pyppmd = python3Packages.buildPythonPackage rec {
-    pname = "pyppmd";
-    version = "1.0.0";
-    src = fetchPypi {
-      inherit version pname; # Corrected: inherit 'name' as well
-      sha256 = "sha256-B1yb0pfjsKh9166ryn/uZoIYrL5p7MHGURBkVY3ohA8=";
-    };
-    propagatedBuildInputs = with python3Packages; [ setuptools-scm ]; # No Python deps
-    doCheck = false;
-  };
-
-  pyzstd = python3Packages.buildPythonPackage rec {
-    pname = "pyzstd";
-    version = "0.15.6";
-    src = fetchPypi {
-      inherit version pname; # Corrected: inherit 'name' as well
-      sha256 = "sha256-MqG2fVNA2N84HnGKeIQXRV7ddr7X6KTL0lms3DC14X4=";
-    };
-    propagatedBuildInputs = with python3Packages; [ ]; # No Python deps
-    doCheck = false;
-  };
-
-  py7zr = python3Packages.buildPythonPackage rec {
-    # Renamed to avoid shadowing
-    pname = "py7zr";
-    version = "0.20.4";
-    format = "pyproject";
-    src = fetchPypi {
-      inherit version pname; # Corrected: inherit 'name' as well
-      sha256 = "sha256-HQH5jqHh9cSZQDWGkbIHb5pYSAVkJlQeeD3jODT1niE=";
-    };
-    propagatedBuildInputs = with python3Packages; [
-      setuptools # propagatedBuildInputs
-      texttable
-      pycryptodomex
-      brotli
-      psutil
-      inflate64
-      pyzstd
-      pyppmd
-      pybcj
-      multivolumefile
-    ];
-    doCheck = false;
-  };
-
   unrar' = python3Packages.buildPythonPackage rec {
     pname = "unrar";
     version = "0.4";
@@ -112,14 +25,14 @@ let
 in
 python3Packages.buildPythonPackage rec {
   pname = "gamma-launcher";
-  version = "2.3";
+  version = "2.3-unstable-2025-4-19";
   format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "Mord3rca";
     repo = "gamma-launcher";
-    rev = "v${version}";
-    hash = "sha256-wS4qA9+fEx5IneDLZfpQSo8Yiy86gUImtlJXkkt7n4c=";
+    rev = "cfd4912418ef4e8da1be0a539fca4c1342fe414d";
+    hash = "sha256-S0AK7BKz2LsDj4uBePgIRAXvcERpCe1fbdQn1LSmdkg=";
   };
 
   nativeBuildInputs = [
