@@ -82,13 +82,13 @@ in
       music = "${config.home.homeDirectory}/Music";
       pictures = "${config.home.homeDirectory}/Pictures";
       videos = "${config.home.homeDirectory}/Videos";
-      # publicshare = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
-      # templates = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
       extraConfig = {
         # publicshare and templates defined as null here instead of as options because
         XDG_PUBLICSHARE_DIR = "/var/empty";
         XDG_TEMPLATES_DIR = "/var/empty";
         XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+        XDG_GAMES_DIR = "${config.home.homeDirectory}/Games";
+        XDG_SRC_DIR = "${config.home.homeDirectory}/.src";
       };
     };
   };
