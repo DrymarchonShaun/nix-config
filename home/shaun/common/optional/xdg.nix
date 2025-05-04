@@ -118,7 +118,7 @@ let
 
   };
   removals = {
-    # Calibre steals odt association from libreoffic so need to remove
+    # Calibre steals odt association from LibreOffice so need to remove
     "application/vnd.oasis.opendocument.text" = [
       "calibre-ebook-viewer.desktop"
       "calibre-ebook-edit.desktop"
@@ -132,6 +132,9 @@ in
   xdg.mimeApps.defaultApplications = associations;
   xdg.mimeApps.associations.removed = removals;
   xdg.mimeApps.associations.added = associations;
+
+  # Make home manager overwrite this file since it gets modified by applications constantly
+  xdg.configFile."mimeapps.list".force = true;
 
   home.packages = builtins.attrValues {
     inherit (pkgs)

@@ -61,4 +61,7 @@ in
     gtk.enable = true;
     x11.enable = true;
   };
+
+  # Make home manager overwrite this file since it gets modified by applications constantly
+  xdg.configFile."gtk-3.0/bookmarks".force = true;
 }
