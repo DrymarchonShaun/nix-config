@@ -40,14 +40,14 @@
                     mountpoint = "/";
                     mountOptions = [
                       "compress=zstd"
-                      "noatime"
+                      "relatime"
                     ];
                   };
                   "@nix" = {
                     mountpoint = "/nix";
                     mountOptions = [
                       "compress=zstd"
-                      "noatime"
+                      "relatime"
                     ];
                   };
                   "@swap" = lib.mkIf withSwap {

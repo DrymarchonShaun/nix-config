@@ -167,9 +167,11 @@ in
   # https://wiki.nixos.org/wiki/Full_Disk_Encryption#Unlocking_secondary_drives
   fileSystems."/run/media/shaun/HDD" = {
     device = "/dev/disk/by-id/wwn-0x50014ee2bbdfd424-part1";
-    fsType = "ntfs-3g";
+    fsType = "ntfs3";
     options = [
       "rw"
+      "windows_names"
+      "prealloc"
       "uid=1000"
       "nosuid"
       "nodev"
@@ -183,7 +185,7 @@ in
     options = [
       "defaults"
       "compress=zstd"
-      "noatime"
+      "relatime"
     ];
   };
   # TODO(stylix): move this stuff to separate file but define theme itself per host
