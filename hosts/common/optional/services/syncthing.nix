@@ -89,7 +89,7 @@
         };
         "dekayi" = {
           name = "dekayi";
-          id = "2VG3CY3-ECCBLGF-V4E3OMN-X5NERGR-PNZ664G-MVY5VTL-TSCM3GY-IZ5WHAH";
+          id = "WTXLORK-GMHIEAF-UQCBXSR-ZLQMRBL-SVF75TM-R5BEIKP-ZLOXRG7-H7O7CAM";
         };
         "getula" = {
           name = "getula";
