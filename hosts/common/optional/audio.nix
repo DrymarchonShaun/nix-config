@@ -58,7 +58,7 @@ in
                       plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
                       label = "noise_suppressor_mono";
                       control = {
-                        "VAD Threshold (%)" = 60.0;
+                        "VAD Threshold (%)" = 90.0;
                         "VAD Grace Period (ms)" = 200;
                         "Retroactive VAD Grace (ms)" = 0;
                       };
