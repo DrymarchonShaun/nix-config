@@ -2,15 +2,6 @@
   stdenv,
   writers,
   fetchurl,
-  master ? # If master is not defined, instantiate from locked commit
-    let
-      lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs-master.locked;
-      nixpkgs-master = fetchTarball {
-        url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
-        sha256 = lock.narHash;
-      };
-    in
-    import nixpkgs-master { overlays = [ ]; },
   python3Packages,
   coreutils,
   libnotify,
@@ -26,10 +17,7 @@ stdenv.mkDerivation rec {
       discord-patcher-launcher =
         let
 
-          # uncomment when vencord is broken
-          # vencord = discord;
-          vencord = discord.override {
-            vencord = master.vencord;
+          vencord' = discord.override {
             withVencord = true;
           };
 
@@ -52,20 +40,20 @@ stdenv.mkDerivation rec {
           inherit name;
           text = ''
             while true; do
-                if [ ! -f ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node ]; then
-                  ${vencord}/bin/discord &
+                if [ ! -f ~/.config/discord/${vencord'.version}/modules/discord_krisp/discord_krisp.node ]; then
+                  ${vencord'}/bin/discord &
                   notify-send "Failed to Apply Patch - Relaunching Discord" "File /modules/discord_krisp/discord_krisp.node does not exist"
 
                   # Wait for the file to appear
-                  while [ ! -f ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node ]; do
+                  while [ ! -f ~/.config/discord/${vencord'.version}/modules/discord_krisp/discord_krisp.node ]; do
                     sleep 1
                   done
 
                   # Kill Discord process
                   killall .Discord-wrapped
                 else
-                  krisp-patcher "$(realpath ~/.config/discord/${vencord.version}/modules/discord_krisp/discord_krisp.node)"
-                  ${vencord}/bin/discord
+                  krisp-patcher "$(realpath ~/.config/discord/${vencord'.version}/modules/discord_krisp/discord_krisp.node)"
+                  ${vencord'}/bin/discord
                     break
                 fi
               done

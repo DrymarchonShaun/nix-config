@@ -1,0 +1,726 @@
+diff --git a/browser/GMPolyfill.js b/browser/GMPolyfill.js
+index 1f1b8878..387389ce 100644
+--- a/browser/GMPolyfill.js
++++ b/browser/GMPolyfill.js
+@@ -17,10 +17,9 @@
+ */
+
+ function parseHeaders(headers) {
+-    const result = new Headers();
+     if (!headers)
+-        return result;
+-
++        return {};
++    const result = {};
+     const headersArr = headers.trim().split("\n");
+     for (var i = 0; i < headersArr.length; i++) {
+         var row = headersArr[i];
+@@ -28,7 +27,13 @@ function parseHeaders(headers) {
+             , key = row.slice(0, index).trim().toLowerCase()
+             , value = row.slice(index + 1).trim();
+
+-        result.append(key, value);
++        if (result[key] === undefined) {
++            result[key] = value;
++        } else if (Array.isArray(result[key])) {
++            result[key].push(value);
++        } else {
++            result[key] = [result[key], value];
++        }
+     }
+     return result;
+ }
+diff --git a/browser/userscript.meta.js b/browser/userscript.meta.js
+index be3b0dd0..1d986aae 100644
+--- a/browser/userscript.meta.js
++++ b/browser/userscript.meta.js
+@@ -9,7 +9,6 @@
+ // @license         GPL-3.0
+ // @match           *://*.discord.com/*
+ // @grant           GM_xmlhttpRequest
+-// @grant           unsafeWindow
+ // @run-at          document-start
+ // @compatible      chrome Chrome + Tampermonkey or Violentmonkey
+ // @compatible      firefox Firefox Tampermonkey
+diff --git a/package.json b/package.json
+index 4c6d5023..b8e518ae 100644
+--- a/package.json
++++ b/package.json
+@@ -104,5 +104,5 @@
+     "watch": "pnpm build --watch",
+     "watchWeb": "pnpm buildWeb --watch"
+   },
+-  "version": "1.12.2"
++  "version": "1.12.1"
+ }
+diff --git a/scripts/build/build.mjs b/scripts/build/build.mjs
+index 7d21cd24..0d796ddb 100755
+--- a/scripts/build/build.mjs
++++ b/scripts/build/build.mjs
+@@ -112,7 +112,7 @@ const buildConfigs = ([
+         ...nodeCommonOpts,
+         entryPoints: ["src/main/index.ts"],
+         outfile: "dist/patcher.js",
+-        footer: { js: "//# sourceURL=file:///VencordPatcher\n" + sourceMapFooter("patcher") },
++        footer: { js: "//# sourceURL=VencordPatcher\n" + sourceMapFooter("patcher") },
+         sourcemap,
+         plugins: [
+             // @ts-ignore this is never undefined
+@@ -131,7 +131,7 @@ const buildConfigs = ([
+         outfile: "dist/renderer.js",
+         format: "iife",
+         target: ["esnext"],
+-        footer: { js: "//# sourceURL=file:///VencordRenderer\n" + sourceMapFooter("renderer") },
++        footer: { js: "//# sourceURL=VencordRenderer\n" + sourceMapFooter("renderer") },
+         globalName: "Vencord",
+         sourcemap,
+         plugins: [
+@@ -148,7 +148,7 @@ const buildConfigs = ([
+         ...nodeCommonOpts,
+         entryPoints: ["src/preload.ts"],
+         outfile: "dist/preload.js",
+-        footer: { js: "//# sourceURL=file:///VencordPreload\n" + sourceMapFooter("preload") },
++        footer: { js: "//# sourceURL=VencordPreload\n" + sourceMapFooter("preload") },
+         sourcemap,
+         define: {
+             ...defines,
+@@ -162,7 +162,7 @@ const buildConfigs = ([
+         ...nodeCommonOpts,
+         entryPoints: ["src/main/index.ts"],
+         outfile: "dist/vencordDesktopMain.js",
+-        footer: { js: "//# sourceURL=file:///VencordDesktopMain\n" + sourceMapFooter("vencordDesktopMain") },
++        footer: { js: "//# sourceURL=VencordDesktopMain\n" + sourceMapFooter("vencordDesktopMain") },
+         sourcemap,
+         plugins: [
+             ...nodeCommonOpts.plugins,
+@@ -180,7 +180,7 @@ const buildConfigs = ([
+         outfile: "dist/vencordDesktopRenderer.js",
+         format: "iife",
+         target: ["esnext"],
+-        footer: { js: "//# sourceURL=file:///VencordDesktopRenderer\n" + sourceMapFooter("vencordDesktopRenderer") },
++        footer: { js: "//# sourceURL=VencordDesktopRenderer\n" + sourceMapFooter("vencordDesktopRenderer") },
+         globalName: "Vencord",
+         sourcemap,
+         plugins: [
+@@ -197,7 +197,7 @@ const buildConfigs = ([
+         ...nodeCommonOpts,
+         entryPoints: ["src/preload.ts"],
+         outfile: "dist/vencordDesktopPreload.js",
+-        footer: { js: "//# sourceURL=file:///VencordPreload\n" + sourceMapFooter("vencordDesktopPreload") },
++        footer: { js: "//# sourceURL=VencordPreload\n" + sourceMapFooter("vencordDesktopPreload") },
+         sourcemap,
+         define: {
+             ...defines,
+diff --git a/scripts/build/buildWeb.mjs b/scripts/build/buildWeb.mjs
+index 824194cf..33168ff9 100644
+--- a/scripts/build/buildWeb.mjs
++++ b/scripts/build/buildWeb.mjs
+@@ -82,7 +82,7 @@ const buildConfigs = [
+     {
+         ...commonOptions,
+         outfile: "dist/browser.js",
+-        footer: { js: "//# sourceURL=file:///VencordWeb" }
++        footer: { js: "//# sourceURL=VencordWeb" }
+     },
+     {
+         ...commonOptions,
+@@ -91,7 +91,7 @@ const buildConfigs = [
+             ...commonOptions.define,
+             IS_EXTENSION: "true"
+         },
+-        footer: { js: "//# sourceURL=file:///VencordWeb" }
++        footer: { js: "//# sourceURL=VencordWeb" }
+     },
+     {
+         ...commonOptions,
+diff --git a/scripts/generateReport.ts b/scripts/generateReport.ts
+index 4aad058c..9502d382 100644
+--- a/scripts/generateReport.ts
++++ b/scripts/generateReport.ts
+@@ -261,7 +261,7 @@ page.on("console", async e => {
+         const [, tag, message, otherMessage] = args as Array<string>;
+
+         switch (tag) {
+-            case "WebpackPatcher:":
++            case "WebpackInterceptor:":
+                 const patchFailMatch = message.match(/Patch by (.+?) (had no effect|errored|found no module) \(Module id is (.+?)\): (.+)/);
+                 const patchSlowMatch = message.match(/Patch by (.+?) (took [\d.]+?ms) \(Module id is (.+?)\): (.+)/);
+                 const match = patchFailMatch ?? patchSlowMatch;
+diff --git a/src/components/ErrorBoundary.tsx b/src/components/ErrorBoundary.tsx
+index 0ca20440..e609d564 100644
+--- a/src/components/ErrorBoundary.tsx
++++ b/src/components/ErrorBoundary.tsx
+@@ -16,10 +16,10 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+-import { LazyComponent, LazyComponentWrapper } from "@utils/lazyReact";
+ import { Logger } from "@utils/Logger";
+ import { Margins } from "@utils/margins";
+-import type { React } from "@webpack/common";
++import { LazyComponent, LazyComponentWrapper } from "@utils/react";
++import { React } from "@webpack/common";
+
+ import { ErrorCard } from "./ErrorCard";
+
+@@ -46,9 +46,7 @@ const NO_ERROR = {};
+ // We might want to import this in a place where React isn't ready yet.
+ // Thus, wrap in a LazyComponent
+ const ErrorBoundary = LazyComponent(() => {
+-    // This component is used in a lot of files which end up importing other Webpack commons and causing circular imports.
+-    // For this reason, use a non import access here.
+-    return class ErrorBoundary extends Vencord.Webpack.Common.React.PureComponent<React.PropsWithChildren<Props>> {
++    return class ErrorBoundary extends React.PureComponent<React.PropsWithChildren<Props>> {
+         state = {
+             error: NO_ERROR as any,
+             stack: "",
+diff --git a/src/debug/runReporter.ts b/src/debug/runReporter.ts
+index 4ee2d394..21802b6a 100644
+--- a/src/debug/runReporter.ts
++++ b/src/debug/runReporter.ts
+@@ -46,13 +46,13 @@ async function runReporter() {
+
+         for (const patch of patches) {
+             if (!patch.all) {
+-                new Logger("WebpackPatcher").warn(`Patch by ${patch.plugin} found no module (Module id is -): ${patch.find}`);
++                new Logger("WebpackInterceptor").warn(`Patch by ${patch.plugin} found no module (Module id is -): ${patch.find}`);
+             }
+         }
+
+         for (const [plugin, moduleId, match, totalTime] of patchTimings) {
+             if (totalTime > 5) {
+-                new Logger("WebpackPatcher").warn(`Patch by ${plugin} took ${Math.round(totalTime * 100) / 100}ms (Module id is ${String(moduleId)}): ${match}`);
++                new Logger("WebpackInterceptor").warn(`Patch by ${plugin} took ${Math.round(totalTime * 100) / 100}ms (Module id is ${String(moduleId)}): ${match}`);
+             }
+         }
+
+diff --git a/src/plugins/accountPanelServerProfile/index.tsx b/src/plugins/accountPanelServerProfile/index.tsx
+index f871b8ee..ad63ba27 100644
+--- a/src/plugins/accountPanelServerProfile/index.tsx
++++ b/src/plugins/accountPanelServerProfile/index.tsx
+@@ -72,7 +72,7 @@ export default definePlugin({
+             group: true,
+             replacement: [
+                 {
+-                    match: /let{ref:\i,speaking:\i/,
++                    match: /let{speaking:\i/,
+                     replace: "$self.useAccountPanelRef();$&"
+                 },
+                 {
+diff --git a/src/plugins/invisibleChat.desktop/index.tsx b/src/plugins/invisibleChat.desktop/index.tsx
+index ab124192..f5e8cbb5 100644
+--- a/src/plugins/invisibleChat.desktop/index.tsx
++++ b/src/plugins/invisibleChat.desktop/index.tsx
+@@ -110,7 +110,7 @@ export default definePlugin({
+     patches: [
+         {
+             // Indicator
+-            find: ".SEND_FAILED,",
++            find: "#{intl::MESSAGE_EDITED}",
+             replacement: {
+                 match: /let\{className:\i,message:\i[^}]*\}=(\i)/,
+                 replace: "try {$1 && $self.INV_REGEX.test($1.message.content) ? $1.content.push($self.indicator()) : null } catch {};$&"
+diff --git a/src/plugins/memberCount/OnlineMemberCountStore.ts b/src/plugins/memberCount/OnlineMemberCountStore.ts
+index 54cc4697..d74bea2a 100644
+--- a/src/plugins/memberCount/OnlineMemberCountStore.ts
++++ b/src/plugins/memberCount/OnlineMemberCountStore.ts
+@@ -7,7 +7,7 @@
+ import { proxyLazy } from "@utils/lazy";
+ import { sleep } from "@utils/misc";
+ import { Queue } from "@utils/Queue";
+-import { ChannelActionCreators, Flux, FluxDispatcher, GuildChannelStore } from "@webpack/common";
++import { Flux, FluxDispatcher, GuildChannelStore, PrivateChannelsStore } from "@webpack/common";
+
+ export const OnlineMemberCountStore = proxyLazy(() => {
+     const preloadQueue = new Queue();
+@@ -22,7 +22,7 @@ export const OnlineMemberCountStore = proxyLazy(() => {
+         async _ensureCount(guildId: string) {
+             if (onlineMemberMap.has(guildId)) return;
+
+-            await ChannelActionCreators.preload(guildId, GuildChannelStore.getDefaultChannel(guildId).id);
++            await PrivateChannelsStore.preload(guildId, GuildChannelStore.getDefaultChannel(guildId).id);
+         }
+
+         ensureCount(guildId?: string) {
+diff --git a/src/plugins/messageLogger/index.tsx b/src/plugins/messageLogger/index.tsx
+index 3c7aecae..ffe5286e 100644
+--- a/src/plugins/messageLogger/index.tsx
++++ b/src/plugins/messageLogger/index.tsx
+@@ -464,21 +464,19 @@ export default definePlugin({
+
+         {
+             // Message content renderer
+-            find: ".SEND_FAILED,",
+-            replacement: {
+-                // Render editHistory behind the message content
+-                match: /\.isFailed]:.+?children:\[/,
+-                replace: "$&arguments[0]?.message?.editHistory?.length>0&&$self.renderEdits(arguments[0]),"
+-            }
+-        },
+-
+-        {
+             find: "#{intl::MESSAGE_EDITED}",
+-            replacement: {
+-                // Make edit marker clickable
+-                match: /"span",\{(?=className:\i\.edited,)/,
+-                replace: "$self.EditMarker,{message:arguments[0].message,"
+-            }
++            replacement: [
++                {
++                    // Render editHistory in the deepest div for message content
++                    match: /(\)\("div",\{id:.+?children:\[)/,
++                    replace: "$1 (!!arguments[0].message.editHistory?.length && $self.renderEdits(arguments[0])),"
++                },
++                {
++                    // Make edit marker clickable
++                    match: /"span",\{(?=className:\i\.edited,)/,
++                    replace: "$self.EditMarker,{message:arguments[0].message,"
++                }
++            ]
+         },
+
+         {
+diff --git a/src/plugins/noServerEmojis/index.ts b/src/plugins/noServerEmojis/index.ts
+index cd950b42..6a39f55c 100644
+--- a/src/plugins/noServerEmojis/index.ts
++++ b/src/plugins/noServerEmojis/index.ts
+@@ -30,7 +30,7 @@ export default definePlugin({
+         {
+             find: "}searchWithoutFetchingLatest(",
+             replacement: {
+-                match: /\.get\((\i)\)\.nameMatchesChain\(\i\)\.reduce\(\((\i),(\i)\)=>\{/,
++                match: /searchWithoutFetchingLatest.{20,300}get\((\i).{10,40}?reduce\(\((\i),(\i)\)=>\{/,
+                 replace: "$& if ($self.shouldSkip($1, $3)) return $2;"
+             }
+         }
+diff --git a/src/plugins/roleColorEverywhere/index.tsx b/src/plugins/roleColorEverywhere/index.tsx
+index dc60bb64..71f87b13 100644
+--- a/src/plugins/roleColorEverywhere/index.tsx
++++ b/src/plugins/roleColorEverywhere/index.tsx
+@@ -153,7 +153,7 @@ export default definePlugin({
+         },
+         // Messages
+         {
+-            find: ".SEND_FAILED,",
++            find: "#{intl::MESSAGE_EDITED}",
+             replacement: {
+                 match: /(?<=isUnsupported\]:(\i)\.isUnsupported\}\),)(?=children:\[)/,
+                 replace: "style:$self.useMessageColorsStyle($1),"
+diff --git a/src/plugins/shikiCodeblocks.desktop/api/languages.ts b/src/plugins/shikiCodeblocks.desktop/api/languages.ts
+index baf7a548..f14a4dc2 100644
+--- a/src/plugins/shikiCodeblocks.desktop/api/languages.ts
++++ b/src/plugins/shikiCodeblocks.desktop/api/languages.ts
+@@ -19,7 +19,7 @@
+ import { ILanguageRegistration } from "@vap/shiki";
+
+ export const VPC_REPO = "Vap0r1ze/vapcord";
+-export const VPC_REPO_COMMIT = "4d0e4b420fb1e4358852bbd18c804a6f5e54c0d7";
++export const VPC_REPO_COMMIT = "88a7032a59cca40da170926651b08201ea3b965a";
+ export const vpcRepoAssets = `https://raw.githubusercontent.com/${VPC_REPO}/${VPC_REPO_COMMIT}/assets/shiki-codeblocks`;
+ export const vpcRepoGrammar = (fileName: string) => `${vpcRepoAssets}/${fileName}`;
+ export const vpcRepoLanguages = `${vpcRepoAssets}/languages.json`;
+@@ -46,7 +46,7 @@ export interface LanguageJson {
+ export const languages: Record<string, Language> = {};
+
+ export const loadLanguages = async () => {
+-    const langsJson: LanguageJson[] = await fetch(vpcRepoLanguages).then(res => res.ok ? res.json() : []);
++    const langsJson: LanguageJson[] = await fetch(vpcRepoLanguages).then(res => res.json());
+     const loadedLanguages = Object.fromEntries(
+         langsJson.map(lang => [lang.id, {
+             ...lang,
+diff --git a/src/plugins/showHiddenChannels/index.tsx b/src/plugins/showHiddenChannels/index.tsx
+index 95dee8fd..7a3dd9fb 100644
+--- a/src/plugins/showHiddenChannels/index.tsx
++++ b/src/plugins/showHiddenChannels/index.tsx
+@@ -356,10 +356,15 @@ export default definePlugin({
+             find: "#{intl::CHANNEL_CALL_CURRENT_SPEAKER}",
+             replacement: [
+                 {
+-                    // Remove the open chat button for the HiddenChannelLockScreen
+-                    match: /(?<=&&)\i\.push\(.{0,120}"chat-spacer"/,
+-                    replace: "(arguments[0]?.inCall||!$self.isHiddenChannel(arguments[0]?.channel,true))&&$&"
+-                }
++                    // Remove the divider and the open chat button for the HiddenChannelLockScreen
++                    match: /"more-options-popout"\)\),(?<=channel:(\i).+?inCall:(\i).+?)/,
++                    replace: (m, channel, inCall) => `${m}${inCall}||!$self.isHiddenChannel(${channel},true)&&`
++                },
++                {
++                    // Remove invite users button for the HiddenChannelLockScreen
++                    match: /"popup".{0,100}?if\((?<=channel:(\i).+?inCall:(\i).+?)/,
++                    replace: (m, channel, inCall) => `${m}(${inCall}||!$self.isHiddenChannel(${channel},true))&&`
++                },
+             ]
+         },
+         {
+@@ -422,8 +427,8 @@ export default definePlugin({
+                 },
+                 {
+                     // Remove the open chat button for the HiddenChannelLockScreen
+-                    match: /(?<=&&)\(0,\i\.jsxs?\).{0,180}\.buttonIcon/,
+-                    replace: "!$self.isHiddenChannel(arguments[0]?.channel,true)&&$&"
++                    match: /"recents".+?&&(?=\(.+?channelId:(\i)\.id,showRequestToSpeakSidebar)/,
++                    replace: (m, channel) => `${m}!$self.isHiddenChannel(${channel})&&`
+                 }
+             ]
+         },
+diff --git a/src/utils/discord.tsx b/src/utils/discord.tsx
+index e04ad201..ba60d98a 100644
+--- a/src/utils/discord.tsx
++++ b/src/utils/discord.tsx
+@@ -17,7 +17,7 @@
+ */
+
+ import { MessageObject } from "@api/MessageEvents";
+-import { ChannelActionCreators, ChannelStore, ComponentDispatch, Constants, FluxDispatcher, GuildStore, i18n, IconUtils, InviteActions, MessageActions, RestAPI, SelectedChannelStore, SelectedGuildStore, UserProfileActions, UserProfileStore, UserSettingsActionCreators, UserUtils } from "@webpack/common";
++import { ChannelStore, ComponentDispatch, Constants, FluxDispatcher, GuildStore, i18n, IconUtils, InviteActions, MessageActions, PrivateChannelsStore, RestAPI, SelectedChannelStore, SelectedGuildStore, UserProfileActions, UserProfileStore, UserSettingsActionCreators, UserUtils } from "@webpack/common";
+ import { Channel, Guild, Message, User } from "discord-types/general";
+ import { Except } from "type-fest";
+
+@@ -91,7 +91,7 @@ export function getCurrentGuild(): Guild | undefined {
+ }
+
+ export function openPrivateChannel(userId: string) {
+-    ChannelActionCreators.openPrivateChannel(userId);
++    PrivateChannelsStore.openPrivateChannel(userId);
+ }
+
+ export const enum Theme {
+diff --git a/src/utils/quickCss.ts b/src/utils/quickCss.ts
+index f32ae7e6..c1e11759 100644
+--- a/src/utils/quickCss.ts
++++ b/src/utils/quickCss.ts
+@@ -19,6 +19,7 @@
+ import { Settings, SettingsStore } from "@api/Settings";
+ import { ThemeStore } from "@webpack/common";
+
++
+ let style: HTMLStyleElement;
+ let themesStyle: HTMLStyleElement;
+
+@@ -60,10 +61,7 @@ async function initThemes() {
+     const { themeLinks, enabledThemes } = Settings;
+
+     // "darker" and "midnight" both count as dark
+-    // This function is first called on DOMContentLoaded, so ThemeStore may not have been loaded yet
+-    const activeTheme = ThemeStore == null
+-        ? undefined
+-        : ThemeStore.theme === "light" ? "light" : "dark";
++    const activeTheme = ThemeStore.theme === "light" ? "light" : "dark";
+
+     const links = themeLinks
+         .map(rawLink => {
+@@ -100,14 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
+     SettingsStore.addChangeListener("themeLinks", initThemes);
+     SettingsStore.addChangeListener("enabledThemes", initThemes);
+
+-    if (!IS_WEB) {
+-        VencordNative.quickCss.addThemeChangeListener(initThemes);
+-    }
+-});
+-
+-export function initQuickCssThemeStore() {
+-    initThemes();
+-
+     let currentTheme = ThemeStore.theme;
+     ThemeStore.addChangeListener(() => {
+         if (currentTheme === ThemeStore.theme) return;
+@@ -115,4 +105,7 @@ export function initQuickCssThemeStore() {
+         currentTheme = ThemeStore.theme;
+         initThemes();
+     });
+-}
++
++    if (!IS_WEB)
++        VencordNative.quickCss.addThemeChangeListener(initThemes);
++});
+diff --git a/src/webpack/common/internal.tsx b/src/webpack/common/internal.tsx
+index 5e8c6052..090d9898 100644
+--- a/src/webpack/common/internal.tsx
++++ b/src/webpack/common/internal.tsx
+@@ -17,7 +17,9 @@
+ */
+
+ import { LazyComponent, LazyComponentWrapper } from "@utils/react";
+-import { FilterFn, filters, lazyWebpackSearchHistory, waitFor } from "@webpack";
++
++// eslint-disable-next-line path-alias/no-relative
++import { FilterFn, filters, lazyWebpackSearchHistory, waitFor } from "../webpack";
+
+ export function waitForComponent<T extends React.ComponentType<any> = React.ComponentType<any> & Record<string, any>>(name: string, filter: FilterFn | string | string[]) {
+     if (IS_REPORTER) lazyWebpackSearchHistory.push(["waitForComponent", Array.isArray(filter) ? filter : [filter]]);
+diff --git a/src/webpack/common/menu.ts b/src/webpack/common/menu.ts
+index 2bb05f36..5b1056dd 100644
+--- a/src/webpack/common/menu.ts
++++ b/src/webpack/common/menu.ts
+@@ -16,8 +16,8 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+-import { filters, mapMangledModuleLazy, waitFor, wreq } from "@webpack";
+-
++// eslint-disable-next-line path-alias/no-relative
++import { filters, mapMangledModuleLazy, waitFor, wreq } from "../webpack";
+ import type * as t from "./types/menu";
+
+ export const Menu = {} as t.Menu;
+diff --git a/src/webpack/common/react.ts b/src/webpack/common/react.ts
+index b8b0e753..89b19506 100644
+--- a/src/webpack/common/react.ts
++++ b/src/webpack/common/react.ts
+@@ -16,7 +16,8 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+-import { findByCodeLazy, findByPropsLazy, waitFor } from "@webpack";
++// eslint-disable-next-line path-alias/no-relative
++import { findByCodeLazy, findByPropsLazy, waitFor } from "../webpack";
+
+ export let React: typeof import("react");
+ export let useState: typeof React.useState;
+diff --git a/src/webpack/common/stores.ts b/src/webpack/common/stores.ts
+index 1dcda187..518f13e2 100644
+--- a/src/webpack/common/stores.ts
++++ b/src/webpack/common/stores.ts
+@@ -16,9 +16,10 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+-import { findByCodeLazy, findByPropsLazy } from "@webpack";
+ import type * as Stores from "discord-types/stores";
+
++// eslint-disable-next-line path-alias/no-relative
++import { findByCodeLazy, findByPropsLazy } from "../webpack";
+ import { waitForStore } from "./internal";
+ import * as t from "./types/stores";
+
+@@ -32,7 +33,7 @@ export let MessageStore: Omit<Stores.MessageStore, "getMessages"> & GenericStore
+     getMessages(chanId: string): any;
+ };
+
+-// TODO: The correct name for this is ChannelActionCreators and it has already been exported again from utils. Remove this export once enough time has passed
++// this is not actually a FluxStore
+ export const PrivateChannelsStore = findByPropsLazy("openPrivateChannel");
+ export let PermissionStore: GenericStore;
+ export let GuildChannelStore: GenericStore;
+@@ -85,8 +86,4 @@ waitForStore("GuildChannelStore", m => GuildChannelStore = m);
+ waitForStore("MessageStore", m => MessageStore = m);
+ waitForStore("WindowStore", m => WindowStore = m);
+ waitForStore("EmojiStore", m => EmojiStore = m);
+-waitForStore("ThemeStore", m => {
+-    ThemeStore = m;
+-    // Importing this directly can easily cause circular imports. For this reason, use a non import access here.
+-    Vencord.QuickCss.initQuickCssThemeStore();
+-});
++waitForStore("ThemeStore", m => ThemeStore = m);
+diff --git a/src/webpack/common/utils.ts b/src/webpack/common/utils.ts
+index 05eb5729..0396f0f3 100644
+--- a/src/webpack/common/utils.ts
++++ b/src/webpack/common/utils.ts
+@@ -16,15 +16,16 @@
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+-import { _resolveReady, filters, findByCodeLazy, findByPropsLazy, findLazy, mapMangledModuleLazy, waitFor } from "@webpack";
+ import type { Channel } from "discord-types/general";
+
++// eslint-disable-next-line path-alias/no-relative
++import { _resolveReady, filters, findByCodeLazy, findByPropsLazy, findLazy, mapMangledModuleLazy, waitFor } from "../webpack";
+ import type * as t from "./types/utils";
+
+ export let FluxDispatcher: t.FluxDispatcher;
+ waitFor(["dispatch", "subscribe"], m => {
+     FluxDispatcher = m;
+-    // Non import access to avoid circular dependency
++    // Non import call to avoid circular dependency
+     Vencord.Plugins.subscribeAllPluginsFluxEvents(m);
+
+     const cb = () => {
+@@ -34,7 +35,7 @@ waitFor(["dispatch", "subscribe"], m => {
+     m.subscribe("CONNECTION_OPEN", cb);
+ });
+
+-export let ComponentDispatch: any;
++export let ComponentDispatch;
+ waitFor(["dispatchToLastSubscribed"], m => ComponentDispatch = m);
+
+ export const Constants: t.Constants = mapMangledModuleLazy('ME:"/users/@me"', {
+@@ -176,7 +177,6 @@ export const MessageActions = findByPropsLazy("editMessage", "sendMessage");
+ export const MessageCache = findByPropsLazy("clearCache", "_channelMessages");
+ export const UserProfileActions = findByPropsLazy("openUserProfileModal", "closeUserProfileModal");
+ export const InviteActions = findByPropsLazy("resolveInvite");
+-export const ChannelActionCreators = findByPropsLazy("openPrivateChannel");
+
+ export const IconUtils: t.IconUtils = findByPropsLazy("getGuildBannerURL", "getUserAvatarURL");
+
+diff --git a/src/webpack/patchWebpack.ts b/src/webpack/patchWebpack.ts
+index 300abbab..4f5899bc 100644
+--- a/src/webpack/patchWebpack.ts
++++ b/src/webpack/patchWebpack.ts
+@@ -60,7 +60,7 @@ export function getFactoryPatchedBy(moduleId: PropertyKey, webpackRequire = wreq
+     return webpackRequire.m[moduleId]?.[SYM_PATCHED_BY];
+ }
+
+-const logger = new Logger("WebpackPatcher", "#8caaee");
++const logger = new Logger("WebpackInterceptor", "#8caaee");
+
+ /** Whether we tried to fallback to the WebpackRequire of the factory, or disabled patches */
+ let wreqFallbackApplied = false;
+@@ -106,13 +106,6 @@ define(Function.prototype, "m", {
+
+         const fileName = stack.match(/\/assets\/(.+?\.js)/)?.[1];
+
+-        // Currently, sentry and libDiscore Webpack instances are not meant to be patched.
+-        // As an extra measure, take advatange of the fact their files include the names and return early if it's one of them.
+-        // Later down we also include other measures to avoid patching them.
+-        if (["sentry", "libdiscore"].some(name => fileName?.toLowerCase()?.includes(name))) {
+-            return;
+-        }
+-
+         // Define a setter for the bundlePath property of WebpackRequire. Only Webpack instances which include chunk loading functionality,
+         // like the main Discord Webpack, have this property.
+         // So if the setter is called with the Discord bundlePath, this means we should patch this instance and initialize the internal references to WebpackRequire.
+@@ -123,10 +116,7 @@ define(Function.prototype, "m", {
+                 define(this, "p", { value: bundlePath });
+                 clearTimeout(bundlePathTimeout);
+
+-                // libDiscore init Webpack instance always returns a constanst string for the js filename of a chunk.
+-                // In that case, avoid patching this instance,
+-                // as it runs before the main Webpack instance and will make the WebpackRequire fallback not work properly, or init an wrongful main WebpackRequire.
+-                if (bundlePath !== "/assets/" || /(?:=>|{return)"[^"]/.exec(String(this.u))) {
++                if (bundlePath !== "/assets/") {
+                     return;
+                 }
+
+@@ -139,9 +129,9 @@ define(Function.prototype, "m", {
+             }
+         });
+
+-        // In the past, the sentry Webpack instance which we also wanted to patch used to rely on chunks being loaded before initing sentry.
++        // In the past, the sentry Webpack instance which we also wanted to patch used to rely on chunks being loaded before initting sentry.
+         // This Webpack instance did not include actual chunk loading, and only awaited for them to be loaded, which means it did not include the bundlePath property.
+-        // To keep backwards compability, if this is ever the case again, and keep patching this type of instance, we explicity patch instances which include wreq.O and not wreq.p.
++        // To keep backwards compability, in case this is ever the case again, and keep patching this type of instance, we explicity patch instances which include wreq.O and not wreq.p.
+         // Since we cannot check what is the bundlePath of the instance to filter for the Discord bundlePath, we only patch it if wreq.p is not included,
+         // which means the instance relies on another instance which does chunk loading, and that makes it very likely to only target Discord Webpack instances like the old sentry.
+
+@@ -446,21 +436,12 @@ function runFactoryWithWrap(patchedFactory: PatchedModuleFactory, thisArg: unkno
+                 callback(exports, module.id);
+                 continue;
+             }
+-        } catch (err) {
+-            logger.error(
+-                "Error while filtering or firing callback for Webpack waitFor subscription:\n", err,
+-                "\n\nModule exports:", exports,
+-                "\n\nFilter:", filter,
+-                "\n\nCallback:", callback
+-            );
+-        }
+
+-        if (typeof exports !== "object") {
+-            continue;
+-        }
++            if (typeof exports !== "object") {
++                continue;
++            }
+
+-        for (const exportKey in exports) {
+-            try {
++            for (const exportKey in exports) {
+                 // Some exports might have not been initialized yet due to circular imports, so try catch it.
+                 try {
+                     var exportValue = exports[exportKey];
+@@ -473,14 +454,9 @@ function runFactoryWithWrap(patchedFactory: PatchedModuleFactory, thisArg: unkno
+                     callback(exportValue, module.id);
+                     break;
+                 }
+-            } catch (err) {
+-                logger.error(
+-                    "Error while filtering or firing callback for Webpack waitFor subscription:\n", err,
+-                    "\n\nExport value:", exports,
+-                    "\n\nFilter:", filter,
+-                    "\n\nCallback:", callback
+-                );
+             }
++        } catch (err) {
++            logger.error("Error while firing callback for Webpack waitFor subscription:\n", err, filter, callback);
+         }
+     }
+
+@@ -591,7 +567,7 @@ function patchFactory(moduleId: PropertyKey, originalFactory: AnyModuleFactory):
+                 }
+
+                 code = newCode;
+-                patchedSource = `// Webpack Module ${String(moduleId)} - Patched by ${pluginsList.join(", ")}\n${newCode}\n//# sourceURL=file:///WebpackModule${String(moduleId)}`;
++                patchedSource = `// Webpack Module ${String(moduleId)} - Patched by ${pluginsList.join(", ")}\n${newCode}\n//# sourceURL=WebpackModule${String(moduleId)}`;
+                 patchedFactory = (0, eval)(patchedSource);
+
+                 if (!patchedBy.has(patch.plugin)) {
+diff --git a/src/webpack/webpack.ts b/src/webpack/webpack.ts
+index ec9e99be..c1847474 100644
+--- a/src/webpack/webpack.ts
++++ b/src/webpack/webpack.ts
+@@ -145,17 +145,9 @@ function makePropertyNonEnumerable(target: Record<PropertyKey, any>, key: Proper
+ }
+
+ export function _blacklistBadModules(requireCache: NonNullable<AnyWebpackRequire["c"]>, exports: ModuleExports, moduleId: PropertyKey) {
+-    try {
+-        if (shouldIgnoreValue(exports)) {
+-            makePropertyNonEnumerable(requireCache, moduleId);
+-            return true;
+-        }
+-    } catch (err) {
+-        logger.error(
+-            "Error while blacklisting module:\n", err,
+-            "\n\nModule id:", moduleId,
+-            "\n\nModule exports:", exports,
+-        );
++    if (shouldIgnoreValue(exports)) {
++        makePropertyNonEnumerable(requireCache, moduleId);
++        return true;
+     }
+
+     if (typeof exports !== "object") {
+@@ -164,25 +156,17 @@ export function _blacklistBadModules(requireCache: NonNullable<AnyWebpackRequire
+
+     let hasOnlyBadProperties = true;
+     for (const exportKey in exports) {
++        // Some exports might have not been initialized yet due to circular imports, so try catch it.
+         try {
+-            // Some exports might have not been initialized yet due to circular imports, so try catch it.
+-            try {
+-                var exportValue = exports[exportKey];
+-            } catch {
+-                continue;
+-            }
++            var exportValue = exports[exportKey];
++        } catch {
++            continue;
++        }
+
+-            if (shouldIgnoreValue(exportValue)) {
+-                makePropertyNonEnumerable(exports, exportKey);
+-            } else {
+-                hasOnlyBadProperties = false;
+-            }
+-        } catch (err) {
+-            logger.error(
+-                "Error while blacklistng module:\n", err,
+-                "\n\nModule id:", moduleId,
+-                "\n\nExport value:", exportValue,
+-            );
++        if (shouldIgnoreValue(exportValue)) {
++            makePropertyNonEnumerable(exports, exportKey);
++        } else {
++            hasOnlyBadProperties = false;
+         }
+     }
+
+@@ -751,7 +735,7 @@ export function extract(id: string | number) {
+ //          This module is NOT ACTUALLY USED! This means putting breakpoints will have NO EFFECT!!
+
+ 0,${mod.toString()}
+-//# sourceURL=file:///ExtractedWebpackModule${id}
++//# sourceURL=ExtractedWebpackModule${id}
+ `;
+     const extracted = (0, eval)(code);
+     return extracted as Function;

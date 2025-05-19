@@ -5,6 +5,9 @@
 { inputs, ... }:
 
 let
+
+  master = import inputs.nixpkgs-master { overlays = [ ]; };
+
   # Adds my custom packages
   # FIXME: Add per-system packages
   additions =
@@ -44,6 +47,19 @@ let
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
+
+    vencord = master.vencord.overrideAttrs (oldAttrs: rec {
+      src =
+        if (oldAttrs.version == "1.12.1") then
+          prev.fetchFromGitHub {
+            owner = "Vendicated";
+            repo = "Vencord";
+            rev = "v1.12.2";
+            hash = "sha256-a4lbeuXEHDMDko8wte7jUdJ0yUcjfq3UPQAuSiz1UQU=";
+          }
+        else
+          throw "remove the override stupid";
+    });
 
     waybar = final.unstable.waybar.overrideAttrs (oldAttrs: rec {
       patches = oldAttrs.patches or [ ] ++ [
