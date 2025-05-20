@@ -9,7 +9,9 @@
         jetbrains-mono
         noto-fonts
         ;
-      nerdfonts = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+      inherit (pkgs.nerd-fonts)
+        symbols-only
+        ;
     };
     fontconfig = {
       enable = true;

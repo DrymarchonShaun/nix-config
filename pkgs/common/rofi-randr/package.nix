@@ -25,7 +25,7 @@ rustPlatform.buildRustPackage {
     makeWrapper
   ];
 
-  cargoHash = "sha256-jkTv/no/EmbyQkFHc091VrOnCMoE/uAtsVUxBGkxMNk=";
+  cargoHash = "sha256-FE+xz2Xe71YskqDwkFpry+uhgrKeYYVqkWAYK3gKlIQ=";
 
   meta = {
     mainProgram = "rofi-randr";

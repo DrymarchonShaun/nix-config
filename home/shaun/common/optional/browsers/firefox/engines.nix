@@ -11,7 +11,7 @@
         ];
       }
     ];
-    iconUpdateURL = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-logo-small.bae4361b.svg";
+    icon = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-logo-small.bae4361b.svg";
     updateInterval = 24 * 60 * 60 * 1000; # every day
     definedAliases = [ "@br" ];
   };
@@ -22,7 +22,7 @@
         params = [
           {
             name = "channel";
-            value = "24.11";
+            value = "25.05";
           }
           {
             name = "query";
@@ -40,7 +40,7 @@
         params = [
           {
             name = "channel";
-            value = "24.11";
+            value = "25.05";
           }
           {
             name = "query";
@@ -49,7 +49,7 @@
         ];
       }
     ];
-    iconUpdateURL = "https://nixos.wiki/favicon.png";
+    icon = "https://nixos.wiki/favicon.png";
     updateInterval = 24 * 60 * 60 * 1000; # every day
     definedAliases = [ "@nixopts" ];
   };
@@ -64,7 +64,7 @@
           }
           {
             name = "release";
-            value = "release-24.11";
+            value = "release-25.05";
           }
         ];
       }

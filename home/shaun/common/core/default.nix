@@ -45,7 +45,10 @@ in
     enable = true;
     enableSshSupport = true;
     enableFishIntegration = true;
-    pinentryPackage = pkgs.pinentry-gnome3;
+    pinentry = {
+      package = pkgs.pinentry-all;
+      program = "pinentry-gnome3";
+    };
   };
 
   home = {

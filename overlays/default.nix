@@ -48,18 +48,22 @@ let
     # ...
     # });
 
-    vencord = master.vencord.overrideAttrs (oldAttrs: rec {
-      src =
-        if (oldAttrs.version == "1.12.1") then
-          prev.fetchFromGitHub {
-            owner = "Vendicated";
-            repo = "Vencord";
-            rev = "v1.12.2";
-            hash = "sha256-a4lbeuXEHDMDko8wte7jUdJ0yUcjfq3UPQAuSiz1UQU=";
-          }
-        else
-          throw "remove the override stupid";
-    });
+    hyprlandPlugins.hy3 = master.hyprlandPlugins.hy3;
+
+    vencord = master.vencord;
+
+    # vencord = master.vencord.overrideAttrs (oldAttrs: rec {
+    #   src =
+    #     if (oldAttrs.version == "1.12.1") then
+    #       prev.fetchFromGitHub {
+    #         owner = "Vendicated";
+    #         repo = "Vencord";
+    #         rev = "v1.12.2";
+    #         hash = "sha256-a4lbeuXEHDMDko8wte7jUdJ0yUcjfq3UPQAuSiz1UQU=";
+    #       }
+    #     else
+    #       throw "remove the override stupid";
+    # });
 
     waybar = final.unstable.waybar.overrideAttrs (oldAttrs: rec {
       patches = oldAttrs.patches or [ ] ++ [
@@ -67,7 +71,7 @@ let
       ];
     });
 
-    steam = final.dev.steam;
+    steam = prev.steam.override { privateTmp = false; };
 
     # arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
     #   patches = oldAttrs.patches or [ ] ++ [
