@@ -7,7 +7,9 @@
 
       ffmpeg
       yt-dlp
-      spotify
+      # spotify
+      dopamine
+      nuclear
       vlc
       calibre
       ;
