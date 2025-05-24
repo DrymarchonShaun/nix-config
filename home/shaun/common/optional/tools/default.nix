@@ -10,7 +10,7 @@
   home.packages = with pkgs; [
     # 3D Printing
     freecad
-    # orca-slicer-overridden # modified .desktop file to not show up when searching for "code"
+    orca-slicer-overridden # modified .desktop file to not show up when searching for "code"
 
     # Device imaging
     rpi-imager
