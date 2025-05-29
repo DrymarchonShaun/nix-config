@@ -1087,14 +1087,15 @@
         "nixvim": "nixvim",
         "oil-lsp-diagnostics": "oil-lsp-diagnostics",
         "oil-vcs-status": "oil-vcs-status",
+        "sqf-vim": "sqf-vim",
         "tokyodark": "tokyodark"
       },
       "locked": {
-        "lastModified": 1747684781,
-        "narHash": "sha256-SZRYJUDE6oECIGG1ayczQ6fWJknhuaBx9eciKBsvaEg=",
+        "lastModified": 1748542546,
+        "narHash": "sha256-2ZESBwAmtIrqV4AEn+OqsCfkjkS+XO1wB6ep2WKYu6k=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "18183c6b0e37828180042da9f8993ce09e8ebdd9",
+        "rev": "f135591a4b63654a30101d9d11801f0a0c348d82",
         "type": "github"
       },
       "original": {
@@ -1305,6 +1306,22 @@
       "original": {
         "owner": "mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sqf-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748478319,
+        "narHash": "sha256-sBNFnPOLDiiQmsZdytecums/lgHUa/2816hPmnELvzU=",
+        "owner": "DrymarchonShaun",
+        "repo": "vim-sqf",
+        "rev": "06ec4a9144ffbe320e3250e2ebae71ed50ab58f3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DrymarchonShaun",
+        "repo": "vim-sqf",
         "type": "github"
       }
     },
