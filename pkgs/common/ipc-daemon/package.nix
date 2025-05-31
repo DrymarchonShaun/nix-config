@@ -5,13 +5,16 @@
   ...
 }:
 writeShellScriptBin ''ipc-daemon'' ''
+    exec 1> >(logger -t $0) && exec 2> >(logger -p err -t $0) && exec 5> >(logger -p debug -t $0) && BASH_XTRACEFD="5" PS4='$LINENO: '
 
     function disable-keybind() {
       case $1 in
+        # Arma 3 - ACE uses the super key
         activewindow\>\>steam_app_107410,Arma*)
           echo "YES $1" && hyprctl dispatch submap shortcuts-inhibited ;;
-        activewindow\>\>steam_app_553850,HELLDIVERS*)
-          echo "YES $1" && hyprctl dispatch submap shortcuts-inhibited ;;
+          # Helldivers - ???
+        # activewindow\>\>steam_app_553850,HELLDIVERS*)
+        #   echo "YES $1" && hyprctl dispatch submap shortcuts-inhibited ;;
         activewindow*)
           echo "NO $1" && hyprctl dispatch submap reset ;;
       esac
