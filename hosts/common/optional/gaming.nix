@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-  hardware.xone.enable = true; # xbox controller
+  # hardware.xone.enable = true; # xbox controller
 
   # required for star citizen
   boot.kernel.sysctl = {
