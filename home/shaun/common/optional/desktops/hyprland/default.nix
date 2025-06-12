@@ -53,6 +53,8 @@ in
       #
       debug = {
         disable_logs = false;
+        # INFO: fix for gamescope - https://github.com/ValveSoftware/gamescope/issues/1825/
+        full_cm_proto = true;
       };
 
       env = [
