@@ -21,7 +21,7 @@
 
       # ========== Extend lib with lib.custom ==========
       # NOTE: This approach allows lib.custom to propagate into hm
-      # see: https://github.com/nix-community/home-manager/pull/3454
+      # see: !https://github.com/nix-community/home-manager/pull/3454
       lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
 
     in

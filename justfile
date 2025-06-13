@@ -21,6 +21,7 @@ check ARGS="":
 
 # Rebuild the system
 rebuild: rebuild-pre && rebuild-post
+  python3 scripts/filechecker.py
   # NOTE: Add --option eval-cache false if you end up caching a failure you can't get around
   scripts/rebuild.sh
 

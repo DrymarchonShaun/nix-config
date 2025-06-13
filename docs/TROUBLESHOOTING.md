@@ -80,7 +80,7 @@ Slightly different issue: <https://github.com/mozilla/nixpkgs-mozilla/issues/82>
 
 seems to be because rust isn't installed as expected by pre-commit and isn't already available on my machine.
 
-Further searching leads to this thread: https://github.com/numtide/devshell/issues/16
+Further searching leads to this thread: !https://github.com/numtide/devshell/issues/16
 which has a solid argument about pre-commit being too late and looking for a solution that would shift format tooling left. Towars the end of the threat (which is dated May 30th, 2022 as of this entry on Dec 21,2023) there is a potential solution with treefmt.
 
 TODO Needs further investigation to determine if this is a suitable solution.

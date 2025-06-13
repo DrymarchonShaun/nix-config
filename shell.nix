@@ -38,7 +38,13 @@
         bats # for bash testing
         age # for bootstrap script
         ssh-to-age # for bootstrap script
+        # for checking git issues
+        curl
+        jq
+        gnugrep
+        gawk
         ;
+      inherit (pkgs.python3Packages) requests termcolor;
     };
   };
 }
