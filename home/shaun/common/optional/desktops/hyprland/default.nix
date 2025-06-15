@@ -66,6 +66,7 @@ in
         "WLR_RENDERER_ALLOW_SOFTWARE,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "_JAVA_AWT_WM_NONREPARENTING,1" # Fixing java apps
+        "GRIMBLAST_HIDE_CURSOR,0" # Fix hyprpanel crashing when using grimblast - see https://github.com/Jas-SinghFSU/HyprPanel/issues/888
       ];
 
       #

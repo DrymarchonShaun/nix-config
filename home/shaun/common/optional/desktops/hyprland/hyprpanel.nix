@@ -10,6 +10,9 @@
     programs.hyprpanel.hasBattery = lib.mkEnableOption "Enables battery widget";
   };
   config = {
+    home.sessionVariables = {
+      GRIMBLAST_HIDE_CURSOR = 0; # Fix hyprpanel crashing when using grimblast - see https://github.com/Jas-SinghFSU/HyprPanel/issues/888
+    };
 
     programs.hyprpanel = {
       enable = true;
