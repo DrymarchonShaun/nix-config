@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import vdf
 import os
+import re
 import subprocess
 import sys
 import requests
@@ -56,6 +57,31 @@ def install_teamspeak():
     )
 
 
+def patch_default_theme():
+    # Patch the default theme to use Arial font instead of Segoe UI
+    ts3_default_theme_path = os.path.join(
+        COMPAT_DATA_PATH,
+        "pfx",
+        "drive_c",
+        "Program Files",
+        "TeamSpeak 3 Client",
+        "styles",
+        "default.qss",
+    )
+    with open(ts3_default_theme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    content = re.sub(
+        r'/\*QWidget\s*\{\s*font-family:\s*"Segoe UI";\s*font-size:\s*9pt;\s*\}\s*\*/',
+        'QWidget {\n    font-family: "Arial";\n    font-size: 10pt;\n}',
+        content,
+        flags=re.DOTALL | re.MULTILINE,
+    )
+
+    with open(ts3_default_theme_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
 # Main Logic
 def main():
     init_vars()
@@ -70,6 +96,7 @@ def main():
     )
 
     if os.path.exists(TS_PATH):
+        patch_default_theme()
         print("TeamSpeak is already installed. Launching...")
         subprocess.call(
             f'protontricks-launch --appid 107410 "{TS_PATH}" /S',
