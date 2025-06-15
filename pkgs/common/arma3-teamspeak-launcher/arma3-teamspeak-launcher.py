@@ -16,10 +16,8 @@ def load_vdf_path(path):
     if not os.path.exists(path_expand):
         print("Error: Steam config file not found!")
         sys.exit(1)
-
     with open(path_expand, "r") as file:
         config_data = vdf.load(file)
-
     return config_data
 
 
@@ -29,13 +27,14 @@ def init_vars():
     # Get the path to the Library that contains Arma 3
     global ARMA_LIBRARY_PATH
     for key, value in libraryfolders_data["libraryfolders"].items():
-        if value["apps"]["107410"]:
+        apps = value.get("apps", {})
+        if "107410" in apps:
             ARMA_LIBRARY_PATH = os.path.join(value["path"], "steamapps")
-            break
 
-    # Get the Proton prefix path
-    global COMPAT_DATA_PATH
-    COMPAT_DATA_PATH = os.path.join(ARMA_LIBRARY_PATH, "compatdata", "107410")
+            # Get the Proton prefix path
+            global COMPAT_DATA_PATH
+            COMPAT_DATA_PATH = os.path.join(ARMA_LIBRARY_PATH, "compatdata", "107410")
+            return  # Stop after finding the first match
 
 
 def install_teamspeak():
