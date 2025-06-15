@@ -7,6 +7,7 @@
 let
 
   master = import inputs.nixpkgs-master { overlays = [ ]; };
+  unstable = import inputs.nixpkgs-unstable { overlays = [ ]; };
 
   # Adds my custom packages
   # FIXME: Add per-system packages
@@ -51,6 +52,8 @@ let
     hyprlandPlugins.hy3 = master.hyprlandPlugins.hy3;
 
     vencord = master.vencord;
+
+    gamescope = unstable.gamescope;
 
     # vencord = master.vencord.overrideAttrs (oldAttrs: rec {
     #   src =
