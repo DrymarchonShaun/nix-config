@@ -95,7 +95,7 @@ in
       connect-timeout = 5;
       log-lines = 25;
       min-free = 128000000; # 128MB
-      max-free = 1000000000; # 1GB
+      max-free = 5000000000; # 5GB
 
       trusted-users = [ "@wheel" ];
       # Deduplicate and optimize nix store
