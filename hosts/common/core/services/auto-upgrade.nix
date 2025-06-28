@@ -6,7 +6,6 @@
   ...
 }:
 let
-  inherit (config.networking) hostName;
   # Only enable auto upgrade if current config came from a clean tree
   # This avoids accidental auto-upgrades when working locally.
   isClean = inputs.self ? rev;
@@ -14,9 +13,9 @@ in
 {
   system.autoUpgrade = {
     enable = isClean;
-    dates = "hourly";
+    dates = "daily";
     flags = [ "--refresh" ];
-    flake = "git://github.com/EmergentMind/nix-config?ref=release-${hostName}";
+    flake = "git+https://codeberg.org/DrymarchonShaun/nix-config?ref=stable";
   };
 
   # Only run if current config (self) is older than the new one.
