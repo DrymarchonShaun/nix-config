@@ -1,11 +1,9 @@
 {
-  inputs,
   lib,
   config,
   ...
 }:
 {
-  imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
   options = {
     programs.hyprpanel.hasBattery = lib.mkEnableOption "Enables battery widget";
   };
@@ -16,12 +14,12 @@
 
     programs.hyprpanel = {
       enable = true;
-      hyprland.enable = true;
-      overwrite.enable = true;
-
+      systemd.enable = true;
       settings = {
-        layout = {
-          "bar.layouts" = {
+        bar = {
+          launcher.autoDetectIcon = true;
+          network.truncation = false;
+          layouts = {
             "*" = {
               left = [
                 "dashboard"
@@ -61,10 +59,6 @@
           bar.outer_spacing = "0.5em";
         };
 
-        bar = {
-          launcher.autoDetectIcon = true;
-          network.truncation = false;
-        };
         notifications.position = "top";
         menus = {
           clock.weather.enabled = false;

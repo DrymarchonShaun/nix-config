@@ -197,6 +197,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Steam Homebrew
+    millennium.url = "git+https://github.com/SteamClientHomebrew/Millennium";
+
     # OpenMW modding
     openmw-nix = {
       url = "git+https://codeberg.org/PopeRigby/openmw-nix.git";
