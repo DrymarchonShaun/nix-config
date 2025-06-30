@@ -23,7 +23,6 @@
       # NOTE: This approach allows lib.custom to propagate into hm
       # see: !https://github.com/nix-community/home-manager/pull/3454
       lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
-
     in
     {
       #
@@ -106,7 +105,12 @@
       checks = forAllSystems (
         system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              self.overlays.default
+            ];
+          };
         in
         import ./checks.nix { inherit inputs system pkgs; }
       );

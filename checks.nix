@@ -38,6 +38,29 @@
       mixed-line-endings.enable = true;
       trim-trailing-whitespace.enable = true;
 
+      conventional-commit = {
+        enable = true;
+        name = "git-conventional-commit";
+        description = "A pre-commit hook that checks commit messages for Conventional Commits formatting";
+        package = pkgs.conventional-pre-commit;
+        entry = "${pkgs.conventional-pre-commit}/bin/conventional-pre-commit";
+        args = [
+          "--strict"
+          "feat"
+          "fix"
+          "chore"
+          "revert"
+          "style"
+          "docs"
+          "build"
+          "refactor"
+          "test"
+          "ci"
+          "perf"
+        ];
+        stages = [ "commit-msg" ];
+      };
+
       forbid-submodules = {
         enable = true;
         name = "forbid submodules";
