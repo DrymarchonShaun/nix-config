@@ -44,7 +44,7 @@
         gnugrep
         gawk
         ;
-      inherit (pkgs.python3Packages) requests termcolor;
+      inherit (pkgs.python3Packages) requests termcolor vdf;
     };
   };
 }

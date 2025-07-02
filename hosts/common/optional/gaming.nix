@@ -1,43 +1,15 @@
 {
-  inputs,
+  # inputs,
   pkgs,
   config,
   ...
 }:
-let
-  steam' = pkgs.steam.override {
-    extraPkgs =
-      pkgs:
-      (builtins.attrValues {
-        inherit (pkgs.xorg)
-          libXcursor
-          libXi
-          libXinerama
-          libXScrnSaver
-          ;
-
-        inherit (pkgs.stdenv.cc.cc)
-          lib
-          ;
-
-        inherit (pkgs)
-          libpng
-          libpulseaudio
-          libvorbis
-          libkrb5
-          keyutils
-          gperftools
-          ;
-      });
-  };
-in
-
 {
   # hardware.xone.enable = true; # xbox controller
 
-  nixpkgs.overlays = [
-    inputs.millennium.overlays.default
-  ];
+  # nixpkgs.overlays = [
+  #   inputs.millennium.overlays.default
+  # ];
 
   # required for star citizen
   boot.kernel.sysctl = {
@@ -52,7 +24,6 @@ in
         package = pkgs.protontricks;
       };
       # package = pkgs.millennium.override { steam = steam'; };
-      package = steam';
       extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
       remotePlay.openFirewall = true;
     };

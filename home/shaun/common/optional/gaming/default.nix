@@ -2,46 +2,57 @@
 # host's monitors configuration
 {
   pkgs,
-  config,
   lib,
   ...
 }:
 
 let
-  monitor = lib.head (lib.filter (m: m.primary) config.monitors);
-
-  steam-session =
-    let
-      gamescope = lib.concatStringsSep " " [
-        (lib.getExe pkgs.gamescope)
-        "--output-width ${toString monitor.width}"
-        "--output-height ${toString monitor.height}"
-        "--framerate-limit ${toString monitor.refreshRate}"
-        "--prefer-output ${monitor.name}"
-        "--adaptive-sync"
-        "--expose-wayland"
-        "--steam"
-        "--hdr-enabled"
-      ];
-      steam = lib.concatStringsSep " " [
-        "steam"
-        #"steam://open/bigpicture"
-      ];
-    in
-    pkgs.writeTextDir "share/applications/steam-session.desktop" ''
-      [Desktop Entry]
-      Name=Steam Session
-      Exec=${gamescope} -- ${steam}
-      Icon=steam
-      Type=Application
-    '';
+  defaultOptions =
+    {
+      gamescope ? false,
+      preExtraEnvVars ? [ ],
+      extraEnvVars ? [ ],
+      preExtraPrefixCommand ? [ ],
+      extraPrefixCommand ? [ ],
+      extraGameOptions ? [ ],
+    }:
+    lib.concatStringsSep " " (
+      lib.flatten [
+        preExtraEnvVars
+        (lib.optional gamescope "MANGOHUD=0")
+        extraEnvVars
+        preExtraPrefixCommand
+        "gamemoderun"
+        extraPrefixCommand
+        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp --adaptive-sync --")
+        "%command%"
+        extraGameOptions
+      ]
+    );
 in
 {
   imports = [
     ./mangohud.nix
   ];
+
+  programs.steam.launchOptions = {
+    enable = true;
+    options = {
+      # Arma 3
+      "107410" = defaultOptions { };
+      # Hell Let Loose
+      "686810" = defaultOptions { gamescope = true; };
+
+      "949230" = defaultOptions {
+        gamescope = true;
+        extraGameOptions = [ "-dx11" ];
+      };
+      # Hell Divers 2
+      "553850" = defaultOptions { extraEnvVars = [ "radv_force_pstate_peak_gfx11_dgpu=false" ]; };
+    };
+  };
+
   home.packages = [
-    steam-session
     pkgs.ckan
     pkgs.lug-helper
     pkgs.gamma-launcher

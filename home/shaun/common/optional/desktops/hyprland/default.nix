@@ -222,12 +222,14 @@ in
       #
       # exec-once = ''${startupScript}/path'';
       # To determine path, run `which foo`
+      exec = [
+        ''steam''
+      ];
       exec-once = [
         ''${lib.getExe pkgs.xorg.xhost} si:localuser:root''
         ''${lib.getExe pkgs.hyprpolkitagent}''
         ''${lib.getExe pkgs.ipc-daemon}''
         # ''${pkgs.import-gsettings}/bin/import-gsettings''
-        ''steam''
       ];
       #
       # ========== Layer Rules ==========

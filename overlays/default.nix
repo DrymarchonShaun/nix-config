@@ -74,7 +74,32 @@ let
       ];
     });
 
-    steam = prev.steam.override { privateTmp = false; };
+    steam = prev.steam.override {
+      privateTmp = false;
+      extraPkgs =
+        pkgs:
+        (builtins.attrValues {
+          inherit (pkgs.xorg)
+            libXcursor
+            libXi
+            libXinerama
+            libXScrnSaver
+            ;
+
+          inherit (pkgs.stdenv.cc.cc)
+            lib
+            ;
+
+          inherit (pkgs)
+            libpng
+            libpulseaudio
+            libvorbis
+            libkrb5
+            keyutils
+            gperftools
+            ;
+        });
+    };
 
     # arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
     #   patches = oldAttrs.patches or [ ] ++ [
