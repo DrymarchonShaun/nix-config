@@ -30,7 +30,6 @@ def truncate_line_around_match(line, match_start, match_len, max_width=MAX_LINE_
     """
     line = line.rstrip("\n\r")
     line_len = len(line)
-    match_end = match_start + match_len
 
     # If no truncation needed
     if line_len <= max_width:

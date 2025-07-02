@@ -1166,11 +1166,11 @@
         "tokyodark": "tokyodark"
       },
       "locked": {
-        "lastModified": 1749576830,
-        "narHash": "sha256-r+Wp45nGG3nIzJ5/WbKWwZGnk0VYboGHyU4E3op1h5E=",
+        "lastModified": 1751232933,
+        "narHash": "sha256-5s6StN0t5Npnu98tauZgFxMSMxrPd4PubUKh7SThH60=",
         "owner": "DrymarchonShaun",
         "repo": "nvix",
-        "rev": "b7329f7097d7538ae1ede32b3bff150d2d8d7f33",
+        "rev": "2b321c66437fcfdee2b7912412446f37317ca513",
         "type": "github"
       },
       "original": {

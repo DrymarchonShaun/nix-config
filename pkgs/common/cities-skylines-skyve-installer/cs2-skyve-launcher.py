@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import vdf
 import os
-import re
 import subprocess
 import sys
 import requests
 from zipfile import ZipFile
 
 APPID = "949230"
+
 
 def load_vdf_path(path):
     path_expand = os.path.expanduser(path)
@@ -42,31 +42,31 @@ def install_skyve():
     ).json()
 
     name = manifest["modDetails"]["name"]
-    version =   manifest["modDetails"]["preferredVersion"]
+    version = manifest["modDetails"]["preferredVersion"]
 
     download_url = f"https://modscontent.paradox-interactive.com/cities_skylines_2/{name}/content/sources/{name}_{version}.zip"
 
     response = requests.get(download_url)
-    zip_path = os.path.join(
-        COMPAT_DATA_PATH, "pfx", "drive_c", "skyve.zip"
-    )
+    zip_path = os.path.join(COMPAT_DATA_PATH, "pfx", "drive_c", "skyve.zip")
     with open(zip_path, "wb") as file:
         file.write(response.content)
 
     extracted_path = os.path.join(COMPAT_DATA_PATH, "pfx", "drive_c", "skyve")
 
     with ZipFile(zip_path, "r") as zip:
-        zip.extractall(
-                path=extracted_path)
+        zip.extractall(path=extracted_path)
 
     # Run the installer
 
     subprocess.call(
-        f'protontricks-launch --appid {APPID} "{extracted_path + "Skyve\ Setup.exe"} /S"', shell=True, cwd="/tmp/"
+        f'protontricks-launch --appid {APPID} "{extracted_path + "Skyve\ Setup.exe"} /S"',
+        shell=True,
+        cwd="/tmp/",
     )
 
 
 # WIP: still need to change the path to exe below and put in some logic to figure out if dotnet472 needs to be installed
+
 
 # Main Logic
 def main():

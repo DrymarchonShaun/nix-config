@@ -10,6 +10,9 @@
       package = pkgs.nixfmt-rfc-style;
     };
 
+    ruff-check.enable = true;
+    ruff-format.enable = true;
+
     jsonfmt.enable = true;
     yamlfmt.enable = true;
     toml-sort.enable = true;
