@@ -68,6 +68,15 @@ let
     #       throw "remove the override stupid";
     # });
 
+    # TODO: remove once kernel 6.15.5 is in stable; ref: https://github.com/NixOS/nixpkgs/issues/421442
+    ghostty = prev.ghostty.overrideAttrs (_: {
+      preBuild = ''
+        shopt -s globstar
+        sed -i 's/^const xev = @import("xev");$/const xev = @import("xev").Epoll;/' **/*.zig
+        shopt -u globstar
+      '';
+    });
+
     waybar = final.unstable.waybar.overrideAttrs (oldAttrs: rec {
       patches = oldAttrs.patches or [ ] ++ [
         ./3934.patch
