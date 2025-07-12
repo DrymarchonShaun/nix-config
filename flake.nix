@@ -121,7 +121,12 @@
       devShells = forAllSystems (
         system:
         import ./shell.nix {
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              self.overlays.default
+            ];
+          };
           checks = self.checks.${system};
         }
       );
@@ -208,11 +213,6 @@
     openmw-nix = {
       url = "git+https://codeberg.org/PopeRigby/openmw-nix.git";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     rust-overlay = {

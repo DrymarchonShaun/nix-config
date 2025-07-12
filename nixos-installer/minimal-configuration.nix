@@ -48,8 +48,13 @@
   security.pam = {
     rssh.enable = true;
     services.sudo = {
+      rules.auth = {
+        rssh = {
+          # Prioritize local U2F authentication over remote SSH keys
+          order = config.security.pam.services.sudo.rules.auth.u2f.order + 10;
+        };
+      };
       rssh = true;
-      u2fAuth = true;
     };
   };
 

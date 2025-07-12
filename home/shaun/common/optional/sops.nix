@@ -12,6 +12,8 @@ let
   homeDirectory = config.home.homeDirectory;
   keys = [
     "odin"
+    "emoryi"
+    "dione"
     "mimir"
   ];
   keySecrets = lib.attrsets.mergeAttrsList (

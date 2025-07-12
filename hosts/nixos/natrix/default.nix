@@ -63,6 +63,7 @@ in
       "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/obsidian.nix" # notes
+      "hosts/common/optional/onlykey.nix" # onlykey hardware security key
       "hosts/common/optional/plymouth.nix" # fancy boot screen
       "hosts/common/optional/recording.nix" # obs / virtual camera
       "hosts/common/optional/scanning.nix" # SANE and simple-scan
@@ -94,7 +95,7 @@ in
 
   hostSpec = {
     hostName = "natrix";
-    useYubikey = lib.mkForce false;
+    useYubikey = lib.mkForce true;
     hdr = lib.mkForce false;
     persistFolder = "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
   };

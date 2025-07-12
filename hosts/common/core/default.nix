@@ -65,7 +65,6 @@ in
   nixpkgs = {
     overlays = [
       outputs.overlays.default
-      inputs.hyprpanel.overlay
       inputs.rust-overlay.overlays.default
     ];
     config = {

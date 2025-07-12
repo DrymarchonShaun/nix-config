@@ -9,7 +9,8 @@ let
   #TODO: add codeberg email
   # publicGitEmail = config.hostSpec.email.gitHub;
   sshFolder = "${config.home.homeDirectory}/.ssh";
-  publicKey = "${sshFolder}/id_mimir.pub";
+  publicKey =
+    if config.hostSpec.useYubikey then "${sshFolder}/id_onlykey.pub" else "${sshFolder}/id_manu.pub";
   privateGitConfig = "${config.home.homeDirectory}/.config/git/gitconfig.private";
 in
 {
@@ -83,6 +84,9 @@ in
       commit.gpgsign = true;
       gpg.format = "ssh";
 
+      # Signing key for non-yubikey hosts
+      user.signingkey = "${publicKey}";
+
       # Taken from https://github.com/clemak27/homecfg/blob/16b86b04bac539a7c9eaf83e9fef4c813c7dce63/modules/git/ssh_signing.nix#L14
       gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
     };
@@ -96,6 +100,8 @@ in
   # https://github.com/web-flow.gpg... would be nice to do that here
   home.file.".ssh/allowed_signers".text = ''
     ${config.hostSpec.email.user} ${lib.fileContents (lib.custom.relativeToRoot "hosts/common/users/primary/keys/id_mimir.pub")}
+    ${config.hostSpec.email.user} ${lib.fileContents (lib.custom.relativeToRoot "hosts/common/users/primary/keys/id_emoryi.pub")}
+    ${config.hostSpec.email.user} ${lib.fileContents (lib.custom.relativeToRoot "hosts/common/users/primary/keys/id_dione.pub")}
   '';
 
   home.file."${privateGitConfig}".text = ''

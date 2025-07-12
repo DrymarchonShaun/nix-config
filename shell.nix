@@ -43,6 +43,7 @@
         jq
         gnugrep
         gawk
+        onlykey-python
         ;
       inherit (pkgs.python3Packages) requests termcolor vdf;
     };

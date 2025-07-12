@@ -52,9 +52,6 @@ in
       # Run the merger script
       ${mergerScript}/bin/steam-launch-options-merger \
         --launch-options ${lib.escapeShellArg (builtins.toJSON cfg.options)}
-
-      # Restart Steam (optional, comment out if not desired)
-      ${lib.getExe pkgs.steam} >/dev/null 2>&1 & sleep 4 & disown
     '';
   };
 }
