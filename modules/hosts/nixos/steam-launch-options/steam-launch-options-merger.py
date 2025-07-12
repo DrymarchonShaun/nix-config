@@ -40,7 +40,9 @@ def main():
             "UserLocalConfigStore": {"Software": {"Valve": {"Steam": {"apps": {}}}}}
         }
 
-    launch_opts = json.loads(args.launch_options)
+    # path should always be absolute, so we can use it directly
+    with open(args.launch_options, "r") as f:
+        launch_opts = json.load(f)
 
     # Merge launch options
     apps = local_config_data["UserLocalConfigStore"]["Software"]["Valve"][

@@ -1,43 +1,90 @@
 {
   # inputs,
   pkgs,
+  lib,
   config,
   ...
 }:
+let
+  defaultOptions =
+    {
+      gamescope ? false,
+      preExtraEnvVars ? [ ],
+      extraEnvVars ? [ ],
+      preExtraPrefixCommand ? [ ],
+      extraPrefixCommand ? [ ],
+      extraGameOptions ? [ ],
+    }:
+    lib.concatStringsSep " " (
+      lib.flatten [
+        preExtraEnvVars
+        (lib.optional gamescope "MANGOHUD=0")
+        extraEnvVars
+        preExtraPrefixCommand
+        "gamemoderun"
+        extraPrefixCommand
+        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp --adaptive-sync --")
+        "%command%"
+        extraGameOptions
+      ]
+    );
+in
 {
-  # hardware.xone.enable = true; # xbox controller
-
-  # nixpkgs.overlays = [
-  #   inputs.millennium.overlays.default
-  # ];
-
   # required for star citizen
   boot.kernel.sysctl = {
     "vm.max_map_count" = 16777216;
   };
 
+  systemd.user.services.steam = {
+    description = "Steam";
+    wantedBy = [ "tray.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.steam}/bin/steam";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
+
   programs = {
     steam = {
       enable = true;
+      package = pkgs.steam;
       protontricks = {
         enable = true;
         package = pkgs.protontricks;
       };
-      # package = pkgs.millennium.override { steam = steam'; };
       extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
       remotePlay.openFirewall = true;
+      launchOptions = {
+        enable = true;
+        options = {
+          # Arma 3
+          "107410" = defaultOptions { };
+          # Hell Let Loose
+          "686810" = defaultOptions { gamescope = true; };
+
+          "949230" = defaultOptions {
+            gamescope = true;
+            extraGameOptions = [ "-dx11" ];
+          };
+          # Hell Divers 2
+          "553850" = defaultOptions { extraEnvVars = [ "radv_force_pstate_peak_gfx11_dgpu=false" ]; };
+          # Command Modern Operations
+          "1076160" = defaultOptions {
+            gamescope = true;
+          };
+        };
+      };
     };
-    #gamescope launch args set dynamically in home/<user>/common/optional/gaming
     gamescope = {
       enable = true;
       # capSysNice = true;
     };
-    # to run steam games in game mode, add the following to the game's properties from within steam
-    # gamemoderun %command%
+
     gamemode = {
       enable = true;
       settings = {
-        #see gamemode man page for settings info
         general = {
           reaper_freq = 5;
           desiredgov = "performance";

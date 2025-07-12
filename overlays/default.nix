@@ -55,19 +55,6 @@ let
 
     gamescope = unstable.gamescope;
 
-    # vencord = master.vencord.overrideAttrs (oldAttrs: rec {
-    #   src =
-    #     if (oldAttrs.version == "1.12.1") then
-    #       prev.fetchFromGitHub {
-    #         owner = "Vendicated";
-    #         repo = "Vencord";
-    #         rev = "v1.12.2";
-    #         hash = "sha256-a4lbeuXEHDMDko8wte7jUdJ0yUcjfq3UPQAuSiz1UQU=";
-    #       }
-    #     else
-    #       throw "remove the override stupid";
-    # });
-
     # TODO: remove once kernel 6.15.5 is in stable; ref: https://github.com/NixOS/nixpkgs/issues/421442
     ghostty = prev.ghostty.overrideAttrs (_: {
       preBuild = ''
@@ -75,12 +62,6 @@ let
         sed -i 's/^const xev = @import("xev");$/const xev = @import("xev").Epoll;/' **/*.zig
         shopt -u globstar
       '';
-    });
-
-    waybar = final.unstable.waybar.overrideAttrs (oldAttrs: rec {
-      patches = oldAttrs.patches or [ ] ++ [
-        ./3934.patch
-      ];
     });
 
     steam = prev.steam.override {
@@ -110,14 +91,6 @@ let
         });
     };
 
-    # arma3-unix-launcher = prev.arma3-unix-launcher.overrideAttrs (oldAttrs: rec {
-    #   patches = oldAttrs.patches or [ ] ++ [
-    #     (prev.fetchpatch {
-    #       url = "https://patch-diff.githubusercontent.com/raw/muttleyxd/arma3-unix-launcher/pull/291.patch";
-    #       hash = "sha256-fBwWfu4IR02zJuiCGhkAKzMlkJEHw/+whw3potR++fA=";
-    #     })
-    #   ];
-    # });
     orca-slicer-overridden = prev.stdenv.mkDerivation {
       name = "orca-slicer-overridden";
       version = prev.orca-slicer.version;

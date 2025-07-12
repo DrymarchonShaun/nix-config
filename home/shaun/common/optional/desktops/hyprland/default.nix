@@ -223,7 +223,7 @@ in
       # exec-once = ''${startupScript}/path'';
       # To determine path, run `which foo`
       exec = [
-        ''steam''
+        # ''steam''
       ];
       exec-once = [
         ''${lib.getExe pkgs.xorg.xhost} si:localuser:root''
