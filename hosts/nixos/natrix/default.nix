@@ -68,6 +68,7 @@ in
       "hosts/common/optional/recording.nix" # obs / virtual camera
       "hosts/common/optional/scanning.nix" # SANE and simple-scan
       "hosts/common/optional/services/avahi.nix" # host discovery
+      "hosts/common/optional/services/duckdns.nix" # dynamic DNS
       "hosts/common/optional/services/bluetooth.nix" # bluetooth
       "hosts/common/optional/services/geoclue.nix" # location services
       "hosts/common/optional/services/greetd.nix" # display manager
