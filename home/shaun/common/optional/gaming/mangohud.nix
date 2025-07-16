@@ -5,6 +5,8 @@
       config.xdg.configFile."MangoHud/MangoHud.conf".target
     }";
   };
+  catppuccin.mangohud.enable = false;
+
   programs.mangohud = {
     enable = true;
     enableSessionWide = true;
