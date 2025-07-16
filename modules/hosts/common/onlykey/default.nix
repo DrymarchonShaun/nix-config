@@ -96,6 +96,7 @@ in
         enable = true;
         settings = {
           cue = true; # Tells user they need to press the button
+          origin = "pam://drymarchon";
           authfile = lib.mkDefault (
             builtins.toFile "u2f_mappings" (
               lib.concatMapStringsSep "\n"
@@ -104,9 +105,9 @@ in
                   lib.concatStringsSep ":" [
                     user
                     # emoryi?
-                    "Ro7I25yXbMXYVhqvNSfPLlyMv04HzOog9FSl7IKEJQDnCwTZUgzooeDmD3JBaS7k008fyKKFVKtDfGu4NH/WCcy7PxA/Ag==,MfGalBUj6xMDzWXZsXw0WzNad2nA/PTjEEg4XYnqK7omuFUy3UCPCjPF5M4YTMXxsX1+i5t/+k3eEL+N3NCW2Q==,es256,+presence"
+                    "9PXG8v7O0BGSshc7l1xMsGNZz/Lb1YYWZXvIPHxAQ7Skdj4eEYwf5H6/5DVer0J1vRJZbhZEKaGiZOcVgCHcB81s/1hCAg==,ccIXNN7GSeJ3r7cOny25ZBbLRWYbMbf5DUF843rNhbJpyBJnTQUwzTcaQlJxJkJdHTxw6VvjXhIQ5XzkPbIHyw==,es256,+presence"
                     # dione?
-                    "nreWoi4mHKKCU/LUPghjYwgUlbOK6U0VTpwQDy2IvJ41sgTZUgzooeDmD3JBaS7k008fyKKFVKtDfGu4NH/WCcy7nw4/Ag==,4jK9wAWKxjpjqLIAyaHsMqycwInDmsBN28iUpZ4Mg3FUCqyO8o45IqKVwq3avWt2A+kOVETW/zBp33/sKMNTig==,es256,+presence"
+                    "v6j4rZ0oWuzeIy3P/8/TP/ocRYBlUO4+2NRHxDSVMVqpST4eEYwf5H6/5DVer0J1vRJZbhZEKaGiZOcVgCHcB81sYFlCAg==,jJUulyCXyJhFLXhrFowsSYh7GABGY8RxPmjFZULVasZr9ItlyZCyfTxBHnqKT/UjxC/DxfKK+W/r5tn9diIfLQ==,es256,+presence"
                   ]
                 )
                 [
