@@ -1,5 +1,4 @@
 {
-  # inputs,
   pkgs,
   lib,
   config,
@@ -40,7 +39,7 @@ in
     wantedBy = [ "tray.target" ];
     after = [ "network.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.steam}/bin/steam";
+      ExecStart = "${config.programs.steam.package}/bin/steam";
       Restart = "on-failure";
       RestartSec = "5s";
     };
@@ -74,6 +73,7 @@ in
           "1076160" = defaultOptions {
             gamescope = true;
           };
+          "1144200" = defaultOptions { };
         };
       };
     };
