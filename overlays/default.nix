@@ -87,6 +87,9 @@ let
             libkrb5
             keyutils
             gperftools
+            gamemode
+            mangohud
+            gamescope
             ;
         });
     };
