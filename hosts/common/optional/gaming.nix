@@ -8,6 +8,7 @@ let
   defaultOptions =
     {
       gamescope ? false,
+      captureCursor ? false,
       preExtraEnvVars ? [ ],
       extraEnvVars ? [ ],
       preExtraPrefixCommand ? [ ],
@@ -22,7 +23,7 @@ let
         preExtraPrefixCommand
         "gamemoderun"
         extraPrefixCommand
-        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp --adaptive-sync --")
+        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp --adaptive-sync ${(lib.optionalString captureCursor "--force-grab-cursor")} --")
         "%command%"
         extraGameOptions
       ]
@@ -62,7 +63,15 @@ in
           "107410" = defaultOptions { };
           # Hell Let Loose
           "686810" = defaultOptions { gamescope = true; };
-
+          # SCP 5K
+          "872670" = defaultOptions {
+            gamescope = true;
+            captureCursor = true;
+            extraGameOptions = [
+              "-dx11"
+              "-nostartupmovies"
+            ];
+          };
           "949230" = defaultOptions {
             gamescope = true;
             extraGameOptions = [ "-dx11" ];
