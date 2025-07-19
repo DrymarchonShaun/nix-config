@@ -23,7 +23,7 @@ let
         preExtraPrefixCommand
         "gamemoderun"
         extraPrefixCommand
-        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp --adaptive-sync ${(lib.optionalString captureCursor "--force-grab-cursor")} --")
+        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp ${(lib.optionalString captureCursor "--force-grab-cursor")} --")
         "%command%"
         extraGameOptions
       ]
@@ -117,6 +117,21 @@ in
         };
       };
     };
+  };
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-cpp;
+    extraRules = [
+      {
+        "name" = "gamescope";
+        "nice" = -20;
+      }
+      {
+        "name" = "gamescope-wl";
+        "nice" = -20;
+      }
+    ];
   };
   users.users.${config.hostSpec.username}.extraGroups = [
     "gamemode"
