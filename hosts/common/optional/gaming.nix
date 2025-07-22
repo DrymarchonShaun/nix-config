@@ -5,29 +5,9 @@
   ...
 }:
 let
-  defaultOptions =
-    {
-      gamescope ? false,
-      captureCursor ? false,
-      preExtraEnvVars ? [ ],
-      extraEnvVars ? [ ],
-      preExtraPrefixCommand ? [ ],
-      extraPrefixCommand ? [ ],
-      extraGameOptions ? [ ],
-    }:
-    lib.concatStringsSep " " (
-      lib.flatten [
-        preExtraEnvVars
-        (lib.optional gamescope "MANGOHUD=0")
-        extraEnvVars
-        preExtraPrefixCommand
-        "gamemoderun"
-        extraPrefixCommand
-        (lib.optional gamescope "gamescope -W 2560 -H 1440 -r 165 -f --mangoapp ${(lib.optionalString captureCursor "--force-grab-cursor")} --")
-        "%command%"
-        extraGameOptions
-      ]
-    );
+  inherit (lib.custom.steam)
+    defaultOptions
+    ;
 in
 {
   # required for star citizen
