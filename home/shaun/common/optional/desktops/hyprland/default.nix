@@ -15,6 +15,7 @@ in
     ./hyprpanel.nix
     ./hyprpaper.nix
     ./wlogout.nix
+    ../common/easyeffects
     ../common/gtk.nix
     ../common/qt.nix
     ../common/services/clipboard.nix

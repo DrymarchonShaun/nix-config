@@ -43,4 +43,42 @@
         ]
       );
   };
+
+  easyeffects = {
+
+    getPresets =
+      path:
+      lib.map
+        (file: {
+          name = lib.removeSuffix ".json" file;
+          value = builtins.fromJSON (builtins.readFile "${path}/${file}");
+        })
+        (
+          builtins.attrNames (
+            lib.filterAttrs (file: type: lib.hasSuffix ".json" file && type == "regular") (
+              builtins.readDir path
+            )
+          )
+        );
+
+    profileAutoload =
+      {
+        type,
+        device,
+        name,
+        profile,
+        preset,
+      }:
+      {
+        xdg.configFile."easyeffects/autoload/${type}/${device}:${profile}.json" = {
+          text = builtins.toJSON {
+            device = device;
+            device-description = name;
+            device-profile = profile;
+            preset-name = preset;
+          };
+        };
+      };
+
+  };
 }
