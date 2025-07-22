@@ -8,8 +8,10 @@
 {
   enable = true;
   package = pkgs.fabricServers.fabric-1_21_4;
-  autoStart = true;
-  restart = "always";
+  # managementSystem = {
+  #   tmux.enable = false;
+  #   systemd-socket.enable = true;
+  # };
   serverProperties = {
     server-port = config.hostSpec.networking.ports.minecraft;
     white-list = true;
@@ -40,6 +42,21 @@
     "config/configurabledespawntimer/specific_despawn_times.txt" = ./specific_despawn_times.txt;
     "config/inventoryessentials-common.toml".value = {
       allowBulkTransferAllOnEmptySlot = true;
+
+      bulkTransferArmorSets = true;
+
+      enableBulkDrop = true;
+
+      enableBulkTransfer = true;
+
+      enableBulkTransferAll = true;
+
+      enableBulkTransferSingle = true;
+
+      enableShiftDrag = true;
+
+      enableSingleTransfer = true;
+
       forceClientImplementation = false;
     };
     "config/discord-mc-chat.json".value = {
@@ -221,70 +238,65 @@
   };
 
   symlinks = {
-
-    # GitHub
-    "mods/carpet.jar" = pkgs.fetchurl {
-      url = "https://github.com/gnembon/fabric-carpet/releases/download/1.4.161/fabric-carpet-1.21.4-1.4.161+v241203.jar";
-      sha512 = "fd42f43ae89af7553ee1b8240efda178a05f5b0f45fe359651cea468cfd11fe24996e991c338522f4a17b07b917e9ebda4a5cfa8551fca280c81e536b240a96c";
-    };
-    "mods/carpet-extra.jar" = pkgs.fetchurl {
-      url = "https://github.com/gnembon/carpet-extra/releases/download/1.4.161/carpet-extra-1.21.4-1.4.161.jar";
-      sha512 = "8afefbc2827151209141b3cbb7d7f3b3ed84befe497446ba384dc0d5cd4e63149aac91c10eb3f6bcc1e942b94df504703fd5cba7814419ead3d0154b229d3203";
-    };
-
-    # Modrinth
-
     "mods/amber.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/vjGZJDu5/versions/UOQGwZI8/amber-fabric-1.21.4-2.1.0%2B1.21.4.jar";
-      sha512 = "58d4d73038ea6145ca9f40f9e6ca231e151c9f7ffefbd90fb5d3cb6c0dc6796d96d5f6b83447e90efbd870e4527f646a99cb896490b75b037c2d428ffe6e812e";
+      url = "https://cdn.modrinth.com/data/vjGZJDu5/versions/xLlRAY41/amber-fabric-1.21.4-3.0.0%2B1.21.4.jar";
+      sha512 = "f99255dcf8c3f94b059557c494eb3fb0af91506adc5f52bd3fe6f70a928a6be3cffbccdd483b731715d67fefcb844bb5336321ca2d1426858bb5c553ec61408e";
     };
     "mods/appleskin.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/EsAfCjCV/versions/cHQjeYVS/appleskin-fabric-mc1.21.3-3.0.6.jar";
       sha512 = "b572a3eea43e0084819c88dd7fac6a0a5d5555d9b73df927b97f29764f281cadbfc8cc5f8f6b6920f1677bcec87b411e5a582d305a191735ad8d60fc90900900";
     };
     "mods/architectury-api.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/lhGA9TYQ/versions/XRwibvvn/architectury-15.0.1-fabric.jar";
-      sha512 = "df0e163a560439c1911c584821a643c665b13bbd541db9a9f318cdf33db0aee4573e3c901e4a3aad585e10013de1b4dc62143dce0855a2c915fcd0b35ee28263";
+      url = "https://cdn.modrinth.com/data/lhGA9TYQ/versions/73nlw3WM/architectury-15.0.3-fabric.jar";
+      sha512 = "6acc7cfccfc6e93fd8c1895fb2c489cbabd27265f38f7cbad98ddaab2cb2e6d1601633bd12cf26fc0bb100a87949ee06b872f333cf7b8490cccc0082ac586dcb";
     };
     "mods/badoptimizations.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/g96Z4WVZ/versions/EPTfY6pQ/BadOptimizations-2.2.1-1.21.2-21.4.jar";
-      sha512 = "c5ec3cf6bc621e867223584454f47fb8c6cbcefc961ba0ef7b7eb848dc287d0682b92677e1b965e2d1b481c451bfc9ebd7d0d3a8a644d05b7a9e1e417462fb64";
+      url = "https://cdn.modrinth.com/data/g96Z4WVZ/versions/PGSmdolb/BadOptimizations-2.3.0-1.21.2-21.5.jar";
+      sha512 = "f1079c91f27dadd54ec36d42eae55c4fb95675aac8ebaaf40cecd8221d4819f3f28ba24b7ce5d31b2fca62a8489fe12860ad0bf187d9df44a928d78e60a9cb53";
     };
     "mods/balm.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/MBAkmtvl/versions/6yIBlv3N/balm-fabric-1.21.4-21.4.6.jar";
-      sha512 = "3854e338ff9aeba5d9fb1b38b8a49f77d1cf022167709b8d3bea6d6e9eb3717e009345c6d1a12a51dc31fe5c8fb213090283a8700d0e651b06ffc2853532c42d";
+      url = "https://cdn.modrinth.com/data/MBAkmtvl/versions/RMBKhF0u/balm-fabric-1.21.4-21.4.36.jar";
+      sha512 = "d4a91effe7475fcf08cc62794fc75e665c361c0987b89806e8b8804f7b1f627d79904fa9a040e8cc3f1abb0b5af459a85186feaecc0fd002d36f585c89740be5";
     };
     "mods/better-fabric-console.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/Y8o1j1Sf/versions/3d1g5aTY/better-fabric-console-mc1.21.4-1.2.2.jar";
       sha512 = "aa7ea5e6fad06927462655331985e58d270bf2f6ac31a9c685830e8d4249c6a3de51f2a2e63ddef150432040448926c3238d3bab4722a26733c5e7db64359563";
+    };
+    "mods/carpet-extra.jar" = pkgs.fetchurl {
+      url = "https://cdn.modrinth.com/data/VX3TgwQh/versions/jLwlJK0f/carpet-extra-1.21.4-1.4.161.jar";
+      sha512 = "8afefbc2827151209141b3cbb7d7f3b3ed84befe497446ba384dc0d5cd4e63149aac91c10eb3f6bcc1e942b94df504703fd5cba7814419ead3d0154b229d3203";
+    };
+    "mods/carpet.jar" = pkgs.fetchurl {
+      url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/aVB2lYQQ/fabric-carpet-1.21.4-1.4.161%2Bv241203.jar";
+      sha512 = "fd42f43ae89af7553ee1b8240efda178a05f5b0f45fe359651cea468cfd11fe24996e991c338522f4a17b07b917e9ebda4a5cfa8551fca280c81e536b240a96c";
     };
     "mods/cloth-config.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/9s6osm5g/versions/TJ6o2sr4/cloth-config-17.0.144-fabric.jar";
       sha512 = "ecc59da51149250284b0752475c7b328e0b0325888948391597afc638d6e67fa436297af12d2067376de0098ffa6ca86aa3b8d6011356c179222404c701c6345";
     };
     "mods/collective.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/e0M1UDsY/versions/F3ciVO4i/collective-1.21.4-7.89.jar";
-      sha512 = "8659df746343e697388b878b52d8eb49027ca528a75f7549177539bf21af26c4f0053acf4552abb36c8d5e5010d6d07976ba64e2b256cda4145785a6acab795d";
+      url = "https://cdn.modrinth.com/data/e0M1UDsY/versions/I5jY2gQ2/collective-1.21.4-8.3.jar";
+      sha512 = "95c18b55a631bfdcbc501c17238f36c1f284d90a866f498dbf2b77ce7b9dcb0260cba0143a16dcbf254660710ea8fdbd8948cac94139e660bf25581b49fa2337";
     };
     "mods/configurable-despawn-timer.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/9olMJ5Qp/versions/dOdzt501/configurabledespawntimer-1.21.4-4.2.jar";
-      sha512 = "6b03a9d6aa6ea0b81f52ad01ce7646f1a44e893f1f12e06d7947a029d44fb58b52a6102267ab05bac847cab8aeea8fc4b888fde1636219e760f5c9829d772de9";
+      url = "https://cdn.modrinth.com/data/9olMJ5Qp/versions/8yBlnZRg/configurabledespawntimer-1.21.4-4.3.jar";
+      sha512 = "7ccb9e7a35cfdef822a7029e2f940d3f1e76fc24499fc11effd83a99eeb3c593febe40fd918a5486a67a89c75a61052acb419701be34b635d8cff4f9805d230a";
     };
     "mods/debugify.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/QwxR6Gcd/versions/yjpSgPEw/Debugify-1.21.4%2B1.1.jar";
       sha512 = "6fcc75db9606e443b976b913aee9cba244dc288f652c1d992329087eefae174f92b345966c925e3749d7b819634f0db4e5a285200597b9641788f22a7c7e2ea5";
     };
     "mods/discord-mc-chat.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/D0sHdnXY/versions/fgxnpAd1/Discord-MC-Chat-2.4.0.jar";
-      sha512 = "09f88bf9ab1347a5eb90ed7a55a7c30846d3451557c9a9c366d3d68deed4655e5e4e124f2cc9404df5d3841a28dc73890191e9ea97e5655d0f1d1321f83a3128";
+      url = "https://cdn.modrinth.com/data/D0sHdnXY/versions/PtVawIb0/Discord-MC-Chat-2.5.0.jar";
+      sha512 = "5d653d21048cea1eeaff13bf1f63619133384385b4da21c5105c64e4b1b6ac67c04fd8534768d0a5125a9c940a4dc38ce64cba6b202e86e705a5ef9b45a8c4d5";
     };
     "mods/essential-commands.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/6VdDUivB/versions/dWRItO8P/essential_commands-0.36.0-mc1.21.3.jar";
-      sha512 = "2b5bde97113f319d1d55b37832e0faf54eb7a903148fb01414dbec1adaeffa8f6b6451a37276b0102af83100736349821790e62ed1672b0f58e3a04c7d85108c";
+      url = "https://cdn.modrinth.com/data/6VdDUivB/versions/gDvOqDt9/essential_commands-0.37.0-mc1.21.4.jar";
+      sha512 = "be89b0b21f57e27b3d9844f99296b1ad18526672a56e338a266dd654bfdf39d9ec41e2f8a505f5561a71fc72cf105a8ed96ad46a4d94f161a875046a47d8b8a6";
     };
     "mods/fabric-api.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/r5NCKSxv/fabric-api-0.114.3%2B1.21.4.jar";
-      sha512 = "37eae71ab45a27bf3855d650b3abcec093daf9271ed7a9ffe5af1729b83605a7146beb2cccf0b15f1337cb444557499c528429f8109b42e4fce61ba9c6e4c392";
+      url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/sVqpGIb1/fabric-api-0.119.3%2B1.21.4.jar";
+      sha512 = "a1927d45902c766b8d21f93cddc36991045eeb1adca5dfeea1c3b6378ce6aa66ae99cf2322ca6e337c58352c4d55fd5226655bc8886080fa864c27f83b18c1d9";
     };
     "mods/ferrite-core.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/uXXizFIs/versions/IPM0JlHd/ferritecore-7.1.1-fabric.jar";
@@ -295,20 +307,20 @@
       sha512 = "a5f84411c0b7b9e5e8d267e268183fcb2e46df955fd976ed3f4bc1fd45249ab5f902a23ab93cbdc45d5bb409a5d570e7f7ec9794ca74f4b6115bf3e95d29914b";
     };
     "mods/immediatelyfast.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/5ZwdcRci/versions/gh2TGVZk/ImmediatelyFast-Fabric-1.3.3%2B1.21.4.jar";
-      sha512 = "29e2ba985c476a190da2686ef567632390ab256efb3b99f0b10caf02d58907796c6cfa97f22ea71aef09a4c73a241ce23a750742dca2f460b2d44db85d7b5045";
+      url = "https://cdn.modrinth.com/data/5ZwdcRci/versions/TBPG2PYa/ImmediatelyFast-Fabric-1.8.1%2B1.21.4.jar";
+      sha512 = "b3379168a1576ee80abf3ae7c6234dbc541df0616ec6d95e7a9d9af44619100bacd11a85366e17cc2157beb15ad6e254191f532cb28fb2e89ad0a47777176211";
     };
     "mods/inventory-essentials.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/Boon8xwi/versions/hDg8NyPb/inventoryessentials-fabric-1.21.4-21.4.1.jar";
-      sha512 = "608edf8877c054248e7d3990704241beff2fedc9066e52f0c015a303f13d7408d63798ac86e64ec2e3551e2f0213ffa6b49e3071c18fbb7a6f09334d525d8f11";
+      url = "https://cdn.modrinth.com/data/Boon8xwi/versions/QQtpAYuC/inventoryessentials-fabric-1.21.4-21.4.5.jar";
+      sha512 = "f997ce643976591ffe7e34a669162554cbfbcca9033019c933aef99ad2a4d297d252ef27122ab9c2dc4927bfe79ed9204f7362eaa888fec51f458818081f2913";
     };
     "mods/jade.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/nvQzSEkH/versions/S1GWTEhB/Jade-1.21.4-Fabric-17.2.0.jar";
-      sha512 = "ad7c711abcd9d6d0063acec4d03ee52b7f3a3e0d69f1da4b2275cb8f3860c6d4f6cafaa98e387ffd7a1f7c1716621c8e6647cada55f3c02a143db5d854eee08a";
+      url = "https://cdn.modrinth.com/data/nvQzSEkH/versions/sSHUBFoq/Jade-1.21.4-Fabric-17.2.2.jar";
+      sha512 = "dbe2ce335170c7a7079595c6341188ef07f54704faab7e3919a7c24130d3b25f321425c5f28107ea706f8d7e47e1d49147882ab05c35cbe6af7ac9d371ca68e7";
     };
     "mods/jamlib.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/IYY9Siz8/versions/2J8TKset/jamlib-fabric-1.2.2%2B1.21.4.jar";
-      sha512 = "b20e4d625d36d16b06eaa8410bf01042487d2b5896a1f0cffc6b713b3e1112498ef63a021ee776da02d79d367c658935aaba20273d7f2f4a731d2b1890e484e2";
+      url = "https://cdn.modrinth.com/data/IYY9Siz8/versions/GSAIeO3Q/jamlib-fabric-1.3.5%2B1.21.4.jar";
+      sha512 = "f212f965dda1283057469ab1952a39a364ed6dd8c06d591cc2464006b692cc4287cd723dc9fefcbd5b2e6e306ec84a121623cde960690df2332ec90c8d6f58fe";
     };
     "mods/krypton.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/fQEb0iXm/versions/Acz3ttTp/krypton-0.2.8.jar";
@@ -319,16 +331,16 @@
       sha512 = "d8cae40d5934469d37ee0bbf5626d919dd9174f1e5c71d6291a3b8b93439a7405cb986e8208f3bc8a343b7f596124ec01a5c98cf0e0d77f94683beef3e871ae6";
     };
     "mods/lithium.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/6SB2ZRPm/lithium-fabric-0.14.5%2Bmc1.21.4.jar";
-      sha512 = "4e523a6c5148a29aed9900476b1f05647c7f22e9912212b3e235c1c69ba1df12a21b64f1dabc91571c2ce2aecdb3b98dda27834e8e3f753f000fce77acab28fd";
+      url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/u8pHPXJl/lithium-fabric-0.15.3%2Bmc1.21.4.jar";
+      sha512 = "b8b541c0e968571c8972872b342e34b92573bc9210d455dc1349589f30a67a90d930dbfd99b176ab9b110350ceb53e11118378dc13a35e83a9090826627bdac0";
     };
     "mods/luckperms.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/Vebnzrzj/versions/6h9SnsZu/LuckPerms-Fabric-5.4.150.jar";
       sha512 = "d616346f5ae1cce2137ce589323e89263a08b4bd26e547fa67d2b87a729740d70dfd2b6b06ffd6b72433f7e20c03bde3b4da69c7cd325f295d1f28f1861c8698";
     };
     "mods/modernfix.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/nmDcB62a/versions/gx7PIV8n/modernfix-fabric-5.20.1%2Bmc1.21.4.jar";
-      sha512 = "e1596a89dc100f454c445d64b5ebf59f1788de22270a4ca52837337abe6a76c517c771e234ededbadf5b51dbb62efe1bc0eccee841c45bc263f9406d8348dfe8";
+      url = "https://cdn.modrinth.com/data/nmDcB62a/versions/ZGxQddYr/modernfix-fabric-5.20.3%2Bmc1.21.4.jar";
+      sha512 = "ae49114c92a048c9ce79e197fc4df028e186cf13546e710f72247382fa8076f0b70d6aa3224951f4a36c886ca236f099a011f20b021a2b0d1a75c631da4d7d52";
     };
     "mods/no-chat-reports.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/9xt05630/NoChatReports-FABRIC-1.21.4-v2.11.0.jar";
@@ -339,48 +351,48 @@
       sha512 = "3119f9325a9ce13d851d4f6eddabade382222c80296266506a155f8e12f32a195a00a75c40a8d062e4439f5a7ef66f3af9a46f9f3b3cb799f3b66b73ca2edee8";
     };
     "mods/rightclickharvest.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/Cnejf5xM/versions/lylk05D8/rightclickharvest-fabric-4.4.4%2B1.21.4.jar";
-      sha512 = "c972c4539652adb01f2d7d7e313be39dd49f44a71510a0fce64ae1915b44968b2450ace3e5c38af8959e76792f813ca56ee7fbc4f012e7b6f27d10934828e7f3";
+      url = "https://cdn.modrinth.com/data/Cnejf5xM/versions/ilSmuwZP/rightclickharvest-fabric-4.5.3%2B1.21.4-patch.1.jar";
+      sha512 = "d486b87636fe4960e7c48bd6f2cf266214079a4b3ab4a01fbdc59a02f2179cd0bc25475747de3e7cb7ce38d3e7ccb2369ca87ca1f1634b447e78907e9e528876";
     };
     "mods/servux.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/fKoMLUos/servux-fabric-1.21.4-0.5.1.jar";
-      sha512 = "49510a9e8d6894567f5d3461fb4b6e87e4d8ecb0664f337fe38f3a79b47887dbe1ac6a233aa0cc4e115b67c4d15ca895fd88a4ee941cdc6f86237a2bbd0c36f1";
+      url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/QtByZXTq/servux-fabric-1.21.4-0.5.4.jar";
+      sha512 = "4044acb3c1155c51551f5ef6f2478fe9b1dfa46b8936ac7c3dd26b6d769ee3a5625a3de9dc09da822e0f1ce31f981408e283bbbb788910d3ae8951d728f8e519";
     };
     "mods/shulkerboxtooltip.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/2M01OLQq/versions/fy4w1xut/shulkerboxtooltip-fabric-5.2.3%2B1.21.4.jar";
-      sha512 = "002f62515affb0599c8ea0b144fe79d97a7e8795f204dad9f9a8ce38fe14fd3146164b2256de1c52a5639434db4c002000642e077b55ae7fe4daf477e1c7ba08";
+      url = "https://cdn.modrinth.com/data/2M01OLQq/versions/zZfEoJB1/shulkerboxtooltip-fabric-5.2.6%2B1.21.4.jar";
+      sha512 = "49570eba94cf49829f0680ec45226b48f2394ea0e564d05bf9e336b8ac2c86a5977654bdefb27e7d836112571fa55e0ac9f6d7d2a14c252655ea6e73bed309fe";
     };
     "mods/simple-voice-chat.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/4Zzq92HE/voicechat-fabric-1.21.4-2.5.27.jar";
-      sha512 = "9ef2ab20cc075a1e43ea7160ac99d5d89a3cc908aee11f443a59e525f8ab3ee3376d768b09b1c8428acb709420d27e1af8e5c385c2309c1bbf5886011e568555";
+      url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/rzxK9Bkj/voicechat-fabric-1.21.4-2.5.35.jar";
+      sha512 = "420db59c1df499f758ae39169abedad1bf091d9720b0f9a4c498cca2f3c504a58435336d40d927e8fe57f8451d75b113ee4a358940a757869a4d409f4ab5f039";
     };
     "mods/sodium.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/AANobbMI/versions/tu8qILqH/sodium-fabric-0.6.6%2Bmc1.21.4.jar";
-      sha512 = "977606f8f344423a1986efded96e9844d1e0efaf11d877f8bec74c4b8711f9d909ddeaf8ba3126b26f704f0c6362f44c661e435cdbed48272bd03b82557314b6";
+      url = "https://cdn.modrinth.com/data/AANobbMI/versions/c3YkZvne/sodium-fabric-0.6.13%2Bmc1.21.4.jar";
+      sha512 = "2c72ca2ddfd27e29ff6c24fccdf6f3d80857bd1014c707017f96cb4a424f94918e53ba21d85f22e3c9171803f8d2c12c99ae857d38d8e85546cc65960b95a2f1";
     };
     "mods/spark.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/l6YH9Als/versions/X2sypdTL/spark-1.10.121-fabric.jar";
       sha512 = "f164ca7dad6baf5e33b3a1b355319ddad264f2b27d2592fd80581d9dcaf35978149d005a159f1e0a116162a31dad4dc553cbaf3af70cc10285f63ca367fe4de5";
     };
     "mods/vanilla-permissions.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/fdZkP5Bb/versions/7awQNHzw/vanilla-permissions-0.2.4%2B1.21.3.jar";
-      sha512 = "6f182c3f976fb3a5e9a542094bc0fcf7a120aa55a32e5b0ed7c162034a24287ea1dbb5e5138c4af41c284900b4a05daca6b998c2d8c973e33188879832dcff55";
+      url = "https://cdn.modrinth.com/data/fdZkP5Bb/versions/PYYDl95q/vanilla-permissions-0.2.9%2B1.21.4.jar";
+      sha512 = "ef65762de7cc0fd5f4e94268162d0dab65d32da833ea0a0df9683c46c1a26d3cc4e9fa73de0445080d1769ea1c17cf543425a03d54a887b84aed9f8d902913ff";
     };
     "mods/where-is-it.jar" = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/FCTyEqkn/versions/K6qcgGyq/whereisit-2.6.4%2B1.21.2.jar";
       sha512 = "56babbe7d36fb5b32e6b961fcfb76d0abf7f3918a75c07797823df75bb284bc79654284e4cda09d1146d9dc69b6e531c26682d69413779be0f040201185d2022";
     };
     "mods/xaeros-minimap.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/1bokaNcj/versions/pGS4L9Gk/Xaeros_Minimap_24.7.1_Fabric_1.21.4.jar";
-      sha512 = "45862a73c95fc0cd37115274129ab0bb2267d5a22bd4d6a63f8f61d474f075ea58f5bd4e9b80fc6bc030bf155805557219508fd43f5c258b94ce93fe7dec6a68";
+      url = "https://cdn.modrinth.com/data/1bokaNcj/versions/TFfNbUts/Xaeros_Minimap_25.2.10_Fabric_1.21.4.jar";
+      sha512 = "38a7873ca5cf0f2c5e3885f00ab5c814a165e939451ff7d39522adbfb370101a46b189662cea5cb305e992ddf63482399145c5cbd09e175c82ee49d1895a8a19";
     };
     "mods/xaeros-world-map.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/NcUtCpym/versions/BnFw7PFl/XaerosWorldMap_1.39.2_Fabric_1.21.4.jar";
-      sha512 = "36c7b9036aa3a2899e4758cc935370ba1e7bf41f8ae0eb25d301ae2f18591bb0e4abfa748c968abd3edd471857ae7dc211217ea07d50ecbd8300df25678008a5";
+      url = "https://cdn.modrinth.com/data/NcUtCpym/versions/xF512qxI/XaerosWorldMap_1.39.12_Fabric_1.21.4.jar";
+      sha512 = "e6e0a904f6fb1a8384b17fa980492e465317b55c0fe01eb0ea9f0ffd80a7b224e8dbf4e8626a477ab6b8261e614515142379ee756ff110bc51c61dbb5e68d2b4";
     };
     "mods/yacl.jar" = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/1eAoo2KR/versions/VtWuZoXP/YetAnotherConfigLib-3.6.2%2B1.21.4-fabric.jar";
-      sha512 = "50f3996aa4382692bbe569ee26506dacd0f4775d86964b5a5c47451e9514d5bf755b5fc1b75e629fc6391fe33d98598977e15c8880ed0f5785c5511ac3360933";
+      url = "https://cdn.modrinth.com/data/1eAoo2KR/versions/axFpNOZX/yet_another_config_lib_v3-3.7.1%2B1.21.4-fabric.jar";
+      sha512 = "c816b11402da81e89e50ce77bb7a0dac1b9a8ec686675eec21297da9a0489da3d018bd47a7c52cb80415cff19c291cffeb05ca39836275b00bc189bdb81046d1";
     };
   };
 }

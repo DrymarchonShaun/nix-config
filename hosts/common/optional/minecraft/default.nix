@@ -56,7 +56,7 @@
       in
       {
         "main" = importServer "main";
-        "bedrock" = importServer "bedrock";
+        # "bedrock" = importServer "bedrock";
       };
   };
 }
