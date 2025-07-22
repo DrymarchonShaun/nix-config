@@ -95,10 +95,6 @@ let
 
     #  Windows and Groups
 
-    # Close the focused/active window
-    "SUPER,q,hy3:killactive"
-    "SUPER,q,killactive"
-
     # Fullscreen
     "ALT,return,fullscreenstate,2 -1" # `internal client`, where `internal` and `client` can be -1 - current, 0 - none, 1 - maximize, 2 - fullscreen, 3 - maximize and fullscreen
     "SUPER,space,togglefloating"
@@ -167,6 +163,10 @@ in
       bind = lib.flatten [
         bind
         [
+          # Close the focused/active window
+          "SUPER,q,hy3:killactive"
+          "SUPER,q,killactive"
+
           # Quick Launch
           "SUPER,d,exec,${rofi}  -modi \"run,drun\" -show drun"
           "SUPER_SHIFT,space,exec,rofi  -modi \"run,drun\" -show run"
