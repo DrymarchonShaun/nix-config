@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    # Corais
     (profileAutoload {
       type = "output";
       device = "alsa_output.usb-GuangZhou_FiiO_Electronics_Co._Ltd_FiiO_USB_DAC-E10-00.analog-stereo";
@@ -30,6 +31,22 @@ in
       name = "Blue Microphones Analog Stereo";
       profile = "analog-input-mic";
       preset = "generic";
+    })
+
+    # Natrix
+    (profileAutoload {
+      type = "output";
+      device = "alsa_output.pci-0000_00_1f.3.analog-stereo";
+      name = "Built-in Audio Analog Stereo";
+      profile = "analog-output-headphones";
+      preset = "dt990";
+    })
+    (profileAutoload {
+      type = "output";
+      device = "alsa_output.pci-0000_00_1f.3.analog-stereo";
+      name = "Built-in Audio Analog Stereo";
+      profile = "analog-output-speaker";
+      preset = "none";
     })
   ];
   services.easyeffects = {
