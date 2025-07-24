@@ -41,7 +41,7 @@
         },
         "band2": {
           "frequency": 160.0,
-          "gain": -2.6,
+          "gain": -7.6,
           "mode": "APO (DR)",
           "mute": false,
           "q": 0.8,
@@ -169,7 +169,7 @@
         },
         "band2": {
           "frequency": 160.0,
-          "gain": -2.6,
+          "gain": -7.6,
           "mode": "APO (DR)",
           "mute": false,
           "q": 0.8,
