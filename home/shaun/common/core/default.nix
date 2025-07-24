@@ -41,15 +41,17 @@ in
     flavor = "macchiato";
   };
 
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    enableFishIntegration = true;
-    pinentry = {
-      package = pkgs.pinentry-all;
-      program = "pinentry-gnome3";
-    };
-  };
+  services.ssh-agent.enable = true;
+
+  # services.gpg-agent = {
+  #   enable = true;
+  #   enableSshSupport = true;
+  #   enableFishIntegration = true;
+  #   pinentry = {
+  #     package = pkgs.pinentry-all;
+  #     program = "pinentry-gnome3";
+  #   };
+  # };
 
   home = {
     username = lib.mkDefault config.hostSpec.username;

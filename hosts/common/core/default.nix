@@ -23,7 +23,7 @@ in
       "modules/hosts/${platform}"
       "hosts/common/core/${platform}.nix"
       "hosts/common/core/sops.nix" # Core because it's used for backups, mail
-      # "hosts/common/core/ssh.nix"
+      "hosts/common/core/ssh.nix"
       #"hosts/common/core/services" #not used yet
       "hosts/common/core/services/remote-builders.nix" # not used yet
       "hosts/common/users/primary"

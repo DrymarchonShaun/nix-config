@@ -30,22 +30,6 @@
 
   boot.tmp.cleanOnBoot = true;
 
-  # less delay on failed login
-  # security.pam.services.login = {
-  #   nodelay = true;
-  #   failDelay = {
-  #     enable = true;
-  #     delay = 500000;
-  #   };
-  # };
-  # security.pam.services.sudo = {
-  #   nodelay = true;
-  #   failDelay = {
-  #     enable = true;
-  #     delay = 500000;
-  #   };
-  # };
-
   documentation.man.generateCaches = true;
 
   services.gnome.gnome-keyring.enable = true;

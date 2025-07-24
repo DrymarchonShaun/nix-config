@@ -16,7 +16,11 @@ in
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
     # openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
-    openssh.authorizedKeys.keyFiles = [ ./keys/id_odin.pub ];
+    openssh.authorizedKeys.keyFiles = [
+      ./keys/id_odin.pub
+      ./keys/id_emoryi.pub
+      ./keys/id_dione.pub
+    ];
   };
 
   # Create ssh sockets directory for controlpaths when homemanager not loaded (i.e. isMinimal)

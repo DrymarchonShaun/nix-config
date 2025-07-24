@@ -11,7 +11,8 @@ let
   onlykeyHostsWithDomain = [
     "natrix"
     "corais"
-    ];
+    "getula"
+  ];
 
   # Add domain to each host name
   genDomains = lib.map (h: "${h}.${config.hostSpec.domain}");
@@ -34,8 +35,10 @@ let
   );
 
   identityFiles = [
-    "id_onlykey" # This is an auto symlink to whatever onlykey is plugged in. See modules/common/onlykey
-    "id_odin" # fallback to id_manu if onlykeys are not present
+    # "id_onlykey" # This is an auto symlink to whatever onlykey is plugged in. See modules/common/onlykey
+    "id_emoryi"
+    "id_dione"
+    # "id_odin" # fallback to id_manu if onlykeys are not present
   ];
 
   # Lots of hosts have the same default config, so don't duplicate
