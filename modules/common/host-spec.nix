@@ -6,144 +6,117 @@
   ...
 }:
 {
-  options.hostSpec = {
-    # Data variables that don't dictate configuration settings
-    username = lib.mkOption {
-      type = lib.types.str;
-      description = "The username of the host";
-    };
-    hostName = lib.mkOption {
-      type = lib.types.str;
-      description = "The hostname of the host";
-    };
-    email = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      description = "The email of the user";
-    };
-    usernames = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      description = "An attribute set of usernames";
-    };
-    # FIXME(hostSpec): Set an assert to make sure this is set if isWork is true
-    work = lib.mkOption {
-      default = { };
-      type = lib.types.attrsOf lib.types.anything;
-      description = "An attribute set of work-related information if isWork is true";
-    };
-    networking = lib.mkOption {
-      default = { };
-      type = lib.types.attrsOf lib.types.anything;
-      description = "An attribute set of networking information";
-    };
-    wifi = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate if a host has wifi";
-    };
-    domain = lib.mkOption {
-      type = lib.types.str;
-      description = "The domain of the host";
-    };
-    userFullName = lib.mkOption {
-      type = lib.types.str;
-      description = "The full name of the user";
-    };
-    handle = lib.mkOption {
-      type = lib.types.str;
-      description = "The handle of the user (eg: github user)";
-    };
-    home = lib.mkOption {
-      type = lib.types.str;
-      description = "The home directory of the user";
-      default =
-        let
-          user = config.hostSpec.username;
-        in
-        if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
-    };
-    longitude = lib.mkOption {
-      default = null;
-      type = lib.types.str;
-      description = "longitude";
-    };
-    latitude = lib.mkOption {
-      default = null;
-      type = lib.types.str;
-      description = "latitude";
-    };
-    # FIXME: This should probably just switch to an impermenance option?
-    persistFolder = lib.mkOption {
-      type = lib.types.str;
-      description = "The folder to persist data if impermenance is enabled";
-      default = "";
-    };
+  options.hostSpec = lib.mkOption {
+    type = lib.types.submodule {
+      freeformType = with lib.types; attrsOf str;
+      options = {
+        # Data variables that don't dictate configuration settings
+        username = lib.mkOption {
+          type = lib.types.str;
+          description = "The username of the host";
+        };
+        hostName = lib.mkOption {
+          type = lib.types.str;
+          description = "The hostname of the host";
+        };
+        email = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          description = "The email of the user";
+        };
+        usernames = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          description = "An attribute set of usernames";
+        };
+        work = lib.mkOption {
+          default = { };
+          type = lib.types.attrsOf lib.types.anything;
+          description = "An attribute set of work-related information if isWork is true";
+        };
+        networking = lib.mkOption {
+          default = { };
+          type = lib.types.attrsOf lib.types.anything;
+          description = "An attribute set of networking information";
+        };
+        wifi = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate if a host has wifi";
+        };
+        domain = lib.mkOption {
+          type = lib.types.str;
+          description = "The domain of the host";
+        };
+        userFullName = lib.mkOption {
+          type = lib.types.str;
+          description = "The full name of the user";
+        };
+        handle = lib.mkOption {
+          type = lib.types.str;
+          description = "The handle of the user (eg: github user)";
+        };
+        home = lib.mkOption {
+          type = lib.types.str;
+          description = "The home directory of the user";
+          default =
+            let
+              user = config.hostSpec.username;
+            in
+            if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
+        };
 
-    # Configuration Settings
-    isMinimal = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a minimal host";
-    };
-    isProduction = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Used to indicate a production host";
-    };
-    isServer = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a server host";
-    };
-    isWork = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that uses work resources";
-    };
-    # Sometimes we can't use pkgs.stdenv.isLinux due to infinite recursion
-    isDarwin = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that is darwin";
-    };
-    useYubikey = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate if the host uses a yubikey";
-    };
-    voiceCoding = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that uses voice coding";
-    };
-    isAutoStyled = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that wants auto styling like stylix";
-    };
-    useNeovimTerminal = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that uses neovim for terminals";
-    };
-    useWindowManager = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Used to indicate a host that uses a window manager";
-    };
-    useAtticCache = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Used to indicate a host that uses LAN atticd for caching";
-    };
-    hdr = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Used to indicate a host that uses HDR";
-    };
-    scaling = lib.mkOption {
-      type = lib.types.str;
-      default = "1";
-      description = "Used to indicate what scaling to use. Floating point number";
+        longitude = lib.mkOption {
+          default = null;
+          type = lib.types.str;
+          description = "longitude";
+        };
+        latitude = lib.mkOption {
+          default = null;
+          type = lib.types.str;
+          description = "latitude";
+        };
+        persistFolder = lib.mkOption {
+          type = lib.types.str;
+          description = "The folder to persist data if impermenance is enabled";
+          default = "";
+        };
+        # Configuration Settings
+        isMinimal = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a minimal host";
+        };
+        isServer = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a server host";
+        };
+        isWork = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a host that uses work resources";
+        };
+        # Sometimes we can't use pkgs.stdenv.isLinux due to infinite recursion
+        isDarwin = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a host that is darwin";
+        };
+        useYubikey = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate if the host uses a yubikey";
+        };
+        hdr = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a host that uses HDR";
+        };
+        scaling = lib.mkOption {
+          type = lib.types.str;
+          default = "1";
+          description = "Used to indicate what scaling to use. Floating point number";
+        };
+      };
     };
   };
 
