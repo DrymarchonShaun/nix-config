@@ -106,6 +106,7 @@
         fastRedstoneDust true
         shulkerSpawningInEndCities false
         commandPlayer true
+        commandLog true
         commandScript false
         xpNoCooldown true
         missingTools true
@@ -181,7 +182,7 @@
         allowNetherCaveModeOnServer:true
         allowRadarOnServer:true
         registerStatusEffects:false
-        everyoneTracksEveryone:false
+        everyoneTracksEveryone:true
       '';
     };
     "config/xaeroworldmap-common.txt" = pkgs.writeTextFile {
@@ -190,7 +191,7 @@
         allowCaveModeOnServer:true
         allowNetherCaveModeOnServer:true
         registerStatusEffects:false
-        everyoneTracksEveryone:false
+        everyoneTracksEveryone:true
       '';
     };
     "config/voicechat/voicechat-server.properties" = pkgs.writeText "voicechat-server.properties" ''
