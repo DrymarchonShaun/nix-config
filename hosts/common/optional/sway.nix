@@ -20,7 +20,6 @@
   };
 
   services.xserver = {
-    # layout = "us,real-prog-dvorak";
     xkb.extraLayouts.real-prog-dvorak = {
       description = "Real Programmer's Dvorak";
       languages = [ "eng" ];

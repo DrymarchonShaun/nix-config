@@ -134,7 +134,9 @@ in
         movefocus_cycles_fullscreen = false; # If enabled, when on a fullscreen window, movefocus will cycle fullscreen, if not, it will move the focus in a direction.
       };
       input = {
-        # kb_layout = "us,real-prog-dvorak";
+        kb_layout = "us,real-prog-dvorak";
+        kb_options = "grp:sclk_toggle";
+
         numlock_by_default = true;
         accel_profile = "flat";
         #sensitivity = -0.2;
