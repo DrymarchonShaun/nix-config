@@ -12,7 +12,7 @@
   home.packages = [
     pkgs.ckan
     pkgs.lug-helper
-    pkgs.gamma-launcher
+    pkgs.dev.gamma-launcher
     pkgs.heroic
     (pkgs.prismlauncher.override {
       jdks = builtins.attrValues {
