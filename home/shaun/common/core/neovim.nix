@@ -27,6 +27,17 @@ in
           };
         };
       };
+      lsp.servers.sqf_analyzer = {
+        enable = true;
+        package = pkgs.sqf-analyzer-lsp;
+        settings = {
+          cmd = [ "sqf-analyzer-server" ];
+          filetypes = [
+            "sqf"
+            "ext"
+          ];
+        };
+      };
     })
   ];
 }
