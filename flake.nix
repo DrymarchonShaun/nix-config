@@ -192,7 +192,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Theming
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/release-25.05";
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
     catppuccin.url = "github:catppuccin/nix";
     nix-index-database = {

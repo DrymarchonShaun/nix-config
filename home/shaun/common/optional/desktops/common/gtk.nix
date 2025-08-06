@@ -31,7 +31,6 @@ in
 {
   catppuccin = {
     gtk = {
-      enable = false;
       icon.enable = true;
     };
     cursors.enable = true;
