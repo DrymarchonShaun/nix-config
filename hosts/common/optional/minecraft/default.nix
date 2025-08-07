@@ -30,7 +30,10 @@
       (config.hostSpec.networking.ports.minecraft + 10)
     ];
     # required for geyser
-    allowedUDPPorts = [ 19132 ];
+    allowedUDPPorts = [
+      (config.hostSpec.networking.ports.minecraft + 1)
+      19132
+    ];
   };
 
   services.minecraft-servers = {
