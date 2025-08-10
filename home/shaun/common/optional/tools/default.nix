@@ -30,7 +30,7 @@
 
     # Wine / Windows
     winetricks
-    wineWowPackages.stagingFull
+    wineWowPackages.stable
   ];
 
   programs.vscode = {
