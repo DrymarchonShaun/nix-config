@@ -49,8 +49,6 @@ let
     # ...
     # });
 
-    hyprlandPlugins.hy3 = master.hyprlandPlugins.hy3;
-
     vencord = master.vencord;
 
     gamescope = unstable.gamescope;
