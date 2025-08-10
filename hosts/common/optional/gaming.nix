@@ -62,7 +62,8 @@ in
           "1076160" = defaultOptions {
             gamescope = true;
           };
-          "1144200" = defaultOptions { };
+          # Ready or Not
+          "1144200" = defaultOptions { extraEnvVars = [ "PROTON_SET_GAME_DRIVE=1" ]; };
         };
       };
     };
