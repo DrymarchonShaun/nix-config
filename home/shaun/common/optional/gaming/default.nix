@@ -10,6 +10,9 @@
   ];
 
   home.packages = [
+    (pkgs.bottles.override {
+      removeWarningPopup = true;
+    })
     pkgs.ckan
     pkgs.lug-helper
     pkgs.dev.gamma-launcher
