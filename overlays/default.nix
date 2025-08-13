@@ -53,15 +53,6 @@ let
 
     gamescope = unstable.gamescope;
 
-    # TODO: remove once kernel 6.15.5 is in stable; ref: https://github.com/NixOS/nixpkgs/issues/421442
-    ghostty = prev.ghostty.overrideAttrs (_: {
-      preBuild = ''
-        shopt -s globstar
-        sed -i 's/^const xev = @import("xev");$/const xev = @import("xev").Epoll;/' **/*.zig
-        shopt -u globstar
-      '';
-    });
-
     steam = prev.steam.override {
       privateTmp = false;
       extraPkgs =
