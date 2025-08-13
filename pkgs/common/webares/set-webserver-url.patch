@@ -1,0 +1,20 @@
+diff --git a/src/main/java/com/webares/webares/DATA_Web.java b/src/main/java/com/webares/webares/DATA_Web.java
+index 23c3ae2..663e891 100644
+--- a/src/main/java/com/webares/webares/DATA_Web.java
++++ b/src/main/java/com/webares/webares/DATA_Web.java
+@@ -7,7 +7,7 @@ import java.util.Map;
+
+ public class DATA_Web {
+     // https://nuclearesgame.blogspot.com/2023/11/webserver.html
+-    public static final String BASE_URL = "http://192.168.1.12:8785/?Variable="; // put your adress
++    public static final String BASE_URL = "http://@host@:@port@/?Variable="; // put your adress
+     public static final ArrayList<String> VARIABLES = new ArrayList<>(Arrays.asList(
+             "TIME",
+             "RODS_POS_ACTUAL",
+@@ -153,4 +153,4 @@ public class DATA_Web {
+             Map.entry("GENERATOR_2_BREAKER","FALSE"),
+             Map.entry("POWER_DEMAND_MW","0")
+     ));
+-}
+\ No newline at end of file
++}
