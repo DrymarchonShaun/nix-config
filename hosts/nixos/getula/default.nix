@@ -56,7 +56,6 @@ in
       # ========== Optional Configs ==========
       #
       "hosts/common/core/services/auto-upgrade.nix" # auto upgrade as this is a server
-      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/plymouth.nix" # fancy boot screen
       "hosts/common/optional/services/avahi.nix" # host discovery

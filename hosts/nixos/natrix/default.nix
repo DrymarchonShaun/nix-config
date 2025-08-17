@@ -60,7 +60,6 @@ in
       "hosts/common/optional/fonts.nix" # vm tools
       "hosts/common/optional/gaming.nix" # steam, gamescope, gamemode, and related hardware
       "hosts/common/optional/hyprland.nix" # window manager
-      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/obsidian.nix" # notes
       "hosts/common/optional/onlykey.nix" # onlykey hardware security key

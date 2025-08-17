@@ -1,27 +1,23 @@
 {
   inputs,
-  configVars,
   pkgs,
+  config,
   ...
 }:
 {
   imports = [
     inputs.nixvirt.nixosModules.default
-    # ./windows.nix
     ./networks.nix
   ];
-  users.users.${configVars.username}.extraGroups = [
+  users.users.${config.hostSpec.username}.extraGroups = [
     "libvirt"
+    "libvirtd"
     "libvirt-qemu"
   ];
   programs.virt-manager.enable = true;
   virtualisation.libvirt.enable = true;
   virtualisation.libvirtd = {
     enable = true;
-    package = pkgs.libvirt;
-    extraConfig = ''
-      user="${configVars.username}"
-    '';
 
     # Don't start any VMs automatically on boot.
     onBoot = "ignore";
@@ -30,10 +26,13 @@
 
     qemu = {
       package = pkgs.qemu_kvm;
+      runAsRoot = true;
       swtpm.enable = true;
       ovmf = {
         enable = true;
-        packages = [ pkgs.OVMFFull.fd ];
+        packages = [
+          pkgs.OVMFFull.fd
+        ];
       };
     };
   };
