@@ -65,7 +65,6 @@ in
       "hosts/common/optional/fonts.nix" # vm tools
       "hosts/common/optional/gaming.nix" # steam, gamescope, gamemode, and related hardware
       "hosts/common/optional/hyprland.nix" # window manager
-      "hosts/common/optional/libvirt.nix" # vm tools
       "hosts/common/optional/net-analysis.nix" # network analysis tools
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/obsidian.nix" # notes
@@ -88,6 +87,8 @@ in
       "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/virtualization/containers/openbooks.nix"
       "hosts/common/optional/virtualization/flatpak" # container subsystem, primarily used for sober (roblox)
+      "hosts/common/optional/virtualization/libvirt/default.nix" # container subsystem, primarily used for sober (roblox)
+      "hosts/common/optional/virtualization/libvirt/windows.nix" # container subsystem, primarily used for sober (roblox)
       "hosts/common/optional/vlc.nix" # media player
     ])
     #
