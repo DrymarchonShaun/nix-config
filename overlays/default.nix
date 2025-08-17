@@ -93,19 +93,6 @@ let
         sed -i 's/gcode\;//' $out/share/applications/OrcaSlicer.desktop
       '';
     };
-
-    qemu_kvm = prev.qemu_kvm.overrideAttrs (attrs: {
-      pipewireSupport = true;
-      #patches = (attrs.patches or [ ]) ++ [ ./overlays/qemu-anti-detection.patch ];
-    });
-
-    OVMFFull = prev.OVMFFull.override {
-      secureBoot = true;
-      tpmSupport = true;
-      # edk2 = pkgs.edk2.overrideAttrs (attrs: {
-      #  patches = (attrs.patches or [ ]) ++ [ ./overlays/edk-to-am.patch ];
-      # });
-    };
   };
 
   stable-packages = final: _prev: {
