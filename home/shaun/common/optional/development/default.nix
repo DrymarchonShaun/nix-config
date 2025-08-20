@@ -10,7 +10,7 @@ let
   # publicGitEmail = config.hostSpec.email.gitHub;
   sshFolder = "${config.home.homeDirectory}/.ssh";
   publicKey =
-    if config.hostSpec.useYubikey then "${sshFolder}/id_onlykey.pub" else "${sshFolder}/id_manu.pub";
+    if config.hostSpec.useYubikey then "${sshFolder}/id_onlykey.pub" else "${sshFolder}/id_mimir.pub";
   privateGitConfig = "${config.home.homeDirectory}/.config/git/gitconfig.private";
 in
 {

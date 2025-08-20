@@ -31,6 +31,7 @@ in
     inputs.catppuccin.homeModules.catppuccin
 
     inputs.nix-index-database.hmModules.nix-index
+
   ];
 
   inherit hostSpec;
@@ -41,8 +42,6 @@ in
     flavor = "macchiato";
   };
 
-  services.ssh-agent.enable = true;
-
   # services.gpg-agent = {
   #   enable = true;
   #   enableSshSupport = true;
@@ -52,6 +51,7 @@ in
   #     program = "pinentry-gnome3";
   #   };
   # };
+  services.ssh-agent.enable = !config.hostSpec.isServer;
 
   home = {
     username = lib.mkDefault config.hostSpec.username;
