@@ -57,34 +57,33 @@
       # No sway bar
       bars = [ ];
 
-      output =
-        {
-          "*" = {
-            bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
-          };
-        }
-        // (builtins.listToAttrs (
-          map (
-            m:
-            let
-              scaleAdjustedx = m.x / m.scale;
-              scaleAdjustedy = m.y / m.scale;
-            in
-            {
-              name = m.name;
-              value = (
-                if m.enabled then
-                  {
-                    mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
-                    scale = toString m.scale;
-                    pos = "${toString scaleAdjustedx} ${toString scaleAdjustedy}";
-                  }
-                else
-                  "disable"
-              );
-            }
-          ) config.monitors
-        ));
+      output = {
+        "*" = {
+          bg = "${pkgs.wallpapers}/share/backgrounds/nix-black-catppuccin.png fill";
+        };
+      }
+      // (builtins.listToAttrs (
+        map (
+          m:
+          let
+            scaleAdjustedx = m.x / m.scale;
+            scaleAdjustedy = m.y / m.scale;
+          in
+          {
+            name = m.name;
+            value = (
+              if m.enabled then
+                {
+                  mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
+                  scale = toString m.scale;
+                  pos = "${toString scaleAdjustedx} ${toString scaleAdjustedy}";
+                }
+              else
+                "disable"
+            );
+          }
+        ) config.monitors
+      ));
 
       workspaceOutputAssign = lib.flatten (
         map (

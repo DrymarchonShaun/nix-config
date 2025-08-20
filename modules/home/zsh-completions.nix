@@ -76,11 +76,12 @@ in
           package:
           pkgs.runCommand "${getName package}-zsh-completions"
             {
-              srcs =
-                [ package ]
-                ++ filter (p: p != null) (
-                  builtins.map (outName: package.${outName} or null) config.home.extraOutputsToInstall
-                );
+              srcs = [
+                package
+              ]
+              ++ filter (p: p != null) (
+                builtins.map (outName: package.${outName} or null) config.home.extraOutputsToInstall
+              );
               nativeBuildInputs = [
                 pkgs.python3
                 pkgs.zsh-manpage-completion-generator

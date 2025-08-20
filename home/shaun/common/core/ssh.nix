@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   ...
 }:
@@ -97,13 +96,15 @@ in
         identitiesOnly = true;
         identityFile = lib.lists.forEach identityFiles (file: "${config.home.homeDirectory}/.ssh/${file}");
       };
-    } // vanillaHostsConfig;
+    }
+    // vanillaHostsConfig;
 
   };
   home.file = {
     ".ssh/config.d/.keep".text = "# Managed by Home Manager";
     ".ssh/sockets/.keep".text = "# Managed by Home Manager";
-  } // onlykeyPublicKeyEntries;
+  }
+  // onlykeyPublicKeyEntries;
 }
 
 # {

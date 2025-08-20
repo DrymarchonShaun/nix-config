@@ -57,7 +57,8 @@
       "3rdparty".Extensions = {
         "uBlock0@raymondhill.net" = {
           permissions = [ "internal:privateBrowsingAllowed" ];
-        } // import ./ublock-origin.nix;
+        }
+        // import ./ublock-origin.nix;
         "addon@darkreader.org" = {
           permissions = [ "internal:privateBrowsingAllowed" ];
         };
