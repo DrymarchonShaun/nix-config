@@ -7,13 +7,13 @@
 
 clangStdenv.mkDerivation (finalAttrs: {
   pname = "FAE_Linux";
-  version = "v1.3";
+  version = "1.3.3";
 
   src = fetchFromGitHub {
     owner = "UnlegitSenpaii";
     repo = finalAttrs.pname;
-    rev = finalAttrs.version;
-    hash = "sha256-lm/s9rc4/2TIT2mzIPwdFoPB9GZm4qluK2yVoL7KwnE=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-NfK2XkgEIMpIIxlFftH/0dFQ7e8+d1gLYb1d1NeMTP8=";
   };
 
   nativeBuildInputs = [ cmake ];
