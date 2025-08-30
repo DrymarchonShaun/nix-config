@@ -586,18 +586,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1755368946,
-        "narHash": "sha256-VAGzrUm9pLl6tUXdKISvZZWJzTvhlwCaY7sR5uAUR6I=",
-        "ref": "refs/heads/main",
-        "rev": "92574f4649ed6e4519424bcec81f24b6082f0519",
-        "revCount": 2037,
+        "lastModified": 1756524547,
+        "narHash": "sha256-PeWTrzwgA9eL8CzrkRnDU239nT2fMzg/Kq8pftb7t3U=",
+        "ref": "nix-add-git-dep",
+        "rev": "0dcc8b09c6c3faffad574300eb34c1f90128d219",
+        "revCount": 2058,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/SteamClientHomebrew/Millennium"
+        "url": "https://github.com/DrymarchonShaun/Millennium"
       },
       "original": {
+        "ref": "nix-add-git-dep",
         "type": "git",
-        "url": "https://github.com/SteamClientHomebrew/Millennium"
+        "url": "https://github.com/DrymarchonShaun/Millennium"
       }
     },
     "mygui": {
