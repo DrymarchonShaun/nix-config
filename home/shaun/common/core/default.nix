@@ -30,7 +30,7 @@ in
     ./zoxide.nix
     inputs.catppuccin.homeModules.catppuccin
 
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
 
   ];
 
