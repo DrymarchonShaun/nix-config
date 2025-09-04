@@ -94,6 +94,8 @@ in
     AllowSuspendThenHibernate=no
   '';
 
+  services.fail2ban.ignoreIP = [ "10.0.0.0/24" ];
+
   #  services.gnome.gnome-keyring.enable = true;
 
   networking = {
