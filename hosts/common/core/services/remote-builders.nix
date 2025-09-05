@@ -7,6 +7,7 @@
   ...
 }:
 let
+  inherit (inputs) self;
   sopsFolder = (builtins.toString inputs.nix-secrets) + "/sops";
 
   hosts = [
@@ -50,11 +51,24 @@ in
       ''
         Match User nix-ssh
           IdentitiesOnly yes
-          IdentityFile ${config.sops.secrets."keys/ssh/dvergar".path}
           UpdateHostkeys yes
           StrictHostKeyChecking=accept-new
           ConnectTimeout=1
           ConnectionAttempts=1
+      ''
+      # use root's key for root access
+      ''
+        Match User nix-ssh exec "sh -c 'test $(id -u) -eq 0'"
+          IdentityFile ${config.sops.secrets."keys/ssh/dvergar".path}
+      ''
+      # use primary user's keys for non-root access
+      ''
+        Match User nix-ssh exec "sh -c 'test $(id -u) -eq 1000'"
+           ${lib.concatStringsSep "\n" (
+             map (file: "IdentityFile ${config.hostSpec.home}/.ssh/${file}") (
+               builtins.attrNames (builtins.readDir (lib.custom.relativeToRoot "hosts/common/users/primary/keys"))
+             )
+           )}
       ''
     ]
   );
@@ -63,10 +77,13 @@ in
     distributedBuilds = true;
     sshServe = {
       enable = true;
-      protocol = "ssh";
+      protocol = "ssh-ng";
       write = true;
-      keys = [
+      keys = lib.flatten [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIGqPA1toSNUi67SSGtgnvxe39AwGuKI5kdOlFm6Me2O id_dvergar"
+        (map (key: builtins.readFile (self + "/hosts/common/users/primary/keys/${key}")) (
+          builtins.attrNames (builtins.readDir (self + /hosts/common/users/primary/keys))
+        ))
       ];
     };
 
@@ -97,7 +114,7 @@ in
           "x86_64-linux"
           "aarch64-linux"
         ];
-        protocol = "ssh";
+        protocol = "ssh-ng";
         maxJobs = 8;
         speedFactor = 0;
         supportedFeatures = [
