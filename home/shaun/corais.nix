@@ -18,7 +18,6 @@
     common/optional/comms
     common/optional/gaming
     common/optional/gaming/arma.nix
-    # common/optional/gaming/morrowind.nix
     common/optional/media
     common/optional/tools
 

@@ -7,13 +7,13 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "rofi-randr";
-  version = "0-unstable-07-07-2024";
+  version = "0-unstable-09-08-2025";
 
   src = fetchFromGitHub {
     owner = "Rintse";
     repo = "rofi-randr";
-    rev = "f7d1290833ff93bda1ff9ecfd05a67f00589850e";
-    hash = "sha256-KqHbS5hneLgx37A493fcZbxhlkrxd6hdwlDp31bEwak=";
+    rev = "ac92836b843b45c8897fffd4fcd1140959b1775d";
+    hash = "sha256-Aa905bkX6ygc35NoTY7yZPJXEmY1gufaW3JOdnGLpz8=";
   };
 
   buildInputs = [

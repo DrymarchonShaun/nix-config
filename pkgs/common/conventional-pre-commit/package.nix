@@ -1,11 +1,11 @@
 { python3Packages, fetchPypi, ... }:
 python3Packages.buildPythonApplication rec {
   pname = "conventional_pre_commit";
-  version = "3.4.0";
+  version = "4.2.0";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-byr6yIzr9Qdz4O8QZ7yrRpZuUS3+wRBclD1bkpvjLoY=";
+    hash = "sha256-a1ooZzOMWKHRTTAN5otWwXt8hAO7EiFV84Y5pCPSH/E=";
   };
 
   doCheck = false;

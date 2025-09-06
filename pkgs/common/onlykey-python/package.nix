@@ -4,7 +4,7 @@
   onlykey-cli,
 }:
 
-python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonPackage {
   pname = "onlykey-python";
   version = onlykey-cli.version;
 
@@ -23,6 +23,6 @@ python3Packages.buildPythonPackage rec {
     mainProgram = "onlykey-python";
     homepage = "https://github.com/trustcrypto/python-onlykey";
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [ DrymarchonShaun ];
   };
 }
