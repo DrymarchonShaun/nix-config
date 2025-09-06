@@ -211,7 +211,6 @@
       # url = "git+https://github.com/SteamClientHomebrew/Millennium";
       # https://github.com/SteamClientHomebrew/Millennium/pull/487
       url = "git+https://github.com/DrymarchonShaun/Millennium?ref=nix-add-git-dep";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # OpenMW modding
     openmw-nix = {
