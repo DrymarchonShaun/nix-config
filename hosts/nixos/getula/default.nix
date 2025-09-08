@@ -62,7 +62,6 @@ in
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
       "hosts/common/optional/services/polkit.nix" # allow remote SSH access
       "hosts/common/optional/services/syncthing.nix" # syncthing
-      "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/virtualization/containers/openbooks.nix"
 
       #

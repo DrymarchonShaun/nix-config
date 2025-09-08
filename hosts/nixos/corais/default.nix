@@ -83,7 +83,6 @@ in
       "hosts/common/optional/services/syncthing.nix" # syncthing
       "hosts/common/optional/services/ydotool.nix" # autoclicker / input automation
       "hosts/common/optional/thunar.nix" # file manager
-      "hosts/common/optional/unbound.nix" # dns server
       "hosts/common/optional/virtualization/containers/openbooks.nix"
       "hosts/common/optional/virtualization/flatpak" # container subsystem, primarily used for sober (roblox)
       "hosts/common/optional/virtualization/libvirt/default.nix" # container subsystem, primarily used for sober (roblox)
