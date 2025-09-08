@@ -59,7 +59,6 @@ in
       "hosts/common/optional/nvtop.nix" # GPU monitor (not available in home-manager)
       "hosts/common/optional/plymouth.nix" # fancy boot screen
       "hosts/common/optional/services/avahi.nix" # host discovery
-      "hosts/common/optional/services/duckdns.nix" # dynamic DNS
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
       "hosts/common/optional/services/polkit.nix" # allow remote SSH access
       "hosts/common/optional/services/syncthing.nix" # syncthing
