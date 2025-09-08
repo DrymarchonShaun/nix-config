@@ -75,6 +75,7 @@ in
       "hosts/common/optional/services/polkit.nix" # polkit agent
       "hosts/common/optional/services/printing.nix" # CUPS
       "hosts/common/optional/services/syncthing.nix" # syncthing
+      "hosts/common/optional/services/wireguard.nix" # vpn / network tunnel
       "hosts/common/optional/services/ydotool.nix" # autoclicker / input automation
       "hosts/common/optional/thunar.nix" # file manager
       "hosts/common/optional/unbound.nix" # dns server
