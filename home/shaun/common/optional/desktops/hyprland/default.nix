@@ -1,5 +1,6 @@
 {
   pkgs,
+  osConfig,
   config,
   lib,
   ...
@@ -109,7 +110,7 @@ in
             else
               "disable"
           }"
-        ) (config.monitors)
+        ) (osConfig.monitors)
       );
 
       workspace = lib.flatten (
@@ -123,7 +124,7 @@ in
               "${workspace}, monitor:${m.name}, defaultName:${key}, default:false, persistent:true"
             # FIXME(monitors): need logic to set primary as default monitor for workspaces that don't match above conditions but because we're limited to 'map' it seems to add more complexity than it's worth
           ) m.workspaces
-        ) config.monitors
+        ) osConfig.monitors
       );
 
       #

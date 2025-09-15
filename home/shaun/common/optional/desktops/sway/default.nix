@@ -1,5 +1,6 @@
 {
   pkgs,
+  osConfig,
   config,
   lib,
   ...
@@ -82,7 +83,7 @@
                 "disable"
             );
           }
-        ) config.monitors
+        ) osConfig.monitors
       ));
 
       workspaceOutputAssign = lib.flatten (
@@ -92,7 +93,7 @@
             output = m.name;
             workspace = "${workspace}:${key}";
           }) m.workspaces
-        ) config.monitors
+        ) osConfig.monitors
       );
 
       startup = [

@@ -1,11 +1,12 @@
 {
   lib,
   pkgs,
+  osConfig,
   config,
   ...
 }:
 let
-  workspaces = lib.mergeAttrsList (map (m: m.workspaces) config.monitors);
+  workspaces = lib.mergeAttrsList (map (m: m.workspaces) osConfig.monitors);
 
   # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
   directions = rec {

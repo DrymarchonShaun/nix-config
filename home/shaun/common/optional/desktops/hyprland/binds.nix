@@ -1,5 +1,6 @@
 #NOTE: Actions prepended with `hy3;` are specific to the hy3 hyprland plugin
 {
+  osConfig,
   config,
   lib,
   pkgs,
@@ -11,7 +12,7 @@
 */
 
 let
-  workspaces = lib.mergeAttrsList (map (m: m.workspaces) config.monitors);
+  workspaces = lib.mergeAttrsList (map (m: m.workspaces) osConfig.monitors);
 
   # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
   directions = rec {
