@@ -64,6 +64,20 @@ in
           };
           # Ready or Not
           "1144200" = defaultOptions { extraEnvVars = [ "PROTON_SET_GAME_DRIVE=1" ]; };
+
+          # Bioshock Remastered
+          "409710" = defaultOptions {
+            gamescope = true;
+            captureCursor = true;
+          };
+
+          # Out of Ore
+          "2009350" = defaultOptions {
+            preExtraPrefixCommand = [
+              "sed -i 's/FrameRateLimit=60.000000/FrameRateLimit=165.000000/' $STEAM_COMPAT_DATA_PATH/pfx/drive_c/users/steamuser/AppData/Local/OutOfOre/Saved/Config/WindowsNoEditor/GameUserSettings.ini;"
+            ];
+          };
+
         };
       };
     };
