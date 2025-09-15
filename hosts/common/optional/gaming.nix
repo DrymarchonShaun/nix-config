@@ -1,13 +1,10 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }:
 let
-  inherit (lib.custom.steam)
-    defaultOptions
-    ;
+
 in
 {
   # required for star citizen
@@ -40,11 +37,13 @@ in
         enable = true;
         options = {
           # Arma 3
-          "107410" = defaultOptions { };
+          "107410" = { };
           # Hell Let Loose
-          "686810" = defaultOptions { gamescope = true; };
+          "686810" = {
+            gamescope = true;
+          };
           # SCP 5K
-          "872670" = defaultOptions {
+          "872670" = {
             gamescope = true;
             captureCursor = true;
             extraGameOptions = [
@@ -52,27 +51,31 @@ in
               "-nostartupmovies"
             ];
           };
-          "949230" = defaultOptions {
+          "949230" = {
             gamescope = true;
             extraGameOptions = [ "-dx11" ];
           };
           # Hell Divers 2
-          "553850" = defaultOptions { extraEnvVars = [ "radv_force_pstate_peak_gfx11_dgpu=false" ]; };
+          "553850" = {
+            extraEnvVars = [ "radv_force_pstate_peak_gfx11_dgpu=false" ];
+          };
           # Command Modern Operations
-          "1076160" = defaultOptions {
+          "1076160" = {
             gamescope = true;
           };
           # Ready or Not
-          "1144200" = defaultOptions { extraEnvVars = [ "PROTON_SET_GAME_DRIVE=1" ]; };
+          "1144200" = {
+            extraEnvVars = [ "PROTON_SET_GAME_DRIVE=1" ];
+          };
 
           # Bioshock Remastered
-          "409710" = defaultOptions {
+          "409710" = {
             gamescope = true;
             captureCursor = true;
           };
 
           # Out of Ore
-          "2009350" = defaultOptions {
+          "2009350" = {
             preExtraPrefixCommand = [
               "sed -i 's/FrameRateLimit=60.000000/FrameRateLimit=165.000000/' $STEAM_COMPAT_DATA_PATH/pfx/drive_c/users/steamuser/AppData/Local/OutOfOre/Saved/Config/WindowsNoEditor/GameUserSettings.ini;"
             ];
