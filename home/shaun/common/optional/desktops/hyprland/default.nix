@@ -290,16 +290,16 @@ in
         "minsize 1 1, title:^()$,class:^([Ss]team)$"
         "monitor 0,   title:^()$,class:^([Ss]team)$"
 
-        "workspace 6 silent, title:^([Ss]team)$,class:^([Ss]team)$"
+        "workspace 5 silent, title:^([Ss]team)$,class:^([Ss]team)$"
 
         # catch all (for proton games?)
-        "workspace 5, class:^([Ss]team_app_.*)$"
+        "workspace 4, class:^([Ss]team_app_.*)$"
         # "monitor 0, class:^([Ss]team_app.*)$"
 
         # Stellaris
-        "workspace 5, class:^([Pp]aradox [Ll]auncher)$"
+        "workspace 4, class:^([Pp]aradox [Ll]auncher)$"
         # "monitor 0, class:^([Pp]aradox [Ll]auncher)$"
-        "workspace 5, title:^([Ss]tellaris)$"
+        "workspace 4, title:^([Ss]tellaris)$"
 
         # TeamSpeak 3
         "workspace 11, title:^(TeamSpeak 3)$,class:^([Ss]team_proton)$"
