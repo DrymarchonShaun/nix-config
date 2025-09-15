@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   config,
@@ -11,10 +10,6 @@ let
     ;
 in
 {
-  nixpkgs.overlays = [
-    inputs.millennium.overlays.default
-  ];
-
   # required for star citizen
   boot.kernel.sysctl = {
     "vm.max_map_count" = 16777216;
@@ -34,7 +29,7 @@ in
   programs = {
     steam = {
       enable = true;
-      package = pkgs.steam-millennium;
+      package = pkgs.steam;
       protontricks = {
         enable = true;
         package = pkgs.protontricks;

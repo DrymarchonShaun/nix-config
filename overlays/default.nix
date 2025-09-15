@@ -51,7 +51,7 @@ let
 
     vencord = master.vencord;
 
-    gamescope = unstable.gamescope;
+    # gamescope = unstable.gamescope;
 
     steam = prev.steam.override {
       privateTmp = false;
@@ -79,8 +79,18 @@ let
             gamemode
             mangohud
             gamescope
+            git
             ;
         });
+      extraProfile =
+        let
+          millennium = inputs.millennium.packages.${final.system}.millennium;
+        in
+        ''
+          export LD_LIBRARY_PATH="${millennium}/lib/millenium/''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          export LD_PRELOAD="${millennium}/lib/millennium/libmillennium_x86.so''${LD_PRELOAD:+:$LD_PRELOAD}"
+        ''
+        + (prev.steam.extraProfile or "");
     };
 
     orca-slicer-overridden = prev.stdenv.mkDerivation {
