@@ -117,6 +117,8 @@ in
     AllowSuspendThenHibernate=no
   '';
 
+  services.fail2ban.ignoreIP = [ "192.168.8.2/24" ];
+
   # set custom autologin options. see greetd.nix for details
   autoLogin.enable = lib.mkIf (config.hostSpec.isServer) true;
   autoLogin.username = config.hostSpec.username;
