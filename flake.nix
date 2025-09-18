@@ -207,11 +207,11 @@
     };
 
     # Steam Homebrew
-    millennium = {
-      # url = "git+https://github.com/SteamClientHomebrew/Millennium";
-      # https://github.com/SteamClientHomebrew/Millennium/pull/487
-      url = "git+https://github.com/DrymarchonShaun/Millennium?ref=nix-add-git-dep";
-    };
+    # millennium = {
+    #   # url = "git+https://github.com/SteamClientHomebrew/Millennium";
+    #   # https://github.com/SteamClientHomebrew/Millennium/pull/487
+    #   url = "git+https://github.com/DrymarchonShaun/Millennium?ref=dont-use-32-bit";
+    # };
     # OpenMW modding
     openmw-nix = {
       url = "git+https://codeberg.org/PopeRigby/openmw-nix.git";

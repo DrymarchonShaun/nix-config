@@ -84,7 +84,8 @@ let
         });
       extraProfile =
         let
-          millennium = inputs.millennium.packages.${final.system}.millennium;
+          # millennium = inputs.millennium.packages.${final.system}.millennium;
+          millennium = inputs.self.packages.${final.system}.millennium;
         in
         ''
           export LD_LIBRARY_PATH="${millennium}/lib/millenium/''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
