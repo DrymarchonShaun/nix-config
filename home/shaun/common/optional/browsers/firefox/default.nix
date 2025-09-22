@@ -4,6 +4,7 @@
   pkgs,
   ...
 }:
+
 {
   catppuccin.firefox.profiles = lib.mkForce { };
 
@@ -135,87 +136,76 @@
 
     profiles =
       let
-        profileDefault = {
-          settings = {
-            "signon.rememberSignons" = false; # Disable built-in password manager
-            "services.passwordSavingEnabled" = false;
-            "browser.aboutConfig.showWarning" = false;
-            "browser.download.dir" = "${config.xdg.userDirs.download}";
-            "browser.urlbar.suggest.quicksuggest.sponsored" = false;
-            "browser.tabs.hoverPreview.enabled" = true; # enable new preview tabs feature as of 129.0
-            "browser.newtabpage.activity-stream.showSponsored" = "lock-false";
-            "browser.newtabpage.activity-stream.system.showSponsored" = "lock-false";
-            "browser.newtabpage.activity-stream.showSponsoredTopSites" = "lock-false";
-            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-            "browser.newtabpage.activity-stream.feeds.topsites" = false;
-            "browser.newtabpage.activity-stream.feeds.snippets" = "lock-false";
-            "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-            "browser.download.autohideButton" = false; # never hide downloads button
-            "browser.sessionstore.resume_from_crash" = true;
-            "media.webrtc.camera.allow-pipewire" = true; # (hopefully) make webcameras work under wayland
-            "general.autoScroll" = true;
-            "browser.tabs.firefox-view" = true; # Sync tabs across devices
-            "browser.tabs.loadInBackground" = true; # load tabs automaticlaly
-            "ui.systemUsesDarkTheme" = 1; # force dark theme
-            "extensions.pocket.enabled" = false;
-
-            "privacy.resistFingerprinting.block_mozAddonManager" = true;
-            "extensions.webextensions.restrictedDomains" = builtins.concatStringsSep "," [
-              "accounts-static.cdn.mozilla.net"
-              "addons.cdn.mozilla.net"
-              "api.accounts.firefox.com"
-              "content.cdn.mozilla.net"
-              "discovery.addons.mozilla.org"
-              "install.mozilla.org"
-              "oauth.accounts.firefox.com"
-              "profile.accounts.firefox.com"
-              "sync.services.mozilla.com"
-            ];
-          };
-
-          search = {
-            force = true;
-            default = "Brave Search";
-            order = [ "Brave Search" ];
-            engines = import ./engines.nix;
-          };
-
-          containersForce = true;
-          containers = {
-            # Container for sites that require a Chrome useragent
-            Chrome = {
-              name = "Chrome";
-              color = "yellow";
-              icon = "circle";
-              id = 1;
+        profileDefault =
+          {
+            id,
+            name,
+            isDefault ? false,
+            extraConfig ? "",
+          }:
+          {
+            id = id;
+            name = name;
+            isDefault = isDefault;
+            settings = {
+              "browser.aboutConfig.showWarning" = false;
+              "browser.download.autohideButton" = false; # never hide downloads button
+              "browser.download.dir" = "${config.xdg.userDirs.download}";
+              "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+              "browser.newtabpage.activity-stream.feeds.snippets" = "lock-false";
+              "browser.newtabpage.activity-stream.feeds.topsites" = false;
+              "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+              "browser.newtabpage.activity-stream.showSponsored" = "lock-false";
+              "browser.newtabpage.activity-stream.showSponsoredTopSites" = "lock-false";
+              "browser.newtabpage.activity-stream.system.showSponsored" = "lock-false";
+              "browser.sessionstore.resume_from_crash" = true;
+              "browser.tabs.firefox-view" = true; # Sync tabs across devices
+              "browser.tabs.hoverPreview.enabled" = true; # enable new preview tabs feature as of 129.0
+              "browser.tabs.loadInBackground" = true; # load tabs automaticlaly
+              "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+              "extensions.pocket.enabled" = false;
+              "general.autoScroll" = true;
+              "media.webrtc.camera.allow-pipewire" = true; # (hopefully) make webcameras work under wayland
+              "privacy.resistFingerprinting.block_mozAddonManager" = true;
+              "services.passwordSavingEnabled" = false;
+              "signon.rememberSignons" = false; # Disable built-in password manager
+              "ui.systemUsesDarkTheme" = 1; # force dark theme
             };
-          };
-          #
-          # This just uses the default suggestion from home-manager for now
-          userChrome = ''
-            /* Hide tab bar in FF Quantum */
-            @-moz-document url("chrome://browser/content/browser.xul") {
-              #TabsToolbar {
-                visibility: collapse !important;
-                margin-bottom: 21px !important;
-              }
 
-              #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
-                visibility: collapse !important;
-              }
-            }
-          '';
-        };
+            search = import ./engines.nix;
+
+            containersForce = true;
+            containers = {
+              # Container for sites that require a Chrome useragent
+              Chrome = {
+                name = "Chrome";
+                color = "yellow";
+                icon = "circle";
+                id = 1;
+              };
+            };
+
+          }
+          // (import ./ff-ultima.nix {
+            inherit pkgs lib;
+            extraExtraConfig = extraConfig;
+          });
       in
       {
-        main = profileDefault // {
+        main = profileDefault {
           id = 0;
           name = "${config.hostSpec.email.user}";
           isDefault = true;
+          extraConfig = ''
+            user_pref("user.theme.catppuccin-mocha", true);
+          '';
         };
-        school = profileDefault // {
+        school = profileDefault {
           id = 1;
           name = "${config.hostSpec.email.school}";
+          extraConfig = ''
+            user_pref("user.theme.catppuccin-frappe", true);
+          '';
         };
       };
   };
